@@ -25,14 +25,5 @@
       <description>Hey, This is my first blog!</description>
     </item>
     
-    <item>
-      <title>Helloworld</title>
-      <link>https://v8v88v8v88.github.io/posts/helloworld/</link>
-      <pubDate>Mon, 06 Jun 2022 16:27:49 +0530</pubDate>
-      
-      <guid>https://v8v88v8v88.github.io/posts/helloworld/</guid>
-      <description>Hello World! I am Vaibhav Pratap Singh</description>
-    </item>
-    
   </channel>
 </rss>
