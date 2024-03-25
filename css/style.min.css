@@ -331,4 +331,14 @@ footer#footer {
         margin-left: -3.8%;
         padding: 1.5rem 2.2rem;
     }
+    main#content .intro-section {
+    text-align: center;
+    }
+
+    main#content .avatar {
+    max-width: 200px;
+    border-radius: 50%;
+    display: block;
+    margin: 0 auto 20px;
+    }
 }
