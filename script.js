@@ -24,24 +24,46 @@ menuToggle.addEventListener('click', () => {
 
 // "Hi, I'm Vaibhav" Hover Effect
 const vaibhavHover = document.querySelector('.vaibhav-hover');
-const hoverText = vaibhavHover.dataset.text;
+const hoverText = vaibhavHover ? vaibhavHover.dataset.text : '';
 
-vaibhavHover.addEventListener('mouseenter', () => {
-  vaibhavHover.textContent = hoverText;
-});
+if (vaibhavHover) {
+  vaibhavHover.addEventListener('mouseenter', () => {
+    vaibhavHover.textContent = hoverText;
+  });
 
-vaibhavHover.addEventListener('mouseleave', () => {
-  vaibhavHover.textContent = 'Vaibhav';
-});
+  vaibhavHover.addEventListener('mouseleave', () => {
+    vaibhavHover.textContent = 'Vaibhav';
+  });
+}
 
 // Light/Dark Mode Switch
 const modeSwitch = document.querySelector('.mode-switch');
 
-modeSwitch.addEventListener('change', () => {
-  document.body.classList.toggle('light-mode');
-});
+if (modeSwitch) {
+  modeSwitch.addEventListener('change', function() {
+    console.log('Switching theme');
+    const body = document.querySelector('body');
+    body.classList.toggle('light-mode');
+    body.classList.toggle('dark-mode');
+    // Save the mode in localStorage
+    if (body.classList.contains('light-mode')) {
+      localStorage.setItem('theme', 'light');
+    } else {
+      localStorage.setItem('theme', 'dark');
+    }
+  });
 
-  const projectsContainer = document.querySelector('.projects ul');
+  // Load the saved theme
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'light') {
+    document.querySelector('body').classList.add('light-mode');
+    document.querySelector('body').classList.remove('dark-mode');
+  }
+}
+
+// Arrows for project container
+const projectsContainer = document.querySelector('.projects ul');
+if (projectsContainer) {
   const leftArrow = document.createElement('div');
   const rightArrow = document.createElement('div');
 
@@ -60,4 +82,5 @@ modeSwitch.addEventListener('change', () => {
 
   rightArrow.addEventListener('click', () => {
     projectsContainer.scrollLeft += projectsContainer.offsetWidth;
-  });  
+  });
+}
