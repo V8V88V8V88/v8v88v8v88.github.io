@@ -1,97 +1,308 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>V8V88V8V88 - About</title>
-  <link rel="stylesheet" href="/css/styles.css">
-  <link rel="icon" type="image/png" href="/images/favicon.ico">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V8V88V8V88 - Posts</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="icon" type="image/png" href="/images/favicon.ico">
+    <style>
+        .posts-hero {
+            position: relative;
+            height: 50vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            margin-bottom: 4rem;
+            border-radius: 1.5rem;
+        }
+
+        .posts-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, #ff6ec7, #7986cb, #44d3d2);
+            opacity: 0.7;
+            z-index: 1;
+        }
+
+        .posts-hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: #fff;
+        }
+
+        .posts-hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .posts-hero p {
+            font-size: 1.5rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .post-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .post-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .post-content {
+            padding: 1.5rem;
+        }
+
+        .post-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .post-excerpt {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: #aaa;
+        }
+
+        .post-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .post-date {
+            display: flex;
+            align-items: center;
+        }
+
+        .post-date i {
+            margin-right: 0.5rem;
+        }
+
+        .post-tags {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+
+        .post-tag {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 0.2rem 0.5rem;
+            border-radius: 1rem;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 4rem;
+        }
+
+        .pagination a {
+            padding: 0.5rem 1rem;
+            margin: 0 0.5rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .pagination a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        body.light-mode .post-card {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        body.light-mode .post-excerpt {
+            color: #555;
+        }
+
+        body.light-mode .post-meta {
+            color: #333;
+        }
+
+        body.light-mode .post-tag {
+            background-color: rgba(0, 0, 0, 0.1);
+            color: #000;
+        }
+
+        body.light-mode .pagination a {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-mode .pagination a:hover {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .posts-hero h1 {
+                font-size: 3rem;
+            }
+
+            .posts-hero p {
+                font-size: 1.2rem;
+            }
+
+            .posts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <nav>
-      <div class="logo">V8V88V8V88</div>
-      <div class="nav-links">
-        <ul class="nav-menu">
-          <li><a href="/">Home</a></li>
-          <li><a href="/about/">About</a></li>
-          <li><a href="/projects/">Projects</a></li>
-          <li><a href="/posts/">Posts</a></li>
-          <li><a href="/contact/">Contact</a></li>
-          <div class="mode-toggle">
-            <input type="checkbox" id="mode-switch" class="mode-switch">
-            <label for="mode-switch" class="mode-switch-label"></label>
-          </div>
-        </ul>
-      </div>
-      <div class="menu-toggle">
-        <i class="fas fa-bars"></i>
-      </div>
-    </nav>
-  </header>
+    <header>
+        <nav>
+            <div class="logo">V8V88V8V88</div>
+            <div class="nav-links">
+                <ul class="nav-menu">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about/">About</a></li>
+                    <li><a href="/projects/">Projects</a></li>
+                    <li><a href="/posts/">Posts</a></li>
+                    <li><a href="/contact/">Contact</a></li>
+                    <div class="mode-toggle">
+                        <input type="checkbox" id="mode-switch" class="mode-switch">
+                        <label for="mode-switch" class="mode-switch-label"></label>
+                    </div>
+                </ul>
+            </div>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
 
-  <main>
-    <section class="about-hero">
-      <h1>About Me</h1>
-      <p>Hi, I'm Vaibhav. I'm a third-year Computer Science student who loves open source and coding.</p>
-    </section>
-    
-    <section class="about-section">
-      <h2>What I Do</h2>
-      <ul>
-        <li>Rust programming (it's my favorite language)</li>
-        <li>Linux tinkering (I use Arch, by the way)</li>
-        <li>C and C++ coding</li>
-        <li>Making apps with GTK and QT</li>
-        <li>Web design (HTML, CSS, and JavaScript)</li>
-        <li>Learning about cybersecurity</li>
-      </ul>
-    </section>
-    
-    <section class="about-section">
-      <h2>My Projects</h2>
-      <p>When I'm not studying, you can find me:</p>
-      <ul>
-        <li>Running The FOSS Club at my college</li>
-        <li>Helping out with GNOME India events</li>
-        <li>Coding small projects in Rust</li>
-        <li>Trying to make my Linux setup look cool</li>
-        <li>Reading about new tech stuff</li>
-      </ul>
-    </section>
-    
-    <section class="about-section">
-      <h2>How I Work</h2>
-      <p>I like writing clean, simple code. Git is my best friend for keeping track of changes. I enjoy working with others on cool tech projects.</p>
-      <p>I'm looking for part-time coding jobs. If you need someone who can turn coffee into code, let's talk!</p>
-    </section>
-  </main>
+    <main>
+        <section class="posts-hero">
+            <div class="posts-hero-content">
+                <h1>My Thoughts & Musings</h1>
+                <p>Exploring tech, design, and life's intricacies</p>
+            </div>
+        </section>
 
-  <footer>
-    <div class="footer-links">
-      <a href="https://yesterweb.org/no-to-web3/" target="_blank"><img alt="freeweb" src="/gifs/Free.gif"></a>
-      <a href="https://sadgrl.online/" target="_blank"><img alt="Sad Girl" src="/gifs/sadgrl.gif"></a>
-      <a href="https://landchad.net/" target="_blank"><img alt="landchad" src="/gifs/landchad.gif"></a>
-      <a href="https://www.getgnulinux.org/en/" target="_blank"><img alt="Linux Now" src="/gifs/LinuxNow.gif"></a>
-      <a href="https://learn.sadgrl.online/" target="_blank"><img alt="Learn SadGirl" src="/gifs/learn-button.gif"></a>
-    </div>
-    <div class="webring">
-      <a href='https://webring.dinhe.net/prev/https://www.v8v88v8v88.in/'>ᐊ</a>
-      <a href="https://webring.dinhe.net/">Webring!</a>
-      <a href='https://webring.dinhe.net/next/https://www.v8v88v8v88.in/'>ᐅ</a>
-    </div>
-    <div id="wcb" class="carbonbadge wcb-d"></div>
-    <script src="https://unpkg.com/website-carbon-badges@1.1.3/b.min.js" defer></script>
+        <section class="posts-grid">
+            <article class="post-card">
+                <div class="post-image" style="background-image: url('/images/namechange.jpg');"></div>
+                <div class="post-content">
+                    <h2 class="post-title">NameChange</h2>
+                    <p class="post-excerpt">The only description of my username "V8" on internet you can find.</p>
+                    <div class="post-meta">
+                        <span class="post-date"><i class="far fa-calendar-alt"></i> Jul 27, 2022</span>
+                        <span class="post-read-time"><i class="far fa-clock"></i> 5 min read</span>
+                    </div>
+                    <div class="post-tags">
+                        <span class="post-tag">Identity</span>
+                        <span class="post-tag">Personal</span>
+                    </div>
+                </div>
+            </article>
 
-    <!-- Start of CuterCounter Code -->
-    <a href="https://www.cutercounter.com/" target="_blank"><img src="https://www.cutercounter.com/hits.php?id=hvvxpoapf&nd=6&style=37" border="0" alt="visitor counter"></a>
-    <!-- End of CuterCounter Code -->
-    <br><br>
-    <p>&copy; Copyleft 2024 <a href="https://github.com/V8V88V8V88/">V8V88V8V88</a>. All Rights Reserved.</p>
-    <div id="wcb" class="carbonbadge wcb-d"></div>
-  </footer>
+            <article class="post-card">
+                <div class="post-image" style="background-image: url('/images/first-post.jpg');"></div>
+                <div class="post-content">
+                    <h2 class="post-title">First</h2>
+                    <p class="post-excerpt">Embarking on a new journey of sharing thoughts and experiences.</p>
+                    <div class="post-meta">
+                        <span class="post-date"><i class="far fa-calendar-alt"></i> Jul 20, 2022</span>
+                        <span class="post-read-time"><i class="far fa-clock"></i> 3 min read</span>
+                    </div>
+                    <div class="post-tags">
+                        <span class="post-tag">Beginnings</span>
+                        <span class="post-tag">Blogging</span>
+                    </div>
+                </div>
+            </article>
 
-  <script src="https://kit.fontawesome.com/133988a847.js" crossorigin="anonymous"></script>
-  <script src="/js/script.js"></script>
+            <article class="post-card">
+                <div class="post-image" style="background-image: url('/images/linux-journey.jpg');"></div>
+                <div class="post-content">
+                    <h2 class="post-title">My Linux Journey</h2>
+                    <p class="post-excerpt">From Windows to Linux: A tale of discovery and customization.</p>
+                    <div class="post-meta">
+                        <span class="post-date"><i class="far fa-calendar-alt"></i> Aug 15, 2022</span>
+                        <span class="post-read-time"><i class="far fa-clock"></i> 8 min read</span>
+                    </div>
+                    <div class="post-tags">
+                        <span class="post-tag">Linux</span>
+                        <span class="post-tag">Open Source</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="post-card">
+                <div class="post-image" style="background-image: url('/images/minimalism.jpg');"></div>
+                <div class="post-content">
+                    <h2 class="post-title">Embracing Digital Minimalism</h2>
+                    <p class="post-excerpt">How simplifying my digital life improved productivity and well-being.</p>
+                    <div class="post-meta">
+                        <span class="post-date"><i class="far fa-calendar-alt"></i> Sep 5, 2022</span>
+                        <span class="post-read-time"><i class="far fa-clock"></i> 6 min read</span>
+                    </div>
+                    <div class="post-tags">
+                        <span class="post-tag">Minimalism</span>
+                        <span class="post-tag">Productivity</span>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <div class="pagination">
+            <a href="#" class="prev">Previous</a>
+            <a href="#" class="next">Next</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <a href="https://yesterweb.org/no-to-web3/" target="_blank"><img alt="freeweb" src="/gifs/Free.gif"></a>
+            <a href="https://sadgrl.online/" target="_blank"><img alt="Sad Girl" src="/gifs/sadgrl.gif"></a>
+            <a href="https://landchad.net/" target="_blank"><img alt="landchad" src="/gifs/landchad.gif"></a>
+            <a href="https://www.getgnulinux.org/en/" target="_blank"><img alt="Linux Now" src="/gifs/LinuxNow.gif"></a>
+            <a href="https://learn.sadgrl.online/" target="_blank"><img alt="Learn SadGirl" src="/gifs/learn-button.gif"></a>
+        </div>
+        <div class="webring">
+            <a href='https://webring.dinhe.net/prev/https://www.v8v88v8v88.in/'>ᐊ</a>
+            <a href="https://webring.dinhe.net/">Webring!</a>
+            <a href='https://webring.dinhe.net/next/https://www.v8v88v8v88.in/'>ᐅ</a>
+        </div>
+        <div id="wcb" class="carbonbadge wcb-d"></div>
+        <script src="https://unpkg.com/website-carbon-badges@1.1.3/b.min.js" defer></script>
+        <a href="https://www.cutercounter.com/" target="_blank"><img src="https://www.cutercounter.com/hits.php?id=hvvxpoapf&nd=6&style=37" border="0" alt="visitor counter"></a>
+        <p>&copy; Copyleft 2024 <a href="https://github.com/V8V88V8V88/">V8V88V8V88</a>. All Rights Reserved.</p>
+    </footer>
+
+    <script src="https://kit.fontawesome.com/133988a847.js" crossorigin="anonymous"></script>
+    <script src="/js/script.js"></script>
 </body>
 </html>
