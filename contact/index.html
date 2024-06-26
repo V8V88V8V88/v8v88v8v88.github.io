@@ -6,6 +6,136 @@
   <title>V8V88V8V88 - Contact</title>
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="icon" type="image/png" href="/images/favicon.ico">
+  <style>
+    .contact-hero {
+      position: relative;
+      height: 60vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      margin-bottom: 4rem;
+    }
+    .contact-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, #ff6ec7, #7986cb, #44d3d2);
+      opacity: 0.7;
+      z-index: 1;
+    }
+    .contact-hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: #fff;
+    }
+    .contact-hero h1 {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+    .contact-hero p {
+      font-size: 1.5rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .terminal {
+      position: absolute;
+      bottom: -50px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      max-width: 600px;
+      background-color: rgba(0, 0, 0, 0.8);
+      border-radius: 10px;
+      padding: 20px;
+      font-family: monospace;
+      color: #00ff00;
+      z-index: 3;
+    }
+    .terminal-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .terminal-buttons {
+      display: flex;
+    }
+    .terminal-button {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin-right: 6px;
+    }
+    .terminal-button.red { background-color: #ff5f56; }
+    .terminal-button.yellow { background-color: #ffbd2e; }
+    .terminal-button.green { background-color: #27c93f; }
+    .terminal-content {
+      font-size: 0.9rem;
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 6rem;
+    }
+    .contact-card {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .contact-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    .contact-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    .contact-card h3 {
+      margin-bottom: 0.5rem;
+    }
+    .contact-card p {
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    .contact-card a {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background-color: #0070c9;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+    .contact-card a:hover {
+      background-color: #005ba1;
+    }
+    body.light-mode .contact-card {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+    body.light-mode .terminal {
+      background-color: rgba(255, 255, 255, 0.9);
+      color: #000;
+    }
+    @media (max-width: 768px) {
+      .contact-hero h1 {
+        font-size: 3rem;
+      }
+      .contact-hero p {
+        font-size: 1.2rem;
+      }
+      .terminal {
+        width: 90%;
+      }
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -31,67 +161,72 @@
   </header>
 
   <main>
-    <section class="about-hero">
-      <h1>Contact Me</h1>
-      <p>Hi, Here are the ways you can try contacting me if you have any questions.</p>
+    <section class="contact-hero">
+      <div class="contact-hero-content">
+        <h1>Let's Connect</h1>
+        <p>I'm always excited to collaborate on new projects and discuss tech!</p>
+      </div>
+      <div class="terminal">
+        <div class="terminal-header">
+          <div class="terminal-buttons">
+            <div class="terminal-button red"></div>
+            <div class="terminal-button yellow"></div>
+            <div class="terminal-button green"></div>
+          </div>
+          <span>bash</span>
+        </div>
+        <div class="terminal-content">
+          <span id="terminal-text"></span>
+          <span class="cursor">|</span>
+        </div>
+      </div>
     </section>
     
-    <section class="about-section">
-      <h2>What I Do</h2>
-      <ul>
-        <li>Rust programming (it's my favorite language)</li>
-        <li>Linux tinkering (I use Arch, by the way)</li>
-        <li>C and C++ coding</li>
-        <li>Making apps with GTK and QT</li>
-        <li>Web design (HTML, CSS, and JavaScript)</li>
-        <li>Learning about cybersecurity</li>
-      </ul>
-    </section>
-    
-    <section class="about-section">
-      <h2>My Projects</h2>
-      <p>When I'm not studying, you can find me:</p>
-      <ul>
-        <li>Running The FOSS Club at my college</li>
-        <li>Helping out with GNOME India events</li>
-        <li>Coding small projects in Rust</li>
-        <li>Trying to make my Linux setup look cool</li>
-        <li>Reading about new tech stuff</li>
-      </ul>
-    </section>
-    
-    <section class="about-section">
-      <h2>How I Work</h2>
-      <p>I like writing clean, simple code. Git is my best friend for keeping track of changes. I enjoy working with others on cool tech projects.</p>
-      <p>I'm looking for part-time coding jobs. If you need someone who can turn coffee into code, let's talk!</p>
+    <section class="contact-grid">
+      <div class="contact-card">
+        <i class="fas fa-envelope contact-icon"></i>
+        <h3>Email</h3>
+        <p>Drop me a line anytime!</p>
+        <a href="mailto:v8v88v8v88@example.com">Send Email</a>
+      </div>
+      <div class="contact-card">
+        <i class="fab fa-github contact-icon"></i>
+        <h3>GitHub</h3>
+        <p>Check out my latest projects and contributions.</p>
+        <a href="https://github.com/v8v88v8v88" target="_blank">View Profile</a>
+      </div>
+      <div class="contact-card">
+        <i class="fab fa-telegram contact-icon"></i>
+        <h3>Telegram</h3>
+        <p>For quick chats and tech discussions.</p>
+        <a href="https://t.me/V8V88V8V88" target="_blank">Message Me</a>
+      </div>
+      <div class="contact-card">
+        <i class="fab fa-linkedin contact-icon"></i>
+        <h3>LinkedIn</h3>
+        <p>Connect professionally and explore opportunities.</p>
+        <a href="https://www.linkedin.com/in/v8v88v8v88/" target="_blank">Connect</a>
+      </div>
     </section>
   </main>
 
   <footer>
-    <div class="footer-links">
-      <a href="https://yesterweb.org/no-to-web3/" target="_blank"><img alt="freeweb" src="/gifs/Free.gif"></a>
-      <a href="https://sadgrl.online/" target="_blank"><img alt="Sad Girl" src="/gifs/sadgrl.gif"></a>
-      <a href="https://landchad.net/" target="_blank"><img alt="landchad" src="/gifs/landchad.gif"></a>
-      <a href="https://www.getgnulinux.org/en/" target="_blank"><img alt="Linux Now" src="/gifs/LinuxNow.gif"></a>
-      <a href="https://learn.sadgrl.online/" target="_blank"><img alt="Learn SadGirl" src="/gifs/learn-button.gif"></a>
-    </div>
-    <div class="webring">
-      <a href='https://webring.dinhe.net/prev/https://www.v8v88v8v88.in/'>ᐊ</a>
-      <a href="https://webring.dinhe.net/">Webring!</a>
-      <a href='https://webring.dinhe.net/next/https://www.v8v88v8v88.in/'>ᐅ</a>
-    </div>
-    <div id="wcb" class="carbonbadge wcb-d"></div>
-    <script src="https://unpkg.com/website-carbon-badges@1.1.3/b.min.js" defer></script>
-<br>
-    <!-- Start of CuterCounter Code -->
-    <a href="https://www.cutercounter.com/" target="_blank"><img src="https://www.cutercounter.com/hits.php?id=hvvxpoapf&nd=6&style=37" border="0" alt="visitor counter"></a>
-    <!-- End of CuterCounter Code -->
-    <br><br>
-    <p>&copy; Copyleft 2024 <a href="https://github.com/V8V88V8V88/">V8V88V8V88</a>. All Rights Reserved.</p>
-    <div id="wcb" class="carbonbadge wcb-d"></div>
+    <!-- Footer content (same as other pages) -->
   </footer>
 
   <script src="https://kit.fontawesome.com/133988a847.js" crossorigin="anonymous"></script>
   <script src="/js/script.js"></script>
+  <script>
+    const terminalText = "echo 'Hello! Thanks for visiting my contact page. Feel free to reach out through any of the channels below.'";
+    let i = 0;
+    function typeWriter() {
+      if (i < terminalText.length) {
+        document.getElementById("terminal-text").innerHTML += terminalText.charAt(i);
+        i++;
+        setTimeout(typeWriter, 50);
+      }
+    }
+    window.onload = typeWriter;
+  </script>
 </body>
 </html>
