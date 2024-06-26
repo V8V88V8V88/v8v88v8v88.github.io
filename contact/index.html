@@ -8,14 +8,13 @@
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="icon" type="image/png" href="/images/favicon.ico">
   <style>
-    .contact-hero {
-      position: relative;
-      height: 60vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-      margin-bottom: 4rem;
+    .contact-hero { position: relative;
+  height: 70vh; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: visible; 
+  margin-bottom: 6rem;  
     }
 
     .contact-hero::before {
@@ -51,7 +50,7 @@
 
     .terminal {
       position: absolute;
-      bottom: -70px;
+      bottom: -50px;
       left: 50%;
       transform: translateX(-50%);
       width: 90%;
@@ -61,12 +60,12 @@
       padding: 20px;
       font-family: monospace;
       color: #00ff00;
-      z-index: 3;
+      z-index: 10;
     }
 
     .terminal-header {
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-start;
       margin-bottom: 10px;
     }
 
@@ -103,7 +102,7 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 2rem;
-      margin-top: 6rem;
+      margin-top: 8rem;
     }
 
     .contact-card {
@@ -278,7 +277,7 @@
   <script src="https://kit.fontawesome.com/133988a847.js" crossorigin="anonymous"></script>
   <script src="/js/script.js"></script>
   <script>
-    const terminalText = "echo 'Hello! Thanks for visiting my contact page. Feel free to reach out through any of the channels below.'";
+    const terminalText = "echo 'Hello Stalkers! Thanks for visiting my contact page. Feel free to reach out through any of the channels below :) '";
     let i = 0;
     function typeWriter() {
       if (i < terminalText.length) {
