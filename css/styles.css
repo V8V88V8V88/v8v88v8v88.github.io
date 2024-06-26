@@ -698,3 +698,59 @@ body.light-mode .mode-switch-label {
   color: #fff;
   margin-bottom: 4rem;
 }
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+}
+
+.mode-toggle {
+  margin-right: 1rem;
+}
+
+@media (max-width: 767px) {
+  .nav-menu {
+      display: none;
+      width: 100%;
+      order: 3;
+  }
+
+  .nav-menu.active {
+      display: flex;
+      flex-direction: column;
+  }
+
+  .nav-right {
+      order: 2;
+  }
+
+  .mode-toggle {
+      margin-right: 0.5rem;
+  }
+
+  .menu-toggle {
+      display: block;
+  }
+}
+
+@media (min-width: 768px) {
+  .menu-toggle {
+      display: none;
+  }
+
+  .nav-menu {
+      display: flex;
+      order: 2;
+  }
+
+  .nav-right {
+      order: 3;
+  }
+}
