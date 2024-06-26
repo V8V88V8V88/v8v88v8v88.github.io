@@ -8,13 +8,15 @@
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="icon" type="image/png" href="/images/favicon.ico">
   <style>
-    .contact-hero { position: relative;
-  height: 70vh; 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: visible; 
-  margin-bottom: 6rem;  
+    .contact-hero {
+      position: relative;
+      height: 70vh; 
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: visible; 
+      margin-bottom: 6rem;  
+      border-radius: 1.5rem;
     }
 
     .contact-hero::before {
@@ -143,6 +145,29 @@
     }
 
     .contact-card a:hover {
+      background-color: #005ba1;
+    }
+
+    /* Light theme styles */
+    body.light-mode {
+      background-color: #fff;
+      color: #000;
+    }
+
+    body.light-mode .contact-hero::before {
+      opacity: 0.9;
+    }
+
+    body.light-mode .contact-card {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    body.light-mode .contact-card a {
+      background-color: #0070c9;
+      color: #fff;
+    }
+
+    body.light-mode .contact-card a:hover {
       background-color: #005ba1;
     }
 
