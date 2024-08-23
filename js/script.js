@@ -84,3 +84,5 @@ if (projectsContainer) {
     projectsContainer.scrollLeft += projectsContainer.offsetWidth;
   });
 }
+
+

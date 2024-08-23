@@ -911,3 +911,53 @@ body.light-mode .contact li:hover {
         font-size: 0.9rem;
     }
 }
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    z-index: 1000;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 15px;
+    height: 1px;
+    margin-bottom: 4px;
+    position: relative;
+    background: #f6f5f4;
+    border-radius: 1px;
+    z-index: 1;
+    transform-origin: 4px 0px;
+    transition:
+        transform 0.3s ease,
+        background 0.3s ease,
+        opacity 0.3s ease;
+}
+
+.menu-toggle span:last-child {
+    margin-bottom: 0;
+}
+
+body.light-mode .menu-toggle span {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+@media (max-width: 767px) {
+    .menu-toggle {
+        display: block;
+    }
+
+    .menu-toggle.active span:first-child {
+        transform: rotate(45deg) translate(1px, -1px);
+    }
+
+    .menu-toggle.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .menu-toggle.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(1px, 0);
+    }
+}
