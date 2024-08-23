@@ -961,3 +961,24 @@ body.light-mode .menu-toggle span {
         transform: rotate(-45deg) translate(1px, 0);
     }
 }
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px); /* For Safari */
+    z-index: 100;
+    padding: 1rem;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition:
+        background-color 0.3s ease,
+        border-bottom-color 0.3s ease;
+}
+
+body.light-mode header {
+    background-color: rgba(0, 0, 0, 0.05);
+    border-bottom-color: rgba(0, 0, 0, 0.1);
+}
