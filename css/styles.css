@@ -963,14 +963,8 @@ body.light-mode .menu-toggle span {
 }
 
 header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
     backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px); /* For Safari */
-    z-index: 100;
-    padding: 1rem;
+    -webkit-backdrop-filter: blur(20px);
     background-color: rgba(255, 255, 255, 0.05);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     transition:
