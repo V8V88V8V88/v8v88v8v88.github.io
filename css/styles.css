@@ -976,3 +976,146 @@ body.light-mode header {
     background-color: rgba(0, 0, 0, 0.05);
     border-bottom-color: rgba(0, 0, 0, 0.1);
 }
+
+footer {
+    text-align: center;
+    padding: 3rem 2rem 2rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+body.light-mode footer {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-top-color: rgba(0, 0, 0, 0.1);
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto 2rem;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 200px;
+    margin-bottom: 1.5rem;
+    text-align: left;
+    padding: 0 1rem;
+}
+
+.footer-section h4 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+body.light-mode .footer-section h4 {
+    color: #000;
+}
+
+.footer-section ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-section a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+body.light-mode .footer-section a {
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.footer-section a:hover {
+    color: #fff;
+}
+
+body.light-mode .footer-section a:hover {
+    color: #000;
+}
+
+.footer-section p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+body.light-mode .footer-section p {
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 1.5rem;
+}
+
+body.light-mode .footer-bottom {
+    border-top-color: rgba(0, 0, 0, 0.1);
+}
+
+.visitor-counter {
+    margin-bottom: 1rem;
+}
+
+.webring {
+    margin-bottom: 1rem;
+}
+
+.webring a {
+    margin: 0 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+body.light-mode .webring a {
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.webring a:hover {
+    color: #fff;
+}
+
+body.light-mode .webring a:hover {
+    color: #000;
+}
+
+.copyright {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+body.light-mode .copyright {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.copyright a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.copyright a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+    }
+
+    .footer-section {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+}
