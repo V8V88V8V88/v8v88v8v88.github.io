@@ -210,7 +210,7 @@ body.light-mode .hero p {
 /* Project Section */
 .projects {
     position: relative;
-    padding: 2rem;
+    padding: 1.5rem;
     border-radius: 1.5rem;
     background-color: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(20px);
@@ -256,8 +256,8 @@ body.light-mode .projects {
 }
 
 .projects img {
-    width: 400px;
-    height: 250px;
+    width: 300px;
+    height: 180px;
     object-fit: cover;
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -274,8 +274,8 @@ body.light-mode .projects {
     text-decoration: none;
     background-color: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
-    padding: 2rem;
-    border-radius: 1.5rem;
+    padding: 1.5rem;
+    border-radius: 1rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition:
         transform 0.3s ease,
@@ -286,8 +286,8 @@ body.light-mode .projects {
 }
 
 .project-item img {
-    width: 400px;
-    height: 250px;
+    width: 300px;
+    height: 180px;
     object-fit: cover;
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -308,7 +308,7 @@ body.light-mode .project-item a {
 }
 
 .project-details h3 {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 600;
     margin-bottom: 0.5rem;
     transition: color 0.3s ease;
@@ -319,7 +319,7 @@ body.light-mode .project-details h3 {
 }
 
 .project-details p {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: #aaa;
     transition: color 0.3s ease;
 }
@@ -332,12 +332,12 @@ body.light-mode .project-details p {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: #aaa;
     cursor: pointer;
     z-index: 1;
     transition: color 0.3s ease;
-    padding: 1rem;
+    padding: 0.8rem;
 }
 
 body.light-mode .arrow {
