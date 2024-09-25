@@ -790,127 +790,6 @@ nav {
     }
 }
 
-.contact {
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-.contact ul {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.5rem;
-}
-
-.contact li {
-    display: inline-flex;
-    align-items: center;
-    background-color: #f1f1f1;
-    color: #333;
-    text-decoration: none;
-    padding: 0.6rem 1rem;
-    border-radius: 2rem;
-    transition:
-        background-color 0.3s,
-        color 0.3s;
-}
-
-.contact li:hover {
-    background-color: #e0e0e0;
-}
-
-.contact li i {
-    font-size: 1.1rem;
-    margin-right: 0.4rem;
-}
-
-.contact li span {
-    font-size: 0.9rem;
-}
-
-@media (max-width: 768px) {
-    .contact ul {
-        flex-direction: row;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-    }
-
-    .contact li {
-        flex: 0 0 auto;
-        width: auto;
-        justify-content: center;
-    }
-
-    .contact li span {
-        font-size: 0.9rem;
-    }
-}
-.contact {
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-.contact ul {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.8rem;
-}
-
-.contact li {
-    display: inline-flex;
-    align-items: center;
-    background-color: #2a2a2a;
-    color: #f1f1f1;
-    text-decoration: none;
-    padding: 0.8rem 1.2rem;
-    border-radius: 2rem;
-    transition:
-        background-color 0.3s,
-        color 0.3s;
-}
-
-.contact li:hover {
-    background-color: #3a3a3a;
-}
-
-.contact li i {
-    font-size: 1.1rem;
-    margin-right: 0.5rem;
-}
-
-.contact li span {
-    font-size: 0.9rem;
-}
-
-body.light-mode .contact li {
-    background-color: #f1f1f1;
-    color: #333;
-}
-
-body.light-mode .contact li:hover {
-    background-color: #e0e0e0;
-}
-
-@media (max-width: 768px) {
-    .contact ul {
-        flex-direction: row;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 0.8rem;
-    }
-
-    .contact li {
-        flex: 0 0 auto;
-        width: auto;
-        justify-content: center;
-    }
-
-    .contact li span {
-        font-size: 0.9rem;
-    }
-}
 .menu-toggle {
     display: none;
     background: none;
@@ -1117,5 +996,70 @@ body.light-mode .copyright {
     .footer-section {
         text-align: center;
         margin-bottom: 2rem;
+    }
+}
+.contact {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 0 1rem;
+}
+
+.contact ul {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+    padding: 0;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.contact li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #2a2a2a;
+    color: #f1f1f1;
+    text-decoration: none;
+    padding: 0.6rem 1rem;
+    border-radius: 2rem;
+    transition:
+        background-color 0.3s,
+        color 0.3s;
+    width: 100%;
+}
+
+.contact li:hover {
+    background-color: #3a3a3a;
+}
+
+.contact li i {
+    font-size: 1rem;
+    margin-right: 0.5rem;
+}
+
+.contact li span {
+    font-size: 0.9rem;
+}
+
+body.light-mode .contact li {
+    background-color: #f1f1f1;
+    color: #333;
+}
+
+body.light-mode .contact li:hover {
+    background-color: #e0e0e0;
+}
+
+@media (min-width: 769px) {
+    .contact ul {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        max-width: none;
+    }
+
+    .contact li {
+        width: auto;
     }
 }
