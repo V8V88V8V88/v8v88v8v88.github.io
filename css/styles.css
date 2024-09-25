@@ -671,26 +671,6 @@ body.light-mode .mode-switch-label {
     }
 
     .about p,
-    .projects p,
-    .posts p {
-        font-size: 0.9rem;
-    }
-
-    .project-item,
-    .posts li {
-        margin-bottom: 1rem;
-    }
-
-    .about-section p,
-    .about-section li {
-        font-size: 1rem;
-    }
-
-    .project-item img {
-        width: 100%;
-        height: auto;
-    }
-
     .contact ul {
         flex-direction: column;
         align-items: center;
