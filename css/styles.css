@@ -898,29 +898,36 @@ body.light-mode .copyright {
     padding: 80px 0;
     background: linear-gradient(to bottom, #000000, #1a1a1a);
     color: #ffffff;
-}
-
-.contact h2 {
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  
+  body.light-mode .contact {
+    background: linear-gradient(to bottom, #f5f5f7, #ffffff);
+    color: #1d1d1f;
+  }
+  
+  .contact h2 {
     font-size: 48px;
     font-weight: 700;
     text-align: center;
     margin-bottom: 40px;
-    background: #fff;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.contact-grid {
+    color: #ffffff;
+  }
+  
+  body.light-mode .contact h2 {
+    color: #000000;
+  }
+  
+  .contact-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
-}
-
-.contact-item {
+  }
+  
+  .contact-item {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -930,76 +937,133 @@ body.light-mode .copyright {
     background: rgba(255, 255, 255, 0.05);
     border-radius: 18px;
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     transition: all 0.3s ease;
     overflow: hidden;
     text-decoration: none;
     color: #ffffff;
-}
-
-.contact-item:hover {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  body.light-mode .contact-item {
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: #1d1d1f;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  }
+  
+  .contact-item:hover {
     transform: translateY(-5px);
     background: rgba(255, 255, 255, 0.1);
-}
-
-.contact-item::before {
-    content: "";
+  }
+  
+  body.light-mode .contact-item:hover {
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  }
+  
+  .contact-item::before {
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, #2997ff, #5ac8fa);
+    background: linear-gradient(135deg, #374151, #4b5563);
     opacity: 0;
     transition: opacity 0.3s ease;
     z-index: 1;
     border-radius: 18px;
-}
-
-.contact-item:hover::before {
+  }
+  
+  body.light-mode .contact-item::before {
+    background: linear-gradient(135deg, #6b7280, #9ca3af);
+  }
+  
+  .contact-item:hover::before {
     opacity: 0.2;
-}
-
-.contact-item i {
+  }
+  
+  body.light-mode .contact-item:hover::before {
+    opacity: 0.1;
+  }
+  
+  .contact-item i {
     font-size: 36px;
     margin-bottom: 15px;
     position: relative;
     z-index: 2;
-    transition: transform 0.3s ease;
-}
-
-.contact-item:hover i {
+    transition: transform 0.3s ease, color 0.3s ease;
+  }
+  
+  .contact-item:hover i {
     transform: scale(1.1);
-}
-
-.contact-item span {
+    color: #9ca3af;
+  }
+  
+  body.light-mode .contact-item:hover i {
+    color: #4b5563;
+  }
+  
+  .contact-item span {
     font-size: 16px;
     font-weight: 500;
     position: relative;
     z-index: 2;
-}
-
-@media (max-width: 768px) {
+    transition: color 0.3s ease;
+  }
+  
+  .contact-item:hover span {
+    color: #9ca3af;
+  }
+  
+  body.light-mode .contact-item:hover span {
+    color: #4b5563;
+  }
+  
+  @media (max-width: 768px) {
     .contact {
-        padding: 60px 0;
+      padding: 60px 0;
     }
-
+  
     .contact h2 {
-        font-size: 36px;
+      font-size: 36px;
     }
-
+  
     .contact-grid {
-        grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, 1fr);
     }
-
+  
     .contact-item {
-        padding: 20px 15px;
+      padding: 20px 15px;
     }
-
+  
     .contact-item i {
-        font-size: 28px;
+      font-size: 28px;
     }
-
+  
     .contact-item span {
-        font-size: 14px;
+      font-size: 14px;
     }
-}
+  }
+  
+  @media (max-width: 480px) {
+    .contact-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      padding: 0 12px;
+    }
+  
+    .contact-item {
+      padding: 16px 12px;
+    }
+  
+    .contact-item i {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+  
+    .contact-item span {
+      font-size: 12px;
+    }
+  }
