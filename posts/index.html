@@ -1,447 +1,495 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>V8V88V8V88 - Posts</title>
-        <link rel="stylesheet" href="/css/styles.css" />
-        <link rel="icon" type="image/png" href="/images/favicon.ico" />
-        <style>
-            .posts-hero {
-                position: relative;
-                height: 50vh;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                overflow: hidden;
-                margin-bottom: 4rem;
-                border-radius: 1.5rem;
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>V8V88V8V88 - Posts</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="icon" type="image/png" href="/images/favicon.ico" />
+    <style>
+        /* Hero styles */
+        .hero {
+            position: relative;
+            height: 40vh;
+            min-height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            margin-bottom: 4rem;
+            border-radius: 24px;
+            background: #000;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(32, 32, 32, 0.8) 0%,
+                rgba(40, 44, 52, 0.8) 50%,
+                rgba(32, 32, 32, 0.8) 100%
+            );
+            z-index: 1;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(45deg, 
+                    rgba(68, 71, 90, 0.1) 25%, 
+                    transparent 25%, 
+                    transparent 75%, 
+                    rgba(68, 71, 90, 0.1) 75%
+                ),
+                linear-gradient(45deg, 
+                    rgba(68, 71, 90, 0.1) 25%, 
+                    transparent 25%, 
+                    transparent 75%, 
+                    rgba(68, 71, 90, 0.1) 75%
+                );
+            background-size: 60px 60px;
+            background-position: 0 0, 30px 30px;
+            opacity: 0.5;
+            z-index: 2;
+            animation: gradientMove 15s linear infinite;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            max-width: 800px;
+            padding: 0 2rem;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #c2c2c2, #ffffff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Light mode styles */
+        body.light-mode .hero::before {
+            background: linear-gradient(135deg, 
+                rgba(245, 245, 247, 0.8) 0%,
+                rgba(250, 250, 252, 0.8) 50%,
+                rgba(245, 245, 247, 0.8) 100%
+            );
+        }
+
+        body.light-mode .hero::after {
+            background: 
+                linear-gradient(45deg, 
+                    rgba(200, 200, 200, 0.1) 25%, 
+                    transparent 25%, 
+                    transparent 75%, 
+                    rgba(200, 200, 200, 0.1) 75%
+                ),
+                linear-gradient(45deg, 
+                    rgba(200, 200, 200, 0.1) 25%, 
+                    transparent 25%, 
+                    transparent 75%, 
+                    rgba(200, 200, 200, 0.1) 75%
+                );
+        }
+
+        body.light-mode .hero h1 {
+            background: linear-gradient(to right, #333, #000);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-mode .hero p {
+            color: rgba(0, 0, 0, 0.7);
+        }
+
+        /* Animation for the grid pattern */
+        @keyframes gradientMove {
+            0% {
+                background-position: 0 0, 30px 30px;
             }
-
-            .posts-hero::before {
-                content: "";
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: linear-gradient(45deg, #ff6ec7, #7986cb, #44d3d2);
-                opacity: 0.7;
-                z-index: 1;
+            100% {
+                background-position: 60px 60px, 90px 90px;
             }
+        }
 
-            .posts-hero-content {
-                position: relative;
-                z-index: 2;
-                text-align: center;
-                color: #fff;
-            }
+        /* Post grid styles */
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
 
-            .posts-hero h1 {
-                font-size: 4rem;
-                margin-bottom: 1rem;
-            }
+        .post-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
 
-            .posts-hero p {
-                font-size: 1.5rem;
-                max-width: 600px;
-                margin: 0 auto;
-            }
+        .post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
 
-            .posts-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-                gap: 2rem;
-                margin-top: 4rem;
-            }
+        .post-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
 
-            .post-card {
-                background-color: rgba(255, 255, 255, 0.1);
-                border-radius: 1rem;
-                overflow: hidden;
-                transition:
-                    transform 0.3s ease,
-                    box-shadow 0.3s ease;
-            }
+        .post-content {
+            padding: 1.5rem;
+        }
 
-            .post-card:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-            }
+        .post-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
 
-            .post-image {
-                height: 200px;
-                background-size: cover;
-                background-position: center;
-            }
+        .post-excerpt {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: #aaa;
+        }
 
-            .post-content {
-                padding: 1.5rem;
-            }
+        .post-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: #666;
+        }
 
-            .post-title {
-                font-size: 1.5rem;
-                margin-bottom: 0.5rem;
-            }
+        .post-date {
+            display: flex;
+            align-items: center;
+        }
 
-            .post-excerpt {
-                font-size: 1rem;
-                margin-bottom: 1rem;
-                color: #aaa;
-            }
+        .post-date i {
+            margin-right: 0.5rem;
+        }
 
-            .post-meta {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                font-size: 0.9rem;
-                color: #666;
-            }
+        .post-tags {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
 
-            .post-date {
-                display: flex;
-                align-items: center;
-            }
+        .post-tag {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 0.2rem 0.5rem;
+            border-radius: 1rem;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
 
-            .post-date i {
-                margin-right: 0.5rem;
-            }
+        /* Pagination styles */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 4rem;
+        }
 
-            .post-tags {
-                display: flex;
-                flex-wrap: wrap;
-                margin-top: 0.5rem;
-            }
+        .pagination a {
+            padding: 0.5rem 1rem;
+            margin: 0 0.5rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            transition: background-color 0.3s ease;
+        }
 
-            .post-tag {
-                background-color: rgba(255, 255, 255, 0.2);
-                color: #fff;
-                padding: 0.2rem 0.5rem;
-                border-radius: 1rem;
-                font-size: 0.8rem;
-                margin-right: 0.5rem;
-                margin-bottom: 0.5rem;
-            }
+        .pagination a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
 
-            .pagination {
-                display: flex;
-                justify-content: center;
-                margin-top: 4rem;
-            }
+        /* Light mode adjustments */
+        body.light-mode .post-card {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
 
-            .pagination a {
-                padding: 0.5rem 1rem;
-                margin: 0 0.5rem;
-                background-color: rgba(255, 255, 255, 0.1);
-                border-radius: 0.5rem;
-                transition: background-color 0.3s ease;
-            }
+        body.light-mode .post-excerpt {
+            color: #555;
+        }
 
-            .pagination a:hover {
-                background-color: rgba(255, 255, 255, 0.2);
-            }
+        body.light-mode .post-meta {
+            color: #333;
+        }
 
-            body.light-mode .post-card {
-                background-color: rgba(0, 0, 0, 0.05);
-            }
+        body.light-mode .post-tag {
+            background-color: rgba(0, 0, 0, 0.1);
+            color: #000;
+        }
 
-            body.light-mode .post-excerpt {
-                color: #555;
-            }
+        body.light-mode .pagination a {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
 
-            body.light-mode .post-meta {
-                color: #333;
-            }
-
-            body.light-mode .post-tag {
-                background-color: rgba(0, 0, 0, 0.1);
-                color: #000;
-            }
-
-            body.light-mode .pagination a {
-                background-color: rgba(0, 0, 0, 0.1);
-            }
-
-            body.light-mode .pagination a:hover {
-                background-color: rgba(0, 0, 0, 0.2);
-            }
-
-            @media (max-width: 768px) {
-                .posts-hero h1 {
-                    font-size: 3rem;
-                }
-
-                .posts-hero p {
-                    font-size: 1.2rem;
-                }
-
-                .posts-grid {
-                    grid-template-columns: 1fr;
-                }
-            }
-        </style>
-    </head>
-    <body>
-        <header>
-            <nav>
-                <div class="logo">V8V88V8V88</div>
-                <div class="nav-right">
-                    <div class="mode-toggle">
-                        <input
-                            type="checkbox"
-                            id="mode-switch"
-                            class="mode-switch"
-                        />
-                        <label
-                            for="mode-switch"
-                            class="mode-switch-label"
-                        ></label>
-                    </div>
-                    <button class="menu-toggle" aria-label="Toggle menu">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </button>
+        body.light-mode .pagination a:hover {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">V8V88V8V88</div>
+            <div class="nav-right">
+                <div class="mode-toggle">
+                    <input type="checkbox" id="mode-switch" class="mode-switch" />
+                    <label for="mode-switch" class="mode-switch-label"></label>
                 </div>
-                <ul class="nav-menu">
-                    <li><a href="/" aria-current="page">Home</a></li>
-                    <li><a href="/posts/">Posts</a></li>
-                    <li><a href="/projects/">Projects</a></li>
-                    <li><a href="/contact/">Contact</a></li>
-                    <li><a href="/about/">About</a></li>
-                </ul>
-            </nav>
-        </header>
-
-        <main>
-            <section class="posts-hero">
-                <div class="posts-hero-content">
-                    <h1>I Write Sometimes</h1>
-                    <p>
-                        The Ultimate Answer to the Life, the Universe, and
-                        Everything
-                    </p>
-                </div>
-            </section>
-
-            <section class="posts-grid">
-                <article class="post-card">
-                    <div
-                        class="post-image"
-                        style="
-                            background-image: url(&quot;/images/namechange.jpg&quot;);
-                        "
-                    ></div>
-                    <div class="post-content">
-                        <h2 class="post-title">Name Change</h2>
-                        <p class="post-excerpt">
-                            The only description of my username "V8" on internet
-                            you can find.
-                        </p>
-                        <div class="post-meta">
-                            <span class="post-date"
-                                ><i class="far fa-calendar-alt"></i> Jul 27,
-                                2022</span
-                            >
-                            <span class="post-read-time"
-                                ><i class="far fa-clock"></i> 5 min read</span
-                            >
-                        </div>
-                        <div class="post-tags">
-                            <span class="post-tag">Identity</span>
-                            <span class="post-tag">Personal</span>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="post-card">
-                    <div
-                        class="post-image"
-                        style="
-                            background-image: url(&quot;/images/first-post.jpg&quot;);
-                        "
-                    ></div>
-                    <div class="post-content">
-                        <h2 class="post-title">First</h2>
-                        <p class="post-excerpt">
-                            Embarking on a new journey of sharing thoughts and
-                            experiences.
-                        </p>
-                        <div class="post-meta">
-                            <span class="post-date"
-                                ><i class="far fa-calendar-alt"></i> Jul 20,
-                                2022</span
-                            >
-                            <span class="post-read-time"
-                                ><i class="far fa-clock"></i> 3 min read</span
-                            >
-                        </div>
-                        <div class="post-tags">
-                            <span class="post-tag">Beginnings</span>
-                            <span class="post-tag">Blogging</span>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="post-card">
-                    <div
-                        class="post-image"
-                        style="
-                            background-image: url(&quot;/images/linux-journey.jpg&quot;);
-                        "
-                    ></div>
-                    <div class="post-content">
-                        <h2 class="post-title">My Linux Journey</h2>
-                        <p class="post-excerpt">
-                            From Windows to Linux: A tale of discovery and
-                            customization.
-                        </p>
-                        <div class="post-meta">
-                            <span class="post-date"
-                                ><i class="far fa-calendar-alt"></i> Aug 15,
-                                2022</span
-                            >
-                            <span class="post-read-time"
-                                ><i class="far fa-clock"></i> 8 min read</span
-                            >
-                        </div>
-                        <div class="post-tags">
-                            <span class="post-tag">Linux</span>
-                            <span class="post-tag">Open Source</span>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="post-card">
-                    <div
-                        class="post-image"
-                        style="
-                            background-image: url(&quot;/images/minimalism.jpg&quot;);
-                        "
-                    ></div>
-                    <div class="post-content">
-                        <h2 class="post-title">Embracing Digital Minimalism</h2>
-                        <p class="post-excerpt">
-                            How simplifying my digital life improved
-                            productivity and well-being.
-                        </p>
-                        <div class="post-meta">
-                            <span class="post-date"
-                                ><i class="far fa-calendar-alt"></i> Sep 5,
-                                2022</span
-                            >
-                            <span class="post-read-time"
-                                ><i class="far fa-clock"></i> 6 min read</span
-                            >
-                        </div>
-                        <div class="post-tags">
-                            <span class="post-tag">Minimalism</span>
-                            <span class="post-tag">Productivity</span>
-                        </div>
-                    </div>
-                </article>
-            </section>
-
-            <div class="pagination">
-                <a href="#" class="prev">Previous</a>
-                <a href="#" class="next">Next</a>
+                <button class="menu-toggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </div>
-        </main>
-        <footer>
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="/">Home</a></li>
-                        <li><a href="/about">About</a></li>
-                        <li><a href="/projects">Projects</a></li>
-                        <li><a href="/posts">Posts</a></li>
-                        <li><a href="/contact">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Connect</h4>
-                    <ul>
-                        <li>
-                            <a
-                                href="https://github.com/v8v88v8v88"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                >GitHub</a
-                            >
-                        </li>
-                        <li>
-                            <a
-                                href="https://t.me/V8V88V8V88"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                >Telegram</a
-                            >
-                        </li>
-                        <li>
-                            <a
-                                href="https://www.youtube.com/c/MagicalV8"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                >YouTube</a
-                            >
-                        </li>
-                        <li>
-                            <a
-                                href="https://fosstodon.org/@v8v88v8v88"
-                                rel="me"
-                                target="_blank"
-                                >Mastodon</a
-                            >
-                        </li>
-                        <li>
-                            <a
-                                href="https://twitter.com/v8v88v8v88"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                >Twitter</a
-                            >
-                        </li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>About V8V88V8V88</h4>
-                    <p>
-                        A CSE student passionate about Linux, FOSS, and design.
-                        Exploring the intersection of technology and creativity.
-                    </p>
-                </div>
+            <ul class="nav-menu">
+                <li><a href="/" aria-current="page">Home</a></li>
+                <li><a href="/posts/">Posts</a></li>
+                <li><a href="/projects/">Projects</a></li>
+                <li><a href="/contact/">Contact</a></li>
+                <li><a href="/about/">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>I Write Sometimes</h1>
+                <p>The Ultimate Answer to the Life, the Universe, and Everything</p>
             </div>
-            <div class="footer-bottom">
-                <div class="visitor-counter">
-                    <img
-                        src="https://www.cutercounter.com/hits.php?id=hvvxpoapf&nd=6&style=37"
-                        border="0"
-                        alt="visitor counter"
-                    />
-                </div>
-                <div class="webring">
-                    <a
-                        href="https://webring.dinhe.net/prev/https://v8v88v8v88.com/"
-                        >Previous</a
-                    >
-                    <a href="https://webring.dinhe.net/">Webring!</a>
-                    <a
-                        href="https://webring.dinhe.net/next/https://v8v88v8v88.com/"
-                        >Next</a
-                    >
-                </div>
-                <div class="copyright">
-                    🄯 Copyleft 2024
-                    <a href="https://github.com/V8V88V8V88">V8V88V8V88</a>. All
-                    Rights Reserved.
-                </div>
+        </section>
+
+      <section class="posts-grid">
+        <article class="post-card">
+          <div
+            class="post-image"
+            style="background-image: url('/images/namechange.jpg')"
+          ></div>
+          <div class="post-content">
+            <h2 class="post-title">Name Change</h2>
+            <p class="post-excerpt">
+              The only description of my username "V8" on internet you can find.
+            </p>
+            <div class="post-meta">
+              <span class="post-date"
+                ><i class="far fa-calendar-alt"></i> Jul 27, 2022</span
+              >
+              <span class="post-read-time"
+                ><i class="far fa-clock"></i> 5 min read</span
+              >
             </div>
-        </footer>
-        <script
-            src="https://kit.fontawesome.com/133988a847.js"
-            crossorigin="anonymous"
-        ></script>
-        <script src="/js/script.js"></script>
-    </body>
+            <div class="post-tags">
+              <span class="post-tag">Identity</span>
+              <span class="post-tag">Personal</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="post-card">
+          <div
+            class="post-image"
+            style="background-image: url('/images/first-post.jpg')"
+          ></div>
+          <div class="post-content">
+            <h2 class="post-title">First</h2>
+            <p class="post-excerpt">
+              Embarking on a new journey of sharing thoughts and experiences.
+            </p>
+            <div class="post-meta">
+              <span class="post-date"
+                ><i class="far fa-calendar-alt"></i> Jul 20, 2022</span
+              >
+              <span class="post-read-time"
+                ><i class="far fa-clock"></i> 3 min read</span
+              >
+            </div>
+            <div class="post-tags">
+              <span class="post-tag">Beginnings</span>
+              <span class="post-tag">Blogging</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="post-card">
+          <div
+            class="post-image"
+            style="background-image: url('/images/linux-journey.jpg')"
+          ></div>
+          <div class="post-content">
+            <h2 class="post-title">My Linux Journey</h2>
+            <p class="post-excerpt">
+              From Windows to Linux: A tale of discovery and customization.
+            </p>
+            <div class="post-meta">
+              <span class="post-date"
+                ><i class="far fa-calendar-alt"></i> Aug 15, 2022</span
+              >
+              <span class="post-read-time"
+                ><i class="far fa-clock"></i> 8 min read</span
+              >
+            </div>
+            <div class="post-tags">
+              <span class="post-tag">Linux</span>
+              <span class="post-tag">Open Source</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="post-card">
+          <div
+            class="post-image"
+            style="background-image: url('/images/minimalism.jpg')"
+          ></div>
+          <div class="post-content">
+            <h2 class="post-title">Embracing Digital Minimalism</h2>
+            <p class="post-excerpt">
+              How simplifying my digital life improved productivity and
+              well-being.
+            </p>
+            <div class="post-meta">
+              <span class="post-date"
+                ><i class="far fa-calendar-alt"></i> Sep 5, 2022</span
+              >
+              <span class="post-read-time"
+                ><i class="far fa-clock"></i> 6 min read</span
+              >
+            </div>
+            <div class="post-tags">
+              <span class="post-tag">Minimalism</span>
+              <span class="post-tag">Productivity</span>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <div class="pagination">
+        <a href="#" class="prev">Previous</a>
+        <a href="#" class="next">Next</a>
+      </div>
+    </main>
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/projects">Projects</a></li>
+            <li><a href="/posts">Posts</a></li>
+            <li><a href="/contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Connect</h4>
+          <ul>
+            <li>
+              <a
+                href="https://github.com/v8v88v8v88"
+                target="_blank"
+                rel="noopener noreferrer"
+                >GitHub</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://t.me/V8V88V8V88"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Telegram</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://www.youtube.com/c/MagicalV8"
+                target="_blank"
+                rel="noopener noreferrer"
+                >YouTube</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://fosstodon.org/@v8v88v8v88"
+                rel="me"
+                target="_blank"
+                >Mastodon</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://twitter.com/v8v88v8v88"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Twitter</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>About V8V88V8V88</h4>
+          <p>
+            A CSE student passionate about Linux, FOSS, and design. Exploring
+            the intersection of technology and creativity.
+          </p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="visitor-counter">
+          <img
+            src="https://www.cutercounter.com/hits.php?id=hvvxpoapf&nd=6&style=37"
+            border="0"
+            alt="visitor counter"
+          />
+        </div>
+        <div class="webring">
+          <a href="https://webring.dinhe.net/prev/https://v8v88v8v88.com/"
+            >Previous</a
+          >
+          <a href="https://webring.dinhe.net/">Webring!</a>
+          <a href="https://webring.dinhe.net/next/https://v8v88v8v88.com/"
+            >Next</a
+          >
+        </div>
+        <div class="copyright">
+          🄯 Copyleft 2024
+          <a href="https://github.com/V8V88V8V88">V8V88V8V88</a>. All Rights
+          Reserved.
+        </div>
+      </div>
+    </footer>
+    <script
+      src="https://kit.fontawesome.com/133988a847.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="/js/script.js"></script>
+  </body>
 </html>
