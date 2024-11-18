@@ -7,15 +7,25 @@
         <link rel="stylesheet" href="/css/styles.css" />
         <link rel="icon" type="image/png" href="/images/favicon.ico" />
         <style>
-:root {
+            :root {
     /* Light mode variables */
+    --background: #f5f5f7;
+    --text: #1d1d1f;
+    --text-secondary: #6e6e73;
+    --card-bg: #ffffff;
+    --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --card-hover-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    --icon-color: #1d1d1f;
+}
 
+body.dark-mode {
     --background: #000000;
     --text: #ffffff;
     --text-secondary: rgba(255, 255, 255, 0.7);
     --card-bg: rgba(255, 255, 255, 0.1);
     --card-shadow: none;
     --card-hover-shadow: none;
+    --icon-color: #ffffff;
 }
 
 body {
@@ -25,6 +35,11 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
 
 /* Hero Section */
 .about-hero {
@@ -32,6 +47,7 @@ body {
     border-radius: 24px;
     padding: 4rem 2rem;
     text-align: center;
+    margin: 2rem auto;
 }
 
 .about-hero h1 {
@@ -82,8 +98,7 @@ body {
 
 .skill-icon {
     font-size: 2rem;
-    color: var(--text);
-    margin-bottom: 1.5rem;
+    color: var(--icon-color);
 }
 
 .skill-title {
@@ -125,8 +140,7 @@ body {
 
 .work-icon {
     font-size: 2rem;
-    color: var(--text);
-    margin-bottom: 1.5rem;
+    color: var(--icon-color);
 }
 
 .work-title {
