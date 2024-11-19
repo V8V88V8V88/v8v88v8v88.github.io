@@ -6,222 +6,248 @@
         <title>V8V88V8V88 - About</title>
         <link rel="stylesheet" href="/css/styles.css" />
         <link rel="icon" type="image/png" href="/images/favicon.ico" />
-        <style>
-            :root {
-    /* Light mode variables */
-    --background: #f5f5f7;
-    --text: #1d1d1f;
-    --text-secondary: #6e6e73;
-    --card-bg: #ffffff;
-    --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    --card-hover-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    --icon-color: #1d1d1f;
-}
-
-body.dark-mode {
-    --background: #000000;
-    --text: #ffffff;
-    --text-secondary: rgba(255, 255, 255, 0.7);
-    --card-bg: rgba(255, 255, 255, 0.1);
-    --card-shadow: none;
-    --card-hover-shadow: none;
-    --icon-color: #ffffff;
-}
-
-body {
-    background-color: var(--background);
-    color: var(--text);
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-}
-
-main {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
-}
-
-/* Hero Section */
-.about-hero {
-    background: linear-gradient(135deg, #b44fdb 0%, #4f7bdb 50%, #4fdbdb 100%);
-    border-radius: 24px;
-    padding: 4rem 2rem;
-    text-align: center;
-    margin: 2rem auto;
-}
-
-.about-hero h1 {
-    font-size: 3.5rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    color: #ffffff;
-}
-
-.about-hero p {
-    font-size: 1.125rem;
-    color: rgba(255, 255, 255, 0.9);
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-/* Section Titles */
-.section-title {
-    font-size: 2.5rem;
-    font-weight: 600;
-    text-align: center;
-    color: var(--text);
-    margin: 6rem 0 3rem;
-}
-
-/* What I Do Section */
-.skill-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-    margin: 0 auto;
-    max-width: 1200px;
-}
-
-.skill-item {
-    background-color: var(--card-bg);
-    border-radius: 16px;
-    padding: 2rem;
-    text-align: center;
-    transition: all 0.3s ease;
-    box-shadow: var(--card-shadow);
-}
-
-.skill-item:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--card-hover-shadow);
-}
-
-.skill-icon {
-    font-size: 2rem;
-    color: var(--icon-color);
-}
-
-.skill-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 0.75rem;
-}
-
-.skill-description {
-    font-size: 0.875rem;
-    color: var(--text-secondary);
-    line-height: 1.5;
-    margin: 0;
-}
-
-/* How I Work Section */
-.work-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-    margin: 3rem auto;
-    max-width: 1200px;
-}
-
-.work-item {
-    text-align: center;
-    background-color: var(--card-bg);
-    border-radius: 16px;
-    padding: 2rem;
-    box-shadow: var(--card-shadow);
-    transition: all 0.3s ease;
-}
-
-.work-item:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--card-hover-shadow);
-}
-
-.work-icon {
-    font-size: 2rem;
-    color: var(--icon-color);
-}
-
-.work-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 0.75rem;
-}
-
-.work-description {
-    font-size: 0.875rem;
-    color: var(--text-secondary);
-    line-height: 1.5;
-    margin: 0;
-}
-
-/* CTA Section */
-.cta-section {
-    text-align: center;
-    margin: 4rem 0;
-    padding: 2rem;
-    background-color: var(--card-bg);
-    border-radius: 24px;
-    box-shadow: var(--card-shadow);
-}
-
-.cta-section p {
-    color: var(--text);
-    margin-bottom: 1.5rem;
-}
-
-.get-in-touch {
-    display: inline-block;
-    background-color: #0071e3;
-    color: #ffffff;
-    padding: 0.75rem 2rem;
-    border-radius: 100px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.2s ease;
-}
-
-.get-in-touch:hover {
-    background-color: #0077ED;
-    transform: translateY(-2px);
-}
-
-/* Responsive Design */
-@media (max-width: 1024px) {
-    .skill-grid,
-    .work-grid {
-        grid-template-columns: repeat(2, 1fr);
-        padding: 0 1rem;
-    }
-}
-
-@media (max-width: 768px) {
-    .about-hero h1 {
-        font-size: 2.5rem;
-    }
-    
-    .section-title {
-        font-size: 2rem;
-    }
-}
-
-@media (max-width: 640px) {
-    .skill-grid,
-    .work-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    main {
-        padding: 1rem;
-    }
-    
-    .about-hero {
-        padding: 3rem 1.5rem;
-    }
-}
-        </style>
+        <style>/* Hero Section - Base (Dark Mode) */
+            .about-hero {
+                background: linear-gradient(135deg, #b44fdb 0%, #4f7bdb 50%, #4fdbdb 100%);
+                border-radius: 24px;
+                padding: 4rem 2rem;
+                text-align: center;
+                margin: 2rem auto;
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .about-hero h1 {
+                font-size: 3.5rem;
+                font-weight: 700;
+                margin-bottom: 1rem;
+                color: #ffffff;
+                position: relative;
+                z-index: 2;
+            }
+            
+            .about-hero p {
+                font-size: 1.125rem;
+                color: rgba(255, 255, 255, 0.9);
+                max-width: 600px;
+                margin: 0 auto;
+                position: relative;
+                z-index: 2;
+            }
+            
+            /* Section Titles - Dark Mode */
+            .section-title {
+                font-size: 2.5rem;
+                font-weight: 600;
+                text-align: center;
+                color: #ffffff;
+                margin: 6rem 0 3rem;
+            }
+            
+            /* What I Do Section - Dark Mode */
+            .skill-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1.5rem;
+                margin: 0 auto;
+                max-width: 1200px;
+                padding: 0 1rem;
+            }
+            
+            .skill-item {
+                background-color: #1c1c1e;
+                border-radius: 16px;
+                padding: 2rem;
+                text-align: center;
+                transition: all 0.3s ease;
+            }
+            
+            .skill-item:hover {
+                transform: translateY(-5px);
+                background-color: #2c2c2e;
+            }
+            
+            .skill-icon {
+                font-size: 2rem;
+                color: #ffffff;
+                margin-bottom: 1rem;
+            }
+            
+            .skill-title {
+                font-size: 1.25rem;
+                font-weight: 600;
+                color: #ffffff;
+                margin-bottom: 0.75rem;
+            }
+            
+            .skill-description {
+                font-size: 0.875rem;
+                color: rgba(255, 255, 255, 0.7);
+                line-height: 1.5;
+                margin: 0;
+            }
+            
+            /* How I Work Section - Dark Mode */
+            .work-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 2rem;
+                margin: 3rem auto;
+                max-width: 1200px;
+                padding: 0 1rem;
+            }
+            
+            .work-item {
+                text-align: center;
+                background-color: #1c1c1e;
+                border-radius: 16px;
+                padding: 2rem;
+                transition: all 0.3s ease;
+            }
+            
+            .work-item:hover {
+                transform: translateY(-5px);
+                background-color: #2c2c2e;
+            }
+            
+            .work-icon {
+                font-size: 2rem;
+                color: #ffffff;
+                margin-bottom: 1rem;
+            }
+            
+            .work-title {
+                font-size: 1.25rem;
+                font-weight: 600;
+                color: #ffffff;
+                margin-bottom: 0.75rem;
+            }
+            
+            .work-description {
+                font-size: 0.875rem;
+                color: rgba(255, 255, 255, 0.7);
+                line-height: 1.5;
+                margin: 0;
+            }
+            
+            /* CTA Section - Dark Mode */
+            .cta-section {
+                text-align: center;
+                margin: 4rem auto;
+                padding: 2rem;
+                background-color: #1c1c1e;
+                border-radius: 24px;
+                max-width: 1200px;
+            }
+            
+            .cta-section p {
+                color: #ffffff;
+                margin-bottom: 1.5rem;
+                font-size: 1.125rem;
+            }
+            
+            .get-in-touch {
+                display: inline-block;
+                background-color: #0071e3;
+                color: #ffffff;
+                padding: 0.75rem 2rem;
+                border-radius: 100px;
+                text-decoration: none;
+                font-weight: 600;
+                transition: all 0.2s ease;
+            }
+            
+            .get-in-touch:hover {
+                background-color: #0077ED;
+                transform: translateY(-2px);
+            }
+            
+            /* Light Mode Styles */
+            body.light-mode .section-title {
+                color: #1d1d1f;
+            }
+            
+            body.light-mode .skill-item {
+                background-color: #ffffff;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            }
+            
+            body.light-mode .skill-item:hover {
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                background-color: #f5f5f7;
+            }
+            
+            body.light-mode .skill-icon {
+                color: #1d1d1f;
+            }
+            
+            body.light-mode .skill-title {
+                color: #1d1d1f;
+            }
+            
+            body.light-mode .skill-description {
+                color: #6e6e73;
+            }
+            
+            body.light-mode .work-item {
+                background-color: #ffffff;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            }
+            
+            body.light-mode .work-item:hover {
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                background-color: #f5f5f7;
+            }
+            
+            body.light-mode .work-icon {
+                color: #1d1d1f;
+            }
+            
+            body.light-mode .work-title {
+                color: #1d1d1f;
+            }
+            
+            body.light-mode .work-description {
+                color: #6e6e73;
+            }
+            
+            body.light-mode .cta-section {
+                background-color: #ffffff;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            }
+            
+            body.light-mode .cta-section p {
+                color: #1d1d1f;
+            }
+            
+            /* Responsive Design */
+            @media (max-width: 1024px) {
+                .skill-grid,
+                .work-grid {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+            }
+            
+            @media (max-width: 768px) {
+                .about-hero h1 {
+                    font-size: 2.5rem;
+                }
+                
+                .section-title {
+                    font-size: 2rem;
+                }
+            }
+            
+            @media (max-width: 640px) {
+                .skill-grid,
+                .work-grid {
+                    grid-template-columns: 1fr;
+                }
+                
+                .about-hero {
+                    padding: 3rem 1.5rem;
+                }
+            }</style>
     </head>
     <body>
         <header>
