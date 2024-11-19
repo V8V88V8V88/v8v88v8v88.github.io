@@ -6,108 +6,81 @@
         <title>V8V88V8V88 - Contact</title>
         <link rel="stylesheet" href="/css/styles.css" />
         <link rel="icon" type="image/png" href="/images/favicon.ico" />
-        <style>
-    
-/* Base styles */
-:root {
-    --background: #f5f5f7;
-    --text: #1d1d1f;
-    --text-secondary: #6e6e73;
-    --card-bg: #ffffff;
-    --card-hover: rgba(0, 0, 0, 0.05);
-    --link-color: #0071e3;
-}
-
-body.dark-mode {
-    --background: #000000;
-    --text: #ffffff;
-    --text-secondary: rgba(255, 255, 255, 0.7);
-    --card-bg: rgba(255, 255, 255, 0.1);
-    --card-hover: rgba(255, 255, 255, 0.15);
-    --link-color: #0095ff;
-}
-
-body {
-    background-color: var(--background);
-    color: var(--text);
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-}
-
-/* Hero Section */
-.contact-hero {
-    position: relative;
-    min-height: 40vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 4rem 2rem;
-    margin: 2rem auto;
-    border-radius: 24px;
-    background: linear-gradient(135deg, #b44fdb 0%, #4f7bdb 50%, #4fdbdb 100%);
-}
-
-.contact-hero h1 {
-    font-size: 3.5rem;
-    font-weight: 700;
-    color: #ffffff;
-    margin-bottom: 1rem;
-    z-index: 2;
-}
-
-.contact-hero p {
-    font-size: 1.125rem;
-    color: rgba(255, 255, 255, 0.9);
-    max-width: 600px;
-    margin: 0 auto;
-    z-index: 2;
-}
-
-/* Terminal */
-.terminal {
-    position: relative;
-    width: 90%;
-    max-width: 800px;
-    margin: 2rem auto -4rem;
-    background-color: #1d1d1f;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-}
-
-.terminal-header {
-    background-color: #2d2d2d;
-    padding: 0.75rem 1rem;
-    display: flex;
-    align-items: center;
-}
-
-.terminal-buttons {
-    display: flex;
-    gap: 6px;
-}
-
-.terminal-button {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-}
-
-.terminal-button.red { background-color: #ff5f56; }
-.terminal-button.yellow { background-color: #ffbd2e; }
-.terminal-button.green { background-color: #27c93f; }
-
-.terminal-content {
-    padding: 1rem;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    font-size: 0.9rem;
-    line-height: 1.4;
-    color: #00ff00;
-}
-
-.contact-grid {
+        <style>/* Hero Section - Dark Mode Base */
+            .contact-hero {
+                position: relative;
+                min-height: 40vh;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                padding: 4rem 2rem;
+                margin: 2rem auto;
+                border-radius: 24px;
+                background: linear-gradient(135deg, #b44fdb 0%, #4f7bdb 50%, #4fdbdb 100%);
+            }
+            
+            .contact-hero h1 {
+                font-size: 3.5rem;
+                font-weight: 700;
+                color: #ffffff;
+                margin-bottom: 1rem;
+                z-index: 2;
+            }
+            
+            .contact-hero p {
+                font-size: 1.125rem;
+                color: rgba(255, 255, 255, 0.9);
+                max-width: 600px;
+                margin: 0 auto;
+                z-index: 2;
+            }
+            
+            /* Terminal - Consistent across themes */
+            .terminal {
+                position: relative;
+                width: 90%;
+                max-width: 800px;
+                margin: 2rem auto -4rem;
+                background-color: #1d1d1f;
+                border-radius: 12px;
+                overflow: hidden;
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            }
+            
+            .terminal-header {
+                background-color: #2d2d2d;
+                padding: 0.75rem 1rem;
+                display: flex;
+                align-items: center;
+            }
+            
+            .terminal-buttons {
+                display: flex;
+                gap: 6px;
+            }
+            
+            .terminal-button {
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+            }
+            
+            .terminal-button.red { background-color: #ff5f56; }
+            .terminal-button.yellow { background-color: #ffbd2e; }
+            .terminal-button.green { background-color: #27c93f; }
+            
+            .terminal-content {
+                padding: 1rem;
+                font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+                font-size: 0.9rem;
+                line-height: 1.4;
+                color: #00ff00;
+            }
+            
+            /* Contact Grid - Dark Mode Base */
+            .contact-grid {
                 width: 100%;
                 max-width: 1200px;
                 margin: 0 auto;
@@ -117,7 +90,7 @@ body {
                 gap: 2rem;
                 place-items: stretch;
             }
-    
+            
             .contact-card {
                 width: 100%;
                 height: 100%;
@@ -135,39 +108,40 @@ body {
                 flex-direction: column;
                 justify-content: space-between;
             }
-    
+            
             .contact-card:hover {
                 transform: translateY(-5px);
                 box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
             }
-    
+            
             .contact-icon {
                 font-size: 3rem;
                 margin-bottom: 1.5rem;
                 transition: transform 0.3s ease;
+                color: #ffffff;
             }
-    
+            
             .contact-card:hover .contact-icon {
                 transform: scale(1.1);
             }
-    
+            
             .contact-card h3 {
                 font-size: 1.5rem;
                 margin-bottom: 1rem;
-                color: #fff;
+                color: #ffffff;
             }
-    
+            
             .contact-card p {
                 font-size: 1rem;
                 margin-bottom: 1.5rem;
                 color: rgba(255, 255, 255, 0.7);
             }
-    
+            
             .contact-card a {
                 display: inline-block;
                 padding: 0.8rem 1.5rem;
                 background-color: rgba(255, 255, 255, 0.1);
-                color: #fff;
+                color: #ffffff;
                 text-decoration: none;
                 border-radius: 30px;
                 transition: all 0.3s ease;
@@ -176,40 +150,42 @@ body {
                 border: 1px solid rgba(255, 255, 255, 0.1);
                 font-weight: 500;
             }
-    
+            
             .contact-card a:hover {
                 background-color: rgba(255, 255, 255, 0.2);
                 transform: translateY(-2px);
             }
-    
-            /* Light theme styles */
-            body.light-mode {
-                background-color: #f5f5f7;
-                color: #333;
-            }
-    
+            
+            /* Light Mode Overrides */
             body.light-mode .contact-card {
-                background: rgba(255, 255, 255, 0.9);
-                box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+                background: #ffffff;
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+                border: 1px solid rgba(0, 0, 0, 0.1);
             }
-    
+            
+            body.light-mode .contact-icon {
+                color: #1d1d1f;
+            }
+            
             body.light-mode .contact-card h3 {
-                color: #333;
+                color: #1d1d1f;
             }
-    
+            
             body.light-mode .contact-card p {
-                color: rgba(0, 0, 0, 0.7);
+                color: #6e6e73;
             }
-    
+            
             body.light-mode .contact-card a {
-                background-color: rgba(0, 0, 0, 0.05);
-                color: #3b82f6;
+                background-color: #f5f5f7;
+                color: #0071e3;
+                border: 1px solid rgba(0, 0, 0, 0.1);
             }
-    
+            
             body.light-mode .contact-card a:hover {
-                background-color: rgba(0, 0, 0, 0.1);
+                background-color: #0071e3;
+                color: #ffffff;
             }
-    
+            
             /* Media Queries */
             @media (max-width: 768px) {
                 .contact-grid {
@@ -230,7 +206,7 @@ body {
                     width: 95%;
                 }
             }
-    
+            
             @media (max-width: 480px) {
                 .contact-card {
                     padding: 1.5rem;
@@ -239,8 +215,7 @@ body {
                 .contact-hero h1 {
                     font-size: 2.5rem;
                 }
-            }
-        </style>
+            }</style>
 
     </head>
 
