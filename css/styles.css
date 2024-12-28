@@ -539,19 +539,6 @@ body.light-mode .intro-text p {
     position: relative;
 }
 
-.hover-text {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    color: transparent;
-    background-image: linear-gradient(45deg, #ff6ec7, #7986cb, #44d3d2);
-    background-clip: text;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
 .vaibhav-hover:hover .hover-text {
     opacity: 1;
 }
