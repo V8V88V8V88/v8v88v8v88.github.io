@@ -535,13 +535,6 @@ body.light-mode .intro-text p {
     margin-bottom: 0;
 }
 
-.vaibhav-hover {
-    position: relative;
-}
-
-.vaibhav-hover:hover .hover-text {
-    opacity: 1;
-}
 
 @media (width <=767px) {
     .nav-menu {
