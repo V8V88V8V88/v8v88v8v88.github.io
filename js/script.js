@@ -27,6 +27,7 @@ const vaibhavHover = document.querySelector(".vaibhav-hover");
 const hoverText = vaibhavHover ? vaibhavHover.dataset.text : "";
 
 if (vaibhavHover) {
+  vaibhavHover.textContent = "Vaibhav";
   vaibhavHover.addEventListener("mouseenter", () => {
     vaibhavHover.textContent = hoverText;
   });
