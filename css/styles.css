@@ -180,25 +180,26 @@ body.light-mode .hero p {
 
 .projects {
     position: relative;
-    padding: 2.5rem;
-    border-radius: 24px;
-    background-color: rgba(32, 32, 32, 0.6);
+    padding: 2rem;
+    border-radius: 20px;
+    background-color: rgba(18, 18, 18, 0.6);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     transition: all 0.3s ease;
     border: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 2rem 0;
 }
 
 body.light-mode .projects {
-    background-color: rgb(0 0 0 / 5%);
+    background-color: rgba(255, 255, 255, 0.6);
     border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .projects h2 {
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 600;
-    margin-bottom: 2rem;
-    padding-left: 1rem;
+    margin-bottom: 1.5rem;
+    padding-left: 0.5rem;
 }
 
 .projects-container {
@@ -206,7 +207,7 @@ body.light-mode .projects {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1rem 0;
+    padding: 0.5rem 0;
 }
 
 .projects ul {
@@ -218,7 +219,7 @@ body.light-mode .projects {
     -ms-overflow-style: none;
     list-style-type: none;
     padding: 0;
-    gap: 2rem;
+    gap: 1.5rem;
 }
 
 .projects ul::-webkit-scrollbar {
@@ -229,29 +230,29 @@ body.light-mode .projects {
     flex: 0 0 auto;
     scroll-snap-align: start;
     width: 100%;
-    max-width: 600px;
+    max-width: 500px;
 }
 
 .project-item {
     background-color: rgba(28, 28, 28, 0.8);
-    border-radius: 20px;
+    border-radius: 16px;
     overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 body.light-mode .project-item {
-    background-color: rgb(0 0 0 / 10%);
+    background-color: rgba(255, 255, 255, 0.8);
     border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .project-item:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
 }
 
 body.light-mode .project-item:hover {
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
 }
 
 .project-item a {
@@ -259,7 +260,7 @@ body.light-mode .project-item:hover {
     flex-direction: column;
     color: #fff;
     text-decoration: none;
-    padding: 1.5rem;
+    padding: 1rem;
 }
 
 body.light-mode .project-item a {
@@ -268,10 +269,10 @@ body.light-mode .project-item a {
 
 .project-item img {
     width: 100%;
-    height: 320px;
+    height: 260px;
     object-fit: cover;
-    border-radius: 12px;
-    margin-bottom: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
     border: 1px solid rgba(255, 255, 255, 0.1);
     transition: all 0.3s ease;
 }
@@ -282,7 +283,6 @@ body.light-mode .project-item img {
 
 .project-item:hover img {
     transform: scale(1.02);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
 .project-details {
@@ -290,16 +290,16 @@ body.light-mode .project-item img {
 }
 
 .project-details h3 {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: 600;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
     line-height: 1.3;
 }
 
 .project-details p {
-    font-size: 1rem;
+    font-size: 0.9rem;
     color: rgba(255, 255, 255, 0.7);
-    line-height: 1.6;
+    line-height: 1.5;
 }
 
 body.light-mode .project-details p {
@@ -310,8 +310,8 @@ body.light-mode .project-details p {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 48px;
-    height: 48px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     background-color: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
@@ -322,28 +322,32 @@ body.light-mode .project-details p {
     cursor: pointer;
     transition: all 0.3s ease;
     z-index: 10;
+    color: rgba(255, 255, 255, 0.7);
 }
 
 body.light-mode .arrow {
     background-color: rgba(255, 255, 255, 0.8);
     border: 1px solid rgba(0, 0, 0, 0.1);
+    color: rgba(0, 0, 0, 0.7);
 }
 
 .arrow:hover {
     background-color: rgba(255, 255, 255, 0.2);
     transform: translateY(-50%) scale(1.1);
+    color: rgba(255, 255, 255, 0.9);
 }
 
 body.light-mode .arrow:hover {
     background-color: rgba(255, 255, 255, 1);
+    color: rgba(0, 0, 0, 0.9);
 }
 
 .arrow.left {
-    left: 1rem;
+    left: 0.5rem;
 }
 
 .arrow.right {
-    right: 1rem;
+    right: 0.5rem;
 }
 
 @media (max-width: 768px) {
@@ -352,25 +356,25 @@ body.light-mode .arrow:hover {
     }
 
     .projects h2 {
-        font-size: 2rem;
-        margin-bottom: 1.5rem;
+        font-size: 1.75rem;
+        margin-bottom: 1rem;
     }
 
     .project-item img {
-        height: 240px;
+        height: 200px;
     }
 
     .project-details h3 {
-        font-size: 1.25rem;
+        font-size: 1.1rem;
     }
 
     .project-details p {
-        font-size: 0.9rem;
+        font-size: 0.875rem;
     }
 
     .arrow {
-        width: 40px;
-        height: 40px;
+        width: 36px;
+        height: 36px;
     }
 }
 
@@ -380,36 +384,12 @@ body.light-mode .arrow:hover {
     }
 
     .project-item img {
-        height: 200px;
+        height: 180px;
     }
 
     .arrow {
         display: none;
     }
-}
-
-.arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 1.5rem;
-    color: #aaa;
-    cursor: pointer;
-    z-index: 1;
-    transition: color 0.3s ease;
-    padding: 0.8rem;
-}
-
-body.light-mode .arrow {
-    color: #555;
-}
-
-.arrow.left {
-    left: 0;
-}
-
-.arrow.right {
-    right: 0;
 }
 
 .posts ul {
