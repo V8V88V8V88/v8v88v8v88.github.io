@@ -653,6 +653,9 @@ body.light-mode .mode-switch-label {
     .posts h2{
         font-size: 2rem;
     }
+    .posts h3{
+        font-size: 1rem;
+    }
     .contact h2{
         font-size: 2rem;
     }
