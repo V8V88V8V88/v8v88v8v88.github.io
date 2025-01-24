@@ -88,8 +88,20 @@
             max-width: 600px;
             margin: 0 auto;
         }
+        
+        @media (max-width: 768px) {
+            .hero {
+                padding: 3rem 1rem;
+            }
 
-        /* Light mode styles */
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+        }
         body.light-mode .hero::before {
             background: linear-gradient(135deg, 
                 rgba(245, 245, 247, 0.8) 0%,
