@@ -4,6 +4,10 @@
     padding: 0;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family:
         "SF Pro Display",
@@ -115,6 +119,37 @@ footer {
 
 body.light-mode footer {
     background-color: rgb(0 0 0 / 10%);
+}
+
+.resume-button {
+    display: inline-block;
+    background-color: rgba(255, 255, 255, 0.1); 
+    color: white; 
+    padding: 12px 24px; 
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 500; 
+    font-size: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2); 
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease; 
+    margin-top: 20px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.resume-button:hover {
+    background-color: rgba(255, 255, 255, 0.2); 
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); 
+}
+
+.about {
+    background-color: rgba(0, 0, 0, 0.5); 
+    padding: 20px; 
+    border-radius: 16px; 
+    border: 1px solid rgba(255, 255, 255, 0.1); 
+    margin: 20px 0; 
 }
 
 h1,
