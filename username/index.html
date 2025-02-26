@@ -1,165 +1,232 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>V8V88V8V88 - Home</title>
- <link rel="stylesheet" href="/css/styles.css">
- <link rel="icon" type="image/png" href="/images/favicon.ico">
- <header>
-  <nav>
-      <div class="logo">V8V88V8V88</div>
-      <div class="nav-right">
-          <div class="mode-toggle">
-              <input type="checkbox" id="mode-switch" class="mode-switch">
-              <label for="mode-switch" class="mode-switch-label"></label>
-          </div>
-          <button class="menu-toggle" aria-label="Toggle menu">
-              <span></span>
-              <span></span>
-              <span></span>
-          </button>
-      </div>
-      <ul class="nav-menu">
-          <li><a href="/" aria-current="page">Home</a></li>
-          <li><a href="/about/">About</a></li>
-          <li><a href="/projects/">Projects</a></li>
-          <li><a href="/posts/">Posts</a></li>
-          <li><a href="/contact/">Contact</a></li>
-      </ul>
-  </nav>
-</header>
-<main class="article-container">
-    <article>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V8V88V8V88</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        :root {
+            --primary-color: #000;
+            --secondary-color: #fff;
+            --accent-color: #888;
+            --transition: all 0.3s ease;
+            --spacing: 2rem;
+            --border-radius: 8px;
+            --font-sans: -apple-system, BlinkMacSystemFont, "San Francisco", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            line-height: 1.6;
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: var(--spacing);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 2.5rem 0 1.5rem;
+            letter-spacing: -0.5px;
+        }
+        
+        p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .lead {
+            font-size: 1.2rem;
+            line-height: 1.5;
+            margin-bottom: 2rem;
+        }
+        
+        strong {
+            font-weight: 600;
+        }
+        
+        em {
+            font-style: italic;
+            opacity: 0.9;
+        }
+        
+        .section-divider {
+            border: none;
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.1);
+            margin: 3rem 0;
+        }
+        
+        blockquote {
+            border-left: 2px solid rgba(255, 255, 255, 0.2);
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+        }
+        
+        blockquote footer {
+            margin-top: 1rem;
+            text-align: right;
+            font-style: normal;
+            opacity: 0.7;
+        }
+        
+        .postscript {
+            margin-top: 3rem;
+            font-size: 0.9rem;
+            opacity: 0.7;
+            font-style: italic;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">V8V88V8V88</div>
+            <div class="nav-right">
+                <div class="mode-toggle">
+                    <input type="checkbox" id="mode-switch" class="mode-switch">
+                    <label for="mode-switch" class="mode-switch-label"></label>
+                </div>
+                <button class="menu-toggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/" aria-current="page">Home</a></li>
+                <li><a href="/about/">About</a></li>
+                <li><a href="/projects/">Projects</a></li>
+                <li><a href="/posts/">Posts</a></li>
+                <li><a href="/contact/">Contact</a></li>
+            </ul>
+        </nav>
+      </header>
+    
+    <main>
         <h1>Why "v8v88v8v88"? Because the World Told Me To</h1>
         
         <p class="lead">Let's get one thing straight: usernames are bullshit. You mash letters and numbers until something sticks, and pray it doesn't scream "I'm 14 and this is deep." But <strong>v8v88v8v88</strong>? It's different. It's not a username - it's a trapdoor. Step through, and I'll tell you why.</p>
-
+        
         <section>
             <h2>The Anatomy of V8</h2>
             <p>The "V" is my flag. <strong>Vaibhav</strong>. My name, my curse, the first letter I scribbled on every textbook when I was too bored to care. The "8"? That's where fate laughs. It's my lucky number, sure, but mostly it's the math of laziness: <em>Vaibhav</em> starts with V, I was born on the 8th, and bam - <strong>V8</strong>. No magic, no manifesto. Just convenience with a side of destiny.</p>
         </section>
-
+        
         <hr class="section-divider">
-
+        
         <section>
             <h2>The Rhythm of Repetition</h2>
             <p>Here's the ugly truth: I stole the rhythm. My old teacher used <strong>d7d77d7d77</strong> like a bad pop-song hook. I hated it. Then I loved it. Then I ripped it off. <em>v8. v88. v8. v88.</em> It's the same beat, but louder. The extra "8"? That's me screaming into the void, <em>"This one's mine."</em></p>
         </section>
-
+        
         <section>
             <h2>The Availability Hack</h2>
             <p>You know the drill. You pick a username, and Instagram says "Taken." Twitter says "Taken." Even TikTok says "Taken." But <strong>v8v88v8v88</strong>? It's always free. Always. (Except on Instagram. <em>Fuck you, Meta.</em>) It's the digital equivalent of a parking spot that's magically empty during rush hour. I don't question it. I just take it.</p>
         </section>
-
+        
         <section>
             <h2>The Beauty of Ugly</h2>
             <p>Here's the kicker: <strong>v8v88v8v88</strong> stuck because it's ugly. It's not sleek like "Vaibhav8" or edgy like "VaiTheDestroyer." It's clunky. Repetitive. A typo waiting to happen. And that's why it works. In a world of flawless usernames crafted by algorithms, mine is a hand-scrawled sticky note. It says: <em>"I'm here, I'm messy, and I don't care if you remember me."</em></p>
         </section>
-
-        <blockquote class="conclusion">
+        
+        <blockquote>
             <p>So yeah, it's just a username. But dig deeper, and it's a rebellion. Against Instagram's greed. Against the pressure to be clever. Against the idea that we need to mean something online.</p>
             <footer>- Vaibhav</footer>
         </blockquote>
-
-        <aside class="postscript">
+        
+        <div class="postscript">
             <p>P.S. The key from my grandfather's attic? Still lost. Maybe it's buried with Instagram's dignity.</p>
-        </aside>
-    </article>
-</main>
-
-<footer>
-    <div class="footer-content">
-        <div class="footer-section">
-            <h4>Quick Links</h4>
-            <ul>
-                <li><a href="/" aria-current="page">Home</a></li>
-                <li><a href="/posts/">Posts</a></li>
-                <li><a href="/projects/">Projects</a></li>
-                <li><a href="/contact/">Contact</a></li>
-                <li><a href="/about/">About</a></li>
-            </ul>
         </div>
-        <div class="footer-section">
-            <h4>Connect</h4>
-            <ul>
-                <li>
-                    <a
-                        href="https://github.com/v8v88v8v88"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        >GitHub</a
-                    >
-                </li>
-                <li>
-                    <a
-                        href="https://t.me/V8V88V8V88"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        >Telegram</a
-                    >
-                </li>
-                <li>
-                    <a
-                        href="https://www.youtube.com/c/MagicalV8"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        >YouTube</a
-                    >
-                </li>
-                <li>
-                    <a
-                        href="https://fosstodon.org/@v8v88v8v88"
-                        rel="me"
-                        target="_blank"
-                        >Mastodon</a
-                    >
-                </li>
-                <li>
-                    <a
-                        href="https://twitter.com/v8v88v8v88"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        >Twitter</a
-                    >
-                </li>
-            </ul>
+    </main>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/posts/">Posts</a></li>
+                    <li><a href="/projects/">Projects</a></li>
+                    <li><a href="/contact/">Contact</a></li>
+                    <li><a href="/about/">About</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Connect</h4>
+                <ul>
+                    <li><a href="https://github.com/v8v88v8v88" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                    <li><a href="https://t.me/V8V88V8V88" target="_blank" rel="noopener noreferrer">Telegram</a></li>
+                    <li><a href="https://www.youtube.com/c/MagicalV8" target="_blank" rel="noopener noreferrer">YouTube</a></li>
+                    <li><a href="https://fosstodon.org/@v8v88v8v88" rel="me" target="_blank">Mastodon</a></li>
+                    <li><a href="https://twitter.com/v8v88v8v88" target="_blank" rel="noopener noreferrer">Twitter</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>About V8V88V8V88</h4>
+                <p>A CSE student passionate about Linux, FOSS, and design. Exploring the intersection of technology and creativity.</p>
+            </div>
         </div>
-        <div class="footer-section">
-            <h4>About V8V88V8V88</h4>
-            <p>
-                A CSE student passionate about Linux, FOSS, and design.
-                Exploring the intersection of technology and creativity.
-            </p>
+        <div class="footer-bottom">
+            <div class="visitor-counter">visitor counter</div>
+            <div class="webring">
+                <a href="https://webring.dinhe.net/prev/https://v8v88v8v88.com/">Previous</a>
+                <a href="https://webring.dinhe.net/">Webring!</a>
+                <a href="https://webring.dinhe.net/next/https://v8v88v8v88.com/">Next</a>
+            </div>
+            <div class="copyright">🄯 Copyleft 2025 <a href="https://github.com/V8V88V8V88">V8V88V8V88</a>. All Rights Reserved.</div>
         </div>
-    </div>
-    <div class="footer-bottom">
-        <div class="visitor-counter">
-            <img
-                src="https://www.cutercounter.com/hits.php?id=hvvxpoapf&nd=6&style=37"
-                border="0"
-                alt="visitor counter"
-            />
-        </div>
-        <div class="webring">
-            <a
-                href="https://webring.dinhe.net/prev/https://v8v88v8v88.com/"
-                >Previous</a
-            >
-            <a href="https://webring.dinhe.net/">Webring!</a>
-            <a
-                href="https://webring.dinhe.net/next/https://v8v88v8v88.com/"
-                >Next</a
-            >
-        </div>
-        <div class="copyright">
-            🄯 Copyleft 2025
-            <a href="https://github.com/V8V88V8V88">V8V88V8V88</a>. All
-            Rights Reserved.
-        </div>
-    </div>
-</footer>
-<script src="https://kit.fontawesome.com/133988a847.js" crossorigin="anonymous"></script>
- <script src="/js/script.js"></script>
+    </footer>
+    
+    <script>
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            document.querySelector('.nav-menu').style.display = 
+                document.querySelector('.nav-menu').style.display === 'flex' ? 'none' : 'flex';
+        });
+        
+        document.getElementById('mode-switch').addEventListener('change', function() {
+            if (this.checked) {
+                document.documentElement.style.setProperty('--primary-color', '#fff');
+                document.documentElement.style.setProperty('--secondary-color', '#000');
+            } else {
+                document.documentElement.style.setProperty('--primary-color', '#000');
+                document.documentElement.style.setProperty('--secondary-color', '#fff');
+            }
+        });
+    </script>
 </body>
 </html>
