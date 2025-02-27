@@ -1,116 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>V8V88V8V88</title>
-    <link rel="stylesheet" href="/css/styles.css">
-    <style>
-        :root {
-            --primary-color: #000;
-            --secondary-color: #fff;
-            --accent-color: #888;
-            --transition: all 0.3s ease;
-            --spacing: 2rem;
-            --border-radius: 8px;
-            --font-sans: -apple-system, BlinkMacSystemFont, "San Francisco", "Helvetica Neue", Helvetica, Arial, sans-serif;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: var(--font-sans);
-            background-color: var(--primary-color);
-            color: var(--secondary-color);
-            line-height: 1.6;
-            font-size: 16px;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-        
-        main {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: var(--spacing);
-        }
-        
-        h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 2rem;
-            line-height: 1.2;
-            letter-spacing: -0.5px;
-        }
-        
-        h2 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin: 2.5rem 0 1.5rem;
-            letter-spacing: -0.5px;
-        }
-        
-        p {
-            margin-bottom: 1.5rem;
-        }
-        
-        .lead {
-            font-size: 1.2rem;
-            line-height: 1.5;
-            margin-bottom: 2rem;
-        }
-        
-        strong {
-            font-weight: 600;
-        }
-        
-        em {
-            font-style: italic;
-            opacity: 0.9;
-        }
-        
-        .section-divider {
-            border: none;
-            height: 1px;
-            background-color: rgba(255, 255, 255, 0.1);
-            margin: 3rem 0;
-        }
-        
-        blockquote {
-            border-left: 2px solid rgba(255, 255, 255, 0.2);
-            padding-left: 1.5rem;
-            margin: 2rem 0;
-            font-style: italic;
-        }
-        
-        blockquote footer {
-            margin-top: 1rem;
-            text-align: right;
-            font-style: normal;
-            opacity: 0.7;
-        }
-        
-        .postscript {
-            margin-top: 3rem;
-            font-size: 0.9rem;
-            opacity: 0.7;
-            font-style: italic;
-        }
-        
-        @media (max-width: 768px) {
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>V8V88V8V88</title>
+        <link rel="stylesheet" href="/css/styles.css">
+        <style>
+            :root {
+                --primary-color: #000;
+                --secondary-color: #fff;
+                --accent-color: #888;
+                --transition: all 0.3s ease;
+                --spacing: 1.5rem;
+                --border-radius: 8px;
+                --font-sans: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+            }
+            
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            
+            body {
+                font-family: var(--font-sans);
+                background-color: var(--primary-color);
+                color: var(--secondary-color);
+                line-height: 1.5;
+                font-size: 17px;
+                letter-spacing: -0.022em;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+            
+            main {
+                max-width: 680px;
+                margin: 0 auto;
+                padding: 2rem var(--spacing) 4rem;
+            }
+            
             h1 {
-                font-size: 2rem;
+                font-size: 48px;
+                font-weight: 700;
+                margin: 2rem 0 1.5rem;
+                line-height: 1.1;
+                letter-spacing: -0.028em;
             }
             
             h2 {
-                font-size: 1.5rem;
+                font-size: 32px;
+                font-weight: 600;
+                margin: 2rem 0 1rem;
+                letter-spacing: -0.024em;
+                line-height: 1.2;
             }
-        }
-    </style>
-</head>
+            
+            p {
+                margin-bottom: 1.2rem;
+            }
+            
+            .lead {
+                font-size: 21px;
+                line-height: 1.5;
+                margin-bottom: 2rem;
+                color: rgba(255, 255, 255, 0.9);
+                font-weight: 400;
+            }
+            
+            strong {
+                font-weight: 600;
+            }
+            
+            em {
+                font-style: italic;
+                color: rgba(255, 255, 255, 0.8);
+            }
+            
+            .section-divider {
+                border: none;
+                height: 1px;
+                background-color: rgba(255, 255, 255, 0.1);
+                margin: 2.5rem 0;
+            }
+            
+            section {
+                margin: 2.5rem 0;
+            }
+            
+            blockquote {
+                border-left: 2px solid rgba(255, 255, 255, 0.2);
+                padding-left: 1.5rem;
+                margin: 2rem 0;
+                font-style: italic;
+                color: rgba(255, 255, 255, 0.8);
+            }
+            
+            blockquote p {
+                font-size: 19px;
+                line-height: 1.6;
+            }
+            
+            blockquote footer {
+                margin-top: 1rem;
+                text-align: right;
+                font-style: normal;
+                font-size: 15px;
+                color: rgba(255, 255, 255, 0.6);
+            }
+            
+            .postscript {
+                margin-top: 3rem;
+                padding-top: 2rem;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                font-size: 15px;
+                color: rgba(255, 255, 255, 0.6);
+                font-style: italic;
+            }
+            
+            @media (max-width: 768px) {
+                body {
+                    font-size: 16px;
+                }
+                
+                h1 {
+                    font-size: 36px;
+                    margin: 1.5rem 0 1rem;
+                }
+                
+                h2 {
+                    font-size: 24px;
+                    margin: 1.5rem 0 0.8rem;
+                }
+                
+                .lead {
+                    font-size: 18px;
+                }
+                
+                blockquote p {
+                    font-size: 17px;
+                }
+                
+                main {
+                    padding: 1rem var(--spacing) 3rem;
+                }
+            }
+        </style>
+    </head>
 <body>
 
     <header>
