@@ -187,6 +187,25 @@ body.light-mode .resume-button:hover {
     margin: 20px 0; 
 }
 
+.about p {
+    font-size: clamp(1.1rem, 2vw, 1.3rem);
+    line-height: 1.7;
+    margin-bottom: 1.8rem;
+    color: rgba(255, 255, 255, 0.85);
+    transition: color 0.3s ease;
+}
+
+body.light-mode .about p {
+    color: rgba(0, 0, 0, 0.8);
+}
+
+@media (max-width: 768px) {
+    .about p {
+        font-size: clamp(1rem, 3vw, 1.2rem);
+        line-height: 1.6;
+    }
+}
+
 h1,
 h2,
 h3 {
