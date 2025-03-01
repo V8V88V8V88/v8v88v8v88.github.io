@@ -122,19 +122,41 @@ body.light-mode footer {
 }
 
 .resume-button {
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 16px auto;
     background-color: rgba(255, 255, 255, 0.1); 
     color: white; 
-    padding: 12px 24px; 
-    border-radius: 12px;
+    padding: 10px 20px; 
+    border-radius: 30px;
     text-decoration: none;
     font-weight: 500; 
-    font-size: 16px;
+    font-size: 15px;
     border: 1px solid rgba(255, 255, 255, 0.2); 
     backdrop-filter: blur(10px);
     transition: all 0.3s ease; 
-    margin-top: 20px; 
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: fit-content;
+    gap: 8px;
+    position: relativ;
+}
+
+.resume-button::after {
+    content: "↓";
+    display: inline-block;
+    font-size: 18px;
+    margin-left: 4px;
+    animation: bounce 1.0s infinite alternate;
+}
+
+@keyframes bounce {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(4px);
+    }
 }
 
 .resume-button:hover {
@@ -144,11 +166,24 @@ body.light-mode footer {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); 
 }
 
+body.light-mode .resume-button {
+    background-color: rgba(0, 0, 0, 0.1);
+    color: black;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+body.light-mode .resume-button:hover {
+    background-color: rgba(0, 0, 0, 0.15);
+    border-color: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
 .about {
     background-color: rgba(0, 0, 0, 0.5); 
     padding: 20px; 
     border-radius: 16px; 
-    border: 1px solid rgba(255, 255, 255, 0.1); 
+    border: 1px solid rgba(255, 255, 255, 0.2); 
     margin: 20px 0; 
 }
 
