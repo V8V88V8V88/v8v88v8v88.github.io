@@ -125,7 +125,7 @@ body.light-mode footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 16px auto;
+    margin: 16px 0;
     background-color: rgba(255, 255, 255, 0.1); 
     color: white; 
     padding: 10px 20px; 
@@ -139,7 +139,13 @@ body.light-mode footer {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     max-width: fit-content;
     gap: 8px;
-    position: relativ;
+    position: relative;
+}
+
+@media (max-width: 768px) {
+    .resume-button {
+        margin: 16px auto;
+    }
 }
 
 .resume-button::after {
