@@ -178,10 +178,18 @@
             padding: 1.5rem;
         }
 
-        .post-title {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
+        .post-title, .post-title a {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: white !important;
+    text-decoration: none;
+}
+
+.post-title a:hover {
+    color: #ddd;
+}
+
+
 
         .post-excerpt {
             font-size: 1rem;
@@ -477,5 +485,18 @@
       crossorigin="anonymous"
     ></script>
     <script src="/js/script.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+          document.querySelectorAll(".post-card").forEach(card => {
+              card.addEventListener("click", function () {
+                  const link = this.querySelector("a");
+                  if (link) {
+                      window.open(link.href, "_blank");
+                  }
+              });
+          });
+      });
+      </script>
+      
   </body>
 </html>
