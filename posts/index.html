@@ -184,13 +184,6 @@
     color: white !important;
     text-decoration: none;
 }
-
-.post-title a:hover {
-    color: #ddd;
-}
-
-
-
         .post-excerpt {
             font-size: 1rem;
             margin-bottom: 1rem;
@@ -255,6 +248,9 @@
             background-color: rgba(0, 0, 0, 0.05);
         }
 
+        body.light-mode .post-title, .post-title a {
+    color: black !important;
+}
         body.light-mode .post-excerpt {
             color: #555;
         }
@@ -270,11 +266,13 @@
 
         body.light-mode .pagination a {
             background-color: rgba(0, 0, 0, 0.1);
+            color: #000;            
         }
 
         body.light-mode .pagination a:hover {
             background-color: rgba(0, 0, 0, 0.2);
         }
+        
     </style>
 </head>
 <body>
