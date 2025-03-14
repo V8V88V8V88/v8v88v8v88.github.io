@@ -23,6 +23,20 @@
           padding: 0;
           box-sizing: border-box;
       }
+
+      .back-button {
+  display: inline-block;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: var(--font-serif);
+  margin-bottom: 16px;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  letter-spacing: 0.02em;
+}
+
+.back-button:hover {
+  color: #fff;
+}
       
       body {
           background-color: var(--primary-color);
@@ -185,6 +199,9 @@
 
 <main>
   <br><br><br><br>
+  <a href="/posts/" class="back-button">
+    ← Back to Posts
+  </a>
   <h1>The V8 Enigma:</h1><h2>A Tale of Loops, Misconceptions, and an Unclaimed Identity</h2>
 
   <p class="lead">
