@@ -7,163 +7,174 @@
     <link rel="stylesheet" href="/css/styles.css" />
     <link rel="icon" type="image/png" href="/images/favicon.ico" />
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap');
-      :root {
-          --primary-color: #000;
-          --secondary-color: #fff;
-          --accent-color: #888;
-          --transition: all 0.3s ease;
-          --spacing: 1.5rem;
-          --border-radius: 8px;
-          --font-serif: "EB Garamond", "Helvetica Neue", "Segoe UI", sans-serif;
-      }
-      
-      * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-      }
-
-      .back-button {
-  display: inline-block;
-  color: rgba(255, 255, 255, 0.7);
-  font-family: var(--font-serif);
-  margin-bottom: 16px;
-  text-decoration: none;
-  transition: color 0.2s ease;
-  letter-spacing: 0.02em;
-}
-
-.back-button:hover {
-  color: #fff;
-}
-      
-      body {
-          background-color: var(--primary-color);
-          color: var(--secondary-color);
-          letter-spacing: -0.022em;
-          -webkit-font-smoothing: antialiased;
-          -moz-osx-font-smoothing: grayscale;
-      }
-      
-      main {
-          max-width: 1000px;
-          margin: 0 auto;
-          padding: 1rem var(--spacing) 4rem;
-          font-family: var(--font-serif);
-      }
-      
-      h1 {
-          font-size: 48px;
-          font-weight: 700;
-          margin: 2rem 0 1.5rem;
-          line-height: 1.1;
-          letter-spacing: -0.028em;
-      }
-      
-      h2 {
-          font-size: 32px;
-          font-weight: 600;
-          margin: 2rem 0 1rem;
-          letter-spacing: -0.024em;
-          line-height: 1.2;
-      }
-      
-      p {
-          margin-bottom: 1.2rem;
-          font-size: 24px;
-      }
-      
-      .lead {
-          font-size: 26px;
-          line-height: 1.5;
-          margin-bottom: 2rem;
-          color: rgba(255, 255, 255, 0.9);
-          font-weight: 400;
-      }
-      
-      strong {
-          font-weight: 600;
-      }
-      
-      em {
-          font-style: italic;
-          color: rgba(255, 255, 255, 0.8);
-      }
-      
-      .section-divider {
-          border: none;
-          height: 1px;
-          background-color: rgba(255, 255, 255, 0.1);
-          margin: 2.5rem 0;
-      }
-      
-      section {
-      }
-      
-      blockquote {
-          border-left: 2px solid rgba(255, 255, 255, 0.8);
-          padding-left: 1.5rem;
-          margin: 2rem 0;
-          font-style: italic;
-          color: rgba(255, 255, 255, 0.8);
-      }
-      
-      blockquote p {
-          font-size: 22px;
-          line-height: 1.6;
-      }
-      
-      blockquote footer {
-          margin-top: 1rem;
-          text-align: right;
-          font-style: normal;
-          font-size: 15px;
-          color: rgba(255, 255, 255, 0.6);
-          
-      }
-      
-      .postscript {
-          margin-top: 3rem;
-          padding-top: 2rem;
-          border-top: 1px solid rgba(255, 255, 255, 0.1);
-          font-size: 15px;
-          color: rgba(255, 255, 255, 0.6);
-          font-style: italic;
-      }
-      
-      @media (max-width: 768px) {
-          body {
-              font-size: 16px;
-          }
-          
-          h1 {
-              font-size: 36px;
-              margin: 1.5rem 0 1rem;
-          }
-          
-          h2 {
-              font-size: 24px;
-              margin: 1.5rem 0 0.8rem;
-          }
-          
-          .lead {
-              font-size: 20px;
-          }
-
-          p {
-              font-size: 18px;
-          }
-          
-          blockquote p {
-              font-size: 17px;
-          }
-          
-          main {
-              padding: 1rem var(--spacing) 3rem;
-          }
-      }
-  </style>
+        @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400..800&display=swap');
+    
+        :root {
+            /* Color Scheme */
+            --primary-bg: #000;
+            --text-color: #fff;
+            --text-muted: rgba(255, 255, 255, 0.7);
+            --text-accent: rgba(255, 255, 255, 0.9);
+            --divider-color: rgba(255, 255, 255, 0.1);
+        
+            /* Typography */
+            --font-serif: "EB Garamond", "Helvetica Neue", "Segoe UI", sans-serif;
+            --lead-font-size: 26px;
+            --heading-font-weight: 700;
+        
+            /* Spacing & Borders */
+            --spacing: 1.5rem;
+            --border-radius: 8px;
+        
+            /* Effects */
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: var(--primary-bg);
+            color: var(--text-color);
+            letter-spacing: -0.022em;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 1rem var(--spacing) 4rem;
+            font-family: var(--font-serif);
+            font-size: 24px; /* Applied ONLY to main */
+        }
+        
+        /* Typography */
+        h1, h2 {
+            font-weight: var(--heading-font-weight);
+            line-height: 1.2;
+            letter-spacing: -0.025em;
+            font-family: var(--font-serif);
+        }
+        
+        h1 {
+            font-size: 48px;
+            margin: 2rem 0 1.5rem;
+        }
+        
+        h2 {
+            font-size: 32px;
+            margin: 2rem 0 1rem;
+        }
+        
+        p {
+            margin-bottom: 1.2rem;
+        }
+        
+        .lead {
+            font-size: var(--lead-font-size);
+            line-height: 1.5;
+            margin-bottom: 2rem;
+            color: var(--text-accent);
+        }
+        
+        strong {
+            font-weight: 600;
+        }
+        
+        em {
+            font-style: italic;
+            color: var(--text-muted);
+        }
+        
+        /* Buttons & Links */
+        .back-button {
+            display: inline-block;
+            color: var(--text-muted);
+            font-family: var(--font-serif);
+            margin-bottom: 16px;
+            text-decoration: none;
+            transition: color 0.2s ease;
+            letter-spacing: 0.02em;
+        }
+        
+        .back-button:hover {
+            color: var(--text-color);
+        }
+        
+        /* Dividers */
+        .section-divider {
+            border: none;
+            height: 1px;
+            background: var(--divider-color);
+            margin: 2.5rem 0;
+        }
+        
+        /* Blockquote */
+        blockquote {
+            border-left: 2px solid var(--text-accent);
+            padding-left: var(--spacing);
+            margin: 2rem 0;
+            font-style: italic;
+            color: var(--text-muted);
+        }
+        
+        blockquote p {
+            font-size: 22px;
+            line-height: 1.6;
+        }
+        
+        blockquote footer {
+            margin-top: 1rem;
+            text-align: right;
+            font-style: normal;
+            font-size: 15px;
+            color: var(--text-muted);
+        }
+        
+        /* Postscript */
+        .postscript {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--divider-color);
+            font-size: 15px;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            main {
+                font-size: 18px; /* Again, only for main */
+            }
+        
+            h1 {
+                font-size: 36px;
+                margin: 1.5rem 0 1rem;
+            }
+        
+            h2 {
+                font-size: 24px;
+                margin: 1.5rem 0 0.8rem;
+            }
+        
+            .lead {
+                font-size: 20px;
+            }
+        
+            p, blockquote p {
+                font-size: 18px;
+            }
+        
+            main {
+                padding: 1rem var(--spacing) 3rem;
+            }
+        }
+    </style>
+       
 </head>
 <body>
 <header>

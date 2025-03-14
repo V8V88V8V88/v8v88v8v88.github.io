@@ -485,16 +485,16 @@
     ></script>
     <script src="/js/script.js"></script>
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-          document.querySelectorAll(".post-card").forEach(card => {
-              card.addEventListener("click", function () {
-                  const link = this.querySelector("a");
-                  if (link) {
-                      window.open(link.href, "_blank");
-                  }
-              });
-          });
-      });
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".post-card").forEach(card => {
+        card.addEventListener("click", function () {
+            const link = this.querySelector("a");
+            if (link) {
+                window.location.href = link.href;
+            }
+        });
+    });
+});
       </script>
       
   </body>
