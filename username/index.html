@@ -8,34 +8,30 @@
     <link rel="icon" type="image/png" href="/images/favicon.ico" />
     <style>
         @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400..800&display=swap');
-    
+
         :root {
-            /* Color Scheme */
+
             --primary-bg: #000;
             --text-color: #fff;
             --text-muted: rgba(255, 255, 255, 0.7);
             --text-accent: rgba(255, 255, 255, 0.9);
             --divider-color: rgba(255, 255, 255, 0.1);
-        
-            /* Typography */
+
             --font-serif: "EB Garamond", "Helvetica Neue", "Segoe UI", sans-serif;
             --lead-font-size: 26px;
             --heading-font-weight: 700;
-        
-            /* Spacing & Borders */
+
             --spacing: 1.5rem;
             --border-radius: 8px;
-        
-            /* Effects */
             --transition: all 0.3s ease;
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             background: var(--primary-bg);
             color: var(--text-color);
@@ -43,54 +39,52 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
-        
+
         main {
             max-width: 1000px;
             margin: 0 auto;
             padding: 1rem var(--spacing) 4rem;
             font-family: var(--font-serif);
-            font-size: 24px; /* Applied ONLY to main */
+            font-size: 24px;
         }
-        
-        /* Typography */
+
         h1, h2 {
             font-weight: var(--heading-font-weight);
             line-height: 1.2;
             letter-spacing: -0.025em;
             font-family: var(--font-serif);
         }
-        
+
         h1 {
             font-size: 48px;
             margin: 2rem 0 1.5rem;
         }
-        
+
         h2 {
             font-size: 32px;
             margin: 2rem 0 1rem;
         }
-        
+
         p {
             margin-bottom: 1.2rem;
         }
-        
+
         .lead {
             font-size: var(--lead-font-size);
             line-height: 1.5;
             margin-bottom: 2rem;
             color: var(--text-accent);
         }
-        
+
         strong {
             font-weight: 600;
         }
-        
+
         em {
             font-style: italic;
             color: var(--text-muted);
         }
-        
-        /* Buttons & Links */
+
         .back-button {
             display: inline-block;
             color: var(--text-muted);
@@ -100,20 +94,18 @@
             transition: color 0.2s ease;
             letter-spacing: 0.02em;
         }
-        
+
         .back-button:hover {
             color: var(--text-color);
         }
-        
-        /* Dividers */
+
         .section-divider {
             border: none;
             height: 1px;
             background: var(--divider-color);
             margin: 2.5rem 0;
         }
-        
-        /* Blockquote */
+
         blockquote {
             border-left: 2px solid var(--text-accent);
             padding-left: var(--spacing);
@@ -121,12 +113,12 @@
             font-style: italic;
             color: var(--text-muted);
         }
-        
+
         blockquote p {
             font-size: 22px;
             line-height: 1.6;
         }
-        
+
         blockquote footer {
             margin-top: 1rem;
             text-align: right;
@@ -134,8 +126,7 @@
             font-size: 15px;
             color: var(--text-muted);
         }
-        
-        /* Postscript */
+
         .postscript {
             margin-top: 3rem;
             padding-top: 2rem;
@@ -144,37 +135,36 @@
             color: var(--text-muted);
             font-style: italic;
         }
-        
-        /* Responsive Styles */
+
         @media (max-width: 768px) {
             main {
-                font-size: 18px; /* Again, only for main */
+                font-size: 18px;
             }
-        
+
             h1 {
                 font-size: 36px;
                 margin: 1.5rem 0 1rem;
             }
-        
+
             h2 {
                 font-size: 24px;
                 margin: 1.5rem 0 0.8rem;
             }
-        
+
             .lead {
                 font-size: 20px;
             }
-        
+
             p, blockquote p {
                 font-size: 18px;
             }
-        
+
             main {
                 padding: 1rem var(--spacing) 3rem;
             }
         }
     </style>
-       
+
 </head>
 <body>
 <header>
@@ -314,9 +304,9 @@
   </blockquote>
 
   <div class="postscript">
-      
+
           P.S. The key from my grandfather’s attic? Still missing. Maybe it’s out there, waiting in the chaos of life—just like this story.
-      
+
   </div>
 </main>
     <footer>
@@ -425,6 +415,6 @@
           });
       });
       </script>
-      
+
   </body>
 </html>
