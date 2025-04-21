@@ -35,12 +35,22 @@ body.light-mode {
     color: #000;
 }
 
+header,
+main,
+footer,
+.resume-button,
+.arrow,
+.posts a,
+.contact-item {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
 header {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    backdrop-filter: blur(10px);
     z-index: 100;
     padding: 1rem;
     background-color: rgb(255 255 255 / 5%);
@@ -94,7 +104,6 @@ main {
     max-width: 1200px;
     margin: 0 auto;
     padding: 7rem 2rem 2rem;
-    backdrop-filter: blur(10px);
 }
 
 section {
@@ -112,7 +121,6 @@ footer {
     text-align: center;
     padding: 2rem;
     background-color: rgb(255 255 255 / 10%);
-    backdrop-filter: blur(10px);
     transition: background-color 0.3s ease;
 }
 
@@ -133,7 +141,6 @@ body.light-mode footer {
     font-weight: 500; 
     font-size: 15px;
     border: 1px solid rgba(255, 255, 255, 0.2); 
-    backdrop-filter: blur(10px);
     transition: all 0.3s ease; 
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     max-width: fit-content;
@@ -192,15 +199,31 @@ body.light-mode .resume-button:hover {
     margin: 20px 0; 
 }
 
+.about p,
+h1, h2, h3,
+p,
+a,
+.hero p,
+.posts p,
+.posts small,
+.webring a,
+.intro-text p,
+.mode-switch-label,
+.footer-section a,
+.contact-item span {
+    transition: color 0.3s ease;
+}
+
 .about p {
     font-size: clamp(1rem, 1.5vw, 1.2rem);
     line-height: 1.6;
     margin-bottom: 1.5rem;
     color: rgba(255, 255, 255, 0.85);
-    transition: color 0.3s ease;
 }
 
 body.light-mode .about p {
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
     color: rgba(0, 0, 0, 0.8);
 }
 
@@ -217,7 +240,6 @@ h3 {
     font-weight: 600;
     margin-bottom: 1.5rem;
     line-height: 1.2;
-    transition: color 0.3s ease;
 }
 
 body.light-mode h1,
@@ -240,7 +262,6 @@ h3 {
 
 p {
     margin-bottom: 1.5rem;
-    transition: color 0.3s ease;
 }
 
 body.light-mode p {
@@ -250,7 +271,6 @@ body.light-mode p {
 a {
     color: #0070c9;
     text-decoration: none;
-    transition: color 0.3s ease;
 }
 
 body.light-mode a {
@@ -265,7 +285,6 @@ body.light-mode a {
 .hero p {
     font-size: 1.4rem;
     color: #aaa;
-    transition: color 0.3s ease;
 }
 
 body.light-mode .hero p {
@@ -379,7 +398,8 @@ body.light-mode .project-item img {
     transform: scale(1.02);
 }
 
-.project-details {
+.project-details,
+.footer-section {
     padding: 0 0.5rem;
 }
 
@@ -408,7 +428,6 @@ body.light-mode .project-details p {
     height: 40px;
     border-radius: 50%;
     background-color: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
     align-items: center;
@@ -500,7 +519,6 @@ body.light-mode .arrow:hover {
     color: #fff;
     text-decoration: none;
     background-color: rgb(255 255 255 / 10%);
-    backdrop-filter: blur(10px);
     padding: 2rem;
     border-radius: 1.5rem;
     box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
@@ -526,7 +544,6 @@ body.light-mode .posts a {
 .posts p {
     margin-bottom: 0.8rem;
     color: #aaa;
-    transition: color 0.3s ease;
 }
 
 body.light-mode .posts p {
@@ -536,7 +553,6 @@ body.light-mode .posts p {
 .posts small {
     color: #666;
     font-size: 0.9rem;
-    transition: color 0.3s ease;
 }
 
 body.light-mode .posts small {
@@ -558,7 +574,6 @@ body.light-mode .posts small {
 .webring a {
     margin: 0 0.8rem;
     color: #fff;
-    transition: color 0.3s ease;
 }
 
 body.light-mode .webring a {
@@ -597,7 +612,6 @@ body.scrolling main {
 .intro-text p {
     font-size: 1.3rem;
     color: #aaa;
-    transition: color 0.3s ease;
 }
 
 body.light-mode .intro-text p {
@@ -608,8 +622,6 @@ body.light-mode .intro-text p {
     font-size: 3rem;
     margin-bottom: 0;
 }
-
-
 
 @media (width <=767px) {
     .nav-menu {
@@ -674,7 +686,6 @@ body.light-mode .mode-switch {
     margin-left: 0.5rem;
     font-size: 0.9rem;
     color: #aaa;
-    transition: color 0.3s ease;
 }
 
 body.light-mode .mode-switch-label {
@@ -741,18 +752,17 @@ body.light-mode .mode-switch-label {
     .intro-text p {
         font-size: 1.1rem;
     }
-    .about h2{
+
+    .about h2,
+    .posts h2,
+    .contact h2 {
         font-size: 2rem;
     }
-    .posts h2{
-        font-size: 2rem;
-    }
-    .posts h3{
+
+    .posts h3 {
         font-size: 1rem;
     }
-    .contact h2{
-        font-size: 2rem;
-    }
+
     .about p,
     .footer-links,
     .webring {
@@ -893,154 +903,104 @@ body.light-mode .menu-toggle span {
     }
 }
 
-header {
-    backdrop-filter: blur(20px);
-    background-color: rgb(255 255 255 / 5%);
-    border-bottom: 1px solid rgb(255 255 255 / 10%);
-    transition:
-        background-color 0.3s ease,
-        border-bottom-color 0.3s ease;
-}
-
-body.light-mode header {
-    background-color: rgb(0 0 0 / 5%);
-    border-bottom-color: rgb(0 0 0 / 10%);
-}
-
-footer {
-    text-align: center;
-    padding: 3rem 2rem 2rem;
-    background-color: rgb(255 255 255 / 10%);
-    backdrop-filter: blur(20px);
-    border-top: 1px solid rgb(255 255 255 / 10%);
-    transition: background-color 0.3s ease;
-  }
-  
-  body.light-mode footer {
-    background-color: rgb(0 0 0 / 10%);
-    border-top-color: rgb(0 0 0 / 10%);
-  }
-  
-  .footer-content {
+.footer-content {
     display: flex;
     justify-content: space-between;
     flex-wrap: nowrap; 
     max-width: 1200px;
     margin: 0 auto 2rem;
     gap: 1rem; 
-  }
-  
-  .footer-section {
+}
+
+.footer-section {
     flex: 1;
     min-width: 150px;
     margin-bottom: 1.5rem;
     text-align: left;
-    padding: 0 0.5rem;
-  }
-  
-  .footer-section h4 {
+}
+
+.footer-section h4 {
     font-size: 1.1rem;
     margin-bottom: 1rem;
     color: #fff;
-  }
-  
-  body.light-mode .footer-section h4 {
+}
+
+body.light-mode .footer-section h4 {
     color: #000;
-  }
-  
-  .footer-section ul {
+}
+
+.footer-section ul {
     list-style-type: none;
     padding: 0;
-  }
-  
-  .footer-section ul li {
+}
+
+.footer-section ul li {
     margin-bottom: 0.5rem;
-  }
-  
-  .footer-section a {
+}
+
+.footer-section a {
     color: rgb(255 255 255 / 70%);
     text-decoration: none;
-    transition: color 0.3s ease;
-  }
-  
-  body.light-mode .footer-section a {
+}
+
+body.light-mode .footer-section a {
     color: rgb(0 0 0 / 70%);
-  }
-  
-  .footer-section a:hover {
+}
+
+.footer-section a:hover {
     color: #fff;
-  }
-  
-  body.light-mode .footer-section a:hover {
+}
+
+body.light-mode .footer-section a:hover {
     color: #000;
-  }
-  
-  .footer-section p {
+}
+
+.footer-section p {
     color: rgb(255 255 255 / 70%);
     font-size: 0.9rem;
     line-height: 1.5;
-  }
-  
-  body.light-mode .footer-section p {
+}
+
+body.light-mode .footer-section p {
     color: rgb(0 0 0 / 70%);
-  }
-  
-  .footer-bottom {
+}
+
+.footer-bottom {
     border-top: 1px solid rgb(255 255 255 / 10%);
     padding-top: 1.5rem;
-  }
-  
-  body.light-mode .footer-bottom {
+}
+
+body.light-mode .footer-bottom {
     border-top-color: rgb(0 0 0 / 10%);
-  }
-  
-  .visitor-counter {
+}
+
+.visitor-counter {
     margin-bottom: 1rem;
-  }
-  
-  .webring {
+}
+
+.webring {
     margin-bottom: 1rem;
-  }
-  
-  .webring a {
-    margin: 0 0.8rem;
-    color: rgb(255 255 255 / 70%);
-    text-decoration: none;
-    transition: color 0.3s ease;
-  }
-  
-  body.light-mode .webring a {
-    color: rgb(0 0 0 / 70%);
-  }
-  
-  .webring a:hover {
-    color: #fff;
-  }
-  
-  body.light-mode .webring a:hover {
-    color: #000;
-  }
-  
-  .copyright {
+}
+
+.copyright {
     font-size: 0.9rem;
     color: rgb(255 255 255 / 50%);
-  }
-  
-  body.light-mode .copyright {
+}
+
+body.light-mode .copyright {
     color: rgb(0 0 0 / 50%);
-  }
-  
-  .copyright a {
+}
+
+.copyright a {
     color: inherit;
     text-decoration: none;
-  }
-  
-  .copyright a:hover {
-    text-decoration: underline;
-  }
-  
+}
 
-  @media (width <= 768px) {
+.copyright a:hover {
+    text-decoration: underline;
+}
+
+@media (width <= 768px) {
     .footer-content {
       flex-direction: row; 
       overflow-x: auto; 
@@ -1063,9 +1023,9 @@ footer {
     .footer-section ul li {
       margin-bottom: 0.4rem;
     }
-  }
+}
   
-  @media (width <= 480px) {
+@media (width <= 480px) {
     .footer-content {
       flex-wrap: wrap;
     }
@@ -1074,8 +1034,7 @@ footer {
       flex: 1 0 40%;
       min-width: 120px;
     }
-  }
-  
+}
   
 .contact {
     padding: 80px 0;
@@ -1119,7 +1078,6 @@ footer {
     padding: 30px 20px;
     background: rgba(255, 255, 255, 0.05);
     border-radius: 18px;
-    backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     transition: all 0.3s ease;
     overflow: hidden;
@@ -1193,7 +1151,6 @@ footer {
     font-weight: 500;
     position: relative;
     z-index: 2;
-    transition: color 0.3s ease;
   }
   
   .contact-item:hover span {
