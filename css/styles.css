@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400..800&display=swap');
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -1207,3 +1209,178 @@ body.light-mode .copyright {
       font-size: 12px;
     }
   }
+
+/* Styles specific to the username post page */
+/* Remove base styles previously intended for body */
+/* .username-post {
+    --primary-bg: #000;
+    --text-color: #fff;
+    --text-muted: rgba(255, 255, 255, 0.7);
+    --text-accent: rgba(255, 255, 255, 0.9);
+    --divider-color: rgba(255, 255, 255, 0.1);
+
+    --font-serif: "EB Garamond", "Helvetica Neue", "Segoe UI", sans-serif;
+    --lead-font-size: 26px;
+    --heading-font-weight: 700;
+
+    --spacing: 1.5rem;
+    --border-radius: 8px;
+    --transition: all 0.3s ease;
+
+    background: var(--primary-bg); 
+    color: var(--text-color); 
+    letter-spacing: -0.022em; 
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+} */
+
+main.username-post { /* Apply class to main element */
+    /* Define CSS variables specifically for this content */
+    --primary-bg-post: #000;
+    --text-color-post: #fff;
+    --text-muted-post: rgba(255, 255, 255, 0.7);
+    --text-accent-post: rgba(255, 255, 255, 0.9);
+    --divider-color-post: rgba(255, 255, 255, 0.1);
+    --font-serif-post: "EB Garamond", "Helvetica Neue", "Segoe UI", sans-serif;
+    --lead-font-size-post: 26px;
+    --heading-font-weight-post: 700;
+    --spacing-post: 1.5rem;
+
+    /* Apply styles directly to the main container */
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 7rem var(--spacing-post) 4rem; /* Use post-specific variable */
+    font-family: var(--font-serif-post);
+    font-size: 24px;
+    color: var(--text-color-post);
+    letter-spacing: -0.022em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Ensure main background doesn't interfere with global body */
+    background-color: transparent; 
+}
+
+main.username-post h1,
+main.username-post h2 { /* Update selector */
+    font-weight: var(--heading-font-weight-post);
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+    font-family: var(--font-serif-post);
+}
+
+main.username-post h1 { /* Update selector */
+    font-size: 48px;
+    margin: 2rem 0 1.5rem;
+    color: var(--text-color-post); 
+}
+
+main.username-post h2 { /* Update selector */
+    font-size: 32px;
+    margin: 2rem 0 1rem;
+    color: var(--text-color-post); 
+}
+
+main.username-post p { /* Update selector */
+    margin-bottom: 1.2rem;
+    color: var(--text-color-post); 
+}
+
+main.username-post .lead { /* Update selector */
+    font-size: var(--lead-font-size-post);
+    line-height: 1.5;
+    margin-bottom: 2rem;
+    color: var(--text-accent-post);
+}
+
+main.username-post strong { /* Update selector */
+    font-weight: 600;
+}
+
+main.username-post em { /* Update selector */
+    font-style: italic;
+    color: var(--text-muted-post);
+}
+
+main.username-post .back-button { /* Update selector */
+    display: inline-block;
+    color: var(--text-muted-post);
+    font-family: var(--font-serif-post);
+    margin-bottom: 16px;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    letter-spacing: 0.02em;
+}
+
+main.username-post .back-button:hover { /* Update selector */
+    color: var(--text-color-post);
+}
+
+main.username-post .section-divider { /* Update selector */
+    border: none;
+    height: 1px;
+    background: var(--divider-color-post);
+    margin: 2.5rem 0;
+}
+
+main.username-post blockquote { /* Update selector */
+    border-left: 2px solid var(--text-accent-post);
+    padding-left: var(--spacing-post);
+    margin: 2rem 0;
+    font-style: italic;
+    color: var(--text-muted-post);
+}
+
+main.username-post blockquote p { /* Update selector */
+    font-size: 22px;
+    line-height: 1.6;
+    color: var(--text-muted-post); /* Explicit color */
+}
+
+main.username-post blockquote footer { /* Update selector */
+    margin-top: 1rem;
+    text-align: right;
+    font-style: normal;
+    font-size: 15px;
+    color: var(--text-muted-post);
+    background-color: transparent; /* Override footer background */
+    border: none; /* Override footer border */
+    padding: 0; /* Override footer padding */
+}
+
+main.username-post .postscript { /* Update selector */
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--divider-color-post);
+    font-size: 15px;
+    color: var(--text-muted-post);
+    font-style: italic;
+}
+
+/* Media query adjustments for username post */
+@media (max-width: 768px) {
+    main.username-post { /* Update selector */
+        font-size: 18px;
+        padding: 5rem var(--spacing-post) 3rem; /* Adjust top padding for mobile */
+    }
+
+    main.username-post h1 { /* Update selector */
+        font-size: 36px;
+        margin: 1.5rem 0 1rem;
+    }
+
+    main.username-post h2 { /* Update selector */
+        font-size: 24px;
+        margin: 1.5rem 0 0.8rem;
+    }
+
+    main.username-post .lead { /* Update selector */
+        font-size: 20px;
+    }
+
+    main.username-post p,
+    main.username-post blockquote p { /* Update selector */
+        font-size: 18px;
+    }
+}
+
+/* End username post specific styles */
