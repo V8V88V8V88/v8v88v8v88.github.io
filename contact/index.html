@@ -47,7 +47,17 @@
                 padding: 4rem 2rem;
                 margin: 2rem auto;
                 border-radius: 24px;
-                background: linear-gradient(135deg, #b44fdb 0%, #4f7bdb 50%, #4fdbdb 100%);
+                /* New Background */
+                background-color: #1a1c1d; /* Dark base */
+                background-image: repeating-linear-gradient(
+                    0deg,
+                    rgba(0, 255, 0, 0.06), /* More visible GREEN lines */
+                    rgba(0, 255, 0, 0.06) 2px, /* Thicker line */
+                    transparent 2px,
+                    transparent 6px /* Adjusted spacing */
+                );
+                color: #fff;
+                animation: scanlineScroll 10s linear infinite; /* Faster animation */
             }
             
             .contact-hero h1 {
@@ -105,7 +115,7 @@
                 font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
                 font-size: 0.9rem;
                 line-height: 1.4;
-                color: #00ff00;
+                color: #1DB954; /* Changed to the vibrant green */
             }
             
             /* Contact Grid - Dark Mode Base */
@@ -129,7 +139,8 @@
                 border-radius: 20px;
                 padding: 2rem;
                 text-align: center;
-                transition: all 0.3s ease;
+                /* Refined transition for smoother feel */
+                transition: transform 0.2s ease-out, box-shadow 0.3s ease-out; 
                 transform-style: preserve-3d;
                 box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
                 border: 1px solid rgba(255, 255, 255, 0.18);
@@ -204,17 +215,35 @@
                 color: #6e6e73;
             }
             
+            /* Restore non-hover styles for light mode */
             body.light-mode .contact-card a {
-                background-color: #eeeeee;
-                color: #000;
+                background-color: #eeeeee; /* Light gray background */
+                color: #000; /* Black text */
                 border: 1px solid rgba(0, 0, 0, 0.1);
+                /* Ensure other properties like padding, radius are inherited or correct */
             }
             
             body.light-mode .contact-card a:hover {
-                background-color: #0071e3;
+                /* Use solid green color */
+                background: #1DB954; 
                 color: #ffffff;
+                border-color: rgba(0, 0, 0, 0.15); /* Keep border subtle */
+                /* transform: translateY(-2px); -- Keep existing transform if desired */
             }
             
+            body.light-mode .contact-hero {
+                /* New Light Background */
+                background-color: #f0f2f5; /* Light base */
+                background-image: repeating-linear-gradient(
+                    0deg,
+                    rgba(0, 0, 0, 0.08), /* More visible DARK lines */
+                    rgba(0, 0, 0, 0.08) 2px, /* Thicker line */
+                    transparent 2px,
+                    transparent 6px /* Adjusted spacing */
+                );
+                color: #333; /* Adjust base text color if needed */
+                /* Animation is inherited */
+            }
             /* Media Queries */
             @media (max-width: 768px) {
                 .contact-grid {
@@ -256,7 +285,18 @@
                 .contact-hero h1 {
                     font-size: 2.5rem;
                 }
-            }</style>
+            }
+
+            /* Keyframes for scanline animation */
+            @keyframes scanlineScroll {
+                0% {
+                    background-position: 0 0;
+                }
+                100% {
+                    background-position: 0 -100px; /* Adjust distance for speed */
+                }
+            }
+        </style>
 
     </head>
 

@@ -189,18 +189,24 @@ filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#2E8945", en
             
             .get-in-touch {
                 display: inline-block;
-                background-color: #0071e3;
+                /* New Gradient Background */
+                background: linear-gradient(135deg, #0f4d1f 0%, #1DB954 100%);
                 color: #ffffff;
-                padding: 0.75rem 2rem;
+                padding: 0.8rem 2.2rem; /* Slightly adjusted padding */
                 border-radius: 100px;
                 text-decoration: none;
                 font-weight: 600;
-                transition: all 0.2s ease;
+                transition: all 0.3s ease;
+                border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border */
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Add shadow */
             }
             
             .get-in-touch:hover {
-                background-color: #0077ED;
-                transform: translateY(-2px);
+                /* Shift gradient slightly or brighten */
+                background: linear-gradient(135deg, #115c24 0%, #22d964 100%); 
+                transform: translateY(-3px);
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); /* Enhance shadow */
+                border-color: rgba(255, 255, 255, 0.2);
             }
             
             /* Light Mode Styles */
@@ -269,6 +275,21 @@ filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#2E8945", en
                 color: #fff;
             }
             
+            /* Light mode styles for the button */
+            body.light-mode .get-in-touch {
+                background: #f0f0f0; /* Light gray background */
+                color: #1d1d1f; /* Dark text */
+                border-color: rgba(0, 0, 0, 0.1); /* Light border */
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+            }
+
+            body.light-mode .get-in-touch:hover {
+                background: #e8e8e8; /* Slightly darker gray on hover */
+                color: #000;
+                border-color: rgba(0, 0, 0, 0.15);
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            }
+            
             /* Responsive Design */
             @media (max-width: 1024px) {
                 .skill-grid,
@@ -311,6 +332,12 @@ filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#2E8945", en
                 .about-hero {
                     padding: 3rem 1.5rem;
                 }
+            }
+
+            /* Add bottom margin for consistent section spacing */
+            main section.section,
+            main section.work-section {
+                margin-bottom: 2rem;
             }
         </style>
     </head>
@@ -415,7 +442,7 @@ filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#2E8945", en
                 </div>
                 <div style="text-align: center;">
                     <p>Looking for a passionate coder for your part-time project? Let's connect!</p>
-                    <a href="/contact" class="cta-button">Get in Touch</a>
+                    <a href="/contact" class="get-in-touch">Get in Touch</a>
                 </div>
             </section>
         </main>
