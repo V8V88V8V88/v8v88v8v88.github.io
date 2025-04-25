@@ -160,6 +160,8 @@ body.light-mode footer {
     font-size: 18px;
     margin-left: 4px;
     animation: bounce 1.0s infinite alternate;
+    position: relative;
+    top: -1px;
 }
 
 @keyframes bounce {
