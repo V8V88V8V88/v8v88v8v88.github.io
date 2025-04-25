@@ -1878,3 +1878,76 @@ body.light-mode main.contact-page .card-button:hover {
       font-size: 12px;
     }
   }
+
+/* Light Mode adjustments for username post */
+body.light-mode main.username-post {
+    /* Keep background transparent to inherit body light mode bg */
+    color: #1d1d1f; /* Main text color for light mode */
+}
+
+body.light-mode main.username-post h1,
+body.light-mode main.username-post h2 {
+    color: #000; /* Black headings for contrast */
+}
+
+body.light-mode main.username-post p {
+    color: #1d1d1f; /* Dark gray for paragraphs */
+}
+
+body.light-mode main.username-post .lead {
+    color: #333; /* Slightly lighter dark gray for lead */
+}
+
+body.light-mode main.username-post strong {
+    color: #000; /* Ensure strong text is black */
+}
+
+body.light-mode main.username-post em {
+    color: #6e6e73; /* Muted gray for emphasis */
+}
+
+body.light-mode main.username-post a {
+    color: #007aff; /* Standard light mode link color */
+}
+
+body.light-mode main.username-post .back-button {
+    color: #6e6e73; /* Muted gray for back button */
+}
+
+body.light-mode main.username-post .back-button:hover {
+    color: #000; /* Black on hover */
+}
+
+body.light-mode main.username-post .section-divider {
+    background: rgba(0, 0, 0, 0.1); /* Light divider color */
+}
+
+body.light-mode main.username-post blockquote {
+    border-left-color: #d1d1d1; /* Slightly darker gray border */
+    background-color: transparent; /* Ensure no conflicting background */
+    margin-left: 0; /* Adjust margin if needed due to parent padding */
+    margin-right: 0;
+}
+
+body.light-mode main.username-post blockquote p {
+    color: #6e6e73; /* Explicitly set paragraph color inside blockquote */
+}
+
+body.light-mode main.username-post blockquote footer {
+    color: #6e6e73; /* Muted gray footer */
+}
+
+body.light-mode main.username-post .postscript {
+    color: #6e6e73; /* Muted gray postscript */
+    border-top-color: rgba(0, 0, 0, 0.1); /* Light border color */
+}
+
+/* Add visual separation for sections in light mode */
+body.light-mode main.username-post section {
+    background-color: #f8f8f8; /* Subtle background for separation */
+    /* Padding and border-radius are inherited from the global 'body.light-mode section' rule */
+    margin-bottom: 2rem; /* Ensure space between sections */
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04); /* Subtle shadow */
+}
+
+/* End username post specific styles */
