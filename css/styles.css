@@ -727,7 +727,11 @@ body.light-mode .mode-switch-label {
     }
 
     main {
-        padding: 3rem 0.5rem 0.5rem;
+        padding: 5rem 1rem 1rem;
+    }
+
+    section {
+        padding: 1rem;
     }
 
     .hero h1 {
@@ -747,21 +751,25 @@ body.light-mode .mode-switch-label {
     }
 
     .intro h2 {
-        font-size: 2.2rem;
-    }
-
-    .intro-text p {
-        font-size: 1.1rem;
-    }
-
-    .about h2,
-    .posts h2,
-    .contact h2 {
         font-size: 2rem;
     }
 
-    .posts h3 {
+    .intro-text p {
         font-size: 1rem;
+    }
+
+    h2,
+    .about h2,
+    .posts h2,
+    .projects h2,
+    .contact h2 {
+        font-size: 1.75rem;
+    }
+
+    h3,
+    .posts h3,
+    .project-details h3 {
+        font-size: 1.3rem;
     }
 
     .about p,
@@ -774,6 +782,39 @@ body.light-mode .mode-switch-label {
     .footer-links a,
     .webring a {
         margin: 0.5rem;
+    }
+}
+
+@media (width <= 480px) {
+    main {
+        padding: 4rem 0.5rem 0.5rem;
+    }
+
+    h2,
+    .about h2,
+    .posts h2,
+    .projects h2,
+    .contact h2 {
+        font-size: 1.6rem;
+    }
+
+    h3,
+    .posts h3,
+    .project-details h3 {
+        font-size: 1.2rem;
+    }
+    
+    .footer-content {
+        flex-wrap: wrap;
+    }
+
+    .footer-section {
+        flex: 1 0 40%;
+        min-width: 120px;
+    }
+
+    .arrow {
+        display: none;
     }
 }
 
@@ -1802,7 +1843,7 @@ body.light-mode main.contact-page .card-button:hover {
   }
   
   .contact-item i {
-    font-size: 36px;
+    font-size: 28px; /* Reduce icon size on mobile */
     margin-bottom: 15px;
     position: relative;
     z-index: 2;
@@ -1819,7 +1860,7 @@ body.light-mode main.contact-page .card-button:hover {
   }
   
   .contact-item span {
-    font-size: 16px;
+    font-size: 14px; /* Reduce text size on mobile */
     font-weight: 500;
     position: relative;
     z-index: 2;
@@ -1974,6 +2015,19 @@ body.light-mode main > section.hero {
 /* Adjust .contact section specifics if needed */
 body.light-mode main > section.contact {
     /* Maybe adjust padding or margin if the new background affects layout */
+}
+
+/* End username post specific styles */
+
+/* Further mobile adjustments for username post */
+@media (max-width: 480px) {
+    main.username-post .lead {
+        font-size: 18px; /* Further reduce lead size */
+    }
+    main.username-post p,
+    main.username-post blockquote p {
+        font-size: 16px; /* Further reduce paragraph/blockquote size */
+    }
 }
 
 /* End username post specific styles */

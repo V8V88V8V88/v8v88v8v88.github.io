@@ -292,7 +292,7 @@ body.light-mode .post-title a {
 }
 
 body.light-mode .post-excerpt {
-    color: #333; /* Darker gray for better contrast */
+    color: #333g; /* Darker gray for better contrast */
 }
 
 body.light-mode .post-meta {
@@ -324,6 +324,28 @@ body.light-mode .pagination a:hover {
     }
     100% {
         background-position: 60px 60px, 90px 90px;
+    }
+}
+
+/* Mobile specific adjustments for post cards */
+@media (max-width: 480px) {
+    .post-meta,
+    .post-date,
+    .post-read-time {
+        font-size: 0.8rem; /* Reduce meta font size */
+    }
+
+    .post-tag {
+        font-size: 0.7rem; /* Reduce tag font size */
+        padding: 0.15rem 0.4rem;
+    }
+
+    .post-card {
+        border-radius: 0.75rem; /* Slightly smaller radius */
+    }
+
+    .posts-grid {
+        gap: 1.5rem;
     }
 }
 
