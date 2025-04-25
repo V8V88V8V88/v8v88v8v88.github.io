@@ -1012,10 +1012,27 @@ body.light-mode .footer-section p {
 .footer-bottom {
     border-top: 1px solid rgb(255 255 255 / 10%);
     padding-top: 1.5rem;
+    /* Flexbox for positioning */
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Vertically align items */
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+    gap: 1rem; /* Add gap for wrapped items */
+}
+
+.footer-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center items horizontally */
+    gap: 1rem; /* Space between counter, webring, copyright */
+    flex-grow: 1; /* Allow this section to take available space */
 }
 
 body.light-mode .footer-bottom {
-    border-top-color: rgb(0 0 0 / 10%);
+    border-radius: 16px; /* Make it thinner */
+    padding: 2px; /* Reduced padding */
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    margin-bottom: 0; /* Remove bottom margin if aligned */
 }
 
 .visitor-counter {

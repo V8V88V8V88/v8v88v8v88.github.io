@@ -127,3 +127,39 @@ document.addEventListener('keydown', function(e) {
     konamiIndex = 0; // Reset if wrong key pressed
   }
 });
+
+// --- Theme Switching Logic ---
+const body = document.body;
+const navbarSwitch = document.getElementById('mode-switch');
+
+function setTheme(theme) {
+  if (theme === 'light') {
+    body.classList.add('light-mode');
+    body.classList.remove('dark-mode');
+    localStorage.setItem('theme', 'light');
+  } else {
+    body.classList.remove('light-mode');
+    body.classList.add('dark-mode');
+    localStorage.setItem('theme', 'dark');
+  }
+  updateSwitchesVisualState(theme);
+}
+
+function updateSwitchesVisualState(theme) {
+  // Update Navbar Switch
+  if (navbarSwitch) {
+    navbarSwitch.checked = (theme === 'dark');
+  }
+}
+
+// Event Listener for Navbar Switch
+if (navbarSwitch) {
+  navbarSwitch.addEventListener('change', function () {
+    const newTheme = this.checked ? 'dark' : 'light';
+    setTheme(newTheme);
+  });
+}
+
+// Initial Theme Load
+const savedTheme = localStorage.getItem('theme') || 'dark'; // Default to dark
+setTheme(savedTheme); // Apply theme and sync NAVBAR switch on load
