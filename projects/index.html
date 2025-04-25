@@ -225,7 +225,7 @@ body.light-mode .project-grid {
 }
 
 body.light-mode .project-card {
-    background: rgba(245, 245, 247, 0.8);
+    background: #fafafa; /* Neutral light gray background */
     border-color: rgba(0, 0, 0, 0.1);
 }
 
@@ -434,7 +434,7 @@ body.light-mode .code-preview {
 
         /* Light mode styles */
         body.light-mode .about-hero {
-            background: linear-gradient(120deg, #d4e9d7, #f5e6d3);
+            background: linear-gradient(120deg, #bde0c6, #ffe8c9); /* More distinct light colors */
         }
 
         body.light-mode .about-hero::before {
@@ -457,12 +457,13 @@ body.light-mode .code-preview {
         }
 
         body.light-mode .tech-item {
-            background: rgba(255,255,255,0.5);
+            background: rgba(255,255,255,0.95);
             color: #000;
         }
 
         body.light-mode .tech-item:hover {
-            background: rgba(255,255,255,0.7);
+            background: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         /* Add light mode style for terminal text */
@@ -545,6 +546,7 @@ body.light-mode .code-preview {
                     <img
                         src="/images/piracyindex.webp"
                         alt="The Piracy Index Website"
+                        loading="lazy"
                     />
                     <h3>The Piracy Index Website</h3>
                     <p>
@@ -594,6 +596,7 @@ body.light-mode .code-preview {
                     <img
                         src="/images/telegram.webp"
                         alt="Telegram - Libadwaita Theme"
+                        loading="lazy"
                     />
                     <h3>Telegram - Libadwaita Theme</h3>
                     <p>
@@ -641,6 +644,7 @@ body.light-mode .code-preview {
                     <img
                         src="/images/facerecognition.webp"
                         alt="Face Recognition using CV2"
+                        loading="lazy"
                     />
                     <h3>Face Recognition using CV2</h3>
                     <p>
@@ -691,7 +695,7 @@ body.light-mode .code-preview {
                 </div>
 
                 <div class="project-card">
-                    <img src="/images/vfetch.webp" alt="vfetch" />
+                    <img src="/images/vfetch.webp" alt="vfetch" loading="lazy" />
                     <h3>vfetch</h3>
                     <p>
                         A minimalist, optimized system information tool designed
@@ -825,8 +829,9 @@ body.light-mode .code-preview {
         <script
             src="https://kit.fontawesome.com/133988a847.js"
             crossorigin="anonymous"
+            defer
         ></script>
-        <script src="/js/script.js"></script>
+        <script src="/js/script.js" defer></script>
         <script>
             function toggleCodePreview(id) {
                 const codePreview = document.getElementById(id);

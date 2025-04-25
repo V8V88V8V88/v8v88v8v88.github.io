@@ -134,22 +134,37 @@
 
 /* Light Mode Styles for Posts Page Hero */
 body.light-mode .hero::before {
+    /* Subtler, natural warm gradient */
     background: linear-gradient(135deg, 
-        rgba(250, 248, 245, 0.8) 0%, /* Warmer light gray */
-        rgba(252, 250, 248, 0.8) 50%, /* Warmer off-white */
-        rgba(250, 248, 245, 0.8) 100% /* Warmer light gray */
+        #fbf9f8 0%, /* Very light warm gray */
+        #fefefe 100% /* Off-white */
     );
+    opacity: 1; 
 }
 
-/* Add border to light mode hero */
+/* Adjust border and REMOVE noise texture from light mode hero */
 body.light-mode .hero {
-    border: 1px solid #dcd6d0; /* Light warm border */
+    border: 1px solid #d9d7d5; /* Slightly cooler border */
+    /* REMOVE background-image property for noise */
+    background-color: transparent; /* Ensure ::before gradient shows through */
 }
 
-/* Define the grid pattern for light mode - SET TO NONE */
+/* Reinstate light mode grid pattern on ::after */
 body.light-mode .hero::after {
-    background: none; /* Remove grid pattern in light mode */
-    /* opacity: 1;  -- No longer needed */
+    background: 
+        linear-gradient(45deg, 
+            rgba(0, 0, 0, 0.04) 25%, /* Faint dark lines */
+            transparent 25%, 
+            transparent 75%, 
+            rgba(0, 0, 0, 0.04) 75%
+        ),
+        linear-gradient(45deg, 
+            rgba(0, 0, 0, 0.04) 25%, 
+            transparent 25%, 
+            transparent 75%, 
+            rgba(0, 0, 0, 0.04) 75%
+        );
+    opacity: 1; 
 }
 
 body.light-mode .hero h1 {
@@ -212,7 +227,7 @@ body.light-mode .hero h1 {
 .post-excerpt {
     font-size: 1rem;
     margin-bottom: 1rem;
-    color: #aaa; /* Explicit color */
+    color: rgba(255, 255, 255, 0.7); /* Lighter color for dark mode contrast */
     line-height: 1.5; /* Adjust line height */
 }
 
@@ -292,7 +307,7 @@ body.light-mode .post-title a {
 }
 
 body.light-mode .post-excerpt {
-    color: #333g; /* Darker gray for better contrast */
+    color: #333; /* Darker gray for better contrast - FIXED TYPO */
 }
 
 body.light-mode .post-meta {
@@ -347,11 +362,6 @@ body.light-mode .pagination a:hover {
     .posts-grid {
         gap: 1.5rem;
     }
-}
-
-/* Add light mode style for terminal text */
-body.light-mode .terminal-content {
-    color: #1d1d1f; /* Dark text for light mode */
 }
 
     </style>
@@ -561,8 +571,9 @@ body.light-mode .terminal-content {
     <script
       src="https://kit.fontawesome.com/133988a847.js"
       crossorigin="anonymous"
+      defer
     ></script>
-    <script src="/js/script.js"></script>
+    <script src="/js/script.js" defer></script>
     <script>
 document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll(".post-card").forEach(card => {
