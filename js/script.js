@@ -101,3 +101,7 @@ window.addEventListener("scroll", function () {
   // Always apply blur to header
   header.style.backdropFilter = "blur(20px)";
 });
+
+// Easter Egg Console Log
+console.log("%cGreetings, fellow traveler! %cLooks like you've found the console. Curious, aren't we? 😉", "color: #1DB954; font-weight: bold;", "color: inherit;");
+console.log("%c                 .--.      \n                / o__o \     \n               |   <>   |    \n               \  .--.  /    \n                ------    ", "color: #a8ff60"); // Using the softer terminal green for ASCII
