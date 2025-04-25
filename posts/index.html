@@ -61,6 +61,7 @@
     z-index: 1;
 }
 
+/* Add back the ::after element for the static grid */
 .hero::after {
     content: "";
     position: absolute;
@@ -70,22 +71,22 @@
     bottom: 0;
     background: 
         linear-gradient(45deg, 
-            rgba(68, 71, 90, 0.1) 25%, 
+            rgba(68, 71, 90, 0.15) 25%, /* Dark mode grid line color */
             transparent 25%, 
             transparent 75%, 
-            rgba(68, 71, 90, 0.1) 75%
+            rgba(68, 71, 90, 0.15) 75% 
         ),
         linear-gradient(45deg, 
-            rgba(68, 71, 90, 0.1) 25%, 
+            rgba(68, 71, 90, 0.15) 25%, 
             transparent 25%, 
             transparent 75%, 
-            rgba(68, 71, 90, 0.1) 75%
+            rgba(68, 71, 90, 0.15) 75% 
         );
     background-size: 60px 60px;
     background-position: 0 0, 30px 30px;
-    opacity: 0.5;
+    opacity: 0.6; /* Dark mode grid opacity */
     z-index: 2;
-    animation: gradientMove 15s linear infinite; /* Keyframes defined globally */
+    /* REMOVED animation property */
 }
 
 .hero-content {
@@ -134,38 +135,29 @@
 /* Light Mode Styles for Posts Page Hero */
 body.light-mode .hero::before {
     background: linear-gradient(135deg, 
-        rgba(245, 245, 247, 0.8) 0%,
-        rgba(250, 250, 252, 0.8) 50%,
-        rgba(245, 245, 247, 0.8) 100%
+        rgba(250, 248, 245, 0.8) 0%, /* Warmer light gray */
+        rgba(252, 250, 248, 0.8) 50%, /* Warmer off-white */
+        rgba(250, 248, 245, 0.8) 100% /* Warmer light gray */
     );
 }
 
+/* Add border to light mode hero */
+body.light-mode .hero {
+    border: 1px solid #dcd6d0; /* Light warm border */
+}
+
+/* Define the grid pattern for light mode - SET TO NONE */
 body.light-mode .hero::after {
-    background: 
-        linear-gradient(45deg, 
-            rgba(200, 200, 200, 0.1) 25%, 
-            transparent 25%, 
-            transparent 75%, 
-            rgba(200, 200, 200, 0.1) 75%
-        ),
-        linear-gradient(45deg, 
-            rgba(200, 200, 200, 0.1) 25%, 
-            transparent 25%, 
-            transparent 75%, 
-            rgba(200, 200, 200, 0.1) 75%
-        );
+    background: none; /* Remove grid pattern in light mode */
+    /* opacity: 1;  -- No longer needed */
 }
 
 body.light-mode .hero h1 {
-    background: linear-gradient(to right, #333, #000);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
-}
-
-body.light-mode .hero p {
-    color: rgba(0, 0, 0, 0.7); /* Explicit color override */
+    color: #1d1d1f; /* Set solid dark color */
+    background: none; /* Override base gradient */
+    -webkit-background-clip: initial; /* Reset clipping */
+    background-clip: initial; /* Reset clipping */
+    -webkit-text-fill-color: initial; /* Reset text fill */
 }
 
 /* Post Grid Styles */
@@ -300,7 +292,7 @@ body.light-mode .post-title a {
 }
 
 body.light-mode .post-excerpt {
-    color: #555;
+    color: #333; /* Darker gray for better contrast */
 }
 
 body.light-mode .post-meta {
