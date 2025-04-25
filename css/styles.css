@@ -2033,3 +2033,62 @@ body.light-mode main > section.contact {
 }
 
 /* End username post specific styles */
+
+/* Webring Styles */
+.webring-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.webring-button {
+    display: inline-block;
+    padding: 0.4rem 0.8rem;
+    background-color: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    border-radius: 8px; /* Less rounded than main buttons */
+    transition: all 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    font-size: 0.85rem;
+}
+
+.webring-button:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.25);
+    color: #fff;
+    transform: translateY(-1px);
+}
+
+.webring-central {
+    color: rgba(255, 255, 255, 0.6); /* Deemphasize middle link */
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s ease;
+}
+
+.webring-central:hover {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Light Mode Webring Styles */
+body.light-mode .webring-button {
+    background-color: rgba(0, 0, 0, 0.05);
+    color: rgba(0, 0, 0, 0.7);
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+body.light-mode .webring-button:hover {
+    background-color: rgba(0, 0, 0, 0.08);
+    border-color: rgba(0, 0, 0, 0.15);
+    color: #000;
+}
+
+body.light-mode .webring-central {
+    color: rgba(0, 0, 0, 0.6);
+}
+
+body.light-mode .webring-central:hover {
+    color: rgba(0, 0, 0, 0.9);
+}
