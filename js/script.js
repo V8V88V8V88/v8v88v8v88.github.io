@@ -105,3 +105,25 @@ window.addEventListener("scroll", function () {
 // Easter Egg Console Log
 console.log("%cGreetings, fellow traveler! %cLooks like you've found the console. Curious, aren't we? 😉", "color: #1DB954; font-weight: bold;", "color: inherit;");
 console.log("%c                 .--.      \n                / o__o \     \n               |   <>   |    \n               \  .--.  /    \n                ------    ", "color: #a8ff60"); // Using the softer terminal green for ASCII
+
+// Konami Code Easter Egg
+const konamiCode = [
+  'ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown',
+  'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight',
+  'b', 'a'
+];
+let konamiIndex = 0;
+document.addEventListener('keydown', function(e) {
+  if (e.key.toLowerCase() === konamiCode[konamiIndex].toLowerCase()) {
+    konamiIndex++;
+    if (konamiIndex === konamiCode.length) {
+      console.log("%cKONAMI! %cAchievement Unlocked: Secret Handshake 😉", "color: #ff5f56; font-weight: bold;", "color: inherit;");
+      // Optional: Add a visual effect here too?
+      // document.body.style.filter = 'invert(1)';
+      // setTimeout(() => { document.body.style.filter = 'none'; }, 1000);
+      konamiIndex = 0; // Reset
+    }
+  } else {
+    konamiIndex = 0; // Reset if wrong key pressed
+  }
+});
