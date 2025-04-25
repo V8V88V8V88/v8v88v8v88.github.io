@@ -1951,3 +1951,28 @@ body.light-mode main.username-post section {
 }
 
 /* End username post specific styles */
+
+/* Add visual separation for specific sections on homepage in light mode */
+body.light-mode main > section.intro,
+body.light-mode main > section.about,
+body.light-mode main > section.projects,
+body.light-mode main > section.posts,
+body.light-mode main > section.contact {
+    background-color: #f8f8f8; /* Subtle background */
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04); /* Subtle shadow */
+    /* Padding and border-radius are handled by existing rules */
+    margin-bottom: 2rem; /* Ensure consistent spacing */
+}
+
+/* Ensure hero section doesn't get this background if not desired */
+body.light-mode main > section.hero {
+    background-color: transparent; /* Or specific hero styles */
+    box-shadow: none;
+}
+
+/* Adjust .contact section specifics if needed */
+body.light-mode main > section.contact {
+    /* Maybe adjust padding or margin if the new background affects layout */
+}
+
+/* End username post specific styles */

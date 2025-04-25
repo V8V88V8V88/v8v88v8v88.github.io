@@ -71,8 +71,8 @@ if (projectsContainer) {
   leftArrow.classList.add("arrow", "left");
   rightArrow.classList.add("arrow", "right");
 
-  leftArrow.innerHTML = "&#8249;";
-  rightArrow.innerHTML = "&#8250;";
+  leftArrow.innerHTML = '<i class="fas fa-chevron-left"></i>';
+  rightArrow.innerHTML = '<i class="fas fa-chevron-right"></i>';
 
   document.querySelector(".projects").prepend(leftArrow);
   document.querySelector(".projects").append(rightArrow);
