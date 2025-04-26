@@ -1012,27 +1012,26 @@ body.light-mode .footer-section p {
 .footer-bottom {
     border-top: 1px solid rgb(255 255 255 / 10%);
     padding-top: 1.5rem;
-    /* Flexbox for positioning */
     display: flex;
-    justify-content: space-between;
-    align-items: center; /* Vertically align items */
-    flex-wrap: wrap; /* Allow wrapping on small screens */
-    gap: 1rem; /* Add gap for wrapped items */
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    position: relative;
 }
 
 .footer-left {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center items horizontally */
-    gap: 1rem; /* Space between counter, webring, copyright */
-    flex-grow: 1; /* Allow this section to take available space */
+    align-items: center;
+    gap: 1rem;
 }
 
 body.light-mode .footer-bottom {
-    border-radius: 16px; /* Make it thinner */
-    padding: 2px; /* Reduced padding */
+    border-radius: 16px;
+    padding: 2px;
     border: 1px solid rgba(255, 255, 255, 0.15);
-    margin-bottom: 0; /* Remove bottom margin if aligned */
+    margin-bottom: 0;
 }
 
 .visitor-counter {
@@ -2060,22 +2059,24 @@ body.light-mode main > section.contact {
 }
 
 .webring-button {
-    display: inline-block;
-    padding: 0.4rem 0.8rem;
-    background-color: rgba(255, 255, 255, 0.08);
-    color: rgba(255, 255, 255, 0.8);
+    /* Make it look like plain text */
+    display: inline; /* Revert from inline-block */
+    padding: 0; /* Remove padding */
+    background-color: transparent; /* Remove background */
+    color: rgb(255 255 255 / 70%); /* Match footer link color */
     text-decoration: none;
-    border-radius: 8px; /* Less rounded than main buttons */
-    transition: all 0.2s ease;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    font-size: 0.85rem;
+    border-radius: 0; /* Remove rounding */
+    transition: color 0.2s ease; /* Transition color only */
+    border: none; /* Remove border */
+    font-size: 0.9rem; /* Match central link size */
 }
 
 .webring-button:hover {
-    background-color: rgba(255, 255, 255, 0.15);
-    border-color: rgba(255, 255, 255, 0.25);
-    color: #fff;
-    transform: translateY(-1px);
+    background-color: transparent; /* Ensure no background on hover */
+    border-color: transparent; /* Ensure no border on hover */
+    color: #fff; /* Brighter color on hover */
+    /* transform: translateY(-1px); -- Remove transform */
+    text-decoration: underline; /* Add underline on hover */
 }
 
 .webring-central {
@@ -2091,15 +2092,15 @@ body.light-mode main > section.contact {
 
 /* Light Mode Webring Styles */
 body.light-mode .webring-button {
-    background-color: rgba(0, 0, 0, 0.05);
-    color: rgba(0, 0, 0, 0.7);
-    border-color: rgba(0, 0, 0, 0.1);
+    /* background-color: rgba(0, 0, 0, 0.05); -- Remove */
+    color: rgb(0 0 0 / 70%); /* Match light footer link color */
+    /* border-color: rgba(0, 0, 0, 0.1); -- Remove */
 }
 
 body.light-mode .webring-button:hover {
-    background-color: rgba(0, 0, 0, 0.08);
-    border-color: rgba(0, 0, 0, 0.15);
-    color: #000;
+    /* background-color: rgba(0, 0, 0, 0.08); -- Remove */
+    /* border-color: rgba(0, 0, 0, 0.15); -- Remove */
+    color: #000; /* Darker color on hover */
 }
 
 body.light-mode .webring-central {
@@ -2108,4 +2109,18 @@ body.light-mode .webring-central {
 
 body.light-mode .webring-central:hover {
     color: rgba(0, 0, 0, 0.9);
+}
+
+/* Footer Theme Switcher Pill Styles */
+.theme-switcher-pill {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: inline-flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 2px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
 }
