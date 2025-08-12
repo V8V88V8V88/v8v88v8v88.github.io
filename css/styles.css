@@ -247,8 +247,13 @@ body.light-mode .resume-button:hover {
 }
 
 body.light-mode .about p {
-    line-height: 1.2;
-    color: rgba(0, 0, 0, 0.8);
+    line-height: 1.6; 
+    color: #1d1d1f; 
+}
+
+body.light-mode .about {
+    background-color: #f8f8f8;
+    border: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 /* Hero Section */
