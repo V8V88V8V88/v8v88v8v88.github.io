@@ -37,30 +37,7 @@ if (vaibhavHover) {
   });
 }
 
-// Light/Dark Mode Switch
-const modeSwitch = document.querySelector(".mode-switch");
-
-if (modeSwitch) {
-  modeSwitch.addEventListener("change", function () {
-    console.log("Switching theme");
-    const body = document.querySelector("body");
-    body.classList.toggle("light-mode");
-    body.classList.toggle("dark-mode");
-    // Save the mode in localStorage
-    if (body.classList.contains("light-mode")) {
-      localStorage.setItem("theme", "light");
-    } else {
-      localStorage.setItem("theme", "dark");
-    }
-  });
-
-  // Load the saved theme
-  const savedTheme = localStorage.getItem("theme");
-  if (savedTheme === "light") {
-    document.querySelector("body").classList.add("light-mode");
-    document.querySelector("body").classList.remove("dark-mode");
-  }
-}
+// (Theme handling consolidated below)
 
 // Arrows for project container
 const projectsContainer = document.querySelector(".projects ul");
@@ -103,7 +80,7 @@ window.addEventListener("scroll", function () {
 });
 
 // Easter Egg Console Log
-console.log("%cGreetings, fellow traveler! %cLooks like you've found the console. Curious, aren't we? 😉", "color: #1DB954; font-weight: bold;", "color: inherit;");
+console.log("%cGreetings, fellow traveler! %cLooks like you've found the console. Curious, aren't we? ", "color: #1DB954; font-weight: bold;", "color: inherit;");
 console.log("%c                 .--.      \n                / o__o \     \n               |   <>   |    \n               \  .--.  /    \n                ------    ", "color: #a8ff60"); // Using the softer terminal green for ASCII
 
 // Konami Code Easter Egg

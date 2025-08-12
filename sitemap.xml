@@ -1,36 +1,27 @@
-<?xml version="1.0" encoding="UTF-8"?> 
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"> 
-<url>
-  <loc>https://v8v88v8v88.com/</loc>
-  <lastmod>2024-07-29</lastmod>
-</url>
-<url>
-  <loc>https://v8v88v8v88.com/posts/</loc>
-  <lastmod>2024-07-29</lastmod>
-</url>
-<url>
-  <loc>https://v8v88v8v88.com/projects/</loc>
-  <lastmod>2024-07-29</lastmod>
-</url>
-<url>
-  <loc>https://v8v88v8v88.com/contact/</loc>
-  <lastmod>2024-07-29</lastmod>
-</url>
-<url>
-  <loc>https://v8v88v8v88.com/about/</loc>
-  <lastmod>2024-07-29</lastmod>
-</url>
-<url>
-  <loc>https://v8v88v8v88.com/username/</loc>
-  <lastmod>2024-07-29</lastmod>
-</url>
-<url>
-  <loc>http://v8v88v8v88.com/first/</loc>
-</url>
-<url>
-  <loc>http://v8v88v8v88.com/${site.url}</loc>
-</url>
-<url>
-  <loc>https://v8v88v8v88.com</loc>
-</url>
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://v8v88v8v88.com/</loc>
+    <lastmod>2025-08-12</lastmod>
+  </url>
+  <url>
+    <loc>https://v8v88v8v88.com/posts/</loc>
+    <lastmod>2025-08-12</lastmod>
+  </url>
+  <url>
+    <loc>https://v8v88v8v88.com/projects/</loc>
+    <lastmod>2025-08-12</lastmod>
+  </url>
+  <url>
+    <loc>https://v8v88v8v88.com/contact/</loc>
+    <lastmod>2025-08-12</lastmod>
+  </url>
+  <url>
+    <loc>https://v8v88v8v88.com/about/</loc>
+    <lastmod>2025-08-12</lastmod>
+  </url>
+  <url>
+    <loc>https://v8v88v8v88.com/username/</loc>
+    <lastmod>2025-08-12</lastmod>
+  </url>
 </urlset>
