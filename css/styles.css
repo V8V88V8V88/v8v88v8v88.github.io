@@ -1315,14 +1315,6 @@ main.username-post blockquote footer {
     padding: 0;
 }
 
-main.username-post .postscript {
-    margin-top: 3rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--divider-color-post);
-    font-size: 15px;
-    color: var(--text-muted-post);
-    font-style: italic;
-}
 
 /* Light Mode adjustments for username post */
 body.light-mode main.username-post {
@@ -1381,10 +1373,6 @@ body.light-mode main.username-post blockquote footer {
     color: #6e6e73;
 }
 
-body.light-mode main.username-post .postscript {
-    color: #6e6e73;
-    border-top-color: rgba(0, 0, 0, 0.1);
-}
 
 body.light-mode main.username-post section {
     background-color: #f8f8f8;

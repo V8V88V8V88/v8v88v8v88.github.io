@@ -1,26 +1,70 @@
-// Scroll Effect
+// Scroll Effect (single handler, rely on CSS for most effects)
 window.addEventListener("scroll", function () {
-  const header = document.querySelector("header");
-  const main = document.querySelector("main");
-
   if (window.pageYOffset > 0) {
     document.body.classList.add("scrolling");
-    header.style.backdropFilter = "blur(20px)";
-    main.style.backdropFilter = "blur(20px)";
   } else {
     document.body.classList.remove("scrolling");
-    header.style.backdropFilter = "none";
-    main.style.backdropFilter = "blur(10px)";
   }
 });
 
-// Mobile Menu Toggle
+// Mobile Menu Toggle + a11y
 const menuToggle = document.querySelector(".menu-toggle");
 const navMenu = document.querySelector(".nav-menu");
 
-menuToggle.addEventListener("click", () => {
-  navMenu.classList.toggle("active");
-});
+function setMenuState(open) {
+  if (!menuToggle || !navMenu) return;
+  navMenu.classList.toggle("active", open);
+  menuToggle.classList.toggle("active", open);
+  menuToggle.setAttribute("aria-expanded", String(open));
+  navMenu.setAttribute("aria-hidden", String(!open));
+  if (open) {
+    // focus first link
+    const firstLink = navMenu.querySelector('a, button, [tabindex="0"]');
+    (firstLink || menuToggle).focus({ preventScroll: true });
+  } else {
+    menuToggle.focus({ preventScroll: true });
+  }
+}
+
+if (menuToggle && navMenu) {
+  menuToggle.setAttribute("aria-expanded", "false");
+  navMenu.setAttribute("aria-hidden", "true");
+
+  menuToggle.addEventListener("click", () => {
+    const open = !navMenu.classList.contains("active");
+    setMenuState(open);
+  });
+
+  // Close on Esc and outside click
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && navMenu.classList.contains("active")) {
+      setMenuState(false);
+    }
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!navMenu.classList.contains("active")) return;
+    if (!navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+      setMenuState(false);
+    }
+  });
+
+  // Basic focus containment when menu is open
+  document.addEventListener("keydown", (e) => {
+    if (!navMenu.classList.contains("active") || e.key !== "Tab") return;
+    const focusables = navMenu.querySelectorAll('a, button, [tabindex="0"]');
+    if (!focusables.length) return;
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  });
+}
 
 // "Hi, I'm Vaibhav" Hover Effect
 const vaibhavHover = document.querySelector(".vaibhav-hover");
@@ -63,20 +107,12 @@ if (projectsContainer) {
   });
 }
 
-// Updated scroll effect
-window.addEventListener("scroll", function () {
+// Ensure header has a subtle blur once (CSS handles the rest)
+document.addEventListener("DOMContentLoaded", () => {
   const header = document.querySelector("header");
-  const main = document.querySelector("main");
-
-  if (window.pageYOffset > 0) {
-    document.body.classList.add("scrolling");
-    main.style.backdropFilter = "blur(20px)";
-  } else {
-    document.body.classList.remove("scrolling");
-    main.style.backdropFilter = "blur(10px)";
+  if (header && header.style) {
+    header.style.backdropFilter = "blur(10px)";
   }
-  // Always apply blur to header
-  header.style.backdropFilter = "blur(20px)";
 });
 
 // Easter Egg Console Log
