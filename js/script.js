@@ -10,13 +10,22 @@ window.addEventListener("scroll", function () {
 // Mobile Menu Toggle + a11y
 const menuToggle = document.querySelector(".menu-toggle");
 const navMenu = document.querySelector(".nav-menu");
+const mobileMql = window.matchMedia('(max-width: 767px)');
 
 function setMenuState(open) {
   if (!menuToggle || !navMenu) return;
   navMenu.classList.toggle("active", open);
   menuToggle.classList.toggle("active", open);
   menuToggle.setAttribute("aria-expanded", String(open));
-  navMenu.setAttribute("aria-hidden", String(!open));
+  // Only manage aria-hidden/inert on mobile layout
+  if (mobileMql.matches) {
+    navMenu.setAttribute("aria-hidden", String(!open));
+    if (open) navMenu.removeAttribute("inert");
+    else navMenu.setAttribute("inert", "");
+  } else {
+    navMenu.setAttribute("aria-hidden", "false");
+    navMenu.removeAttribute("inert");
+  }
   if (open) {
     // focus first link
     const firstLink = navMenu.querySelector('a, button, [tabindex="0"]');
@@ -26,9 +35,24 @@ function setMenuState(open) {
   }
 }
 
+function applyInertForLayout() {
+  if (!navMenu || !menuToggle) return;
+  if (mobileMql.matches) {
+    // If not explicitly opened, keep closed and inert
+    const open = navMenu.classList.contains('active');
+    navMenu.setAttribute('aria-hidden', String(!open));
+    if (!open) navMenu.setAttribute('inert', '');
+    menuToggle.setAttribute('aria-expanded', String(open));
+  } else {
+    navMenu.removeAttribute('inert');
+    navMenu.setAttribute('aria-hidden', 'false');
+    menuToggle.setAttribute('aria-expanded', 'false');
+  }
+}
+
 if (menuToggle && navMenu) {
   menuToggle.setAttribute("aria-expanded", "false");
-  navMenu.setAttribute("aria-hidden", "true");
+  applyInertForLayout();
 
   menuToggle.addEventListener("click", () => {
     const open = !navMenu.classList.contains("active");
@@ -64,6 +88,13 @@ if (menuToggle && navMenu) {
       first.focus();
     }
   });
+  // Sync behavior on viewport changes
+  if (mobileMql.addEventListener) {
+    mobileMql.addEventListener('change', applyInertForLayout);
+  } else if (mobileMql.addListener) {
+    // Legacy Safari
+    mobileMql.addListener(applyInertForLayout);
+  }
 }
 
 // "Hi, I'm Vaibhav" Hover Effect

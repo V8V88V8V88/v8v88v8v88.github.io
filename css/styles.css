@@ -167,7 +167,7 @@ a {
 }
 
 body.light-mode a {
-    color: #007aff;
+    color: #0054a6;
 }
 
 /* Resume Button */
@@ -544,6 +544,8 @@ body.scrolling main {
     height: 150px;
     border-radius: 50%;
     margin-right: 2rem;
+    object-fit: cover;
+    aspect-ratio: 1 / 1;
 }
 
 .intro-text {
