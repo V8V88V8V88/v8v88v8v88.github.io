@@ -1371,6 +1371,10 @@ body.light-mode main.username-post blockquote p {
     color: #6e6e73;
 }
 
+body.light-mode main.username-post blockquote i {
+    color: #6e6e73;
+}
+
 body.light-mode main.username-post blockquote footer {
     color: #6e6e73;
 }
