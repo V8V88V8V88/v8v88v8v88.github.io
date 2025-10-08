@@ -85,6 +85,32 @@ filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#2E8945", en
                 z-index: 2;
             }
             
+            .about-content {
+                max-width: 800px;
+                margin: 3rem auto;
+                padding: 0 2rem;
+                text-align: center;
+                background: transparent;
+            }
+            
+            .about-content p {
+                font-size: 1.125rem;
+                line-height: 1.8;
+                color: #ffffff;
+                margin-bottom: 2rem;
+            }
+            
+            .about-content a {
+                color: #1DB954;
+                text-decoration: none;
+                transition: color 0.3s ease;
+                font-weight: 600;
+            }
+            
+            .about-content a:hover {
+                color: #22d964;
+            }
+            
             /* Section Titles - Dark Mode */
             .section-title {
                 font-size: 2.5rem;
@@ -185,7 +211,7 @@ filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#2E8945", en
                 text-align: center;
                 margin: 4rem auto;
                 padding: 2rem;
-                background-color: #1c1c1e;
+                background-color: transparent;
                 border-radius: 24px;
                 max-width: 1200px;
             }
@@ -218,6 +244,34 @@ filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#2E8945", en
                 border-color: rgba(255, 255, 255, 0.2);
             }
             
+            /* Resume Button Styles - Dark Mode */
+            .resume-button {
+                display: inline-block;
+                background: linear-gradient(135deg, #0f4d1f 0%, #1DB954 100%);
+                color: #ffffff !important;
+                padding: 0.8rem 2.2rem;
+                border-radius: 100px;
+                text-decoration: none;
+                font-weight: 600;
+                transition: all 0.3s ease;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            }
+            
+            .resume-button:hover {
+                background: linear-gradient(135deg, #115c24 0%, #22d964 100%); 
+                color: #ffffff !important;
+                transform: translateY(-3px);
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+                border-color: rgba(255, 255, 255, 0.2);
+            }
+            
+            /* Button Wrapper */
+            .button-wrapper {
+                text-align: center;
+                margin: 2rem 0;
+            }
+            
             /* Light Mode Styles */
             body.light-mode .section-title {
                 color: #1d1d1f;
@@ -245,6 +299,24 @@ filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#2E8945", en
                 color: #6e6e73;
             }
             
+            body.light-mode .about-content a,
+            body.light-mode .get-in-touch a {
+                color: #1DB954;
+            }
+            
+            body.light-mode .about-content a:hover {
+                color: #115c24;
+            }
+            
+            body.light-mode .about-content {
+                background: transparent;
+            }
+            
+            body.light-mode .about-content p,
+            body.light-mode .get-in-touch p {
+                color: #1d1d1f;
+            }
+            
             body.light-mode .work-item {
                 background-color: #ffffff;
                 box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -268,8 +340,8 @@ filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#2E8945", en
             }
             
             body.light-mode .cta-section {
-                background-color: #ffffff;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+                background-color: transparent;
+                box-shadow: none;
             }
             
             body.light-mode .cta-section p {
@@ -284,19 +356,21 @@ filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#2E8945", en
                 color: #fff;
             }
             
-            /* Light mode styles for the button */
-            body.light-mode .get-in-touch {
-                background: #f0f0f0; /* Light gray background */
-                color: #1d1d1f; /* Dark text */
-                border-color: rgba(0, 0, 0, 0.1); /* Light border */
-                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+            /* Light mode styles for buttons - keep gradient */
+            body.light-mode .get-in-touch,
+            body.light-mode .resume-button {
+                background: linear-gradient(135deg, #0f4d1f 0%, #1DB954 100%);
+                color: #ffffff !important;
+                border-color: rgba(0, 0, 0, 0.1);
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
             }
 
-            body.light-mode .get-in-touch:hover {
-                background: #e8e8e8; /* Slightly darker gray on hover */
-                color: #000;
+            body.light-mode .get-in-touch:hover,
+            body.light-mode .resume-button:hover {
+                background: linear-gradient(135deg, #115c24 0%, #22d964 100%);
+                color: #ffffff !important;
                 border-color: rgba(0, 0, 0, 0.15);
-                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
             }
             
             /* Responsive Design */
@@ -386,10 +460,32 @@ filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#2E8945", en
         <main>
             <section class="about-hero">
                 <h1>About Me</h1>
+            </section>
+
+            <section class="about-content">
                 <p>
-                    Hi, I'm Vaibhav. I'm a third-year Computer Science student
-                    who loves open source and coding.
+                    Hi there! I am
+                    <span data-hover="Yes, that's my real name"
+                        >Vaibhav Pratap Singh</span
+                    >, known by the Username
+                    <span data-hover="V8V88V8V88">V8</span> on the Internet. I
+                    am interested in Computers, Internet, FOSS, Linux, Design,
+                    and Coding. I am a CSE student who loves exploring new areas
+                    of interest. I am a firm believer in
+                    <a
+                        href="http://principles-wiki.net/principles:keep_it_simple_stupid"
+                        >KISS</a
+                    >
+                    and
+                    <a href="https://www.wikiwand.com/en/Unix_philosophy"
+                        >Unix philosophy</a
+                    >. I am Inquisitive and Curious by nature. Feel free to
+                    reach out to me at my social handles, although I might not
+                    respond right away :)
                 </p>
+                <div class="button-wrapper">
+                    <a href="https://drive.google.com/file/d/1iQFjSzPWcSA3sAt4WS-uKIUd7ReCz_hz/view?usp=sharing" class="resume-button" target="_blank">Resume</a>
+                </div>
             </section>
 
 
@@ -430,31 +526,12 @@ filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#2E8945", en
                     </div>
                 </section>
 
-
-            <section class="work-section">
-                <h2 class="section-title">How I Work</h2>
-                <div class="work-grid">
-                    <div class="work-item">
-                        <i class="fas fa-code work-icon"></i>
-                        <h3 class="work-title">Clean Code</h3>
-                        <p class="work-description">Writing simple, efficient, and maintainable code</p>
-                    </div>
-                    <div class="work-item">
-                        <i class="fab fa-git-alt work-icon"></i>
-                        <h3 class="work-title">Version Control</h3>
-                        <p class="work-description">Using Git for tracking changes and collaboration</p>
-                    </div>
-                    <div class="work-item">
-                        <i class="fas fa-users work-icon"></i>
-                        <h3 class="work-title">Collaboration</h3>
-                        <p class="work-description">Thriving in team environments on exciting projects</p>
-                    </div>
-                </div>
-                <div style="text-align: center;">
+                <section class="cta-section">
                     <p>Looking for a passionate coder for your part-time project? Let's connect!</p>
                     <a href="/contact" class="get-in-touch">Get in Touch</a>
-                </div>
-            </section>
+                </section>
+            </div>
+
         </main>
         <footer>
             <div class="footer-content">
