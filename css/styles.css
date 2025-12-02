@@ -320,15 +320,402 @@ body.light-mode section {
     background-color: rgba(0, 0, 0, 0.05);
 }
 
-footer {
-    text-align: center;
-    padding: 2rem;
-    background-color: rgba(255, 255, 255, 0.1);
-    transition: background-color 0.3s ease;
+/* ========================================= */
+/* ==      Modern Liquid Glass Footer      == */
+/* ========================================= */
+
+.site-footer {
+    position: relative;
+    margin-top: 4rem;
+    padding: 0 1.5rem 1.5rem;
 }
 
-body.light-mode footer {
-    background-color: rgba(0, 0, 0, 0.1);
+.footer-glass {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2.5rem;
+    border-radius: 24px;
+    
+    /* Liquid glass effect */
+    background: 
+        linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.08) 0%,
+            rgba(255, 255, 255, 0.03) 50%,
+            rgba(255, 255, 255, 0) 100%
+        ),
+        rgba(30, 30, 30, 0.4);
+    
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 
+        0 0 0 0.5px rgba(255, 255, 255, 0.05),
+        0 8px 32px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.light-mode .footer-glass {
+    background: linear-gradient(180deg, #f8f8f8 0%, #e5e5e5 100%);
+    
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+/* Light mode footer text colors */
+body.light-mode .footer-logo {
+    color: #1d1d1f;
+}
+
+body.light-mode .footer-tagline {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+body.light-mode .footer-nav-group h5 {
+    color: rgba(0, 0, 0, 0.4);
+}
+
+body.light-mode .footer-nav-group a {
+    color: rgba(0, 0, 0, 0.6);
+}
+
+body.light-mode .footer-nav-group a:hover {
+    color: #000;
+}
+
+body.light-mode .footer-social-icons a {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.08);
+    color: rgba(0, 0, 0, 0.6);
+}
+
+body.light-mode .footer-social-icons a:hover {
+    background: rgba(0, 0, 0, 0.1);
+    color: #000;
+}
+
+body.light-mode .footer-main {
+    border-bottom-color: rgba(0, 0, 0, 0.06);
+}
+
+body.light-mode .footer-meta {
+    color: rgba(0, 0, 0, 0.4);
+}
+
+body.light-mode .footer-meta a {
+    color: rgba(0, 0, 0, 0.6);
+}
+
+body.light-mode .footer-meta a:hover {
+    color: #000;
+}
+
+body.light-mode .footer-webring {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.06);
+}
+
+body.light-mode .footer-webring:hover {
+    background: rgba(0, 0, 0, 0.08);
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+body.light-mode .webring-link,
+body.light-mode .webring-hub {
+    color: rgba(0, 0, 0, 0.6);
+}
+
+body.light-mode .webring-link:hover,
+body.light-mode .webring-hub:hover {
+    color: #000;
+}
+
+body.light-mode .webring-link:hover,
+body.light-mode .webring-hub:hover {
+    color: #fff;
+}
+
+.footer-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.footer-brand {
+    flex-shrink: 0;
+}
+
+.footer-logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+    text-decoration: none;
+    letter-spacing: -0.02em;
+    display: block;
+    margin-bottom: 0.5rem;
+    transition: opacity 0.25s ease;
+}
+
+.footer-logo:hover {
+    opacity: 0.8;
+}
+
+body.light-mode .footer-logo {
+    color: #000;
+}
+
+.footer-tagline {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0;
+    letter-spacing: 0.02em;
+}
+
+body.light-mode .footer-tagline {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.footer-nav {
+    display: flex;
+    gap: 4rem;
+}
+
+.footer-nav-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.footer-nav-group h5 {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.4);
+    margin: 0 0 0.5rem 0;
+}
+
+.footer-nav-group a {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: color 0.2s ease;
+    line-height: 1.4;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.footer-nav-group a i {
+    font-size: 0.85rem;
+    width: 1rem;
+    text-align: center;
+}
+
+.footer-nav-group a:hover {
+    color: #fff;
+}
+
+/* Social Icons Grid */
+.footer-socials {
+    min-width: auto;
+}
+
+.footer-social-icons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
+}
+
+.footer-social-icons a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.7);
+    transition: all 0.25s ease;
+}
+
+.footer-social-icons a:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.footer-social-icons a i {
+    font-size: 1rem;
+    width: auto;
+}
+
+.footer-bottom-bar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding-top: 1.5rem;
+    gap: 1rem;
+}
+
+.footer-bottom-bar .footer-meta {
+    justify-self: start;
+}
+
+.footer-bottom-bar .footer-webring {
+    justify-self: center;
+}
+
+.footer-bottom-bar .footer-visitors {
+    justify-self: end;
+}
+
+.footer-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.footer-meta a {
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-meta a:hover {
+    color: #fff;
+}
+
+.separator {
+    opacity: 0.5;
+}
+
+.footer-webring {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.25s ease;
+}
+
+.footer-webring:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.webring-link,
+.webring-hub {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.webring-link:hover,
+.webring-hub:hover {
+    color: #fff;
+}
+
+.webring-hub {
+    font-weight: 500;
+}
+
+.footer-visitors img {
+    height: 20px;
+    opacity: 0.7;
+    transition: opacity 0.25s ease;
+    border-radius: 4px;
+}
+
+.footer-visitors:hover img {
+    opacity: 1;
+}
+
+/* Footer Responsive */
+@media (max-width: 768px) {
+    .site-footer {
+        padding: 0 1rem 1rem;
+        margin-top: 3rem;
+    }
+    
+    .footer-glass {
+        padding: 2rem 1.5rem;
+        border-radius: 20px;
+    }
+    
+    .footer-main {
+        flex-direction: column;
+        gap: 2rem;
+        text-align: center;
+    }
+    
+    .footer-brand {
+        order: -1;
+        text-align: center;
+    }
+    
+    .footer-nav {
+        width: 100%;
+        justify-content: center;
+        gap: 2.5rem;
+        flex-wrap: wrap;
+    }
+    
+    .footer-nav-group {
+        align-items: center;
+        min-width: 100px;
+    }
+    
+    .footer-bottom-bar {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+    
+    .footer-bottom-bar .footer-meta,
+    .footer-bottom-bar .footer-webring,
+    .footer-bottom-bar .footer-visitors {
+        justify-self: center;
+    }
+    
+    .footer-meta {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-glass {
+        padding: 1.5rem 1rem;
+        border-radius: 16px;
+    }
+    
+    .footer-nav {
+        gap: 1.5rem;
+    }
+    
+    .footer-nav-group {
+        min-width: 80px;
+    }
+    
+    .footer-logo {
+        font-size: 1.3rem;
+    }
 }
 
 /* Typography */
@@ -701,28 +1088,6 @@ body.light-mode .posts small {
     color: #333;
 }
 
-/* Footer Components */
-.footer-links {
-    margin-bottom: 1.5rem;
-}
-
-.footer-links a {
-    margin: 0 0.8rem;
-}
-
-.webring {
-    margin-bottom: 1.5rem;
-}
-
-.webring a {
-    margin: 0 0.8rem;
-    color: #fff;
-}
-
-body.light-mode .webring a {
-    color: #000;
-}
-
 body.scrolling main {
     backdrop-filter: blur(20px);
 }
@@ -881,115 +1246,6 @@ body.light-mode .menu-toggle span {
     background: rgba(0, 0, 0, 0.7);
 }
 
-/* Footer Structure */
-.footer-content {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: nowrap; 
-    max-width: 1200px;
-    margin: 0 auto 2rem;
-    gap: 1rem; 
-}
-
-.footer-section {
-    flex: 1;
-    min-width: 150px;
-    margin-bottom: 1.5rem;
-    text-align: left;
-}
-
-.footer-section h4 {
-    font-size: 1.1rem;
-    margin-bottom: 1rem;
-    color: #fff;
-}
-
-body.light-mode .footer-section h4 {
-    color: #000;
-}
-
-.footer-section ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.footer-section ul li {
-    margin-bottom: 0.5rem;
-}
-
-.footer-section a {
-    color: rgba(255, 255, 255, 0.7);
-    text-decoration: none;
-}
-
-body.light-mode .footer-section a {
-    color: rgba(0, 0, 0, 0.7);
-}
-
-.footer-section a:hover {
-    color: #fff;
-}
-
-body.light-mode .footer-section a:hover {
-    color: #000;
-}
-
-.footer-section p {
-    font-size: 0.9rem;
-    color: rgb(255 255 255 / 70%);
-}
-
-body.light-mode .footer-section p {
-    color: rgba(0, 0, 0, 0.7);
-}
-
-.footer-bottom {
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    padding-top: 1.5rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-    position: relative;
-}
-
-.footer-left {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-}
-
-body.light-mode .footer-bottom {
-    border-radius: 16px;
-    padding: 2px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    margin-bottom: 0;
-}
-
-.visitor-counter {
-    margin-bottom: 1rem;
-}
-
-.copyright {
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.5);
-}
-
-body.light-mode .copyright {
-    color: rgba(0, 0, 0, 0.5);
-}
-
-.copyright a {
-    color: inherit;
-    text-decoration: none;
-}
-
-.copyright a:hover {
-    text-decoration: underline;
-}
-
 /* Contact Section */
 .contact {
     padding: 80px 0;
@@ -1089,60 +1345,6 @@ body.light-mode .contact-item:hover span {
     color: #4b5563;
 }
 
-/* Webring Navigation */
-.webring-nav {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-}
-
-.webring-button {
-    display: inline;
-    padding: 0;
-    background-color: transparent;
-    color: rgba(255, 255, 255, 0.7);
-    text-decoration: none;
-    border-radius: 0;
-    transition: color 0.2s ease;
-    border: none;
-    font-size: 0.9rem;
-}
-
-.webring-button:hover {
-    background-color: transparent;
-    border-color: transparent;
-    color: #fff;
-    text-decoration: underline;
-}
-
-.webring-central {
-    color: rgba(255, 255, 255, 0.6);
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: color 0.2s ease;
-}
-
-.webring-central:hover {
-    color: rgba(255, 255, 255, 0.9);
-}
-
-body.light-mode .webring-button {
-    color: rgba(0, 0, 0, 0.7);
-}
-
-body.light-mode .webring-button:hover {
-    color: #000;
-}
-
-body.light-mode .webring-central {
-    color: rgba(0, 0, 0, 0.6);
-}
-
-body.light-mode .webring-central:hover {
-    color: rgba(0, 0, 0, 0.9);
-}
-
 /* Standard Media Queries */
 @media (max-width: 768px) {
     .resume-button {
@@ -1208,16 +1410,9 @@ body.light-mode .webring-central:hover {
         font-size: 1.3rem;
     }
 
-    .about p,
-    .footer-links,
-    .webring {
+    .about p {
         flex-wrap: wrap;
         justify-content: center;
-    }
-
-    .footer-links a,
-    .webring a {
-        margin: 0.5rem;
     }
     
     .projects {
@@ -1244,29 +1439,6 @@ body.light-mode .webring-central:hover {
     .arrow {
         width: 36px;
         height: 36px;
-    }
-    
-    .footer-content {
-        flex-direction: row; 
-        overflow-x: auto; 
-        padding-bottom: 0.5rem;
-        gap: 0.5rem; 
-    }
-
-    .footer-section {
-        flex: 0 0 auto; 
-        min-width: 120px;
-        font-size: 0.9rem; 
-        text-align: left; 
-        margin-bottom: 1rem; 
-    }
-  
-    .footer-section h4 {
-        font-size: 1rem; 
-    }
-  
-    .footer-section ul li {
-        margin-bottom: 0.4rem;
     }
     
     .contact {
@@ -1532,15 +1704,6 @@ body.light-mode .webring-central:hover {
     .posts h3,
     .project-details h3 {
         font-size: 1.2rem;
-}
-
-.footer-content {
-        flex-wrap: wrap;
-}
-
-.footer-section {
-        flex: 1 0 40%;
-        min-width: 120px;
     }
 
     .arrow {
