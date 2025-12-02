@@ -757,21 +757,21 @@ body.light-mode p {
 }
 
 a {
-    color: #58a6ff;
+    color: #1DB954;
     text-decoration: none;
     transition: color 0.2s ease;
 }
 
 a:hover {
-    color: #79b8ff;
+    color: #22d964;
 }
 
 body.light-mode a {
-    color: #0066cc;
+    color: #1DB954;
 }
 
 body.light-mode a:hover {
-    color: #0077ed;
+    color: #115c24;
 }
 
 /* Resume Button */
@@ -780,16 +780,17 @@ body.light-mode a:hover {
     align-items: center;
     justify-content: center;
     margin: 0;
-    background: rgba(255, 255, 255, 0.08);
-    color: rgba(255, 255, 255, 0.9);
-    padding: 0.65rem 1.5rem;
-    border-radius: 12px;
+    background: linear-gradient(135deg, #0f4d1f 0%, #1DB954 100%);
+    color: #fff;
+    padding: 0.7rem 1.75rem;
+    border-radius: 999px;
     text-decoration: none;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 0.9rem;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    transition: all 0.25s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
     gap: 0.5rem;
+    box-shadow: 0 4px 15px rgba(29, 185, 84, 0.3);
 }
 
 .resume-button::after {
@@ -809,22 +810,24 @@ body.light-mode a:hover {
 }
 
 .resume-button:hover {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: rgba(255, 255, 255, 0.2);
+    background: linear-gradient(135deg, #115c24 0%, #22d964 100%);
     color: #fff;
-    transform: translateY(-1px);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(29, 185, 84, 0.4);
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
 body.light-mode .resume-button {
-    background: rgba(0, 0, 0, 0.06);
-    color: rgba(0, 0, 0, 0.8);
+    background: linear-gradient(135deg, #0f4d1f 0%, #1DB954 100%);
+    color: #fff;
     border-color: rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 15px rgba(29, 185, 84, 0.25);
 }
 
 body.light-mode .resume-button:hover {
-    background: rgba(0, 0, 0, 0.1);
-    border-color: rgba(0, 0, 0, 0.15);
-    color: #000;
+    background: linear-gradient(135deg, #115c24 0%, #22d964 100%);
+    color: #fff;
+    box-shadow: 0 6px 20px rgba(29, 185, 84, 0.35);
 }
 
 /* ========================================= */
@@ -858,13 +861,14 @@ body.light-mode .resume-button:hover {
 }
 
 .about a:not(.resume-button) {
-    color: #58a6ff;
+    color: #1DB954;
     text-decoration: underline;
     text-underline-offset: 2px;
+    font-weight: 600;
 }
 
 .about a:not(.resume-button):hover {
-    color: #79b8ff;
+    color: #22d964;
 }
 
 body.light-mode .about {
@@ -877,11 +881,11 @@ body.light-mode .about p {
 }
 
 body.light-mode .about a:not(.resume-button) {
-    color: #0066cc;
+    color: #1DB954;
 }
 
 body.light-mode .about a:not(.resume-button):hover {
-    color: #0077ed;
+    color: #115c24;
 }
 
 /* ========================================= */
@@ -1248,6 +1252,40 @@ body.light-mode .intro img {
     margin-bottom: 0;
     font-weight: 400;
     letter-spacing: 0.02em;
+}
+
+/* Vaibhav → V8V88V8V88 hover effect */
+.vaibhav-hover {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.vaibhav-hover::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-family: "EB Garamond", Georgia, serif;
+    font-style: italic;
+    font-weight: 500;
+    opacity: 0;
+    white-space: nowrap;
+    pointer-events: none;
+    color: #fff;
+}
+
+body.light-mode .vaibhav-hover::after {
+    color: #1d1d1f;
+}
+
+.vaibhav-hover:hover {
+    color: transparent;
+    transition: color 0.2s ease;
+}
+
+.vaibhav-hover:hover::after {
+    opacity: 1;
 }
 
 body.light-mode .intro-text p {
