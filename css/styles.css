@@ -33,7 +33,6 @@ body.light-mode {
     color: #000;
 }
 
-header,
 main,
 footer,
 .resume-button,
@@ -44,60 +43,264 @@ footer,
     -webkit-backdrop-filter: blur(10px);
 }
 
+/* ========================================= */
+/* ==    Apple Liquid Glass Navbar         == */
+/* ========================================= */
+
 header {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    max-width: calc(100% - 24px);
     z-index: 100;
-    padding: 1rem;
-    background-color: rgba(255, 255, 255, 0.05);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    transition: background-color 0.3s ease, border-bottom-color 0.3s ease;
+    padding: 0.55rem 2rem;
+    border-radius: 999px;
+    
+    /* Liquid glass base - layered backgrounds for depth */
+    background: 
+        /* Top highlight - simulates light hitting glass surface */
+        linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.08) 0%,
+            rgba(255, 255, 255, 0.03) 50%,
+            rgba(255, 255, 255, 0) 100%
+        ),
+        /* Main glass tint - very subtle */
+        rgba(30, 30, 30, 0.25);
+    
+    /* Strong blur for frosted glass effect */
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    
+    /* Subtle inner border glow */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    
+    /* Outer glow for floating effect */
+    box-shadow: 
+        0 0 0 0.5px rgba(255, 255, 255, 0.05),
+        0 4px 24px rgba(0, 0, 0, 0.15),
+        0 1px 3px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    
+    /* Smooth transitions */
+    transition: 
+        background 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Liquid shimmer effect layer */
+header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: inherit;
+    background: 
+        radial-gradient(
+            ellipse 80% 50% at 50% 0%,
+            rgba(255, 255, 255, 0.06) 0%,
+            transparent 60%
+        );
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 0.4s ease;
+}
+
+/* Animated highlight that follows cursor (controlled by JS) */
+header::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+        300px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(255, 255, 255, 0.08) 0%,
+        transparent 60%
+    );
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+header:hover::after {
+    opacity: 1;
+}
+
+/* Scrolled state - slightly more opaque */
+body.scrolling header {
+    background: 
+        linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.06) 0%,
+            rgba(255, 255, 255, 0.02) 50%,
+            rgba(255, 255, 255, 0) 100%
+        ),
+        rgba(20, 20, 20, 0.35);
+    box-shadow: 
+        0 0 0 0.5px rgba(255, 255, 255, 0.06),
+        0 8px 32px rgba(0, 0, 0, 0.25),
+        0 2px 6px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* Light mode liquid glass - reference style */
 body.light-mode header {
-    background-color: rgba(0, 0, 0, 0.05);
-    border-bottom-color: rgba(0, 0, 0, 0.1);
+    background: 
+        /* Top highlight - bright edge highlight like reference */
+        linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.7) 0%,
+            rgba(255, 255, 255, 0.4) 30%,
+            rgba(255, 255, 255, 0.25) 60%,
+            rgba(255, 255, 255, 0.2) 100%
+        ),
+        /* Glass tint - slightly more visible base */
+        rgba(245, 245, 247, 0.35);
+    
+    /* Subtle light border like reference */
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    
+    box-shadow: 
+        0 0 0 0.5px rgba(255, 255, 255, 0.4),
+        0 4px 30px rgba(0, 0, 0, 0.06),
+        0 1px 3px rgba(0, 0, 0, 0.03),
+        /* Bright top/left edge highlight like reference */
+        inset 0 1px 0 rgba(255, 255, 255, 0.95),
+        inset -1px 0 0 rgba(255, 255, 255, 0.7),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.02);
+    
+    /* Strong blur for frosted glass effect */
+    backdrop-filter: blur(60px) saturate(200%);
+    -webkit-backdrop-filter: blur(60px) saturate(200%);
+}
+
+body.light-mode header::before {
+    background: 
+        /* Bright top-left highlight like reference */
+        radial-gradient(
+            ellipse 100% 60% at 0% 0%,
+            rgba(255, 255, 255, 0.7) 0%,
+            rgba(255, 255, 255, 0.3) 30%,
+            transparent 60%
+        );
+    opacity: 0.9;
+}
+
+body.light-mode header::after {
+    background: radial-gradient(
+        300px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(255, 255, 255, 0.4) 0%,
+        transparent 50%
+    );
+}
+
+body.light-mode.scrolling header {
+    background: 
+        linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.75) 0%,
+            rgba(255, 255, 255, 0.45) 30%,
+            rgba(255, 255, 255, 0.3) 60%,
+            rgba(255, 255, 255, 0.25) 100%
+        ),
+        rgba(245, 245, 247, 0.4);
+    box-shadow: 
+        0 0 0 0.5px rgba(255, 255, 255, 0.45),
+        0 8px 32px rgba(0, 0, 0, 0.08),
+        0 2px 6px rgba(0, 0, 0, 0.04),
+        inset 0 1px 0 rgba(255, 255, 255, 0.98),
+        inset -1px 0 0 rgba(255, 255, 255, 0.75),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.02);
 }
 
 nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    position: relative;
+    z-index: 1;
+    gap: 1rem;
 }
 
 .nav-right {
     display: flex;
     align-items: center;
+    gap: 0.5rem;
 }
 
 nav ul {
     list-style-type: none;
     display: flex;
+    gap: 0.5rem;
 }
 
 nav a {
-    color: #fff;
+    color: rgba(255, 255, 255, 0.9);
     text-decoration: none;
-    padding: 0.8rem 1.2rem;
-    border-radius: 2rem;
-    transition: background-color 0.3s ease;
-    font-size: 1.1rem;
+    padding: 0.5rem 1.1rem;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    position: relative;
+    transition: 
+        color 0.25s ease,
+        background-color 0.25s ease,
+        transform 0.2s ease;
 }
 
 body.light-mode nav a {
-    color: #000;
+    color: rgba(0, 0, 0, 0.85);
 }
 
 nav a:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    box-shadow: none;
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.12);
+    transform: translateY(-1px);
 }
 
 body.light-mode nav a:hover {
+    color: #000;
+    background-color: rgba(0, 0, 0, 0.08);
+}
+
+/* Active nav link indicator */
+nav a[aria-current="page"] {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #fff;
+}
+
+body.light-mode nav a[aria-current="page"] {
     background-color: rgba(0, 0, 0, 0.1);
+    color: #000;
+}
+
+/* Logo styling for liquid glass navbar */
+.logo a {
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: -0.02em;
+    color: #fff;
+    transition: opacity 0.25s ease;
+}
+
+body.light-mode .logo a {
+    color: #000;
+}
+
+.logo a:hover {
+    opacity: 0.8;
+    background-color: transparent;
 }
 
 main {
@@ -566,49 +769,67 @@ body.light-mode .intro-text p {
     margin-bottom: 0;
 }
 
-/* Mode Toggle */
+/* Mode Toggle - Liquid Glass Style */
 .mode-toggle {
     display: flex;
     align-items: center;
-    margin-right: 1rem;
 }
 
 .mode-switch {
     appearance: none;
-    width: 3rem;
-    height: 1.5rem;
-    background-color: #aaa;
+    width: 2.5rem;
+    height: 1.35rem;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 1rem;
     position: relative;
     cursor: pointer;
     outline: 0;
-    transition: background-color 0.3s ease;
+    transition: 
+        background-color 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.mode-switch:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
 }
 
 body.light-mode .mode-switch {
-    background-color: #555;
+    background: rgba(0, 0, 0, 0.1);
+    border-color: rgba(0, 0, 0, 0.15);
+}
+
+body.light-mode .mode-switch:hover {
+    background: rgba(0, 0, 0, 0.15);
+    border-color: rgba(0, 0, 0, 0.2);
 }
 
 .mode-switch::before {
     content: "";
     position: absolute;
-    top: 0.25rem;
-    left: 0.25rem;
+    top: 2px;
+    left: 2px;
     width: 1rem;
     height: 1rem;
-    background-color: #fff;
+    background: linear-gradient(180deg, #fff 0%, #e0e0e0 100%);
     border-radius: 50%;
-    transition: transform 0.3s ease;
+    box-shadow: 
+        0 1px 3px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .mode-switch:checked::before {
-    transform: translateX(1.5rem);
+    transform: translateX(1.1rem);
 }
 
 .mode-switch-label {
     margin-left: 0.5rem;
     font-size: 0.9rem;
     color: #aaa;
+    display: none;
 }
 
 body.light-mode .mode-switch-label {
@@ -635,25 +856,25 @@ body.light-mode .mode-switch-label {
     background: none;
     border: none;
     cursor: pointer;
-    padding: 6px;
+    padding: 8px;
     z-index: 1000;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
 }
 
 .menu-toggle span {
     display: block;
-    width: 15px;
-    height: 1px;
-    margin-bottom: 4px;
-    position: relative;
-    background: #f6f5f4;
-    border-radius: 1px;
-    z-index: 1;
-    transform-origin: 4px 0;
+    width: 18px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 2px;
     transition: transform 0.3s ease, background 0.3s ease, opacity 0.3s ease;
 }
 
-.menu-toggle span:last-child {
-    margin-bottom: 0;
+body.light-mode .menu-toggle span {
+    background: rgba(0, 0, 0, 0.8);
 }
 
 body.light-mode .menu-toggle span {
@@ -937,17 +1158,8 @@ body.light-mode .webring-central:hover {
     }
 
     header {
-        padding: 0.5rem;
-    }
-
-    nav ul {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    nav a {
-        padding: 0.5rem;
-        font-size: 0.9rem;
+        top: 8px;
+        padding: 0.65rem 1.5rem;
     }
 
     main {
@@ -1083,31 +1295,164 @@ body.light-mode .webring-central:hover {
 }
 
 @media (max-width: 767px) {
+    header {
+        padding: 0.45rem 1.5rem;
+        border-radius: 999px;
+        width: auto;
+        max-width: calc(100% - 12px);
+    }
+    
+    nav {
+        flex-wrap: nowrap;
+        gap: 0;
+    }
+    
+    .logo a {
+        font-size: 0.95rem;
+        margin-right: 0;
+    }
+    
+    .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        flex-shrink: 0;
+    }
+    
     .nav-menu {
+        position: fixed;
+        top: 60px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: calc(100% - 40px);
+        max-width: 300px;
         display: none;
-        width: 100%;
-        order: 3;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 1rem 1.2rem;
+        background:
+            linear-gradient(
+                180deg,
+                rgba(255, 255, 255, 0.08) 0%,
+                rgba(255, 255, 255, 0.03) 50%,
+                rgba(255, 255, 255, 0) 100%
+            ),
+            rgba(20, 20, 20, 0.3);
+        backdrop-filter: blur(45px) saturate(180%);
+        -webkit-backdrop-filter: blur(45px) saturate(180%);
+        border-radius: 22px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        box-shadow: 
+            0 0 0 0.5px rgba(255, 255, 255, 0.05),
+            0 8px 32px rgba(0, 0, 0, 0.35),
+            0 2px 8px rgba(0, 0, 0, 0.2),
+            inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        z-index: 99;
+        overflow: hidden;
+        position: fixed;
+        isolation: isolate;
+    }
+
+    .nav-menu::before,
+    .nav-menu::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+    }
+
+    .nav-menu::before {
+        background:
+            radial-gradient(
+                ellipse 90% 55% at 50% 0%,
+                rgba(255, 255, 255, 0.2),
+                transparent 70%
+            );
+        opacity: 0.9;
+    }
+
+    .nav-menu::after {
+        background:
+            radial-gradient(
+                ellipse 140% 90% at 50% 120%,
+                rgba(255, 255, 255, 0.08),
+                transparent 70%
+            );
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        mix-blend-mode: screen;
+        opacity: 0.6;
+    }
+    
+    body.light-mode .nav-menu {
+        background:
+            linear-gradient(
+                180deg,
+                rgba(255, 255, 255, 0.7) 0%,
+                rgba(255, 255, 255, 0.4) 30%,
+                rgba(255, 255, 255, 0.25) 60%,
+                rgba(255, 255, 255, 0.2) 100%
+            ),
+            rgba(245, 245, 247, 0.35);
+        border-color: rgba(255, 255, 255, 0.6);
+        box-shadow: 
+            0 0 0 0.5px rgba(255, 255, 255, 0.4),
+            0 8px 32px rgba(0, 0, 0, 0.06),
+            0 2px 8px rgba(0, 0, 0, 0.04),
+            inset 0 1px 0 rgba(255, 255, 255, 0.95),
+            inset -1px 0 0 rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(60px) saturate(200%);
+        -webkit-backdrop-filter: blur(60px) saturate(200%);
+    }
+
+    body.light-mode .nav-menu::before {
+        background:
+            radial-gradient(
+                ellipse 100% 60% at 0% 0%,
+                rgba(255, 255, 255, 0.7) 0%,
+                rgba(255, 255, 255, 0.3) 30%,
+                transparent 60%
+            );
+        opacity: 0.9;
+    }
+
+    body.light-mode .nav-menu::after {
+        border-color: rgba(255, 255, 255, 0.4);
+        background:
+            radial-gradient(
+                ellipse 140% 90% at 50% 120%,
+                rgba(255, 255, 255, 0.2),
+                transparent 70%
+            );
     }
 
     .nav-menu.active {
         display: flex;
-        flex-direction: column;
+        animation: menuSlideDown 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .nav-right {
-        order: 2;
+    @keyframes menuSlideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-8px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
     .mode-toggle {
-        margin-right: 0.5rem;
+        margin: 0;
     }
 
     .menu-toggle {
-        display: block;
+        display: flex;
     }
     
     .menu-toggle.active span:first-child {
-        transform: rotate(45deg) translate(1px, -1px);
+        transform: rotate(45deg) translate(4px, 4px);
     }
 
     .menu-toggle.active span:nth-child(2) {
@@ -1115,7 +1460,26 @@ body.light-mode .webring-central:hover {
     }
 
     .menu-toggle.active span:nth-child(3) {
-        transform: rotate(-45deg) translate(1px, 0);
+        transform: rotate(-45deg) translate(4px, -4px);
+    }
+    
+    nav a {
+        padding: 0.5rem 1rem;
+        font-size: 0.95rem;
+        width: 100%;
+        text-align: center;
+    }
+    
+    .nav-menu a {
+        border-radius: 10px;
+    }
+    
+    .nav-menu a:hover {
+        background: rgba(255, 255, 255, 0.1);
+    }
+    
+    body.light-mode .nav-menu a:hover {
+        background: rgba(0, 0, 0, 0.06);
     }
 }
 
@@ -1131,19 +1495,27 @@ body.light-mode .webring-central:hover {
 
     .nav-right {
         order: 3;
-}
+    }
 
     header {
-        padding: 0.5rem 1rem;
+        padding: 0.55rem 2rem;
     }
 
     nav a {
-        padding: 0.5rem 0.8rem;
-        font-size: 1rem;
+        padding: 0.45rem 1.1rem;
+        font-size: 0.95rem;
     }
 }
 
 @media (max-width: 480px) {
+    header {
+        padding: 0.4rem 1.25rem;
+    }
+    
+    .logo a {
+        font-size: 0.95rem;
+    }
+    
     main {
         padding: 4rem 0.5rem 0.5rem;
     }

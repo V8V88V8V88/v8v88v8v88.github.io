@@ -138,12 +138,43 @@ if (projectsContainer) {
   });
 }
 
-// Ensure header has a subtle blur once (CSS handles the rest)
+// Liquid Glass Navbar - Mouse tracking for dynamic highlight
 document.addEventListener("DOMContentLoaded", () => {
   const header = document.querySelector("header");
-  if (header && header.style) {
-    header.style.backdropFilter = "blur(10px)";
+  if (header) {
+    // Track mouse position for the liquid glass highlight effect
+    header.addEventListener("mousemove", (e) => {
+      const rect = header.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      header.style.setProperty("--mouse-x", `${x}%`);
+      header.style.setProperty("--mouse-y", `${y}%`);
+    });
+    
+    // Reset position when mouse leaves
+    header.addEventListener("mouseleave", () => {
+      header.style.setProperty("--mouse-x", "50%");
+      header.style.setProperty("--mouse-y", "50%");
+    });
   }
+  
+  // Set active nav link based on current page
+  const navLinks = document.querySelectorAll(".nav-menu a");
+  const currentPath = window.location.pathname;
+  
+  navLinks.forEach(link => {
+    // Remove existing aria-current from all links
+    link.removeAttribute("aria-current");
+    
+    const linkPath = link.getAttribute("href");
+    
+    // Check if this link matches the current page
+    if (linkPath === currentPath || 
+        (linkPath !== "/" && currentPath.startsWith(linkPath)) ||
+        (linkPath === "/" && currentPath === "/")) {
+      link.setAttribute("aria-current", "page");
+    }
+  });
 });
 
 // Easter Egg Console Log
