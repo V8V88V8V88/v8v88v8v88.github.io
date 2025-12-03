@@ -11,6 +11,69 @@
         <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="css/styles.css" />
     <link rel="icon" href="/images/favicon.ico" sizes="any" />
+    <style>
+        /* ===== Homepage UX - Snappy & Light ===== */
+        
+        /* Hero - Bold terminal */
+        .hero h1 {
+            font-family: 'JetBrains Mono', 'SF Mono', monospace;
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+        
+        .hero h1::after {
+            content: '';
+            display: inline-block;
+            width: 3px;
+            height: 0.9em;
+            background: #1DB954;
+            margin-left: 2px;
+            animation: blink 1s step-end infinite;
+            vertical-align: baseline;
+            border-radius: 1px;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        /* Section header with View All */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 1.25rem;
+        }
+        
+        .section-header h2 {
+            margin-bottom: 0;
+        }
+        
+        .view-all {
+            font-family: 'SF Mono', 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.45) !important;
+            text-decoration: none !important;
+            background: none !important;
+            border: none !important;
+            padding: 0 !important;
+            box-shadow: none !important;
+        }
+        
+        .view-all:hover {
+            color: #1DB954 !important;
+        }
+        
+        body.light-mode .view-all {
+            color: rgba(0, 0, 0, 0.45) !important;
+        }
+        
+        body.light-mode .view-all:hover {
+            color: #0f4d1f !important;
+        }
+    </style>
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://v8v88v8v88.com/">
     <meta property="og:title" content="V8V88V8V88 - Linux, FOSS, Code & Design">
@@ -127,7 +190,10 @@
             </section>
 
             <section class="projects">
-                <h2>Projects</h2>
+                <div class="section-header">
+                    <h2>Projects</h2>
+                    <a href="/projects/" class="view-all">view all →</a>
+                </div>
                 <ul>
                     <li class="project-item">
                         <a href="https://piracyindex.vercel.app/" target="_blank">
@@ -198,7 +264,10 @@
             </section>
 
             <section class="posts">
-                <h2>Blogs</h2>
+                <div class="section-header">
+                    <h2>Blogs</h2>
+                    <a href="/blogs/" class="view-all">view all →</a>
+                </div>
                 <ul>
                     <li>
                         <a href="/minimalism/">

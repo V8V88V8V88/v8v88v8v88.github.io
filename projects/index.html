@@ -3,481 +3,551 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Projects by V8V88V8V88 - Web, Themes, ML & More</title>
-        <meta name="description" content="Showcase of projects by V8V88V8V88, including The Piracy Index, Telegram themes, Face Recognition, vfetch, and more.">
+        <title>Projects by V8V88V8V88</title>
+        <meta name="description" content="All projects by V8V88V8V88 - Open source, tools, apps, and experiments.">
         <link rel="canonical" href="https://v8v88v8v88.com/projects/" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="/css/styles.css" />
     <link rel="icon" href="/images/favicon.ico" sizes="any" />
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://v8v88v8v88.com/projects/">
-    <meta property="og:title" content="Projects by V8V88V8V88">
-    <meta property="og:description" content="Showcase of projects by V8V88V8V88, including The Piracy Index, Telegram themes, Face Recognition, vfetch, and more.">
-    <meta property="og:image" content="https://v8v88v8v88.com/images/piracyindex.webp">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Projects by V8V88V8V88">
-    <meta name="twitter:description" content="Showcase of projects by V8V88V8V88, including The Piracy Index, Telegram themes, Face Recognition, vfetch, and more.">
-    <meta name="twitter:image" content="https://v8v88v8v88.com/images/piracyindex.webp">
-        <script type="application/ld+json">
-        {
-          "@context": "https://schema.org",
-          "@type": "ItemList",
-          "name": "V8V88V8V88 Projects",
-          "description": "A list of projects developed by Vaibhav Pratap Singh (V8V88V8V88).",
-          "url": "https://v8v88v8v88.com/projects/",
-          "numberOfItems": 4,
-          "itemListElement": [
-            {
-              "@type": "ListItem",
-              "position": 1,
-              "item": {
-                "@type": "SoftwareApplication",
-                "name": "The Piracy Index Website",
-                "url": "https://piracyindex.vercel.app/",
-                "image": "https://v8v88v8v88.com/images/piracyindex.webp",
-                "description": "A comprehensive index of piracy-related resources.",
-                "applicationCategory": "WebApplication",
-                "author": {"@type": "Person", "name": "V8V88V8V88"}
-              }
-            },
-            {
-              "@type": "ListItem",
-              "position": 2,
-              "item": {
-                "@type": "SoftwareApplication",
-                "name": "Telegram - Libadwaita Theme",
-                "url": "https://github.com/V8V88V8V88/telegram-gtk4-theme",
-                "image": "https://v8v88v8v88.com/images/telegram.webp",
-                "description": "A custom GTK4 / Libadwaita theme for Telegram Desktop.",
-                "applicationCategory": "DesktopApplication",
-                "author": {"@type": "Person", "name": "V8V88V8V88"}
-              }
-            },
-            {
-              "@type": "ListItem",
-              "position": 3,
-              "item": {
-                "@type": "SoftwareApplication",
-                "name": "Face Recognition using CV2",
-                "url": "https://github.com/V8V88V8V88/face-recognition",
-                "image": "https://v8v88v8v88.com/images/facerecognition.webp",
-                "description": "A Python-based face recognition system using OpenCV.",
-                "applicationCategory": "DesktopApplication",
-                "author": {"@type": "Person", "name": "V8V88V8V88"}
-              }
-            },
-            {
-              "@type": "ListItem",
-              "position": 4,
-              "item": {
-                "@type": "SoftwareApplication",
-                "name": "vfetch",
-                "url": "https://github.com/V8V88V8V88/vfetch",
-                "image": "https://v8v88v8v88.com/images/vfetch.webp",
-                "description": "A minimalist POSIX shell system information tool.",
-                "applicationCategory": "Utilities",
-                "author": {"@type": "Person", "name": "V8V88V8V88"}
-              }
-            }
-          ]
-        }
-        </script>
         <style>
-            .project-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 2rem;
-    padding: 1rem;
+/* ========================================= */
+/* ==     Projects Page - List Style      == */
+/* ========================================= */
+
+.projects-page {
+    min-height: 100vh;
+    padding: 0 2rem 4rem;
+    max-width: 900px;
+    margin: 0 auto;
 }
 
-.project-card {
-    position: relative;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 1.5rem;
-    padding: 2rem;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    backdrop-filter: blur(10px);
-    overflow: hidden;
-}
-
-.project-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, 
-        transparent,
-        rgba(255, 255, 255, 0.2),
-        transparent
-    );
-    transform: translateX(-100%);
-    transition: transform 0.8s ease;
-}
-
-.project-card:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 
-        0 20px 40px rgba(0, 0, 0, 0.3),
-        0 0 20px rgba(255, 255, 255, 0.05),
-        0 0 40px rgba(255, 255, 255, 0.02);
-    border-color: rgba(255, 255, 255, 0.35);
-}
-
-.project-card:hover::before {
-    transform: translateX(100%);
-}
-
-.project-card img {
-    width: 100%;
-    height: 240px;
-    object-fit: cover;
-    border-radius: 1rem;
-    margin-bottom: 1.5rem;
-    transition: transform 0.4s ease;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.project-card:hover img {
-    transform: scale(1.04);
-}
-
-.project-card h3 {
-    font-size: 1.75rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    background: linear-gradient(to right, #fff, #ccc);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.project-card p {
-    font-size: 1rem;
-    line-height: 1.6;
-    color: rgba(255, 255, 255, 0.7);
-    margin-bottom: 1.5rem;
-}
-
-.project-card .tags {
+/* Hero Section */
+.projects-hero {
+    min-height: 70vh;
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    margin-bottom: 1.5rem;
-}
-
-.project-card .tag {
-    background: rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.9);
-    padding: 0.5rem 1rem;
-    border-radius: 2rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    transition: all 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.project-card:hover .tag {
-    background: rgba(255, 255, 255, 0.15);
-    transform: translateY(-2px);
-}
-
-.project-card .links {
-    display: flex;
-    gap: 1rem;
-    margin-top: auto;
-    flex-wrap: wrap;
+    flex-direction: column;
     justify-content: center;
+    align-items: flex-start;
+    padding: 120px 0 4rem;
+    position: relative;
 }
 
-.project-card .links a {
-    display: inline-block;
-    padding: 0.8rem 1.5rem;
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #ffffff;
-    text-decoration: none;
-    border-radius: 30px;
-    transition: all 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    font-weight: 500;
-    text-align: center;
-    flex-grow: 1;
-    min-width: 120px;
-}
-
-.project-card .links a:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-    transform: translateY(-2px);
-}
-
-.code-preview {
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 1rem;
-    padding: 1.5rem;
+.hero-ascii {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.9rem;
-    line-height: 1.5;
-    overflow-x: auto;
-    margin-top: 1.5rem;
+    font-size: clamp(0.35rem, 1vw, 0.55rem);
+    line-height: 1.1;
+    color: #1DB954;
+    white-space: pre;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+    text-shadow: 0 0 20px rgba(29, 185, 84, 0.4);
 }
 
-/* Light mode styles */
-
-body.light-mode .project-grid {
-    background: #fff;
+.hero-tagline {
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: 400;
+    color: #fff;
+    max-width: 600px;
+    line-height: 1.4;
+    margin-bottom: 1.5rem;
 }
 
-body.light-mode .project-card {
-    background: #fafafa; /* Neutral light gray background */
+.hero-tagline em {
+    font-style: italic;
+    color: #1DB954;
+}
+
+.hero-stats {
+    display: flex;
+    gap: 3rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.hero-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.hero-stat-value {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #fff;
+}
+
+.hero-stat-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* Tech Stack in Hero */
+.hero-tech {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.hero-tech-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: rgba(255, 255, 255, 0.35);
+}
+
+.hero-tech-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tech-pill {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    padding: 0.35rem 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 100px;
+    color: rgba(255, 255, 255, 0.6);
+    transition: all 0.2s ease;
+}
+
+.tech-pill:hover {
+    background: rgba(29, 185, 84, 0.1);
+    border-color: rgba(29, 185, 84, 0.3);
+    color: #1DB954;
+}
+
+.hero-scroll {
+    position: absolute;
+    bottom: 2rem;
+    left: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    animation: bounce 2s infinite;
+}
+
+.hero-scroll::before {
+    content: '↓';
+    font-size: 1rem;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(5px); }
+}
+
+/* Divider */
+.projects-divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1) 20%, rgba(255, 255, 255, 0.1) 80%, transparent);
+    margin-bottom: 2rem;
+}
+
+/* Filter Controls */
+.filter-controls {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.filter-btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 100px;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.filter-btn.active {
+    background: rgba(29, 185, 84, 0.15);
+    border-color: rgba(29, 185, 84, 0.3);
+    color: #1DB954;
+}
+
+/* Hide non-featured when filter active */
+.project-list.show-featured-only .project-item:not(.featured) {
+    display: none;
+}
+
+.project-list.show-featured-only .section-label {
+    display: none;
+}
+
+/* Project List */
+.project-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.project-item {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 1.5rem;
+    align-items: center;
+    padding: 1rem 1rem;
+    margin: 0 -1rem;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.project-item:hover {
+    background: rgba(29, 185, 84, 0.08);
+}
+
+.project-info {
+    min-width: 0;
+}
+
+.project-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #fff;
+    margin-bottom: 0.35rem;
+    transition: color 0.2s ease;
+}
+
+.project-item:hover .project-name {
+    color: #1DB954;
+}
+
+.project-desc {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.project-lang {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.7);
+    padding: 0.35rem 0.75rem;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 100px;
+    white-space: nowrap;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.project-arrow {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.3);
+    transition: all 0.2s ease;
+}
+
+.project-item:hover .project-arrow {
+    color: #1DB954;
+    transform: translateX(4px);
+}
+
+/* Featured/Popular Projects */
+.project-item.featured {
+    background: linear-gradient(135deg, rgba(29, 185, 84, 0.08) 0%, rgba(29, 185, 84, 0.02) 100%);
+    border: 1px solid rgba(29, 185, 84, 0.15);
+    border-radius: 10px;
+    margin: 0.25rem -1rem;
+    padding: 1rem 1rem;
+}
+
+.project-item.featured .project-name {
+    color: #1DB954;
+}
+
+.project-item.featured .project-name::after {
+    content: '★';
+    margin-left: 0.5rem;
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+
+.project-item.featured:hover {
+    background: linear-gradient(135deg, rgba(29, 185, 84, 0.12) 0%, rgba(29, 185, 84, 0.04) 100%);
+    border-color: rgba(29, 185, 84, 0.25);
+}
+
+/* Section dividers */
+.section-label {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: #1DB954;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin: 2rem 0 0.75rem;
+    padding: 1.5rem 0 0.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+.section-label:first-child {
+    border-top: none;
+    padding-top: 0;
+    margin-top: 0;
+    }
+
+/* ========================================= */
+/* ==           Light Mode                 == */
+/* ========================================= */
+
+body.light-mode .hero-ascii {
+    color: #0f4d1f;
+    text-shadow: none;
+}
+
+body.light-mode .hero-tagline {
+    color: #1d1d1f;
+}
+
+body.light-mode .hero-tagline em {
+    color: #0f4d1f;
+}
+
+body.light-mode .hero-stat-value {
+    color: #1d1d1f;
+        }
+
+body.light-mode .hero-stat-label {
+    color: rgba(0, 0, 0, 0.4);
+}
+
+body.light-mode .hero-scroll {
+    color: rgba(0, 0, 0, 0.3);
+}
+
+body.light-mode .hero-tech-label {
+    color: rgba(0, 0, 0, 0.35);
+}
+
+body.light-mode .tech-pill {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.08);
+    color: rgba(0, 0, 0, 0.6);
+}
+
+body.light-mode .tech-pill:hover {
+    background: rgba(29, 185, 84, 0.08);
+    border-color: rgba(15, 77, 31, 0.3);
+    color: #0f4d1f;
+}
+
+body.light-mode .project-item.featured {
+    background: linear-gradient(135deg, rgba(29, 185, 84, 0.06) 0%, rgba(29, 185, 84, 0.02) 100%);
+    border-color: rgba(15, 77, 31, 0.15);
+}
+
+body.light-mode .project-item.featured .project-name {
+    color: #0f4d1f;
+}
+
+body.light-mode .project-item.featured:hover {
+    background: linear-gradient(135deg, rgba(29, 185, 84, 0.1) 0%, rgba(29, 185, 84, 0.04) 100%);
+    border-color: rgba(15, 77, 31, 0.25);
+}
+
+body.light-mode .projects-divider {
+    background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.1) 20%, rgba(0, 0, 0, 0.1) 80%, transparent);
+}
+
+body.light-mode .filter-btn {
+    background: rgba(0, 0, 0, 0.04);
     border-color: rgba(0, 0, 0, 0.1);
+    color: rgba(0, 0, 0, 0.6);
 }
 
-body.light-mode .project-card:hover {
-    box-shadow: 
-        0 20px 40px rgba(0, 0, 0, 0.1),
-        0 0 20px rgba(0, 0, 0, 0.05);
-    border-color: rgba(0, 0, 0, 0.15);
-}
-
-body.light-mode .project-card h3 {
-    background: linear-gradient(to right, #000, #333);
-    -webkit-background-clip: text;
-    background-clip: text;
-}
-
-body.light-mode .project-card p {
-    color: rgba(0, 0, 0, 0.7);
-}
-
-body.light-mode .project-card .tag {
-    background: rgba(0, 0, 0, 0.05);
+body.light-mode .filter-btn:hover {
+    background: rgba(0, 0, 0, 0.06);
     color: rgba(0, 0, 0, 0.8);
-    border-color: rgba(0, 0, 0, 0.1);
 }
 
-body.light-mode .project-card:hover .tag {
-    background: rgba(0, 0, 0, 0.08);
+body.light-mode .filter-btn.active {
+    background: rgba(29, 185, 84, 0.1);
+    border-color: rgba(15, 77, 31, 0.3);
+    color: #0f4d1f;
 }
 
-body.light-mode .project-card .links a {
-    background-color: #eeeeee;
-    color: #000;
-    border: 1px solid rgba(0, 0, 0, 0.1);
+body.light-mode .project-item {
+    border-bottom-color: rgba(0, 0, 0, 0.05);
 }
 
-body.light-mode .project-card .links a:hover {
-    background: #1DB954;
-    color: #ffffff;
-    border-color: rgba(0, 0, 0, 0.15);
+body.light-mode .project-item:hover {
+    background: rgba(29, 185, 84, 0.06);
 }
 
-body.light-mode .code-preview {
+body.light-mode .project-name {
+    color: #1d1d1f;
+        }
+
+body.light-mode .project-item:hover .project-name {
+    color: #0f4d1f;
+}
+
+body.light-mode .project-desc {
+    color: rgba(0, 0, 0, 0.6);
+}
+
+body.light-mode .project-lang {
+    color: rgba(0, 0, 0, 0.7);
     background: rgba(0, 0, 0, 0.05);
     border-color: rgba(0, 0, 0, 0.1);
+        }
+
+body.light-mode .project-arrow {
+    color: rgba(0, 0, 0, 0.3);
 }
+
+body.light-mode .project-item:hover .project-arrow {
+    color: #0f4d1f;
+}
+
+body.light-mode .section-label {
+    color: #0f4d1f;
+    border-top-color: rgba(0, 0, 0, 0.08);
+}
+
+/* ========================================= */
+/* ==           Responsive                 == */
+/* ========================================= */
 
 @media (max-width: 768px) {
-    .project-grid {
-        grid-template-columns: 1fr;
+    .projects-page {
+        padding: 0 1.5rem 3rem;
+    }
+    
+    .projects-hero {
+        min-height: 60vh;
+        padding: 100px 0 3rem;
+    }
+    
+    .hero-ascii {
+        font-size: 0.3rem;
+        }
+
+    .hero-stats {
+        gap: 2rem;
+    }
+    
+    .hero-stat-value {
+        font-size: 1.25rem;
+    }
+    
+    .hero-tech {
+        margin-top: 1.5rem;
+    }
+    
+    .tech-pill {
+        font-size: 0.65rem;
+        padding: 0.3rem 0.6rem;
     }
 
-    .project-card {
-        padding: 1.5rem;
+    .project-item {
+        grid-template-columns: 1fr auto;
+        gap: 1rem;
+        padding: 0.85rem 0.75rem;
+        margin: 0 -0.75rem;
     }
-
-    .project-card img {
-        height: 200px;
+    
+    .project-lang {
+        display: none;
     }
-
-    .project-card h3 {
-        font-size: 1.5rem;
+    
+    .project-name {
+        font-size: 0.95rem;
     }
-
-    .about-hero {
-        padding: 3rem 1rem;
-    }
-
-    .about-hero h1 {
-        font-size: 3rem;
-    }
-
-    .about-hero p {
-        font-size: 1rem;
-    }
-
-    .tech-item {
+    
+    .project-desc {
         font-size: 0.8rem;
-        padding: 0.4rem 0.8rem;
     }
 }
 
 @media (max-width: 480px) {
-    .project-card {
-        padding: 1rem;
+    .projects-page {
+        padding: 0 1rem 2rem;
+        }
+
+    .projects-hero {
+        min-height: 55vh;
+        padding: 90px 0 2rem;
+    }
+    
+    .hero-ascii {
+        font-size: 0.22rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .hero-tagline {
+        font-size: 1.25rem;
+        }
+
+    .hero-stats {
+        gap: 1.5rem;
+        flex-wrap: wrap;
+    }
+    
+    .hero-stat-value {
+        font-size: 1.1rem;
+        }
+
+    .hero-stat-label {
+        font-size: 0.6rem;
+        }
+
+    .hero-scroll {
+        display: none;
+    }
+    
+    .hero-tech {
+        margin-top: 1rem;
+    }
+    
+    .hero-tech-label {
+        font-size: 0.6rem;
+    }
+    
+    .tech-pill {
+        font-size: 0.6rem;
+        padding: 0.25rem 0.5rem;
     }
 
-    .project-card h3 {
-        font-size: 1.3rem;
+    .project-item {
+        padding: 0.75rem 0.5rem;
+        margin: 0 -0.5rem;
     }
 
-    .project-card p {
+    .project-name {
         font-size: 0.9rem;
+        }
+
+    .project-desc {
+        font-size: 0.75rem;
     }
-
-    .project-card .tag {
-        font-size: 0.8rem;
-        padding: 0.4rem 0.8rem;
-    }
-
-    .project-card .links a {
-        font-size: 0.9rem;
-    }
-
-    .code-preview {
-        font-size: 0.8rem;
-        padding: 1rem;
-    }
-}
-
-.about-hero {
-            position: relative;
-            min-height: 50vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            padding: 4rem 2rem;
-            background: #000;
-            border-radius: 24px;
-            margin: 2rem;
-        }
-
-        .about-hero::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                linear-gradient(45deg, rgba(0,0,255,0.3) 0%, rgba(0,0,255,0) 70%),
-                linear-gradient(135deg, rgba(0,255,0,0.3) 10%, rgba(0,255,0,0) 80%),
-                linear-gradient(225deg, rgba(255,0,0,0.3) 10%, rgba(255,0,0,0) 80%),
-                linear-gradient(315deg, rgba(255,255,0,0.3) 100%, rgba(255,255,0,0) 70%);
-            opacity: 0.5;
-            z-index: 1;
-        }
-
-        .about-hero::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="none" stroke="white" stroke-width="0.25" x="0" y="0" width="100" height="100"/></svg>') repeat;
-            background-size: 20px 20px;
-            opacity: 0.1;
-            z-index: 2;
-            animation: gridMove 20s linear infinite;
-        }
-
-        @keyframes gridMove {
-            0% { background-position: 0 0; }
-            100% { background-position: 20px 20px; }
-        }
-
-        .about-hero h1 {
-            font-size: 4rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            color: #fff;
-            text-shadow: 0 0 20px rgba(255,255,255,0.5);
-            position: relative;
-            z-index: 3;
-        }
-
-        .about-hero p {
-            font-size: 1.25rem;
-            color: #ddd;
-            max-width: 800px;
-            margin: 0 auto 2rem;
-            text-align: center;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-            position: relative;
-            z-index: 3;
-        }
-
-        .tech-stack {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 0.75rem;
-            position: relative;
-            z-index: 3;
-            width: 100%;
-            max-width: 1200px;
-        }
-
-        .tech-item {
-            background: rgba(255,255,255,0.1);
-            color: #fff;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-
-        .tech-item:hover {
-            background: rgba(255,255,255,0.2);
-            transform: translateY(-3px);
-        }
-
-        /* Light mode styles */
-        body.light-mode .about-hero {
-            background: linear-gradient(120deg, #bde0c6, #ffe8c9); /* More distinct light colors */
-        }
-
-        body.light-mode .about-hero::before {
-            opacity: 0.2;
-        }
-
-        body.light-mode .about-hero::after {
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="none" stroke="black" stroke-width="0.25" x="0" y="0" width="100" height="100"/></svg>') repeat;
-            opacity: 0.05;
-        }
-
-        body.light-mode .about-hero h1 {
-            color: #000;
-            text-shadow: none;
-        }
-
-        body.light-mode .about-hero p {
-            color: #333;
-            text-shadow: none;
-        }
-
-        body.light-mode .tech-item {
-            background: rgba(255,255,255,0.95);
-            color: #000;
-        }
-
-        body.light-mode .tech-item:hover {
-            background: #ffffff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        /* Add light mode style for terminal text */
-        body.light-mode .terminal-content {
-            color: #1d1d1f; /* Dark text for light mode */
         }
     </style>
     </head>
@@ -487,16 +557,8 @@ body.light-mode .code-preview {
                 <div class="logo"><a href="/">V8V88V8V88</a></div>
                 <div class="nav-right">
                     <div class="mode-toggle">
-                        <input
-                            type="checkbox"
-                            id="mode-switch"
-                            class="mode-switch"
-                            aria-label="Toggle dark mode"
-                        />
-                        <label
-                            for="mode-switch"
-                            class="mode-switch-label"
-                        ></label>
+                        <input type="checkbox" id="mode-switch" class="mode-switch" aria-label="Toggle dark mode" />
+                        <label for="mode-switch" class="mode-switch-label"></label>
                     </div>
                     <button class="menu-toggle" aria-label="Toggle menu">
                         <span></span>
@@ -505,246 +567,404 @@ body.light-mode .code-preview {
                     </button>
                 </div>
                 <ul class="nav-menu">
-                    <li><a href="/" aria-current="page">Home</a></li>
+                    <li><a href="/">Home</a></li>
                     <li><a href="/blogs/">Blogs</a></li>
-                    <li><a href="/projects/">Projects</a></li>
+                    <li><a href="/projects/" aria-current="page">Projects</a></li>
                     <li><a href="/contact/">Contact</a></li>
                     <li><a href="/about/">About</a></li>
                 </ul>
             </nav>
         </header>
 
-        <main>
-            <section class="about-hero">
-                <h1>My Projects</h1>
-                <p>
-                    Here are some of the projects I've worked on. Each one
-                    showcases different skills and technologies I've learned.
+        <main class="projects-page">
+            <section class="projects-hero">
+                <pre class="hero-ascii">
+ ██████╗ ██████╗  ██████╗      ██╗███████╗ ██████╗████████╗███████╗
+ ██╔══██╗██╔══██╗██╔═══██╗     ██║██╔════╝██╔════╝╚══██╔══╝██╔════╝
+ ██████╔╝██████╔╝██║   ██║     ██║█████╗  ██║        ██║   ███████╗
+ ██╔═══╝ ██╔══██╗██║   ██║██   ██║██╔══╝  ██║        ██║   ╚════██║
+ ██║     ██║  ██║╚██████╔╝╚█████╔╝███████╗╚██████╗   ██║   ███████║
+ ╚═╝     ╚═╝  ╚═╝ ╚═════╝  ╚════╝ ╚══════╝ ╚═════╝   ╚═╝   ╚══════╝
+                </pre>
+                <p class="hero-tagline">
+                    Things I've built, broken, and <em>shipped anyway</em>.
                 </p>
-                <div class="tech-stack">
-                    <span class="tech-item">C</span>
-                    <span class="tech-item">C++</span>
-                    <span class="tech-item">Rust</span>
-                    <span class="tech-item">Bash</span>
-                    <span class="tech-item">ASM</span>
-                    <span class="tech-item">Java</span>
-                    <span class="tech-item">Python</span>
-                    <span class="tech-item">JavaScript</span>
-                    <span class="tech-item">TypeScript</span>
-                    <span class="tech-item">HTML5</span>
-                    <span class="tech-item">CSS3</span>
-                    <span class="tech-item">React</span>
-                    <span class="tech-item">Svelte</span>
-                    <span class="tech-item">Express</span>
-                    <span class="tech-item">PostgreSQL</span>
-                    <span class="tech-item">MongoDB</span>
-                    <span class="tech-item">Docker</span>
-                    <span class="tech-item">Kubernetes</span>
-                    <span class="tech-item">AWS</span>
-                    <span class="tech-item">GNU</span>
-                    <span class="tech-item">Linux</span>
-                    <span class="tech-item">Git</span>
-                    <span class="tech-item">GitHub</span>
-                    <span class="tech-item">Neovim</span>
-                    <span class="tech-item">Zed</span>
-                    <span class="tech-item">TensorFlow</span>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <span class="hero-stat-value">35+</span>
+                        <span class="hero-stat-label">Repositories</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="hero-stat-value">8+</span>
+                        <span class="hero-stat-label">Languages</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="hero-stat-value">∞</span>
+                        <span class="hero-stat-label">Side quests</span>
+                    </div>
                 </div>
+                <div class="hero-tech">
+                    <span class="hero-tech-label">I write in</span>
+                    <div class="hero-tech-list">
+                        <span class="tech-pill">Rust</span>
+                        <span class="tech-pill">C/C++</span>
+                        <span class="tech-pill">Python</span>
+                        <span class="tech-pill">TypeScript</span>
+                        <span class="tech-pill">Svelte</span>
+                        <span class="tech-pill">Go</span>
+                        <span class="tech-pill">Shell</span>
+                        <span class="tech-pill">Java</span>
+                    </div>
+                </div>
+                <div class="hero-scroll">scroll to explore</div>
             </section>
 
-            <section class="project-grid">
-                <div class="project-card">
-                    <img
-                        src="/images/piracyindex.webp"
-                        alt="The Piracy Index Website"
-                        loading="lazy"
-                    />
-                    <h3>The Piracy Index Website</h3>
-                    <p>
-                        A comprehensive index of piracy-related resources, built
-                        with modern web technologies.
-                    </p>
-                    <div class="tags">
-                        <span class="tag">HTML</span>
-                        <span class="tag">CSS</span>
-                        <span class="tag">JavaScript</span>
-                        <span class="tag">Web Scraping</span>
-                    </div>
-                    <div class="links">
-                        <a href="https://piracyindex.vercel.app/" target="_blank"
-                            >Visit Site</a
-                        >
-                        <a href="#" onclick="toggleCodePreview('piracy-index')"
-                            >View Code</a
-                        >
-                    </div>
-                    <div
-                        id="piracy-index"
-                        class="code-preview"
-                        style="display: none"
-                    >
-                        // Sample code from The Piracy Index Website const
-                        fetchSites = async () => { try { const response = await
-                        fetch('/api/sites'); const data = await response.json();
-                        return data; } catch (error) { console.error('Error
-                        fetching sites:', error); return []; } }; const
-                        renderSites = (sites) => { const siteList =
-                        document.getElementById('site-list'); siteList.innerHTML
-                        = sites.map(site => `
-                        <li>
-                            <a href="${site.url}" target="_blank"
-                                >${site.name}</a
-                            >
-                            <span class="category">${site.category}</span>
-                        </li>
-                        `).join(''); }; // Initialize the site list (async () =>
-                        { const sites = await fetchSites(); renderSites(sites);
-                        })();
-                    </div>
-                </div>
+            <div class="projects-divider"></div>
 
-                <div class="project-card">
-                    <img
-                        src="/images/telegram.webp"
-                        alt="Telegram - Libadwaita Theme"
-                        loading="lazy"
-                    />
-                    <h3>Telegram - Libadwaita Theme</h3>
-                    <p>
-                        A custom GTK4 / Libadwaita theme for Telegram Desktop,
-                        bringing a native look to the app on Linux.
-                    </p>
-                    <div class="tags">
-                        <span class="tag">CSS</span>
-                        <span class="tag">GTK</span>
-                        <span class="tag">Libadwaita</span>
-                        <span class="tag">UI Design</span>
-                    </div>
-                    <div class="links">
-                        <a
-                            href="https://github.com/V8V88V8V88/telegram-gtk4-theme"
-                            target="_blank"
-                            >GitHub</a
-                        >
-                        <a
-                            href="#"
-                            onclick="toggleCodePreview('telegram-theme')"
-                            >View Code</a
-                        >
-                    </div>
-                    <div
-                        id="telegram-theme"
-                        class="code-preview"
-                        style="display: none"
-                    >
-                        /* Sample CSS from Telegram - Libadwaita Theme */
-                        .window { background-color: @theme_bg_color; } .header {
-                        background-color: @theme_header_bg_color; border-bottom:
-                        1px solid @borders; } .message-in { background-color:
-                        alpha(@theme_selected_bg_color, 0.1); border-radius:
-                        18px 18px 18px 0; } .message-out { background-color:
-                        @theme_selected_bg_color; border-radius: 18px 18px 0
-                        18px; color: @theme_selected_fg_color; } button.text {
-                        background: none; border: none; box-shadow: none;
-                        min-height: 24px; padding: 2px 8px; } button.text:hover
-                        { background-color: alpha(@theme_fg_color, 0.1); }
-                    </div>
-                </div>
+            <div class="filter-controls">
+                <button class="filter-btn active" data-filter="all">All Projects</button>
+                <button class="filter-btn" data-filter="featured">★ Featured Only</button>
+            </div>
 
-                <div class="project-card">
-                    <img
-                        src="/images/facerecognition.webp"
-                        alt="Face Recognition using CV2"
-                        loading="lazy"
-                    />
-                    <h3>Face Recognition using CV2</h3>
-                    <p>
-                        A Python-based face recognition system using OpenCV and
-                        machine learning techniques.
-                    </p>
-                    <div class="tags">
-                        <span class="tag">Python</span>
-                        <span class="tag">OpenCV</span>
-                        <span class="tag">Machine Learning</span>
-                        <span class="tag">Computer Vision</span>
+            <div class="project-list">
+                <span class="section-label">Themes & Desktop</span>
+                
+                <a href="https://github.com/V8V88V8V88/Telegram-GTK4-Libadwaita-Theme" target="_blank" class="project-item featured">
+                    <div class="project-info">
+                        <div class="project-name">Telegram-GTK4-Libadwaita-Theme</div>
+                        <div class="project-desc">A GTK4 - Libadwaita Inspired Theme for Telegram Desktop</div>
                     </div>
-                    <div class="links">
-                        <a
-                            href="https://github.com/V8V88V8V88/face-recognition"
-                            target="_blank"
-                            >GitHub</a
-                        >
-                        <a
-                            href="#"
-                            onclick="toggleCodePreview('face-recognition')"
-                            >View Code</a
-                        >
-                    </div>
-                    <div
-                        id="face-recognition"
-                        class="code-preview"
-                        style="display: none"
-                    >
-                        # Sample code from Face Recognition using CV2 import cv2
-                        import numpy as np from sklearn.neighbors import
-                        KNeighborsClassifier def train_face_recognizer(faces,
-                        labels): knn = KNeighborsClassifier(n_neighbors=5)
-                        knn.fit(faces, labels) return knn def
-                        recognize_face(frame, face_cascade, recognizer): gray =
-                        cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY) faces =
-                        face_cascade.detectMultiScale(gray, 1.3, 5) for (x, y,
-                        w, h) in faces: roi_gray = gray[y:y+h, x:x+w] roi_gray =
-                        cv2.resize(roi_gray, (100, 100)) roi_gray =
-                        roi_gray.flatten() prediction =
-                        recognizer.predict([roi_gray])[0] cv2.rectangle(frame,
-                        (x, y), (x+w, y+h), (255, 0, 0), 2) cv2.putText(frame,
-                        f"Person: {prediction}", (x, y-10),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36,255,12), 2) return
-                        frame # Main loop for real-time face recognition #
-                        (implementation details omitted for brevity)
-                    </div>
-                </div>
+                    <span class="project-lang">Theme</span>
+                    <span class="project-arrow">→</span>
+                </a>
 
-                <div class="project-card">
-                    <img src="/images/vfetch.webp" alt="vfetch" loading="lazy" />
-                    <h3>vfetch</h3>
-                    <p>
-                        A minimalist, optimized system information tool designed
-                        to run in all POSIX shells.
-                    </p>
-                    <div class="tags">
-                        <span class="tag">Shell Scripting</span>
-                        <span class="tag">POSIX</span>
-                        <span class="tag">System Info</span>
-                        <span class="tag">Performance Optimization</span>
+                <a href="https://github.com/V8V88V8V88/dotfiles" target="_blank" class="project-item">
+                    <div class="project-info">
+                        <div class="project-name">dotfiles</div>
+                        <div class="project-desc">All the dotfiles of my linux system</div>
                     </div>
-                    <div class="links">
-                        <a
-                            href="https://github.com/V8V88V8V88/vfetch"
-                            target="_blank"
-                            >GitHub</a
-                        >
-                        <a href="#" onclick="toggleCodePreview('vfetch')"
-                            >View Code</a
-                        >
+                    <span class="project-lang">Config</span>
+                    <span class="project-arrow">→</span>
+                </a>
+
+                <span class="section-label">Web Applications</span>
+
+                <a href="https://github.com/V8V88V8V88/piracyindex" target="_blank" class="project-item featured">
+                    <div class="project-info">
+                        <div class="project-name">piracyindex</div>
+                        <div class="project-desc">The greatest piracy index of all time</div>
                     </div>
-                    <div id="vfetch" class="code-preview" style="display: none">
-                        #!/bin/sh # vfetch - A minimal system info script #
-                        Colors c0='[0m'; c1='[31m'; c2='[32m' c3='[33m';
-                        c4='[34m'; c5='[35m' c6='[36m'; c7='[37m'; c8='[38m' #
-                        Get system information user=$(whoami) host=$(hostname)
-                        os=$(uname -s) kernel=$(uname -r) uptime=$(uptime -p |
-                        sed 's/up //') packages=$(ls /var/lib/dpkg/info/*.list
-                        2>/dev/null | wc -l) shell=$(basename "$SHELL") # Print
-                        system information cat << EOF ${c1} _____ ${c2} /\\ _\\
-                        ${c0}${user}${c6}@${c0}${host} ${c3} / \\ \\ \\ ${c6}OS:
-                        ${c0}${os} ${c4} / \\ \\ \\ ${c6}KERNEL: ${c0}${kernel}
-                        ${c5} / /\\ \\ \\__\\ ${c6}UPTIME: ${c0}${uptime} ${c6}
-                        / /__\\ \\ \\${c6}PACKAGES: ${c0}${packages} ${c7} /
-                        ______\\ \\ ${c6}SHELL: ${c0}${shell} ${c8}/__/ \\__\\
-                        EOF
+                    <span class="project-lang">TypeScript</span>
+                    <span class="project-arrow">→</span>
+                </a>
+
+                <a href="https://github.com/V8V88V8V88/Synthio" target="_blank" class="project-item featured">
+                    <div class="project-info">
+                        <div class="project-name">Synthio</div>
+                        <div class="project-desc">A minimalist music visualizer built with Svelte</div>
                     </div>
+                    <span class="project-lang">Svelte</span>
+                    <span class="project-arrow">→</span>
+                </a>
+
+                <a href="https://github.com/V8V88V8V88/musical-playground" target="_blank" class="project-item">
+                    <div class="project-info">
+                        <div class="project-name">musical-playground</div>
+                        <div class="project-desc">Try music instruments online using svelte, vue, and tone.js</div>
+                    </div>
+                    <span class="project-lang">Svelte</span>
+                    <span class="project-arrow">→</span>
+                </a>
+
+                <a href="https://github.com/V8V88V8V88/FOSS-Hack-Delhi" target="_blank" class="project-item">
+                    <div class="project-info">
+                        <div class="project-name">FOSS-Hack-Delhi</div>
+                        <div class="project-desc">Website to promote FOSS Hack in Delhi area</div>
+                    </div>
+                    <span class="project-lang">TypeScript</span>
+                    <span class="project-arrow">→</span>
+                </a>
+
+                <span class="section-label">AI & Machine Learning</span>
+
+                <a href="https://github.com/V8V88V8V88/face-recognition" target="_blank" class="project-item featured">
+                    <div class="project-info">
+                        <div class="project-name">face-recognition</div>
+                        <div class="project-desc">Face detection on live cameras using OpenCV and Dlib</div>
+                    </div>
+                    <span class="project-lang">C++</span>
+                    <span class="project-arrow">→</span>
+                </a>
+
+                <a href="https://github.com/V8V88V8V88/Vajra" target="_blank" class="project-item featured">
+                    <div class="project-info">
+                        <div class="project-name">Vajra</div>
+                        <div class="project-desc">AI-Powered Cyber Threat Forecaster</div>
+                    </div>
+                    <span class="project-lang">TypeScript</span>
+                    <span class="project-arrow">→</span>
+                </a>
+
+                <a href="https://github.com/V8V88V8V88/AI-Document-Analyzer" target="_blank" class="project-item">
+                    <div class="project-info">
+                        <div class="project-name">AI-Document-Analyzer</div>
+                        <div class="project-desc">AI Powered Document Analyzer</div>
+                    </div>
+                    <span class="project-lang">Python</span>
+                    <span class="project-arrow">→</span>
+                </a>
+
+                <a href="https://github.com/V8V88V8V88/AI-Child-Protection" target="_blank" class="project-item">
+                    <div class="project-info">
+                        <div class="project-name">AI-Child-Protection</div>
+                        <div class="project-desc">AI-driven parental control with face detection</div>
+                    </div>
+                    <span class="project-lang">Python</span>
+                    <span class="project-arrow">→</span>
+                </a>
+
+                <a href="https://github.com/V8V88V8V88/H1RE" target="_blank" class="project-item featured">
+                    <div class="project-info">
+                        <div class="project-name">H1RE</div>
+                        <div class="project-desc">AI-powered resume analyzer for starters</div>
+                    </div>
+                    <span class="project-lang">TypeScript</span>
+                    <span class="project-arrow">→</span>
+                </a>
+
+                <a href="https://github.com/V8V88V8V88/cnn-image-classification" target="_blank" class="project-item">
+                    <div class="project-info">
+                        <div class="project-name">cnn-image-classification</div>
+                        <div class="project-desc">CNN to classify images in CIFAR-10 dataset</div>
+                    </div>
+                    <span class="project-lang">Jupyter</span>
+                    <span class="project-arrow">→</span>
+                </a>
+
+                <a href="https://github.com/V8V88V8V88/T2S" target="_blank" class="project-item">
+                    <div class="project-info">
+                        <div class="project-name">T2S</div>
+                        <div class="project-desc">Text to speech using AI</div>
+                    </div>
+                    <span class="project-lang">CSS</span>
+                    <span class="project-arrow">→</span>
+                </a>
+
+                <span class="section-label">Rust Projects</span>
+
+                <a href="https://github.com/V8V88V8V88/H3IST" target="_blank" class="project-item featured">
+                    <div class="project-info">
+                        <div class="project-name">H3IST</div>
+                        <div class="project-desc">A next-generation elevator control system</div>
+                    </div>
+                    <span class="project-lang">Rust</span>
+                    <span class="project-arrow">→</span>
+                </a>
+
+                <a href="https://github.com/V8V88V8V88/MarkVue" target="_blank" class="project-item">
+                    <div class="project-info">
+                        <div class="project-name">MarkVue</div>
+                        <div class="project-desc">GTK-based Markdown viewer with real-time preview</div>
                 </div>
-            </section>
+                    <span class="project-lang">Rust</span>
+                    <span class="project-arrow">→</span>
+                </a>
+
+                <a href="https://github.com/V8V88V8V88/yama" target="_blank" class="project-item featured">
+                    <div class="project-info">
+                        <div class="project-name">yama</div>
+                        <div class="project-desc">Lightweight package manager using C and Rust</div>
+                    </div>
+                    <span class="project-lang">Rust</span>
+                    <span class="project-arrow">→</span>
+                </a>
+
+                <a href="https://github.com/V8V88V8V88/DeskImage" target="_blank" class="project-item">
+                    <div class="project-info">
+                        <div class="project-name">DeskImage</div>
+                        <div class="project-desc">CLI tool that generates .Desktop entries for AppImages</div>
+                </div>
+                    <span class="project-lang">Rust</span>
+                    <span class="project-arrow">→</span>
+                </a>
+
+                <a href="https://github.com/V8V88V8V88/BudgetWiser" target="_blank" class="project-item featured">
+                    <div class="project-info">
+                        <div class="project-name">BudgetWiser</div>
+                        <div class="project-desc">A Rust program to track your expenses</div>
+                    </div>
+                    <span class="project-lang">Rust</span>
+                    <span class="project-arrow">→</span>
+                </a>
+
+                <a href="https://github.com/V8V88V8V88/rusty-snake" target="_blank" class="project-item">
+                    <div class="project-info">
+                        <div class="project-name">rusty-snake</div>
+                        <div class="project-desc">A simple snake game built with Rust and Piston</div>
+            </div>
+                    <span class="project-lang">Rust</span>
+                    <span class="project-arrow">→</span>
+                </a>
+
+                <a href="https://github.com/V8V88V8V88/iced-calculator" target="_blank" class="project-item">
+                    <div class="project-info">
+                        <div class="project-name">iced-calculator</div>
+                        <div class="project-desc">Simple calculator made using iced kit</div>
+                    </div>
+                    <span class="project-lang">Rust</span>
+                    <span class="project-arrow">→</span>
+                </a>
+
+                <a href="https://github.com/V8V88V8V88/Rust-RISCV-Compiler" target="_blank" class="project-item featured">
+                    <div class="project-info">
+                        <div class="project-name">Rust-RISCV-Compiler</div>
+                        <div class="project-desc">RISC-V compiler in Rust</div>
+                    </div>
+                    <span class="project-lang">Rust</span>
+                    <span class="project-arrow">→</span>
+                </a>
+
+                <a href="https://github.com/V8V88V8V88/mini-vm" target="_blank" class="project-item featured">
+                    <div class="project-info">
+                        <div class="project-name">mini-vm</div>
+                        <div class="project-desc">Minimal virtual machine</div>
+                    </div>
+                    <span class="project-lang">Rust</span>
+                    <span class="project-arrow">→</span>
+                </a>
+
+                <span class="section-label">CLI & System Tools</span>
+
+                <a href="https://github.com/V8V88V8V88/vfetch" target="_blank" class="project-item featured">
+                    <div class="project-info">
+                        <div class="project-name">vfetch</div>
+                        <div class="project-desc">A minimal system information fetcher</div>
+                    </div>
+                    <span class="project-lang">Shell</span>
+                    <span class="project-arrow">→</span>
+                </a>
+
+                <a href="https://github.com/V8V88V8V88/Fedorable" target="_blank" class="project-item featured">
+                    <div class="project-info">
+                        <div class="project-name">Fedorable</div>
+                        <div class="project-desc">Simple script for maintaining Fedora Linux</div>
+                    </div>
+                    <span class="project-lang">Python</span>
+                    <span class="project-arrow">→</span>
+                </a>
+
+                <a href="https://github.com/V8V88V8V88/nanoHTTP" target="_blank" class="project-item featured">
+                    <div class="project-info">
+                        <div class="project-name">nanoHTTP</div>
+                        <div class="project-desc">Nano lightweight HTTP server in C</div>
+                    </div>
+                    <span class="project-lang">C</span>
+                    <span class="project-arrow">→</span>
+                </a>
+
+                <a href="https://github.com/V8V88V8V88/todo-list" target="_blank" class="project-item">
+                    <div class="project-info">
+                        <div class="project-name">todo-list</div>
+                        <div class="project-desc">Simple CLI todo list in C</div>
+                    </div>
+                    <span class="project-lang">C</span>
+                    <span class="project-arrow">→</span>
+                </a>
+
+                <a href="https://github.com/V8V88V8V88/dirSim" target="_blank" class="project-item">
+                    <div class="project-info">
+                        <div class="project-name">dirSim</div>
+                        <div class="project-desc">Lightweight directory and file system simulator</div>
+                    </div>
+                    <span class="project-lang">Python</span>
+                    <span class="project-arrow">→</span>
+                </a>
+
+                <a href="https://github.com/V8V88V8V88/simple-round-robin-scheduler" target="_blank" class="project-item">
+                    <div class="project-info">
+                        <div class="project-name">simple-round-robin-scheduler</div>
+                        <div class="project-desc">Round robin scheduler made during OS lectures</div>
+                    </div>
+                    <span class="project-lang">C</span>
+                    <span class="project-arrow">→</span>
+                </a>
+
+                <a href="https://github.com/V8V88V8V88/canva-linux" target="_blank" class="project-item">
+                    <div class="project-info">
+                        <div class="project-name">canva-linux</div>
+                        <div class="project-desc">Canva for Linux</div>
+                    </div>
+                    <span class="project-lang">Python</span>
+                    <span class="project-arrow">→</span>
+                </a>
+
+                <a href="https://github.com/V8V88V8V88/linux-keylogger" target="_blank" class="project-item">
+                    <div class="project-info">
+                        <div class="project-name">linux-keylogger</div>
+                        <div class="project-desc">Basically what you read</div>
+                    </div>
+                    <span class="project-lang">C++</span>
+                    <span class="project-arrow">→</span>
+                </a>
+
+                <span class="section-label">GNOME & GTK</span>
+
+                <a href="https://github.com/V8V88V8V88/GNOME-bluetooth-battery-monitor" target="_blank" class="project-item">
+                    <div class="project-info">
+                        <div class="project-name">GNOME-bluetooth-battery-monitor</div>
+                        <div class="project-desc">Displays battery level in the GNOME shell</div>
+                    </div>
+                    <span class="project-lang">JavaScript</span>
+                    <span class="project-arrow">→</span>
+                </a>
+
+                <a href="https://github.com/V8V88V8V88/gtk-emoji-picker" target="_blank" class="project-item">
+                    <div class="project-info">
+                        <div class="project-name">gtk-emoji-picker</div>
+                        <div class="project-desc">GTK4-based emoji picker with global shortcut</div>
+                    </div>
+                    <span class="project-lang">Python</span>
+                    <span class="project-arrow">→</span>
+                </a>
+
+                <span class="section-label">Other</span>
+
+                <a href="https://github.com/V8V88V8V88/LogiChain" target="_blank" class="project-item">
+                    <div class="project-info">
+                        <div class="project-name">LogiChain</div>
+                        <div class="project-desc">Supply Chain Management System in Java</div>
+                    </div>
+                    <span class="project-lang">Java</span>
+                    <span class="project-arrow">→</span>
+                </a>
+
+                <a href="https://github.com/V8V88V8V88/SkibidiSpeak" target="_blank" class="project-item">
+                    <div class="project-info">
+                        <div class="project-name">SkibidiSpeak</div>
+                        <div class="project-desc">Ohio language translator for understanding gen alpha</div>
+                    </div>
+                    <span class="project-lang">TypeScript</span>
+                    <span class="project-arrow">→</span>
+                </a>
+
+                <a href="https://github.com/V8V88V8V88/Sauce_Run" target="_blank" class="project-item">
+                    <div class="project-info">
+                        <div class="project-name">Sauce_Run</div>
+                        <div class="project-desc">Endless runner game made in Redot engine</div>
+                    </div>
+                    <span class="project-lang">GDScript</span>
+                    <span class="project-arrow">→</span>
+                </a>
+
+                <a href="https://github.com/V8V88V8V88/golang" target="_blank" class="project-item">
+                    <div class="project-info">
+                        <div class="project-name">golang</div>
+                        <div class="project-desc">Go experiments</div>
+                    </div>
+                    <span class="project-lang">Go</span>
+                    <span class="project-arrow">→</span>
+                </a>
+            </div>
         </main>
 
         <footer class="site-footer">
@@ -754,7 +974,6 @@ body.light-mode .code-preview {
                         <a href="/" class="footer-logo">V8V88V8V88</a>
                         <p class="footer-tagline">Linux × FOSS × Code × Design</p>
                     </div>
-                    
                     <nav class="footer-nav">
                         <div class="footer-nav-group">
                             <h5>Explore</h5>
@@ -762,13 +981,11 @@ body.light-mode .code-preview {
                             <a href="/blogs/">Blogs</a>
                             <a href="/projects/">Projects</a>
                         </div>
-                        
                         <div class="footer-nav-group">
                             <h5>More</h5>
                             <a href="/about/">About</a>
                             <a href="/contact/">Contact</a>
                         </div>
-                        
                         <div class="footer-nav-group footer-socials">
                             <h5>Socials</h5>
                             <div class="footer-social-icons">
@@ -781,23 +998,20 @@ body.light-mode .code-preview {
                                 <a href="https://www.reddit.com/user/v8v88v8v88" target="_blank" rel="noopener noreferrer" title="Reddit"><i class="fab fa-reddit"></i></a>
                                 <a href="https://myanimelist.net/profile/V8V88V8V88" target="_blank" rel="noopener noreferrer" title="MyAnimeList"><i class="fas fa-film"></i></a>
                             </div>
-                </div>
+                        </div>
                     </nav>
                 </div>
-                
                 <div class="footer-bottom-bar">
                     <div class="footer-meta">
                         <span class="copyright">🄯 2025</span>
                         <span class="separator">·</span>
                         <span class="made-with">Made with ♥ by <a href="https://github.com/V8V88V8V88">V8V88V8V88</a></span>
-                </div>
-                    
+                    </div>
                     <div class="footer-webring">
                         <a href="https://webring.dinhe.net/prev/https://v8v88v8v88.com/" class="webring-link">←</a>
                         <a href="https://webring.dinhe.net/" class="webring-hub">Webring</a>
                         <a href="https://webring.dinhe.net/next/https://v8v88v8v88.com/" class="webring-link">→</a>
-            </div>
-                    
+                    </div>
                     <div class="footer-visitors">
                         <a href="https://visitorbadge.io/status?path=https%3A%2F%2Fv8v88v8v88.com">
                             <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fv8v88v8v88.com&label=Visitors&labelColor=%23010101&countColor=%23b1b1b1&style=flat" alt="Visitors" loading="lazy"/>
@@ -806,21 +1020,30 @@ body.light-mode .code-preview {
                  </div>
             </div>
         </footer>
-        <script
-            src="https://kit.fontawesome.com/133988a847.js"
-            crossorigin="anonymous"
-            defer
-        ></script>
+        <script src="https://kit.fontawesome.com/133988a847.js" crossorigin="anonymous" defer></script>
         <script src="/js/script.js" defer></script>
         <script>
-            function toggleCodePreview(id) {
-                const codePreview = document.getElementById(id);
-                if (codePreview.style.display === "none") {
-                    codePreview.style.display = "block";
-                } else {
-                    codePreview.style.display = "none";
-                }
-            }
+            // Filter functionality
+            document.addEventListener('DOMContentLoaded', () => {
+                const filterBtns = document.querySelectorAll('.filter-btn');
+                const projectList = document.querySelector('.project-list');
+                
+                filterBtns.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        // Update active state
+                        filterBtns.forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        
+                        // Apply filter
+                        const filter = btn.dataset.filter;
+                        if (filter === 'featured') {
+                            projectList.classList.add('show-featured-only');
+                        } else {
+                            projectList.classList.remove('show-featured-only');
+                        }
+                    });
+                });
+            });
         </script>
     </body>
 </html>
