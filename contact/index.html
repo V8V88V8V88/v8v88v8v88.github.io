@@ -8,18 +8,18 @@
         <link rel="canonical" href="https://v8v88v8v88.com/contact/" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="/css/styles.css" />
-    <link rel="icon" href="/images/favicon.ico" sizes="any" />
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://v8v88v8v88.com/contact/">
-    <meta property="og:title" content="Contact V8V88V8V88">
-    <meta property="og:description" content="Contact Vaibhav (V8V88V8V88) via Email, GitHub, Telegram, LinkedIn, YouTube, Mastodon, Twitter, or Reddit.">
-    <meta property="og:image" content="https://v8v88v8v88.com/images/image.webp">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Contact V8V88V8V88">
-    <meta name="twitter:description" content="Contact Vaibhav (V8V88V8V88) via Email, GitHub, Telegram, LinkedIn, YouTube, Mastodon, Twitter, or Reddit.">
-    <meta name="twitter:image" content="https://v8v88v8v88.com/images/image.webp">
+        <link rel="icon" href="/images/favicon.ico" sizes="any" />
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://v8v88v8v88.com/contact/">
+        <meta property="og:title" content="Contact V8V88V8V88">
+        <meta property="og:description" content="Contact Vaibhav (V8V88V8V88) via Email, GitHub, Telegram, LinkedIn, YouTube, Mastodon, Twitter, or Reddit.">
+        <meta property="og:image" content="https://v8v88v8v88.com/images/image.webp">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Contact V8V88V8V88">
+        <meta name="twitter:description" content="Contact Vaibhav (V8V88V8V88) via Email, GitHub, Telegram, LinkedIn, YouTube, Mastodon, Twitter, or Reddit.">
+        <meta name="twitter:image" content="https://v8v88v8v88.com/images/image.webp">
         <script type="application/ld+json">
         {
           "@context": "https://schema.org",
@@ -44,269 +44,654 @@
           }
         }
         </script>
-        <style>/* Hero Section - Dark Mode Base */
-            .contact-hero {
-                position: relative;
-                min-height: 40vh;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                text-align: center;
-                padding: 4rem 2rem;
-                margin: 2rem auto;
-                border-radius: 24px;
-                /* New Background */
-                background-color: #1a1c1d; /* Dark base */
-                background-image: repeating-linear-gradient(
-                    0deg,
-                    rgba(0, 255, 0, 0.06), /* More visible GREEN lines */
-                    rgba(0, 255, 0, 0.06) 2px, /* Thicker line */
-                    transparent 2px,
-                    transparent 6px /* Adjusted spacing */
-                );
-                color: #fff;
-                animation: scanlineScroll 10s linear infinite; /* Faster animation */
-            }
-            
-            .contact-hero h1 {
-                font-size: 3.5rem;
-                font-weight: 700;
-                color: #ffffff;
-                margin-bottom: 1rem;
-                z-index: 2;
-            }
-            
-            .contact-hero p {
-                font-size: 1.125rem;
-                color: rgba(255, 255, 255, 0.9);
-                max-width: 600px;
-                margin: 0 auto;
-                z-index: 2;
-            }
-             
-            /* Terminal - Consistent across themes */
-            .terminal {
-                position: relative;
-                width: 90%;
-                max-width: 800px;
-                margin: 2rem auto -4rem;
-                background-color: #1d1f1f;
-                border-radius: 12px;
-                overflow: hidden;
-                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            }
-            
-            .terminal-header {
-                background-color: #2d2d2d;
-                padding: 0.75rem 1rem;
-                display: flex;
-                align-items: center;
-            }
-            
-            .terminal-buttons {
-                display: flex;
-                gap: 6px;
-            }
-            
-            .terminal-button {
-                width: 12px;
-                height: 12px;
-                border-radius: 50%;
-            }
-            
-            .terminal-button.red { background-color: #ff5f56; }
-            .terminal-button.yellow { background-color: #ffbd2e; }
-            .terminal-button.green { background-color: #27c93f; }
-            
-            .terminal-content {
-                padding: 1rem;
-                font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-                font-size: 0.9rem;
-                line-height: 1.4;
-                color: #1DB954; /* Changed to the vibrant green */
-            }
-            
-            /* Contact Grid - Dark Mode Base */
-            .contact-grid {
-                width: 100%;
-                max-width: 1200px;
-                margin: 0 auto;
-                padding: 2rem;
-                display: grid;
-                grid-template-columns: repeat(4, 1fr);
-                gap: 1.5rem;
-                place-items: stretch;
-            }
-            
-            .contact-card {
-                width: 100%;
-                height: 100%;
-                background: rgba(255, 255, 255, 0.1);
-                backdrop-filter: blur(10px);
-                -webkit-backdrop-filter: blur(10px);
-                border-radius: 20px;
-                padding: 1.5rem;
-                text-align: center;
-                /* Refined transition for smoother feel */
-                transition: transform 0.2s ease-out, box-shadow 0.3s ease-out; 
-                transform-style: preserve-3d;
-                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-                border: 1px solid rgba(255, 255, 255, 0.18);
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-            }
-            
-            .contact-card:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-            }
-            
-            .contact-icon {
-                font-size: 3rem;
-                margin-bottom: 1.5rem;
-                transition: transform 0.3s ease;
-                color: #ffffff;
-            }
-            
-            .contact-card:hover .contact-icon {
-                transform: scale(1.1);
-            }
-            
-            .contact-card h3 {
-                font-size: 1.5rem;
-                margin-bottom: 1rem;
-                color: #ffffff;
-            }
-            
-            .contact-card p {
-                font-size: 1rem;
-                margin-bottom: 1.5rem;
-                color: rgba(255, 255, 255, 0.7);
-            }
-            
-            .contact-card a {
-                display: inline-block;
-                padding: 0.8rem 1.5rem;
-                background-color: rgba(255, 255, 255, 0.1);
-                color: #ffffff;
-                text-decoration: none;
-                border-radius: 30px;
-                transition: all 0.3s ease;
-                backdrop-filter: blur(5px);
-                -webkit-backdrop-filter: blur(5px);
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                font-weight: 500;
-            }
-            
-            .contact-card a:hover {
-                background-color: rgba(255, 255, 255, 0.2);
-                transform: translateY(-2px);
-            }
-            
-            /* Light Mode Overrides */
-            body.light-mode .contact-card {
-                background: #ffffff;
-                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-                border: 1px solid rgba(0, 0, 0, 0.1);
-            }
-            
-            body.light-mode .contact-icon {
-                color: #1d1f1f;
-            }
-            
-            body.light-mode .contact-card h3 {
-                color: #1d1f1f;
-            }
-            
-            body.light-mode .contact-card p {
-                color: #6e6e73;
-            }
-            
-            /* Restore non-hover styles for light mode */
-            body.light-mode .contact-card a {
-                background-color: #eeeeee; /* Light gray background */
-                color: #000; /* Black text */
-                border: 1px solid rgba(0, 0, 0, 0.1);
-                /* Ensure other properties like padding, radius are inherited or correct */
-            }
-            
-            body.light-mode .contact-card a:hover {
-                /* Use solid green color */
-                background: #1DB954; 
-                color: #ffffff;
-                border-color: rgba(0, 0, 0, 0.15); /* Keep border subtle */
-                /* transform: translateY(-2px); -- Keep existing transform if desired */
-            }
-            
-            body.light-mode .contact-hero {
-                /* New Light Background */
-                background-color: #f0f2f5; /* Light base */
-                background-image: repeating-linear-gradient(
-                    0deg,
-                    rgba(170, 160, 150, 0.1), /* Warmer light lines */
-                    rgba(170, 160, 150, 0.1) 2px, /* Thicker line */
-                    transparent 2px,
-                    transparent 6px /* Adjusted spacing */
-                );
-                color: #333; /* Adjust base text color if needed */
-                /* Animation is inherited */
-            }
-            /* Media Queries */
-            @media (max-width: 768px) {
-                .contact-grid {
-                    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-                    padding: 1rem;
-                    gap: 1.5rem;
-                }
-                
-                .contact-hero h1 {
-                    font-size: 3rem;
-                }
-                
-                .contact-hero p {
-                    font-size: 1.25rem;
-                }
-                
-                .terminal {
-                    width: 95%;
-                }
-            }
-            
-            @media (max-width: 480px) {
-                .contact-card {
-                    padding: 1.25rem;
-                }
-                
-                .contact-icon {
-                    font-size: 2.5rem;
-                }
-                
-                .contact-card h3 {
-                    font-size: 1.25rem;
-                }
-                
-                .terminal-content {
-                    font-size: 0.8rem;
-                }
-                
-                .contact-hero h1 {
-                    font-size: 2.5rem;
-                }
-            }
+        <style>
+/* ========================================= */
+/* ==       Contact Page Styles           == */
+/* ========================================= */
 
-            /* Keyframes for scanline animation */
-            @keyframes scanlineScroll {
-                0% {
-                    background-position: 0 0;
-                }
-                100% {
-                    background-position: 0 -100px; /* Adjust distance for speed */
-                }
-            }
+.contact-page {
+    min-height: 100vh;
+    padding-top: 100px;
+}
+
+/* Terminal Hero */
+.terminal-hero {
+    max-width: 900px;
+    margin: 0 auto 3rem;
+    padding: 0 2rem;
+}
+
+.terminal-window {
+    background: rgba(20, 20, 20, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.terminal-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.terminal-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    transition: all 0.15s ease;
+    position: relative;
+}
+
+.terminal-dot.red { background: #ff5f56; cursor: pointer; }
+.terminal-dot.yellow { background: #ffbd2e; cursor: pointer; }
+.terminal-dot.green { background: #27ca40; cursor: pointer; }
+
+.terminal-dot:hover {
+    transform: scale(1.15);
+    filter: brightness(1.1);
+}
+
+/* Terminal States */
+.terminal-window.closed {
+    animation: terminalClose 0.4s ease forwards;
+}
+
+.terminal-window.minimized {
+    animation: magicLamp 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.terminal-window.maximized {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    height: 100vh !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    z-index: 9999 !important;
+    animation: terminalMaximize 0.3s ease forwards;
+}
+
+.terminal-window.maximized .terminal-body {
+    height: calc(100vh - 50px);
+    overflow-y: auto;
+}
+
+/* Restore button for maximized state */
+.terminal-window.maximized .terminal-dot.green::after {
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border: 1.5px solid rgba(0,0,0,0.4);
+    border-radius: 1px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes terminalClose {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.8);
+        visibility: hidden;
+    }
+}
+
+@keyframes magicLamp {
+    0% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+        transform-origin: bottom center;
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(0.5, 0.1) translateY(100%);
+        transform-origin: bottom center;
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.1, 0.02) translateY(200%);
+        transform-origin: bottom center;
+        visibility: hidden;
+    }
+}
+
+@keyframes terminalMaximize {
+    0% {
+        opacity: 0.9;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Terminal hero collapse when closed */
+.terminal-hero.collapsed {
+    margin-bottom: 0;
+}
+
+.terminal-hero.collapsed .terminal-window {
+    display: none;
+}
+
+/* Reopen button - macOS terminal icon */
+.terminal-reopen {
+    display: none;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    background: linear-gradient(180deg, #000 0%, #1a1a1a 100%);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 1rem;
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.terminal-reopen::before {
+    content: '>_';
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.terminal-reopen:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 
+        0 8px 20px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.terminal-reopen:active {
+    transform: translateY(-1px) scale(1.02);
+}
+
+.terminal-reopen.visible {
+    display: inline-block;
+    animation: bounceIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes bounceIn {
+    0% { 
+        opacity: 0; 
+        transform: scale(0.3);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% { 
+        opacity: 1; 
+        transform: scale(1);
+    }
+}
+
+body.light-mode .terminal-reopen {
+    background: linear-gradient(180deg, #f5f5f5 0%, #e0e0e0 100%);
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+body.light-mode .terminal-reopen::before {
+    color: #1d1d1f;
+}
+
+body.light-mode .terminal-reopen:hover {
+    box-shadow: 
+        0 8px 20px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+.terminal-title {
+    flex: 1;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.4);
+    margin-right: 52px;
+}
+
+.terminal-body {
+    padding: 1.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.95rem;
+    line-height: 1.8;
+}
+
+.terminal-line {
+    margin-bottom: 0.5rem;
+}
+
+.terminal-prompt {
+    color: #1DB954;
+}
+
+.terminal-command {
+    color: #fff;
+}
+
+.terminal-output {
+    color: rgba(255, 255, 255, 0.7);
+    padding-left: 0;
+}
+
+.terminal-comment {
+    color: rgba(255, 255, 255, 0.35);
+    font-style: italic;
+}
+
+.terminal-link {
+    color: #1DB954;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.terminal-link:hover {
+    color: #22d35e;
+    text-decoration: underline;
+}
+
+.terminal-cursor {
+    display: inline-block;
+    width: 8px;
+    height: 18px;
+    background: #1DB954;
+    margin-left: 4px;
+    animation: blink 1s step-end infinite;
+    vertical-align: text-bottom;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+/* Terminal Input */
+.terminal-input-line {
+    display: flex;
+    align-items: center;
+    margin-top: 0.75rem;
+}
+
+.terminal-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: inherit;
+    color: #fff;
+    caret-color: #1DB954;
+    margin-left: 0.5rem;
+}
+
+.terminal-input::placeholder {
+    color: rgba(255, 255, 255, 0.25);
+}
+
+.terminal-history {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.terminal-window.maximized .terminal-history {
+    max-height: calc(100vh - 120px);
+}
+
+/* Scrollbar for terminal */
+.terminal-history::-webkit-scrollbar {
+    width: 6px;
+}
+
+.terminal-history::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.terminal-history::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+}
+
+.terminal-history::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Light mode terminal input */
+body.light-mode .terminal-input {
+    color: #1d1d1f;
+    caret-color: #0f4d1f;
+}
+
+body.light-mode .terminal-input::placeholder {
+    color: rgba(0, 0, 0, 0.25);
+}
+
+body.light-mode .terminal-history::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.15);
+}
+
+body.light-mode .terminal-history::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.25);
+}
+
+/* Contact Grid */
+.contact-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem 4rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+}
+
+.contact-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 1.75rem 1.5rem;
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.contact-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+}
+
+.contact-card:hover {
+    transform: translateY(-6px);
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.contact-icon {
+    font-size: 2rem;
+    color: rgba(255, 255, 255, 0.8);
+    transition: all 0.3s ease;
+}
+
+.contact-card:hover .contact-icon {
+    color: #1DB954;
+    transform: scale(1.1);
+}
+
+.contact-card h3 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0;
+    letter-spacing: 0.02em;
+}
+
+.contact-card p {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0;
+    line-height: 1.5;
+}
+
+.contact-card a.contact-btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    padding: 0.6rem 1.25rem;
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 100px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    margin-top: auto;
+}
+
+.contact-card a.contact-btn:hover {
+    background: #1DB954;
+    border-color: #1DB954;
+    transform: translateY(-2px);
+}
+
+/* Section Header */
+.section-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 0 2rem;
+}
+
+.section-header h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.4);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+
+/* ========================================= */
+/* ==           Light Mode                 == */
+/* ========================================= */
+
+body.light-mode .terminal-window {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(0, 0, 0, 0.08);
+    box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+body.light-mode .terminal-header {
+    background: rgba(0, 0, 0, 0.02);
+    border-bottom-color: rgba(0, 0, 0, 0.06);
+}
+
+body.light-mode .terminal-title {
+    color: rgba(0, 0, 0, 0.4);
+}
+
+body.light-mode .terminal-body {
+    background: rgba(248, 248, 248, 1);
+}
+
+body.light-mode .terminal-prompt {
+    color: #0f4d1f;
+}
+
+body.light-mode .terminal-command {
+    color: #1d1d1f;
+}
+
+body.light-mode .terminal-output {
+    color: rgba(0, 0, 0, 0.6);
+}
+
+body.light-mode .terminal-comment {
+    color: rgba(0, 0, 0, 0.35);
+}
+
+body.light-mode .terminal-link {
+    color: #0f4d1f;
+}
+
+body.light-mode .terminal-link:hover {
+    color: #1DB954;
+}
+
+body.light-mode .terminal-cursor {
+    background: #0f4d1f;
+}
+
+body.light-mode .contact-card {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+body.light-mode .contact-card::before {
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(0, 0, 0, 0.08),
+        transparent
+    );
+}
+
+body.light-mode .contact-card:hover {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(0, 0, 0, 0.12);
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.08),
+        0 0 0 1px rgba(0, 0, 0, 0.03);
+}
+
+body.light-mode .contact-icon {
+    color: rgba(0, 0, 0, 0.7);
+}
+
+body.light-mode .contact-card:hover .contact-icon {
+    color: #1DB954;
+}
+
+body.light-mode .contact-card h3 {
+    color: #1d1d1f;
+}
+
+body.light-mode .contact-card p {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+body.light-mode .contact-card a.contact-btn {
+    background: rgba(0, 0, 0, 0.05);
+    color: #1d1d1f;
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+body.light-mode .contact-card a.contact-btn:hover {
+    background: #1DB954;
+    color: #fff;
+    border-color: #1DB954;
+}
+
+body.light-mode .section-header h2 {
+    color: rgba(0, 0, 0, 0.4);
+}
+
+/* ========================================= */
+/* ==           Responsive                 == */
+/* ========================================= */
+
+@media (max-width: 1024px) {
+    .contact-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .contact-page {
+        padding-top: 80px;
+    }
+    
+    .terminal-hero {
+        padding: 0 1rem;
+        margin-bottom: 2rem;
+    }
+    
+    .terminal-body {
+        font-size: 0.8rem;
+        padding: 1rem;
+    }
+    
+    .contact-grid {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 0 1rem 3rem;
+        gap: 1rem;
+    }
+    
+    .contact-card {
+        padding: 1.25rem 1rem;
+    }
+    
+    .contact-icon {
+        font-size: 1.75rem;
+    }
+    
+    .contact-card h3 {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .terminal-body {
+        font-size: 0.7rem;
+        line-height: 1.6;
+    }
+    
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .contact-card {
+        flex-direction: row;
+        text-align: left;
+        gap: 1rem;
+        padding: 1rem 1.25rem;
+    }
+    
+    .contact-icon {
+        font-size: 1.5rem;
+    }
+    
+    .contact-card-info {
+        flex: 1;
+    }
+    
+    .contact-card a.contact-btn {
+        margin-top: 0;
+    }
+}
         </style>
-
     </head>
 
     <body>
@@ -333,108 +718,116 @@
                     </button>
                 </div>
                 <ul class="nav-menu">
-                    <li><a href="/" aria-current="page">Home</a></li>
+                    <li><a href="/">Home</a></li>
                     <li><a href="/blogs/">Blogs</a></li>
                     <li><a href="/projects/">Projects</a></li>
-                    <li><a href="/contact/">Contact</a></li>
+                    <li><a href="/contact/" aria-current="page">Contact</a></li>
                     <li><a href="/about/">About</a></li>
                 </ul>
             </nav>
         </header>
-        <main>
-            <section class="contact-hero">
-                <div class="contact-hero-content">
-                    <h1>Get in Touch</h1>
-                    <p>
-                        I'm always excited to connect, collaborate, and discuss
-                        new ideas. Don't hesitate to reach out!
-                    </p>
-                </div>
-                <div class="terminal">
+        
+        <main class="contact-page">
+            <!-- Terminal Hero -->
+            <section class="terminal-hero" id="terminal-hero">
+                <div class="terminal-window" id="terminal-window">
                     <div class="terminal-header">
-                        <div class="terminal-buttons">
-                            <div class="terminal-button red"></div>
-                            <div class="terminal-button yellow"></div>
-                            <div class="terminal-button green"></div>
+                        <span class="terminal-dot red" id="btn-close" title="Close"></span>
+                        <span class="terminal-dot yellow" id="btn-minimize" title="Minimize"></span>
+                        <span class="terminal-dot green" id="btn-maximize" title="Maximize"></span>
+                        <span class="terminal-title">v8v88v8v88@fedora ~ /contact</span>
+                    </div>
+                    <div class="terminal-body" id="terminal-body">
+                        <div class="terminal-history" id="terminal-history">
+                            <div class="terminal-line">
+                                <span class="terminal-prompt">❯</span>
+                                <span class="terminal-command"> whoami</span>
+                            </div>
+                            <div class="terminal-line terminal-output">
+                                Vaibhav Pratap Singh (V8V88V8V88)
+                            </div>
+                            <div class="terminal-line" style="margin-top: 0.75rem;">
+                                <span class="terminal-prompt">❯</span>
+                                <span class="terminal-command"> echo "hello stalker!"</span>
+                            </div>
+                            <div class="terminal-line terminal-output">
+                                hello stalker!
+                            </div>
+                            <div class="terminal-line" style="margin-top: 0.75rem;">
+                                <span class="terminal-prompt">❯</span>
+                                <span class="terminal-command"> help</span>
+                            </div>
+                            <div class="terminal-line terminal-output" style="color: rgba(255,255,255,0.5);">
+                                available commands: whoami, cat, ls, echo, help, clear, neofetch
+                            </div>
+                        </div>
+                        <div class="terminal-input-line">
+                            <span class="terminal-prompt">❯</span>
+                            <input type="text" id="terminal-input" class="terminal-input" autocomplete="off" spellcheck="false" autofocus placeholder="type a command...">
                         </div>
                     </div>
-                    <div class="terminal-content" id="terminal-text"></div>
                 </div>
             </section>
+
+            <!-- Section Header -->
+            <div class="section-header">
+                <button class="terminal-reopen" id="terminal-reopen" title="Open Terminal"></button>
+                <h2>All the ways to reach me</h2>
+            </div>
+
+            <!-- Contact Grid -->
             <section class="contact-grid">
                 <div class="contact-card">
                     <i class="fas fa-envelope contact-icon"></i>
                     <h3>Email</h3>
-                    <p>Drop me a line anytime!</p>
-                    <a href="mailto:v8v88v8v88@protonmail.com">Send Email</a>
+                    <p>Drop me a line anytime</p>
+                    <a href="mailto:v8v88v8v88@protonmail.com" class="contact-btn">Send Email</a>
                 </div>
                 <div class="contact-card">
                     <i class="fab fa-github contact-icon"></i>
                     <h3>GitHub</h3>
-                    <p>Check out my latest projects and contributions.</p>
-                    <a href="https://github.com/v8v88v8v88" target="_blank"
-                        >View Profile</a
-                    >
+                    <p>Check out my code</p>
+                    <a href="https://github.com/v8v88v8v88" target="_blank" class="contact-btn">View Profile</a>
                 </div>
                 <div class="contact-card">
                     <i class="fab fa-telegram contact-icon"></i>
                     <h3>Telegram</h3>
-                    <p>For quick chats and tech discussions.</p>
-                    <a href="https://t.me/V8V88V8V88" target="_blank"
-                        >Message Me</a
-                    >
+                    <p>Quick chats welcome</p>
+                    <a href="https://t.me/V8V88V8V88" target="_blank" class="contact-btn">Message Me</a>
                 </div>
                 <div class="contact-card">
                     <i class="fab fa-linkedin contact-icon"></i>
                     <h3>LinkedIn</h3>
-                    <p>Connect professionally and explore opportunities.</p>
-                    <a
-                        href="https://www.linkedin.com/in/v8v88v8v88/"
-                        target="_blank"
-                        >Connect</a
-                    >
+                    <p>Professional network</p>
+                    <a href="https://www.linkedin.com/in/v8v88v8v88/" target="_blank" class="contact-btn">Connect</a>
                 </div>
                 <div class="contact-card">
                     <i class="fab fa-youtube contact-icon"></i>
                     <h3>YouTube</h3>
-                    <p>Watch my tech videos and tutorials.</p>
-                    <a
-                        href="https://www.youtube.com/c/MagicalV8"
-                        target="_blank"
-                        >Subscribe</a
-                    >
+                    <p>Tech videos & tutorials</p>
+                    <a href="https://www.youtube.com/c/MagicalV8" target="_blank" class="contact-btn">Subscribe</a>
                 </div>
                 <div class="contact-card">
                     <i class="fab fa-mastodon contact-icon"></i>
                     <h3>Mastodon</h3>
-                    <p>Follow me on the decentralized social network.</p>
-                    <a
-                        href="https://fosstodon.org/@v8v88v8v88"
-                        target="_blank"
-                        rel="me"
-                        >Follow</a
-                    >
+                    <p>Decentralized social</p>
+                    <a href="https://fosstodon.org/@v8v88v8v88" target="_blank" rel="me" class="contact-btn">Follow</a>
                 </div>
                 <div class="contact-card">
                     <i class="fab fa-twitter contact-icon"></i>
                     <h3>Twitter</h3>
-                    <p>Stay updated with my latest thoughts and projects.</p>
-                    <a href="https://twitter.com/v8v88v8v88" target="_blank"
-                        >Follow</a
-                    >
+                    <p>Thoughts & updates</p>
+                    <a href="https://twitter.com/v8v88v8v88" target="_blank" class="contact-btn">Follow</a>
                 </div>
                 <div class="contact-card">
                     <i class="fab fa-reddit contact-icon"></i>
                     <h3>Reddit</h3>
-                    <p>Join me in discussions on various tech topics.</p>
-                    <a
-                        href="https://www.reddit.com/user/v8v88v8v88"
-                        target="_blank"
-                        >Connect</a
-                    >
+                    <p>Tech discussions</p>
+                    <a href="https://www.reddit.com/user/v8v88v8v88" target="_blank" class="contact-btn">Connect</a>
                 </div>
             </section>
         </main>
+        
         <footer class="site-footer">
             <div class="footer-glass">
                 <div class="footer-main">
@@ -469,7 +862,7 @@
                                 <a href="https://www.reddit.com/user/v8v88v8v88" target="_blank" rel="noopener noreferrer" title="Reddit"><i class="fab fa-reddit"></i></a>
                                 <a href="https://myanimelist.net/profile/V8V88V8V88" target="_blank" rel="noopener noreferrer" title="MyAnimeList"><i class="fas fa-film"></i></a>
                             </div>
-                </div>
+                        </div>
                     </nav>
                 </div>
                 
@@ -478,20 +871,20 @@
                         <span class="copyright">🄯 2025</span>
                         <span class="separator">·</span>
                         <span class="made-with">Made with ♥ by <a href="https://github.com/V8V88V8V88">V8V88V8V88</a></span>
-                </div>
+                    </div>
                     
                     <div class="footer-webring">
                         <a href="https://webring.dinhe.net/prev/https://v8v88v8v88.com/" class="webring-link">←</a>
                         <a href="https://webring.dinhe.net/" class="webring-hub">Webring</a>
                         <a href="https://webring.dinhe.net/next/https://v8v88v8v88.com/" class="webring-link">→</a>
-            </div>
+                    </div>
                     
                     <div class="footer-visitors">
                         <a href="https://visitorbadge.io/status?path=https%3A%2F%2Fv8v88v8v88.com">
                             <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fv8v88v8v88.com&label=Visitors&labelColor=%23010101&countColor=%23b1b1b1&style=flat" alt="Visitors" loading="lazy"/>
                         </a>
                     </div>
-                 </div>
+                </div>
             </div>
         </footer>
         <script
@@ -501,42 +894,196 @@
         ></script>
         <script src="/js/script.js" defer></script>
         <script>
-            const terminalText =
-                "echo 'Hello Stalkers! Thanks for visiting my contact page. Feel free to reach out through any of the channels below :) '";
-            let i = 0;
-            function typeWriter() {
-                if (i < terminalText.length) {
-                    document.getElementById("terminal-text").innerHTML +=
-                        terminalText.charAt(i);
-                    i++;
-                    setTimeout(typeWriter, 50);
+            // Terminal Window Controls
+            const terminal = document.getElementById('terminal-window');
+            const terminalHero = document.getElementById('terminal-hero');
+            const btnClose = document.getElementById('btn-close');
+            const btnMinimize = document.getElementById('btn-minimize');
+            const btnMaximize = document.getElementById('btn-maximize');
+            const reopenBtn = document.getElementById('terminal-reopen');
+            
+            let isMaximized = false;
+            
+            // Close terminal (collapse space)
+            btnClose.addEventListener('click', () => {
+                terminal.classList.remove('maximized', 'minimized');
+                terminal.classList.add('closed');
+                isMaximized = false;
+                setTimeout(() => {
+                    terminalHero.classList.add('collapsed');
+                    reopenBtn.classList.add('visible');
+                }, 400);
+            });
+            
+            // Minimize terminal (magic lamp effect)
+            btnMinimize.addEventListener('click', () => {
+                if (isMaximized) {
+                    terminal.classList.remove('maximized');
+                    isMaximized = false;
+                } else {
+                    terminal.classList.remove('maximized');
+                    terminal.classList.add('minimized');
+                    setTimeout(() => {
+                        reopenBtn.classList.add('visible');
+                    }, 500);
                 }
+            });
+            
+            // Maximize terminal
+            btnMaximize.addEventListener('click', () => {
+                if (isMaximized) {
+                    terminal.classList.remove('maximized');
+                    isMaximized = false;
+                } else {
+                    terminal.classList.remove('minimized', 'closed');
+                    terminal.classList.add('maximized');
+                    isMaximized = true;
+                }
+            });
+            
+            // Reopen terminal
+            reopenBtn.addEventListener('click', () => {
+                terminalHero.classList.remove('collapsed');
+                terminal.classList.remove('closed', 'minimized');
+                terminal.style.visibility = 'visible';
+                terminal.style.opacity = '1';
+                terminal.style.transform = 'scale(1)';
+                reopenBtn.classList.remove('visible');
+                isMaximized = false;
+            });
+            
+            // ESC key to exit maximized mode
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && isMaximized) {
+                    terminal.classList.remove('maximized');
+                    isMaximized = false;
+                }
+            });
+            
+            // Interactive Terminal Commands
+            const terminalInput = document.getElementById('terminal-input');
+            const terminalHistory = document.getElementById('terminal-history');
+            const terminalBody = document.getElementById('terminal-body');
+            
+            const commands = {
+                whoami: () => 'Vaibhav Pratap Singh (V8V88V8V88)',
+                help: () => '<span style="color: rgba(255,255,255,0.5);">available commands: whoami, cat, ls, echo, help, clear, neofetch</span>',
+                ls: () => 'contact.json  README.md  socials/',
+                cat: (args) => {
+                    if (args === 'contact.json') {
+                        return `{
+  "email": "<a href="mailto:v8v88v8v88@protonmail.com" class="terminal-link">v8v88v8v88@protonmail.com</a>",
+  "github": "<a href="https://github.com/v8v88v8v88" target="_blank" class="terminal-link">github.com/v8v88v8v88</a>",
+  "telegram": "<a href="https://t.me/V8V88V8V88" target="_blank" class="terminal-link">t.me/V8V88V8V88</a>",
+  "status": "Open to collaborate"
+}`;
+                    } else if (args === 'README.md') {
+                        return `# Contact V8V88V8V88
+Feel free to reach out through any channel!
+I'm always open to collaborate on cool projects.`;
+                    }
+                    return `cat: ${args || 'missing file'}: No such file or directory`;
+                },
+                echo: (args) => args || '',
+                clear: () => 'CLEAR',
+                neofetch: () => `<span style="color: #1DB954;">        ⠀⠀⣠⣤⣤⣤⣤⣤⣄⡀</span>        <span style="color: #1DB954;">v8v88v8v88</span>@<span style="color: #1DB954;">fedora</span>
+<span style="color: #1DB954;">     ⠀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦</span>       ─────────────────
+<span style="color: #1DB954;">    ⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿</span>       <span style="color: #1DB954;">OS:</span> Fedora Linux
+<span style="color: #1DB954;">    ⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿</span>       <span style="color: #1DB954;">DE:</span> GNOME
+<span style="color: #1DB954;">    ⠀⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟</span>       <span style="color: #1DB954;">Shell:</span> fish
+<span style="color: #1DB954;">     ⠀⠈⠛⠿⣿⣿⣿⣿⣿⠿⠛⠁</span>        <span style="color: #1DB954;">Editor:</span> Neovim
+<span style="color: #1DB954;">        ⠀⠀⠉⠉⠉⠉⠉</span>           <span style="color: #1DB954;">Status:</span> Open to work`,
+                pwd: () => '/home/v8v88v8v88/contact',
+                date: () => new Date().toString(),
+                cd: () => 'nice try :)',
+                sudo: () => 'permission denied: nice try diddy',
+                rm: () => 'permission denied: you cannot delete my files!',
+                vim: () => 'neovim is better btw',
+                nvim: () => 'starting neovim... just kidding, this is a website!',
+                exit: () => {
+                    setTimeout(() => btnClose.click(), 100);
+                    return 'goodbye!';
+                }
+            };
+            
+            // Command history for up/down arrow
+            let cmdHistory = [];
+            let historyIndex = -1;
+            
+            terminalInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    const input = terminalInput.value.trim();
+                    if (!input) return;
+                    
+                    // Add to history
+                    cmdHistory.push(input);
+                    historyIndex = cmdHistory.length;
+                    
+                    // Parse command
+                    const parts = input.match(/(?:[^\s"]+|"[^"]*")+/g) || [];
+                    const cmd = parts[0]?.toLowerCase();
+                    const args = parts.slice(1).join(' ').replace(/^"|"$/g, '');
+                    
+                    // Add command to display
+                    const cmdLine = document.createElement('div');
+                    cmdLine.className = 'terminal-line';
+                    cmdLine.style.marginTop = '0.75rem';
+                    cmdLine.innerHTML = `<span class="terminal-prompt">❯</span><span class="terminal-command"> ${escapeHtml(input)}</span>`;
+                    terminalHistory.appendChild(cmdLine);
+                    
+                    // Execute command
+                    let output;
+                    if (cmd === 'clear') {
+                        terminalHistory.innerHTML = '';
+                    } else if (commands[cmd]) {
+                        output = commands[cmd](args);
+                    } else if (cmd) {
+                        output = `command not found: ${cmd}. type 'help' for available commands.`;
+                    }
+                    
+                    // Add output
+                    if (output && output !== 'CLEAR') {
+                        const outputLine = document.createElement('div');
+                        outputLine.className = 'terminal-line terminal-output';
+                        outputLine.innerHTML = output.replace(/\n/g, '<br>');
+                        terminalHistory.appendChild(outputLine);
+                    }
+                    
+                    // Clear input and scroll
+                    terminalInput.value = '';
+                    setTimeout(() => {
+                        terminalHistory.scrollTop = terminalHistory.scrollHeight;
+                    }, 10);
+                    
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    if (historyIndex > 0) {
+                        historyIndex--;
+                        terminalInput.value = cmdHistory[historyIndex];
+                    }
+                } else if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    if (historyIndex < cmdHistory.length - 1) {
+                        historyIndex++;
+                        terminalInput.value = cmdHistory[historyIndex];
+                    } else {
+                        historyIndex = cmdHistory.length;
+                        terminalInput.value = '';
+                    }
+                }
+            });
+            
+            // Focus input when clicking terminal
+            terminalBody.addEventListener('click', () => {
+                terminalInput.focus();
+            });
+            
+            // Escape HTML to prevent XSS
+            function escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
             }
-            window.onload = typeWriter;
         </script>
-            <script>
-                document.querySelectorAll('.contact-card').forEach(card => {
-                    card.addEventListener('mousemove', e => {
-                        const rect = card.getBoundingClientRect();
-                        const x = e.clientX - rect.left;
-                        const y = e.clientY - rect.top;
-        
-                        const centerX = rect.width / 2;
-                        const centerY = rect.height / 2;
-        
-                        const deltaX = (x - centerX) / centerX;
-                        const deltaY = (y - centerY) / centerY;
-        
-                        const tiltX = deltaY * 10;
-                        const tiltY = -deltaX * 10;
-        
-                        card.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateZ(20px)`;
-                    });
-        
-                    card.addEventListener('mouseleave', () => {
-                        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateZ(0)';
-                    });
-                });
-            </script>
     </body>
 </html>
