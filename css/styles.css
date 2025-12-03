@@ -155,19 +155,19 @@ body.scrolling header {
 /* Light mode liquid glass - reference style */
 body.light-mode header {
     background: 
-        /* Top highlight - bright edge highlight like reference */
+        /* Top highlight - subtle edge */
         linear-gradient(
             180deg,
-            rgba(255, 255, 255, 0.7) 0%,
-            rgba(255, 255, 255, 0.4) 30%,
-            rgba(255, 255, 255, 0.25) 60%,
-            rgba(255, 255, 255, 0.2) 100%
+            rgba(255, 255, 255, 0.5) 0%,
+            rgba(255, 255, 255, 0.25) 30%,
+            rgba(255, 255, 255, 0.15) 60%,
+            rgba(255, 255, 255, 0.1) 100%
         ),
-        /* Glass tint - slightly more visible base */
-        rgba(245, 245, 247, 0.35);
+        /* Glass tint - more translucent */
+        rgba(245, 245, 247, 0.2);
     
-    /* Subtle light border like reference */
-    border: 1px solid rgba(255, 255, 255, 0.6);
+    /* Subtle dark border for visibility */
+    border: 1px solid rgba(0, 0, 0, 0.08);
     
     box-shadow: 
         0 0 0 0.5px rgba(255, 255, 255, 0.4),
@@ -207,12 +207,12 @@ body.light-mode.scrolling header {
     background: 
         linear-gradient(
             180deg,
-            rgba(255, 255, 255, 0.75) 0%,
-            rgba(255, 255, 255, 0.45) 30%,
-            rgba(255, 255, 255, 0.3) 60%,
-            rgba(255, 255, 255, 0.25) 100%
+            rgba(255, 255, 255, 0.55) 0%,
+            rgba(255, 255, 255, 0.3) 30%,
+            rgba(255, 255, 255, 0.2) 60%,
+            rgba(255, 255, 255, 0.15) 100%
         ),
-        rgba(245, 245, 247, 0.4);
+        rgba(245, 245, 247, 0.25);
     box-shadow: 
         0 0 0 0.5px rgba(255, 255, 255, 0.45),
         0 8px 32px rgba(0, 0, 0, 0.08),
