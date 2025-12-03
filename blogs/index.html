@@ -43,16 +43,26 @@
 /* Hero styles for Posts Page */
 .hero {
     position: relative;
-    height: 40vh;
-    min-height: 400px;
+    height: 35vh;
+    min-height: 320px;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    margin-bottom: 4rem;
+    margin: 1rem auto 3rem;
     border-radius: 24px;
-    background: #000;
-    margin: 2rem auto;
+    background: linear-gradient(145deg, #0a0a0a 0%, #1a1a1a 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: border-color 0.4s ease, box-shadow 0.4s ease;
+    isolation: isolate;
+}
+
+.hero:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 
+        0 0 0 1px rgba(255, 255, 255, 0.05),
+        0 8px 40px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
 .hero::before {
@@ -62,15 +72,58 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, 
-        rgba(32, 32, 32, 0.8) 0%,
-        rgba(40, 44, 52, 0.8) 50%,
-        rgba(32, 32, 32, 0.8) 100%
-    );
+    background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
     z-index: 1;
+    transition: opacity 0.4s ease;
 }
 
-/* Add back the ::after element for the static grid */
+/* Liquid glass glow that follows cursor */
+.hero-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    background: radial-gradient(
+        600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(255, 255, 255, 0.08) 0%,
+        rgba(255, 255, 255, 0.03) 25%,
+        transparent 50%
+    );
+}
+
+.hero:hover .hero-glow {
+    opacity: 1;
+}
+
+/* Top edge highlight on hover */
+.hero-highlight {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.3) 20%,
+        rgba(255, 255, 255, 0.5) 50%,
+        rgba(255, 255, 255, 0.3) 80%,
+        transparent 100%
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: 10;
+}
+
+.hero:hover .hero-highlight {
+    opacity: 1;
+}
+
 .hero::after {
     content: "";
     position: absolute;
@@ -80,296 +133,480 @@
     bottom: 0;
     background: 
         linear-gradient(45deg, 
-            rgba(68, 71, 90, 0.15) 25%, /* Dark mode grid line color */
+            rgba(255, 255, 255, 0.02) 25%, 
             transparent 25%, 
             transparent 75%, 
-            rgba(68, 71, 90, 0.15) 75% 
+            rgba(255, 255, 255, 0.02) 75%
         ),
         linear-gradient(45deg, 
-            rgba(68, 71, 90, 0.15) 25%, 
+            rgba(255, 255, 255, 0.02) 25%, 
             transparent 25%, 
             transparent 75%, 
-            rgba(68, 71, 90, 0.15) 75% 
+            rgba(255, 255, 255, 0.02) 75%
         );
-    background-size: 60px 60px;
-    background-position: 0 0, 30px 30px;
-    opacity: 0.6; /* Dark mode grid opacity */
-    z-index: 2;
-    /* REMOVED animation property */
+    background-size: 40px 40px;
+    background-position: 0 0, 20px 20px;
+    opacity: 0.5;
+    z-index: 3;
 }
 
 .hero-content {
     position: relative;
     z-index: 3;
     text-align: center;
-    max-width: 800px;
+    max-width: 700px;
     padding: 0 2rem;
 }
 
 .hero h1 {
-    font-size: 4rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    background: linear-gradient(to right, #c2c2c2, #ffffff);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
-    color: transparent; /* Ensure gradient is visible, overriding global h1 */
+    font-family: "EB Garamond", Georgia, serif;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+    color: #fff;
+    letter-spacing: -0.02em;
+}
+
+.hero h1 i {
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.6);
 }
 
 .hero p {
-    font-size: 1.5rem;
-    color: rgba(255, 255, 255, 0.7); /* Explicit color override */
-    max-width: 600px;
-    margin: 0 auto; /* Use distinct margin properties */
-    line-height: 1.6; /* Explicit line-height */
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: rgba(255, 255, 255, 0.5);
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.6;
+    font-weight: 400;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .hero {
-        padding: 3rem 1rem;
-    }
-
-    .hero h1 {
-        font-size: 3rem;
-    }
-
-    .hero p {
-        font-size: 1rem;
-    }
-}
-
-/* Light Mode Styles for Posts Page Hero */
-body.light-mode .hero::before {
-    /* Subtler, natural warm gradient */
-    background: linear-gradient(135deg, 
-        #fbf9f8 0%, /* Very light warm gray */
-        #fefefe 100% /* Off-white */
-    );
-    opacity: 1; 
-}
-
-/* Adjust border and REMOVE noise texture from light mode hero */
+/* Light Mode Hero */
 body.light-mode .hero {
-    border: 1px solid #d9d7d5; /* Slightly cooler border */
-    /* REMOVE background-image property for noise */
-    background-color: transparent; /* Ensure ::before gradient shows through */
+    background: linear-gradient(145deg, #f8f8f8 0%, #efefef 100%);
+    border-color: rgba(0, 0, 0, 0.08);
 }
 
-/* Reinstate light mode grid pattern on ::after */
+body.light-mode .hero:hover {
+    border-color: rgba(0, 0, 0, 0.12);
+    box-shadow: 
+        0 0 0 1px rgba(255, 255, 255, 0.5),
+        0 8px 40px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+body.light-mode .hero::before {
+    background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255, 255, 255, 0.5) 0%, transparent 50%);
+}
+
+body.light-mode .hero-glow {
+    background: radial-gradient(
+        600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(255, 255, 255, 0.6) 0%,
+        rgba(255, 255, 255, 0.2) 25%,
+        transparent 50%
+    );
+}
+
+body.light-mode .hero-highlight {
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.8) 20%,
+        rgba(255, 255, 255, 1) 50%,
+        rgba(255, 255, 255, 0.8) 80%,
+        transparent 100%
+    );
+}
+
 body.light-mode .hero::after {
     background: 
         linear-gradient(45deg, 
-            rgba(0, 0, 0, 0.04) 25%, /* Faint dark lines */
+            rgba(0, 0, 0, 0.02) 25%, 
             transparent 25%, 
             transparent 75%, 
-            rgba(0, 0, 0, 0.04) 75%
+            rgba(0, 0, 0, 0.02) 75%
         ),
         linear-gradient(45deg, 
-            rgba(0, 0, 0, 0.04) 25%, 
+            rgba(0, 0, 0, 0.02) 25%, 
             transparent 25%, 
             transparent 75%, 
-            rgba(0, 0, 0, 0.04) 75%
+            rgba(0, 0, 0, 0.02) 75%
         );
-    opacity: 1; 
+    opacity: 0.6;
 }
 
 body.light-mode .hero h1 {
-    color: #1d1d1f; /* Set solid dark color */
-    background: none; /* Override base gradient */
-    -webkit-background-clip: initial; /* Reset clipping */
-    background-clip: initial; /* Reset clipping */
-    -webkit-text-fill-color: initial; /* Reset text fill */
+    color: #1d1d1f;
+}
+
+body.light-mode .hero h1 i {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+body.light-mode .hero p {
+    color: rgba(0, 0, 0, 0.5);
 }
 
 /* Post Grid Styles */
 .posts-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: 4rem;
-    padding: 0; /* Reset padding if needed */
-    background-color: transparent; /* Ensure no background override */
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+    margin-top: 0;
+    padding: 0;
+    background-color: transparent;
 }
 
 .post-card {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 1rem;
+    position: relative;
+    background: 
+        linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.06) 0%,
+            rgba(255, 255, 255, 0.02) 50%,
+            rgba(255, 255, 255, 0) 100%
+        ),
+        rgba(25, 25, 25, 0.6);
+    border-radius: 20px;
     overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
-    border: 1px solid rgba(255, 255, 255, 0.1); /* Add border */
-    display: flex; /* Use flexbox for layout */
-    flex-direction: column; 
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    box-shadow: 
+        0 0 0 0.5px rgba(255, 255, 255, 0.05),
+        0 4px 20px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+/* Inner highlight for glass depth */
+.post-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.15) 30%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0.15) 70%,
+        transparent 100%
+    );
+    z-index: 10;
 }
 
 .post-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    border-color: rgba(255, 255, 255, 0.2); /* Enhance border on hover */
+    transform: translateY(-6px);
+    box-shadow: 
+        0 0 0 0.5px rgba(255, 255, 255, 0.08),
+        0 20px 40px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.18);
+    background: 
+        linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.08) 0%,
+            rgba(255, 255, 255, 0.03) 50%,
+            rgba(255, 255, 255, 0) 100%
+        ),
+        rgba(30, 30, 30, 0.7);
 }
 
 .post-image {
-    height: 200px;
+    height: 180px;
     background-size: cover;
     background-position: center;
-    width: 100%; /* Ensure image takes full width */
+    width: 100%;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.post-card:hover .post-image {
+    transform: scale(1.02);
+}
+
+.post-image::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.4), transparent);
+    pointer-events: none;
 }
 
 .post-content {
     padding: 1.5rem;
-    flex-grow: 1; /* Allow content to fill space */
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .post-title, 
 .post-title a {
-    font-size: 1.5rem;
-    font-weight: 600; /* Add weight */
-    margin-bottom: 0.5rem;
-    color: #fff !important; /* Re-added !important as it was in original */
+    font-size: 1.35rem;
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+    color: #fff !important;
     text-decoration: none;
-    line-height: 1.3; /* Adjust line height */
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    transition: color 0.2s ease;
+}
+
+.post-card:hover .post-title,
+.post-card:hover .post-title a {
+    color: #1DB954 !important;
 }
 
 .post-excerpt {
-    font-size: 1rem;
+    font-size: 0.95rem;
     margin-bottom: 1rem;
-    color: rgba(255, 255, 255, 0.7); /* Lighter color for dark mode contrast */
-    line-height: 1.5; /* Adjust line height */
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.55;
+    flex-grow: 1;
+}
+
+.post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.post-tag {
+    background: rgba(29, 185, 84, 0.15);
+    color: #1DB954;
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    border: 1px solid rgba(29, 185, 84, 0.2);
+    transition: all 0.2s ease;
+}
+
+.post-card:hover .post-tag {
+    background: rgba(29, 185, 84, 0.25);
+    border-color: rgba(29, 185, 84, 0.4);
 }
 
 .post-meta {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 0.9rem;
-    color: #666; /* Explicit color */
-    margin-top: auto; /* Push meta to bottom */
-    padding-top: 1rem; /* Add some space */
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.4);
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.post-date {
+.post-date,
+.post-read-time {
     display: flex;
     align-items: center;
+    gap: 0.4rem;
 }
 
 .post-date i,
 .post-read-time i {
-    margin-right: 0.5rem;
-    color: #666; /* Ensure icon color matches meta */
-}
-
-.post-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem; /* Use gap for spacing */
-    margin-top: 0.5rem; /* Add space above tags */
-    margin-bottom: 1rem; /* Add space below tags */
-}
-
-.post-tag {
-    background-color: rgba(255, 255, 255, 0.2);
-    color: #fff;
-    padding: 0.2rem 0.5rem;
-    border-radius: 1rem;
-    font-size: 0.8rem;
-    /* Removed margin-right/bottom, using gap in parent */
+    font-size: 0.75rem;
+    opacity: 0.7;
 }
 
 /* Pagination styles */
 .pagination {
     display: flex;
     justify-content: center;
-    margin-top: 4rem;
+    gap: 0.75rem;
+    margin-top: 3rem;
+    padding-bottom: 1rem;
 }
 
 .pagination a {
-    padding: 0.5rem 1rem;
-    margin: 0 0.5rem;
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 0.5rem;
-    transition: background-color 0.3s ease;
-    color: #fff;
-    text-decoration: none; /* Added */
+    padding: 0.6rem 1.25rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 999px;
+    transition: all 0.25s ease;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
 }
 
 .pagination a:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    transform: translateY(-2px);
 }
 
 /* Light mode adjustments */
 body.light-mode .post-card {
-    background-color: rgba(0, 0, 0, 0.05);
-    border-color: rgba(0,0,0, 0.1);
+    background: 
+        linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.9) 0%,
+            rgba(255, 255, 255, 0.6) 50%,
+            rgba(255, 255, 255, 0.4) 100%
+        ),
+        rgba(248, 248, 248, 0.8);
+    border-color: rgba(0, 0, 0, 0.08);
+    box-shadow: 
+        0 4px 20px rgba(0, 0, 0, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+body.light-mode .post-card::before {
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.7) 30%,
+        rgba(255, 255, 255, 0.9) 50%,
+        rgba(255, 255, 255, 0.7) 70%,
+        transparent 100%
+    );
 }
 
 body.light-mode .post-card:hover {
-    background-color: rgba(0, 0, 0, 0.08);
-    border-color: rgba(0,0,0, 0.15);
+    background: 
+        linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 1) 0%,
+            rgba(255, 255, 255, 0.8) 50%,
+            rgba(255, 255, 255, 0.6) 100%
+        ),
+        rgba(255, 255, 255, 0.9);
+    border-color: rgba(0, 0, 0, 0.12);
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+body.light-mode .post-image::after {
+    background: linear-gradient(to top, rgba(255, 255, 255, 0.3), transparent);
 }
 
 body.light-mode .post-title, 
 body.light-mode .post-title a {
-    color: black !important; /* Re-added !important as it was in original */
+    color: #1d1d1f !important;
+}
+
+body.light-mode .post-card:hover .post-title,
+body.light-mode .post-card:hover .post-title a {
+    color: #1DB954 !important;
 }
 
 body.light-mode .post-excerpt {
-    color: #333; /* Darker gray for better contrast - FIXED TYPO */
-}
-
-body.light-mode .post-meta {
-    color: #333;
-}
-
-body.light-mode .post-date i,
-body.light-mode .post-read-time i {
-     color: #333;
+    color: rgba(0, 0, 0, 0.6);
 }
 
 body.light-mode .post-tag {
-    background-color: rgba(0, 0, 0, 0.1);
-    color: #000;
+    background: rgba(29, 185, 84, 0.1);
+    color: #15803d;
+    border-color: rgba(29, 185, 84, 0.2);
+}
+
+body.light-mode .post-card:hover .post-tag {
+    background: rgba(29, 185, 84, 0.2);
+    border-color: rgba(29, 185, 84, 0.35);
+}
+
+body.light-mode .post-meta {
+    color: rgba(0, 0, 0, 0.4);
+    border-top-color: rgba(0, 0, 0, 0.06);
 }
 
 body.light-mode .pagination a {
-    background-color: rgba(0, 0, 0, 0.1);
-    color: #000;            
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.08);
+    color: rgba(0, 0, 0, 0.6);
 }
 
 body.light-mode .pagination a:hover {
-    background-color: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.08);
+    border-color: rgba(0, 0, 0, 0.12);
+    color: #000;
 }
 
-@keyframes gradientMove {
-    0% {
-        background-position: 0 0, 30px 30px;
-    }
-    100% {
-        background-position: 60px 60px, 90px 90px;
-    }
-}
-
-/* Mobile specific adjustments for post cards */
-@media (max-width: 480px) {
-    .post-meta,
-    .post-date,
-    .post-read-time {
-        font-size: 0.8rem; /* Reduce meta font size */
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .hero {
+        height: 30vh;
+        min-height: 260px;
+        margin: 0.5rem auto 2rem;
+        border-radius: 20px;
     }
 
-    .post-tag {
-        font-size: 0.7rem; /* Reduce tag font size */
-        padding: 0.15rem 0.4rem;
+    .hero h1 {
+        font-size: 2.5rem;
     }
 
-    .post-card {
-        border-radius: 0.75rem; /* Slightly smaller radius */
+    .hero p {
+        font-size: 1rem;
     }
-
+    
     .posts-grid {
-        gap: 1.5rem;
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+    
+    .post-image {
+        height: 160px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero {
+        min-height: 220px;
+        border-radius: 16px;
+    }
+    
+    .hero h1 {
+        font-size: 2rem;
+    }
+    
+    .post-card {
+        border-radius: 16px;
+    }
+    
+    .post-content {
+        padding: 1.25rem;
+    }
+    
+    .post-title, 
+    .post-title a {
+        font-size: 1.2rem;
+    }
+    
+    .post-excerpt {
+        font-size: 0.9rem;
+    }
+    
+    .post-tag {
+        font-size: 0.7rem;
+        padding: 0.25rem 0.6rem;
+    }
+    
+    .post-meta {
+        font-size: 0.75rem;
+    }
+    
+    .pagination a {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
     }
 }
 
@@ -402,6 +639,8 @@ body.light-mode .pagination a:hover {
 
     <main>
         <section class="hero">
+            <div class="hero-glow"></div>
+            <div class="hero-highlight"></div>
             <div class="hero-content">
                 <h1>I write <i>maybe</i></h1>
                 <p>The ultimate answer to the life, the universe, and everything</p>
@@ -410,85 +649,58 @@ body.light-mode .pagination a:hover {
 
       <section class="posts-grid">
         <article class="post-card">
-          <div
-            class="post-image"
-            style="background-image: url('/images/username.png')"
-          ></div>
+          <div class="post-image" style="background-image: url('/images/username.png')"></div>
           <div class="post-content">
             <h2 class="post-title"><a href="/username/">Username</a></h2>
-            <p class="post-excerpt">
-              The only description behind my mysterious username.
-            </p>
-            <div class="post-meta">
-              <span class="post-date">
-                <i class="far fa-calendar-alt"></i> Mar 4, 2025
-              </span>
-              <span class="post-read-time">
-                <i class="far fa-clock"></i> 5 min read
-              </span>
-            </div>
+            <p class="post-excerpt">The only description behind my mysterious username V8V88V8V88.</p>
             <div class="post-tags">
               <span class="post-tag">Identity</span>
               <span class="post-tag">Personal</span>
             </div>
+            <div class="post-meta">
+              <span class="post-date">Mar 4, 2025</span>
+              <span class="post-read-time">5 min read</span>
+            </div>
           </div>
         </article>
 
         <article class="post-card">
-          <div
-            class="post-image"
-            style="background-image: url('/images/linux.png')"
-          ></div>
+          <div class="post-image" style="background-image: url('/images/linux.png')"></div>
           <div class="post-content">
             <h2 class="post-title">My Linux Journey</h2>
-            <p class="post-excerpt">
-              From Pro Windows User to Linux Nerd, How have been my journery.
-            </p>
-            <div class="post-meta">
-              <span class="post-date"
-                ><i class="far fa-calendar-alt"></i> Aug 15, 2022</span
-              >
-              <span class="post-read-time"
-                ><i class="far fa-clock"></i> 8 min read</span
-              >
-            </div>
+            <p class="post-excerpt">From Pro Windows User to Linux Nerd — how my journey unfolded.</p>
             <div class="post-tags">
               <span class="post-tag">Linux</span>
               <span class="post-tag">Open Source</span>
             </div>
+            <div class="post-meta">
+              <span class="post-date">Aug 15, 2022</span>
+              <span class="post-read-time">8 min read</span>
+            </div>
           </div>
         </article>
 
         <article class="post-card">
-          <div
-            class="post-image"
-            style="background-image: url('/images/minimal.jpg')"
-          ></div>
+          <div class="post-image" style="background-image: url('/images/minimal.jpg')"></div>
           <div class="post-content">
             <h2 class="post-title"><a href="/minimalism/">Minimalism</a></h2>
-            <p class="post-excerpt">
-              How ultimate simplicity changed the design of my life.
-            </p>
-            <div class="post-meta">
-              <span class="post-date"
-                ><i class="far fa-calendar-alt"></i> Oct 6, 2025</span
-              >
-              <span class="post-read-time"
-                ><i class="far fa-clock"></i> 6 min read</span
-              >
-            </div>
+            <p class="post-excerpt">How ultimate simplicity changed the design of my life.</p>
             <div class="post-tags">
               <span class="post-tag">Minimalism</span>
               <span class="post-tag">Philosophy</span>
+            </div>
+            <div class="post-meta">
+              <span class="post-date">Oct 6, 2025</span>
+              <span class="post-read-time">6 min read</span>
             </div>
           </div>
         </article>
       </section>
 
-      <div class="pagination">
-        <a href="#" class="prev">Previous</a>
-        <a href="#" class="next">Next</a>
-      </div>
+      <nav class="pagination">
+        <a href="#" class="prev">← Previous</a>
+        <a href="#" class="next">Next →</a>
+      </nav>
     </main>
     <footer class="site-footer">
         <div class="footer-glass">
@@ -557,6 +769,7 @@ body.light-mode .pagination a:hover {
     <script src="/js/script.js" defer></script>
     <script>
 document.addEventListener("DOMContentLoaded", function () {
+    // Post card click handler
     document.querySelectorAll(".post-card").forEach(card => {
         card.addEventListener("click", function () {
             const link = this.querySelector("a");
@@ -565,6 +778,18 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
+
+    // Hero liquid glass glow effect
+    const hero = document.querySelector(".hero");
+    if (hero) {
+        hero.addEventListener("mousemove", (e) => {
+            const rect = hero.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+            hero.style.setProperty("--mouse-x", x + "%");
+            hero.style.setProperty("--mouse-y", y + "%");
+        });
+    }
 });
       </script>
       
