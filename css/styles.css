@@ -1256,36 +1256,18 @@ body.light-mode .intro img {
 
 /* Vaibhav → V8V88V8V88 hover effect */
 .vaibhav-hover {
-    position: relative;
-    display: inline-block;
     cursor: pointer;
 }
 
-.vaibhav-hover::after {
-    content: attr(data-text);
-    position: absolute;
-    left: 0;
-    top: 0;
+.vaibhav-hover:hover {
     font-family: "EB Garamond", Georgia, serif;
     font-style: italic;
-    font-weight: 500;
-    opacity: 0;
-    white-space: nowrap;
-    pointer-events: none;
-    color: #fff;
+    font-size: 0;
 }
 
-body.light-mode .vaibhav-hover::after {
-    color: #1d1d1f;
-}
-
-.vaibhav-hover:hover {
-    color: transparent;
-    transition: color 0.2s ease;
-}
-
-.vaibhav-hover:hover::after {
-    opacity: 1;
+.vaibhav-hover:hover::before {
+    content: "V8V88V8V88";
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
 }
 
 body.light-mode .intro-text p {

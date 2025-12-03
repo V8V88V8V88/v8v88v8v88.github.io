@@ -73,6 +73,58 @@
         body.light-mode .view-all:hover {
             color: #0f4d1f !important;
         }
+        
+        /* Avatar coin flip - smooth 60fps */
+        .intro .avatar-flip {
+            width: 120px;
+            height: 120px;
+            perspective: 800px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        
+        .intro .avatar-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+        
+        .intro .avatar-flip.flipped .avatar-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .intro .avatar-flip img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100% !important;
+            height: 100% !important;
+            border-radius: 50%;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .intro .avatar-back {
+            transform: rotateY(180deg);
+        }
+        
+        @media (max-width: 768px) {
+            .intro .avatar-flip {
+                width: 100px;
+                height: 100px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .intro .avatar-flip {
+                width: 80px;
+                height: 80px;
+            }
+        }
     </style>
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://v8v88v8v88.com/">
@@ -155,11 +207,18 @@
 
             <section class="intro">
                 <div class="intro-content">
-                    <img src="/images/image.webp" alt="notmesherlock" />
+                    <div class="avatar-flip" id="avatar-flip" onclick="this.classList.toggle('flipped')">
+                        <div class="avatar-inner">
+                            <img src="/images/image.webp" alt="Vaibhav" class="avatar-front" />
+                            <img src="/images/V8.webp" alt="V8" class="avatar-back" />
+                        </div>
+                    </div>
                     <div class="intro-text">
                         <h2>
                             Hi, I'm
-                            <span class="vaibhav-hover" data-text="V8V88V8V88">Vaibhav</span>
+                            <span class="vaibhav-hover" data-text="V8V88V8V88" 
+                                onmouseenter="document.getElementById('avatar-flip').classList.add('flipped')"
+                                onmouseleave="document.getElementById('avatar-flip').classList.remove('flipped')">Vaibhav</span>
                         </h2>
                         <p>Linux × FOSS × Code × Design</p>
                     </div>
