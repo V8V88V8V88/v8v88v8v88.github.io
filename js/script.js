@@ -1,4 +1,3 @@
-// Scroll Effect (single handler, rely on CSS for most effects)
 window.addEventListener("scroll", function () {
   if (window.pageYOffset > 0) {
     document.body.classList.add("scrolling");
@@ -7,7 +6,6 @@ window.addEventListener("scroll", function () {
   }
 });
 
-// Mobile Menu Toggle + a11y
 const menuToggle = document.querySelector(".menu-toggle");
 const navMenu = document.querySelector(".nav-menu");
 const mobileMql = window.matchMedia('(max-width: 767px)');
@@ -17,7 +15,6 @@ function setMenuState(open) {
   navMenu.classList.toggle("active", open);
   menuToggle.classList.toggle("active", open);
   menuToggle.setAttribute("aria-expanded", String(open));
-  // Only manage aria-hidden/inert on mobile layout
   if (mobileMql.matches) {
     navMenu.setAttribute("aria-hidden", String(!open));
     if (open) navMenu.removeAttribute("inert");
@@ -27,7 +24,6 @@ function setMenuState(open) {
     navMenu.removeAttribute("inert");
   }
   if (open) {
-    // focus first link
     const firstLink = navMenu.querySelector('a, button, [tabindex="0"]');
     (firstLink || menuToggle).focus({ preventScroll: true });
   } else {
@@ -38,7 +34,6 @@ function setMenuState(open) {
 function applyInertForLayout() {
   if (!navMenu || !menuToggle) return;
   if (mobileMql.matches) {
-    // If not explicitly opened, keep closed and inert
     const open = navMenu.classList.contains('active');
     navMenu.setAttribute('aria-hidden', String(!open));
     if (!open) navMenu.setAttribute('inert', '');
@@ -59,7 +54,6 @@ if (menuToggle && navMenu) {
     setMenuState(open);
   });
 
-  // Close on Esc and outside click
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && navMenu.classList.contains("active")) {
       setMenuState(false);
@@ -73,7 +67,6 @@ if (menuToggle && navMenu) {
     }
   });
 
-  // Basic focus containment when menu is open
   document.addEventListener("keydown", (e) => {
     if (!navMenu.classList.contains("active") || e.key !== "Tab") return;
     const focusables = navMenu.querySelectorAll('a, button, [tabindex="0"]');
@@ -88,16 +81,13 @@ if (menuToggle && navMenu) {
       first.focus();
     }
   });
-  // Sync behavior on viewport changes
   if (mobileMql.addEventListener) {
     mobileMql.addEventListener('change', applyInertForLayout);
   } else if (mobileMql.addListener) {
-    // Legacy Safari
     mobileMql.addListener(applyInertForLayout);
   }
 }
 
-// "Hi, I'm Vaibhav" Hover Effect
 const vaibhavHover = document.querySelector(".vaibhav-hover");
 const hoverText = vaibhavHover ? vaibhavHover.dataset.text : "";
 
@@ -112,9 +102,6 @@ if (vaibhavHover) {
   });
 }
 
-// (Theme handling consolidated below)
-
-// Arrows for project container
 const projectsContainer = document.querySelector(".projects ul");
 if (projectsContainer) {
   const leftArrow = document.createElement("div");
@@ -138,11 +125,9 @@ if (projectsContainer) {
   });
 }
 
-// Liquid Glass Navbar - Mouse tracking for dynamic highlight
 document.addEventListener("DOMContentLoaded", () => {
   const header = document.querySelector("header");
   if (header) {
-    // Track mouse position for the liquid glass highlight effect
     header.addEventListener("mousemove", (e) => {
       const rect = header.getBoundingClientRect();
       const x = ((e.clientX - rect.left) / rect.width) * 100;
@@ -150,60 +135,29 @@ document.addEventListener("DOMContentLoaded", () => {
       header.style.setProperty("--mouse-x", `${x}%`);
       header.style.setProperty("--mouse-y", `${y}%`);
     });
-    
-    // Reset position when mouse leaves
+
     header.addEventListener("mouseleave", () => {
       header.style.setProperty("--mouse-x", "50%");
       header.style.setProperty("--mouse-y", "50%");
     });
   }
-  
-  // Set active nav link based on current page
+
   const navLinks = document.querySelectorAll(".nav-menu a");
   const currentPath = window.location.pathname;
-  
+
   navLinks.forEach(link => {
-    // Remove existing aria-current from all links
     link.removeAttribute("aria-current");
-    
+
     const linkPath = link.getAttribute("href");
-    
-    // Check if this link matches the current page
-    if (linkPath === currentPath || 
-        (linkPath !== "/" && currentPath.startsWith(linkPath)) ||
-        (linkPath === "/" && currentPath === "/")) {
+
+    if (linkPath === currentPath ||
+      (linkPath !== "/" && currentPath.startsWith(linkPath)) ||
+      (linkPath === "/" && currentPath === "/")) {
       link.setAttribute("aria-current", "page");
     }
   });
 });
 
-// Easter Egg Console Log
-console.log("%cGreetings, fellow traveler! %cLooks like you've found the console. Curious, aren't we? ", "color: #1DB954; font-weight: bold;", "color: inherit;");
-console.log("%c                 .--.      \n                / o__o \     \n               |   <>   |    \n               \  .--.  /    \n                ------    ", "color: #a8ff60"); // Using the softer terminal green for ASCII
-
-// Konami Code Easter Egg
-const konamiCode = [
-  'ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown',
-  'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight',
-  'b', 'a'
-];
-let konamiIndex = 0;
-document.addEventListener('keydown', function(e) {
-  if (e.key.toLowerCase() === konamiCode[konamiIndex].toLowerCase()) {
-    konamiIndex++;
-    if (konamiIndex === konamiCode.length) {
-      console.log("%cKONAMI! %cAchievement Unlocked: Secret Handshake 😉", "color: #ff5f56; font-weight: bold;", "color: inherit;");
-      // Optional: Add a visual effect here too?
-      // document.body.style.filter = 'invert(1)';
-      // setTimeout(() => { document.body.style.filter = 'none'; }, 1000);
-      konamiIndex = 0; // Reset
-    }
-  } else {
-    konamiIndex = 0; // Reset if wrong key pressed
-  }
-});
-
-// --- Theme Switching Logic ---
 const body = document.body;
 const navbarSwitch = document.getElementById('mode-switch');
 
@@ -217,17 +171,17 @@ function setTheme(theme) {
     body.classList.add('dark-mode');
     localStorage.setItem('theme', 'dark');
   }
+
+
   updateSwitchesVisualState(theme);
 }
 
 function updateSwitchesVisualState(theme) {
-  // Update Navbar Switch
   if (navbarSwitch) {
     navbarSwitch.checked = (theme === 'dark');
   }
 }
 
-// Event Listener for Navbar Switch
 if (navbarSwitch) {
   navbarSwitch.addEventListener('change', function () {
     const newTheme = this.checked ? 'dark' : 'light';
@@ -235,6 +189,5 @@ if (navbarSwitch) {
   });
 }
 
-// Initial Theme Load
-const savedTheme = localStorage.getItem('theme') || 'dark'; // Default to dark
-setTheme(savedTheme); // Apply theme and sync NAVBAR switch on load
+const savedTheme = localStorage.getItem('theme') || 'dark';
+setTheme(savedTheme);

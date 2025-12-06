@@ -44,7 +44,7 @@ footer,
 }
 
 /* ========================================= */
-/* ==    Apple Liquid Glass Navbar         == */
+/* ==    Liquid Glass Navbar         == */
 /* ========================================= */
 
 header {
@@ -57,42 +57,32 @@ header {
     z-index: 100;
     padding: 0.55rem 2rem;
     border-radius: 999px;
-    
-    /* Liquid glass base - layered backgrounds for depth */
-    background: 
-        /* Top highlight - simulates light hitting glass surface */
-        linear-gradient(
-            180deg,
+
+    background:
+        linear-gradient(180deg,
             rgba(255, 255, 255, 0.08) 0%,
             rgba(255, 255, 255, 0.03) 50%,
-            rgba(255, 255, 255, 0) 100%
-        ),
-        /* Main glass tint - very subtle */
+            rgba(255, 255, 255, 0) 100%),
         rgba(30, 30, 30, 0.25);
-    
-    /* Strong blur for frosted glass effect */
+
     backdrop-filter: blur(40px) saturate(180%);
     -webkit-backdrop-filter: blur(40px) saturate(180%);
-    
-    /* Subtle inner border glow */
+
     border: 1px solid rgba(255, 255, 255, 0.1);
-    
-    /* Outer glow for floating effect */
-    box-shadow: 
+
+    box-shadow:
         0 0 0 0.5px rgba(255, 255, 255, 0.05),
         0 4px 24px rgba(0, 0, 0, 0.15),
         0 1px 3px rgba(0, 0, 0, 0.1),
         inset 0 1px 0 rgba(255, 255, 255, 0.05);
-    
-    /* Smooth transitions */
-    transition: 
+
+    transition:
         background 0.4s cubic-bezier(0.4, 0, 0.2, 1),
         border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
         box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
         transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Liquid shimmer effect layer */
 header::before {
     content: '';
     position: absolute;
@@ -101,18 +91,15 @@ header::before {
     right: 0;
     bottom: 0;
     border-radius: inherit;
-    background: 
-        radial-gradient(
-            ellipse 80% 50% at 50% 0%,
+    background:
+        radial-gradient(ellipse 80% 50% at 50% 0%,
             rgba(255, 255, 255, 0.06) 0%,
-            transparent 60%
-        );
+            transparent 60%);
     pointer-events: none;
     opacity: 1;
     transition: opacity 0.4s ease;
 }
 
-/* Animated highlight that follows cursor (controlled by JS) */
 header::after {
     content: '';
     position: absolute;
@@ -121,11 +108,9 @@ header::after {
     right: 0;
     bottom: 0;
     border-radius: inherit;
-    background: radial-gradient(
-        300px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-        rgba(255, 255, 255, 0.08) 0%,
-        transparent 60%
-    );
+    background: radial-gradient(300px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+            rgba(255, 255, 255, 0.08) 0%,
+            transparent 60%);
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.4s ease;
@@ -135,85 +120,67 @@ header:hover::after {
     opacity: 1;
 }
 
-/* Scrolled state - slightly more opaque */
 body.scrolling header {
-    background: 
-        linear-gradient(
-            180deg,
+    background:
+        linear-gradient(180deg,
             rgba(255, 255, 255, 0.06) 0%,
             rgba(255, 255, 255, 0.02) 50%,
-            rgba(255, 255, 255, 0) 100%
-        ),
+            rgba(255, 255, 255, 0) 100%),
         rgba(20, 20, 20, 0.35);
-    box-shadow: 
+    box-shadow:
         0 0 0 0.5px rgba(255, 255, 255, 0.06),
         0 8px 32px rgba(0, 0, 0, 0.25),
         0 2px 6px rgba(0, 0, 0, 0.15),
         inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
-/* Light mode liquid glass - reference style */
 body.light-mode header {
-    background: 
-        /* Top highlight - subtle edge */
-        linear-gradient(
-            180deg,
+    background:
+        linear-gradient(180deg,
             rgba(255, 255, 255, 0.5) 0%,
             rgba(255, 255, 255, 0.25) 30%,
             rgba(255, 255, 255, 0.15) 60%,
-            rgba(255, 255, 255, 0.1) 100%
-        ),
-        /* Glass tint - more translucent */
+            rgba(255, 255, 255, 0.1) 100%),
         rgba(245, 245, 247, 0.2);
-    
-    /* Subtle dark border for visibility */
+
     border: 1px solid rgba(0, 0, 0, 0.08);
-    
-    box-shadow: 
+
+    box-shadow:
         0 0 0 0.5px rgba(255, 255, 255, 0.4),
         0 4px 30px rgba(0, 0, 0, 0.06),
         0 1px 3px rgba(0, 0, 0, 0.03),
-        /* Bright top/left edge highlight like reference */
         inset 0 1px 0 rgba(255, 255, 255, 0.95),
         inset -1px 0 0 rgba(255, 255, 255, 0.7),
         inset 0 -1px 0 rgba(0, 0, 0, 0.02);
-    
-    /* Strong blur for frosted glass effect */
+
     backdrop-filter: blur(60px) saturate(200%);
     -webkit-backdrop-filter: blur(60px) saturate(200%);
 }
 
 body.light-mode header::before {
-    background: 
-        /* Bright top-left highlight like reference */
-        radial-gradient(
-            ellipse 100% 60% at 0% 0%,
+    background:
+        radial-gradient(ellipse 100% 60% at 0% 0%,
             rgba(255, 255, 255, 0.7) 0%,
             rgba(255, 255, 255, 0.3) 30%,
-            transparent 60%
-        );
+            transparent 60%);
     opacity: 0.9;
 }
 
 body.light-mode header::after {
-    background: radial-gradient(
-        300px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-        rgba(255, 255, 255, 0.4) 0%,
-        transparent 50%
-    );
+    background: radial-gradient(300px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+            rgba(255, 255, 255, 0.4) 0%,
+            transparent 50%);
 }
 
 body.light-mode.scrolling header {
-    background: 
-        linear-gradient(
-            180deg,
+    background:
+        linear-gradient(180deg,
             rgba(255, 255, 255, 0.55) 0%,
             rgba(255, 255, 255, 0.3) 30%,
             rgba(255, 255, 255, 0.2) 60%,
-            rgba(255, 255, 255, 0.15) 100%
-        ),
+            rgba(255, 255, 255, 0.15) 100%),
         rgba(245, 245, 247, 0.25);
-    box-shadow: 
+    box-shadow:
         0 0 0 0.5px rgba(255, 255, 255, 0.45),
         0 8px 32px rgba(0, 0, 0, 0.08),
         0 2px 6px rgba(0, 0, 0, 0.04),
@@ -253,7 +220,7 @@ nav a {
     font-weight: 500;
     letter-spacing: -0.01em;
     position: relative;
-    transition: 
+    transition:
         color 0.25s ease,
         background-color 0.25s ease,
         transform 0.2s ease;
@@ -274,7 +241,6 @@ body.light-mode nav a:hover {
     background-color: rgba(0, 0, 0, 0.08);
 }
 
-/* Active nav link indicator */
 nav a[aria-current="page"] {
     background-color: rgba(255, 255, 255, 0.15);
     color: #fff;
@@ -285,7 +251,6 @@ body.light-mode nav a[aria-current="page"] {
     color: #000;
 }
 
-/* Logo styling for liquid glass navbar */
 .logo a {
     font-weight: 600;
     font-size: 1.05rem;
@@ -335,34 +300,31 @@ body.light-mode section {
     margin: 0 auto;
     padding: 2.5rem;
     border-radius: 24px;
-    
-    /* Liquid glass effect */
-    background: 
-        linear-gradient(
-            180deg,
+
+    background:
+        linear-gradient(180deg,
             rgba(255, 255, 255, 0.08) 0%,
             rgba(255, 255, 255, 0.03) 50%,
-            rgba(255, 255, 255, 0) 100%
-        ),
+            rgba(255, 255, 255, 0) 100%),
         rgba(30, 30, 30, 0.4);
-    
+
     backdrop-filter: blur(40px) saturate(180%);
     -webkit-backdrop-filter: blur(40px) saturate(180%);
-    
+
     border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 
+    box-shadow:
         0 0 0 0.5px rgba(255, 255, 255, 0.05),
         0 8px 32px rgba(0, 0, 0, 0.2),
         inset 0 1px 0 rgba(255, 255, 255, 0.05);
-    
+
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 body.light-mode .footer-glass {
     background: linear-gradient(180deg, #f8f8f8 0%, #e5e5e5 100%);
-    
+
     border: 1px solid rgba(0, 0, 0, 0.08);
-    box-shadow: 
+    box-shadow:
         0 8px 32px rgba(0, 0, 0, 0.05),
         inset 0 1px 0 rgba(255, 255, 255, 0.6);
 }
@@ -524,7 +486,6 @@ body.light-mode .footer-tagline {
     color: #fff;
 }
 
-/* Social Icons Grid */
 .footer-socials {
     min-width: auto;
 }
@@ -645,54 +606,53 @@ body.light-mode .footer-tagline {
     opacity: 1;
 }
 
-/* Footer Responsive */
 @media (max-width: 768px) {
     .site-footer {
         padding: 0 1rem 1rem;
         margin-top: 3rem;
     }
-    
+
     .footer-glass {
         padding: 2rem 1.5rem;
         border-radius: 20px;
     }
-    
+
     .footer-main {
         flex-direction: column;
         gap: 2rem;
         text-align: center;
     }
-    
+
     .footer-brand {
         order: -1;
         text-align: center;
     }
-    
+
     .footer-nav {
         width: 100%;
         justify-content: center;
         gap: 2.5rem;
         flex-wrap: wrap;
     }
-    
+
     .footer-nav-group {
         align-items: center;
         min-width: 100px;
     }
-    
+
     .footer-bottom-bar {
         display: flex;
         flex-direction: column;
         text-align: center;
         gap: 1rem;
     }
-    
+
     .footer-bottom-bar .footer-meta,
     .footer-bottom-bar .footer-webring,
     .footer-bottom-bar .footer-visitors {
         justify-self: center;
     }
-    
+
     .footer-meta {
         flex-wrap: wrap;
         justify-content: center;
@@ -704,15 +664,15 @@ body.light-mode .footer-tagline {
         padding: 1.5rem 1rem;
         border-radius: 16px;
     }
-    
+
     .footer-nav {
         gap: 1.5rem;
     }
-    
+
     .footer-nav-group {
         min-width: 80px;
     }
-    
+
     .footer-logo {
         font-size: 1.3rem;
     }
@@ -722,7 +682,9 @@ body.light-mode .footer-tagline {
 /* ==         Typography System           == */
 /* ========================================= */
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
     font-weight: 600;
     margin-bottom: 1.5rem;
     line-height: 1.15;
@@ -801,9 +763,12 @@ body.light-mode a:hover {
 }
 
 @keyframes bounce {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: translateY(0);
     }
+
     50% {
         transform: translateY(3px);
     }
@@ -1290,7 +1255,7 @@ body.light-mode .intro-text p {
     position: relative;
     cursor: pointer;
     outline: 0;
-    transition: 
+    transition:
         background-color 0.3s ease,
         border-color 0.3s ease,
         box-shadow 0.3s ease;
@@ -1320,7 +1285,7 @@ body.light-mode .mode-switch:hover {
     height: 1rem;
     background: linear-gradient(180deg, #fff 0%, #e0e0e0 100%);
     border-radius: 50%;
-    box-shadow: 
+    box-shadow:
         0 1px 3px rgba(0, 0, 0, 0.2),
         inset 0 1px 0 rgba(255, 255, 255, 0.8);
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -1346,11 +1311,11 @@ body.light-mode .mode-switch-label {
     transition: opacity 0.3s ease;
 }
 
-.mode-switch:checked + .mode-switch-label .mode-switch-text {
+.mode-switch:checked+.mode-switch-label .mode-switch-text {
     opacity: 0;
 }
 
-.mode-switch:checked + .mode-switch-label .mode-switch-text::before {
+.mode-switch:checked+.mode-switch-label .mode-switch-text::before {
     content: "Dark Mode";
     opacity: 1;
 }
@@ -1397,9 +1362,7 @@ body.light-mode .menu-toggle span {
     border-radius: 20px;
     border: 1px solid rgba(255, 255, 255, 0.08);
 }
-  
-/* Light mode contact is handled by the unified section styling below */
-  
+
 .contact h2 {
     font-size: clamp(1.5rem, 3vw, 2rem);
     font-weight: 600;
@@ -1408,11 +1371,11 @@ body.light-mode .menu-toggle span {
     color: #fff;
     padding-left: 0.25rem;
 }
-  
+
 body.light-mode .contact h2 {
     color: #1d1d1f;
 }
-  
+
 .contact-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -1420,7 +1383,7 @@ body.light-mode .contact h2 {
     max-width: 100%;
     padding: 0;
 }
-  
+
 .contact-item {
     position: relative;
     display: flex;
@@ -1436,36 +1399,36 @@ body.light-mode .contact h2 {
     color: rgba(255, 255, 255, 0.8);
     border: 1px solid rgba(255, 255, 255, 0.08);
 }
-  
+
 body.light-mode .contact-item {
     background: rgba(0, 0, 0, 0.03);
     border-color: rgba(0, 0, 0, 0.06);
     color: rgba(0, 0, 0, 0.7);
 }
-  
+
 .contact-item:hover {
     transform: translateY(-3px);
     background: rgba(255, 255, 255, 0.08);
     border-color: rgba(255, 255, 255, 0.15);
     color: #fff;
 }
-  
+
 body.light-mode .contact-item:hover {
     background: rgba(0, 0, 0, 0.05);
     border-color: rgba(0, 0, 0, 0.1);
     color: #000;
 }
-  
+
 .contact-item i {
     font-size: 1.5rem;
     margin-bottom: 0.75rem;
     transition: transform 0.25s ease;
 }
-  
+
 .contact-item:hover i {
     transform: scale(1.1);
 }
-  
+
 .contact-item span {
     font-size: 0.8rem;
     font-weight: 500;
@@ -1514,7 +1477,7 @@ body.light-mode .contact-item:hover {
     .about {
         padding: 1.5rem;
     }
-    
+
     .projects {
         padding: 1.5rem;
     }
@@ -1527,28 +1490,28 @@ body.light-mode .contact-item:hover {
         width: 36px;
         height: 36px;
     }
-    
+
     .contact {
         padding: 2rem 0;
         margin: 1.5rem 0;
         border-radius: 20px;
     }
-  
+
     .contact-grid {
         grid-template-columns: repeat(4, 1fr);
         gap: 0.75rem;
         padding: 0 1rem;
     }
-  
+
     .contact-item {
         padding: 1.25rem 0.75rem;
     }
-  
+
     .contact-item i {
         font-size: 1.25rem;
         margin-bottom: 0.5rem;
     }
-  
+
     .contact-item span {
         font-size: 0.7rem;
     }
@@ -1561,24 +1524,24 @@ body.light-mode .contact-item:hover {
         width: auto;
         max-width: calc(100% - 12px);
     }
-    
+
     nav {
         flex-wrap: nowrap;
         gap: 0;
     }
-    
+
     .logo a {
         font-size: 0.95rem;
         margin-right: 0;
     }
-    
+
     .nav-right {
         display: flex;
         align-items: center;
         gap: 0.25rem;
         flex-shrink: 0;
     }
-    
+
     .nav-menu {
         position: fixed;
         top: 60px;
@@ -1592,18 +1555,16 @@ body.light-mode .contact-item:hover {
         gap: 0.4rem;
         padding: 1rem 1.2rem;
         background:
-            linear-gradient(
-                180deg,
+            linear-gradient(180deg,
                 rgba(255, 255, 255, 0.08) 0%,
                 rgba(255, 255, 255, 0.03) 50%,
-                rgba(255, 255, 255, 0) 100%
-            ),
+                rgba(255, 255, 255, 0) 100%),
             rgba(20, 20, 20, 0.3);
         backdrop-filter: blur(45px) saturate(180%);
         -webkit-backdrop-filter: blur(45px) saturate(180%);
         border-radius: 22px;
         border: 1px solid rgba(255, 255, 255, 0.15);
-        box-shadow: 
+        box-shadow:
             0 0 0 0.5px rgba(255, 255, 255, 0.05),
             0 8px 32px rgba(0, 0, 0, 0.35),
             0 2px 8px rgba(0, 0, 0, 0.2),
@@ -1625,38 +1586,32 @@ body.light-mode .contact-item:hover {
 
     .nav-menu::before {
         background:
-            radial-gradient(
-                ellipse 90% 55% at 50% 0%,
+            radial-gradient(ellipse 90% 55% at 50% 0%,
                 rgba(255, 255, 255, 0.2),
-                transparent 70%
-            );
+                transparent 70%);
         opacity: 0.9;
     }
 
     .nav-menu::after {
         background:
-            radial-gradient(
-                ellipse 140% 90% at 50% 120%,
+            radial-gradient(ellipse 140% 90% at 50% 120%,
                 rgba(255, 255, 255, 0.08),
-                transparent 70%
-            );
+                transparent 70%);
         border: 1px solid rgba(255, 255, 255, 0.08);
         mix-blend-mode: screen;
         opacity: 0.6;
     }
-    
+
     body.light-mode .nav-menu {
         background:
-            linear-gradient(
-                180deg,
+            linear-gradient(180deg,
                 rgba(255, 255, 255, 0.7) 0%,
                 rgba(255, 255, 255, 0.4) 30%,
                 rgba(255, 255, 255, 0.25) 60%,
-                rgba(255, 255, 255, 0.2) 100%
-            ),
+                rgba(255, 255, 255, 0.2) 100%),
             rgba(245, 245, 247, 0.35);
         border-color: rgba(255, 255, 255, 0.6);
-        box-shadow: 
+        box-shadow:
             0 0 0 0.5px rgba(255, 255, 255, 0.4),
             0 8px 32px rgba(0, 0, 0, 0.06),
             0 2px 8px rgba(0, 0, 0, 0.04),
@@ -1668,23 +1623,19 @@ body.light-mode .contact-item:hover {
 
     body.light-mode .nav-menu::before {
         background:
-            radial-gradient(
-                ellipse 100% 60% at 0% 0%,
+            radial-gradient(ellipse 100% 60% at 0% 0%,
                 rgba(255, 255, 255, 0.7) 0%,
                 rgba(255, 255, 255, 0.3) 30%,
-                transparent 60%
-            );
+                transparent 60%);
         opacity: 0.9;
     }
 
     body.light-mode .nav-menu::after {
         border-color: rgba(255, 255, 255, 0.4);
         background:
-            radial-gradient(
-                ellipse 140% 90% at 50% 120%,
+            radial-gradient(ellipse 140% 90% at 50% 120%,
                 rgba(255, 255, 255, 0.2),
-                transparent 70%
-            );
+                transparent 70%);
     }
 
     .nav-menu.active {
@@ -1697,6 +1648,7 @@ body.light-mode .contact-item:hover {
             opacity: 0;
             transform: translateY(-8px);
         }
+
         to {
             opacity: 1;
             transform: translateY(0);
@@ -1710,7 +1662,7 @@ body.light-mode .contact-item:hover {
     .menu-toggle {
         display: flex;
     }
-    
+
     .menu-toggle.active span:first-child {
         transform: rotate(45deg) translate(4px, 4px);
     }
@@ -1722,22 +1674,22 @@ body.light-mode .contact-item:hover {
     .menu-toggle.active span:nth-child(3) {
         transform: rotate(-45deg) translate(4px, -4px);
     }
-    
+
     nav a {
         padding: 0.5rem 1rem;
         font-size: 0.95rem;
         width: 100%;
         text-align: center;
     }
-    
+
     .nav-menu a {
         border-radius: 10px;
     }
-    
+
     .nav-menu a:hover {
         background: rgba(255, 255, 255, 0.1);
     }
-    
+
     body.light-mode .nav-menu a:hover {
         background: rgba(0, 0, 0, 0.06);
     }
@@ -1775,11 +1727,11 @@ body.light-mode .contact-item:hover {
     header {
         padding: 0.4rem 1.25rem;
     }
-    
+
     .logo a {
         font-size: 0.95rem;
     }
-    
+
     main {
         padding: 4.5rem 0.75rem 1rem;
     }
@@ -1806,7 +1758,7 @@ body.light-mode .contact-item:hover {
     .arrow {
         display: none;
     }
-    
+
     .projects {
         padding: 1rem;
         border-radius: 16px;
@@ -1819,28 +1771,28 @@ body.light-mode .contact-item:hover {
     .posts a {
         padding: 1.25rem;
     }
-    
+
     .contact {
         padding: 1.5rem 0;
         border-radius: 16px;
     }
-    
+
     .contact-grid {
         grid-template-columns: repeat(4, 1fr);
         gap: 0.5rem;
         padding: 0 0.75rem;
     }
-  
+
     .contact-item {
         padding: 1rem 0.5rem;
         border-radius: 12px;
     }
-  
+
     .contact-item i {
         font-size: 1.1rem;
         margin-bottom: 0.4rem;
     }
-  
+
     .contact-item span {
         font-size: 0.65rem;
     }
@@ -1870,7 +1822,7 @@ main.username-post {
     letter-spacing: -0.022em;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: transparent; 
+    background-color: transparent;
 }
 
 main.username-post h1,
@@ -1884,18 +1836,18 @@ main.username-post h2 {
 main.username-post h1 {
     font-size: 48px;
     margin: 2rem 0 1.5rem;
-    color: var(--text-color-post); 
+    color: var(--text-color-post);
 }
 
 main.username-post h2 {
     font-size: 32px;
     margin: 2rem 0 1rem;
-    color: var(--text-color-post); 
+    color: var(--text-color-post);
 }
 
 main.username-post p {
     margin-bottom: 1.2rem;
-    color: var(--text-color-post); 
+    color: var(--text-color-post);
 }
 
 main.username-post .lead {
@@ -2026,7 +1978,7 @@ body.light-mode main.username-post blockquote footer {
 body.light-mode main.username-post section {
     background-color: #f8f8f8;
     margin-bottom: 2rem;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
 /* Media query adjustments for username post */
@@ -2060,6 +2012,7 @@ body.light-mode main.username-post section {
     main.username-post .lead {
         font-size: 18px;
     }
+
     main.username-post p,
     main.username-post blockquote p {
         font-size: 16px;
@@ -2094,11 +2047,10 @@ main.posts-page section.hero::before {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, 
-        rgba(32, 32, 32, 0.8) 0%,
-        rgba(40, 44, 52, 0.8) 50%,
-        rgba(32, 32, 32, 0.8) 100%
-    );
+    background: linear-gradient(135deg,
+            rgba(32, 32, 32, 0.8) 0%,
+            rgba(40, 44, 52, 0.8) 50%,
+            rgba(32, 32, 32, 0.8) 100%);
     z-index: 1;
 }
 
@@ -2109,19 +2061,17 @@ main.posts-page section.hero::after {
     left: 0;
     right: 0;
     bottom: 0;
-    background: 
-        linear-gradient(45deg, 
-            rgba(68, 71, 90, 0.1) 25%, 
-            transparent 25%, 
-            transparent 75%, 
-            rgba(68, 71, 90, 0.1) 75%
-        ),
-        linear-gradient(45deg, 
-            rgba(68, 71, 90, 0.1) 25%, 
-            transparent 25%, 
-            transparent 75%, 
-            rgba(68, 71, 90, 0.1) 75%
-        );
+    background:
+        linear-gradient(45deg,
+            rgba(68, 71, 90, 0.1) 25%,
+            transparent 25%,
+            transparent 75%,
+            rgba(68, 71, 90, 0.1) 75%),
+        linear-gradient(45deg,
+            rgba(68, 71, 90, 0.1) 25%,
+            transparent 25%,
+            transparent 75%,
+            rgba(68, 71, 90, 0.1) 75%);
     background-size: 60px 60px;
     background-position: 0 0, 30px 30px;
     opacity: 0.5;
@@ -2159,27 +2109,24 @@ main.posts-page section.hero p {
 
 /* Light Mode Styles for Posts Page Hero */
 body.light-mode main.posts-page section.hero::before {
-    background: linear-gradient(135deg, 
-        rgba(245, 245, 247, 0.8) 0%,
-        rgba(250, 250, 252, 0.8) 50%,
-        rgba(245, 245, 247, 0.8) 100%
-    );
+    background: linear-gradient(135deg,
+            rgba(245, 245, 247, 0.8) 0%,
+            rgba(250, 250, 252, 0.8) 50%,
+            rgba(245, 245, 247, 0.8) 100%);
 }
 
 body.light-mode main.posts-page section.hero::after {
-    background: 
-        linear-gradient(45deg, 
-            rgba(200, 200, 200, 0.1) 25%, 
-            transparent 25%, 
-            transparent 75%, 
-            rgba(200, 200, 200, 0.1) 75%
-        ),
-        linear-gradient(45deg, 
-            rgba(200, 200, 200, 0.1) 25%, 
-            transparent 25%, 
-            transparent 75%, 
-            rgba(200, 200, 200, 0.1) 75%
-        );
+    background:
+        linear-gradient(45deg,
+            rgba(200, 200, 200, 0.1) 25%,
+            transparent 25%,
+            transparent 75%,
+            rgba(200, 200, 200, 0.1) 75%),
+        linear-gradient(45deg,
+            rgba(200, 200, 200, 0.1) 25%,
+            transparent 25%,
+            transparent 75%,
+            rgba(200, 200, 200, 0.1) 75%);
 }
 
 body.light-mode main.posts-page section.hero h1 {
@@ -2212,7 +2159,7 @@ main.posts-page .post-card {
     cursor: pointer;
     border: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
 }
 
 main.posts-page .post-card:hover {
@@ -2233,7 +2180,7 @@ main.posts-page .post-content {
     flex-grow: 1;
 }
 
-main.posts-page .post-title, 
+main.posts-page .post-title,
 main.posts-page .post-title a {
     font-size: 1.5rem;
     font-weight: 600;
@@ -2290,15 +2237,15 @@ main.posts-page .post-tag {
 /* Light mode adjustments for posts page grid */
 body.light-mode main.posts-page .post-card {
     background-color: rgba(0, 0, 0, 0.05);
-    border-color: rgba(0,0,0, 0.1);
+    border-color: rgba(0, 0, 0, 0.1);
 }
 
 body.light-mode main.posts-page .post-card:hover {
     background-color: rgba(0, 0, 0, 0.08);
-    border-color: rgba(0,0,0, 0.15);
+    border-color: rgba(0, 0, 0, 0.15);
 }
 
-body.light-mode main.posts-page .post-title, 
+body.light-mode main.posts-page .post-title,
 body.light-mode main.posts-page .post-title a {
     color: #000;
 }
@@ -2313,7 +2260,7 @@ body.light-mode main.posts-page .post-meta {
 
 body.light-mode main.posts-page .post-date i,
 body.light-mode main.posts-page .post-read-time i {
-     color: #333;
+    color: #333;
 }
 
 body.light-mode main.posts-page .post-tag {
@@ -2323,7 +2270,7 @@ body.light-mode main.posts-page .post-tag {
 
 body.light-mode main.posts-page .pagination a {
     background-color: rgba(0, 0, 0, 0.1);
-    color: #000;            
+    color: #000;
 }
 
 body.light-mode main.posts-page .pagination a:hover {
@@ -2341,7 +2288,7 @@ body.light-mode main.posts-page .pagination a:hover {
     }
 
     main.posts-page section.hero p {
-    font-size: 1rem;
+        font-size: 1rem;
     }
 }
 
@@ -2350,26 +2297,27 @@ body.light-mode main.posts-page .pagination a:hover {
     0% {
         background-position: 0 0, 30px 30px;
     }
+
     100% {
         background-position: 60px 60px, 90px 90px;
     }
 }
 
 /* Ensure consistent section styling in light mode */
-body.light-mode main > section.about,
-body.light-mode main > section.projects,
-body.light-mode main > section.posts,
-body.light-mode main > section.contact {
+body.light-mode main>section.about,
+body.light-mode main>section.projects,
+body.light-mode main>section.posts,
+body.light-mode main>section.contact {
     background-color: #f8f8f8;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
     margin-bottom: 2rem;
     padding: 2rem;
     border-radius: 20px;
     border: 1px solid rgba(0, 0, 0, 0.06);
 }
 
-body.light-mode main > section.hero,
-body.light-mode main > section.intro {
+body.light-mode main>section.hero,
+body.light-mode main>section.intro {
     background-color: transparent;
     box-shadow: none;
 }
