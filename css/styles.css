@@ -1523,6 +1523,20 @@ body.light-mode .contact-item:hover {
         border-radius: 999px;
         width: auto;
         max-width: calc(100% - 12px);
+        /* Bring back a subtle blur on mobile header */
+        background: rgba(15, 15, 15, 0.95);
+        backdrop-filter: blur(22px) saturate(140%);
+        -webkit-backdrop-filter: blur(22px) saturate(140%);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    body.light-mode header {
+        background: rgba(247, 247, 247, 0.9);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+        backdrop-filter: blur(22px) saturate(140%);
+        -webkit-backdrop-filter: blur(22px) saturate(140%);
     }
 
     nav {
@@ -1554,21 +1568,12 @@ body.light-mode .contact-item:hover {
         align-items: center;
         gap: 0.4rem;
         padding: 1rem 1.2rem;
-        background:
-            linear-gradient(180deg,
-                rgba(255, 255, 255, 0.08) 0%,
-                rgba(255, 255, 255, 0.03) 50%,
-                rgba(255, 255, 255, 0) 100%),
-            rgba(20, 20, 20, 0.3);
-        backdrop-filter: blur(45px) saturate(180%);
-        -webkit-backdrop-filter: blur(45px) saturate(180%);
+        background: rgba(15, 15, 15, 0.95);
+        backdrop-filter: blur(22px) saturate(140%);
+        -webkit-backdrop-filter: blur(22px) saturate(140%);
         border-radius: 22px;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        box-shadow:
-            0 0 0 0.5px rgba(255, 255, 255, 0.05),
-            0 8px 32px rgba(0, 0, 0, 0.35),
-            0 2px 8px rgba(0, 0, 0, 0.2),
-            inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
         z-index: 99;
         overflow: hidden;
         position: fixed;
@@ -1603,39 +1608,18 @@ body.light-mode .contact-item:hover {
     }
 
     body.light-mode .nav-menu {
-        background:
-            linear-gradient(180deg,
-                rgba(255, 255, 255, 0.7) 0%,
-                rgba(255, 255, 255, 0.4) 30%,
-                rgba(255, 255, 255, 0.25) 60%,
-                rgba(255, 255, 255, 0.2) 100%),
-            rgba(245, 245, 247, 0.35);
-        border-color: rgba(255, 255, 255, 0.6);
-        box-shadow:
-            0 0 0 0.5px rgba(255, 255, 255, 0.4),
-            0 8px 32px rgba(0, 0, 0, 0.06),
-            0 2px 8px rgba(0, 0, 0, 0.04),
-            inset 0 1px 0 rgba(255, 255, 255, 0.95),
-            inset -1px 0 0 rgba(255, 255, 255, 0.7);
-        backdrop-filter: blur(60px) saturate(200%);
-        -webkit-backdrop-filter: blur(60px) saturate(200%);
+        background: rgba(247, 247, 247, 0.97);
+        border-color: rgba(0, 0, 0, 0.08);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(22px) saturate(140%);
+        -webkit-backdrop-filter: blur(22px) saturate(140%);
     }
 
-    body.light-mode .nav-menu::before {
-        background:
-            radial-gradient(ellipse 100% 60% at 0% 0%,
-                rgba(255, 255, 255, 0.7) 0%,
-                rgba(255, 255, 255, 0.3) 30%,
-                transparent 60%);
-        opacity: 0.9;
-    }
-
+    body.light-mode .nav-menu::before,
     body.light-mode .nav-menu::after {
-        border-color: rgba(255, 255, 255, 0.4);
-        background:
-            radial-gradient(ellipse 140% 90% at 50% 120%,
-                rgba(255, 255, 255, 0.2),
-                transparent 70%);
+        display: none;
+        background: none;
+        border: none;
     }
 
     .nav-menu.active {
