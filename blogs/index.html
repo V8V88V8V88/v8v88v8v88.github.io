@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,7 +9,8 @@
     <link rel="canonical" href="https://v8v88v8v88.com/blogs/" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="/css/styles.css" />
     <link rel="icon" href="/images/favicon.ico" sizes="any" />
     <meta property="og:type" content="website">
@@ -36,582 +38,558 @@
     }
     </script>
     <style>
-/* ========================================= */
-/* ==         Posts Page Specific         == */
-/* ========================================= */
+        /* ========================================= */
+        /* ==         Posts Page Specific         == */
+        /* ========================================= */
 
-/* Hero styles for Posts Page */
-.hero {
-    position: relative;
-    height: 35vh;
-    min-height: 320px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    margin: 1rem auto 3rem;
-    border-radius: 24px;
-    background: linear-gradient(145deg, #0a0a0a 0%, #1a1a1a 100%);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    transition: border-color 0.4s ease, box-shadow 0.4s ease;
-    isolation: isolate;
-}
+        /* Hero styles for Posts Page */
+        .hero {
+            position: relative;
+            height: 35vh;
+            min-height: 320px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            margin: 1rem auto 3rem;
+            border-radius: 24px;
+            background: linear-gradient(145deg, #0a0a0a 0%, #1a1a1a 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: border-color 0.4s ease, box-shadow 0.4s ease;
+            isolation: isolate;
+        }
 
-.hero:hover {
-    border-color: rgba(255, 255, 255, 0.15);
-    box-shadow: 
-        0 0 0 1px rgba(255, 255, 255, 0.05),
-        0 8px 40px rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.06);
-}
+        .hero:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow:
+                0 0 0 1px rgba(255, 255, 255, 0.05),
+                0 8px 40px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.06);
+        }
 
-.hero::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
-    z-index: 1;
-    transition: opacity 0.4s ease;
-}
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
+            z-index: 1;
+            transition: opacity 0.4s ease;
+        }
 
-/* Liquid glass glow that follows cursor */
-.hero-glow {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    pointer-events: none;
-    z-index: 2;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    background: radial-gradient(
-        600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-        rgba(255, 255, 255, 0.08) 0%,
-        rgba(255, 255, 255, 0.03) 25%,
-        transparent 50%
-    );
-}
+        /* Liquid glass glow that follows cursor */
+        .hero-glow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 2;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+                    rgba(255, 255, 255, 0.08) 0%,
+                    rgba(255, 255, 255, 0.03) 25%,
+                    transparent 50%);
+        }
 
-.hero:hover .hero-glow {
-    opacity: 1;
-}
+        .hero:hover .hero-glow {
+            opacity: 1;
+        }
 
-/* Top edge highlight on hover */
-.hero-highlight {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(
-        90deg,
-        transparent 0%,
-        rgba(255, 255, 255, 0.3) 20%,
-        rgba(255, 255, 255, 0.5) 50%,
-        rgba(255, 255, 255, 0.3) 80%,
-        transparent 100%
-    );
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    z-index: 10;
-}
+        /* Top edge highlight on hover */
+        .hero-highlight {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg,
+                    transparent 0%,
+                    rgba(255, 255, 255, 0.3) 20%,
+                    rgba(255, 255, 255, 0.5) 50%,
+                    rgba(255, 255, 255, 0.3) 80%,
+                    transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 10;
+        }
 
-.hero:hover .hero-highlight {
-    opacity: 1;
-}
+        .hero:hover .hero-highlight {
+            opacity: 1;
+        }
 
-.hero::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-        linear-gradient(45deg, 
-            rgba(255, 255, 255, 0.02) 25%, 
-            transparent 25%, 
-            transparent 75%, 
-            rgba(255, 255, 255, 0.02) 75%
-        ),
-        linear-gradient(45deg, 
-            rgba(255, 255, 255, 0.02) 25%, 
-            transparent 25%, 
-            transparent 75%, 
-            rgba(255, 255, 255, 0.02) 75%
-        );
-    background-size: 40px 40px;
-    background-position: 0 0, 20px 20px;
-    opacity: 0.5;
-    z-index: 3;
-}
+        .hero::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                linear-gradient(45deg,
+                    rgba(255, 255, 255, 0.02) 25%,
+                    transparent 25%,
+                    transparent 75%,
+                    rgba(255, 255, 255, 0.02) 75%),
+                linear-gradient(45deg,
+                    rgba(255, 255, 255, 0.02) 25%,
+                    transparent 25%,
+                    transparent 75%,
+                    rgba(255, 255, 255, 0.02) 75%);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
+            opacity: 0.5;
+            z-index: 3;
+        }
 
-.hero-content {
-    position: relative;
-    z-index: 3;
-    text-align: center;
-    max-width: 700px;
-    padding: 0 2rem;
-}
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            max-width: 700px;
+            padding: 0 2rem;
+        }
 
-.hero h1 {
-    font-family: "EB Garamond", Georgia, serif;
-    font-size: clamp(2.5rem, 6vw, 4rem);
-    font-weight: 500;
-    margin-bottom: 0.75rem;
-    color: #fff;
-    letter-spacing: -0.02em;
-}
+        .hero h1 {
+            font-family: "EB Garamond", Georgia, serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 500;
+            margin-bottom: 0.75rem;
+            color: #fff;
+            letter-spacing: -0.02em;
+        }
 
-.hero h1 i {
-    font-style: italic;
-    color: rgba(255, 255, 255, 0.6);
-}
+        .hero h1 i {
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.6);
+        }
 
-.hero p {
-    font-size: clamp(1rem, 2vw, 1.25rem);
-    color: rgba(255, 255, 255, 0.5);
-    max-width: 500px;
-    margin: 0 auto;
-    line-height: 1.6;
-    font-weight: 400;
-}
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: rgba(255, 255, 255, 0.5);
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.6;
+            font-weight: 400;
+        }
 
-/* Light Mode Hero */
-body.light-mode .hero {
-    background: linear-gradient(145deg, #f8f8f8 0%, #efefef 100%);
-    border-color: rgba(0, 0, 0, 0.08);
-    }
+        /* Light Mode Hero */
+        body.light-mode .hero {
+            background: linear-gradient(145deg, #f8f8f8 0%, #efefef 100%);
+            border-color: rgba(0, 0, 0, 0.08);
+        }
 
-body.light-mode .hero:hover {
-    border-color: rgba(0, 0, 0, 0.12);
-    box-shadow: 
-        0 0 0 1px rgba(255, 255, 255, 0.5),
-        0 8px 40px rgba(0, 0, 0, 0.08),
-        inset 0 1px 0 rgba(255, 255, 255, 0.9);
-}
+        body.light-mode .hero:hover {
+            border-color: rgba(0, 0, 0, 0.12);
+            box-shadow:
+                0 0 0 1px rgba(255, 255, 255, 0.5),
+                0 8px 40px rgba(0, 0, 0, 0.08),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+        }
 
-body.light-mode .hero::before {
-    background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255, 255, 255, 0.5) 0%, transparent 50%);
-}
+        body.light-mode .hero::before {
+            background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255, 255, 255, 0.5) 0%, transparent 50%);
+        }
 
-body.light-mode .hero-glow {
-    background: radial-gradient(
-        600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-        rgba(255, 255, 255, 0.6) 0%,
-        rgba(255, 255, 255, 0.2) 25%,
-        transparent 50%
-    );
-}
+        body.light-mode .hero-glow {
+            background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+                    rgba(255, 255, 255, 0.6) 0%,
+                    rgba(255, 255, 255, 0.2) 25%,
+                    transparent 50%);
+        }
 
-body.light-mode .hero-highlight {
-    background: linear-gradient(
-        90deg,
-        transparent 0%,
-        rgba(255, 255, 255, 0.8) 20%,
-        rgba(255, 255, 255, 1) 50%,
-        rgba(255, 255, 255, 0.8) 80%,
-        transparent 100%
-    );
-}
+        body.light-mode .hero-highlight {
+            background: linear-gradient(90deg,
+                    transparent 0%,
+                    rgba(255, 255, 255, 0.8) 20%,
+                    rgba(255, 255, 255, 1) 50%,
+                    rgba(255, 255, 255, 0.8) 80%,
+                    transparent 100%);
+        }
 
-body.light-mode .hero::after {
-    background: 
-        linear-gradient(45deg, 
-            rgba(0, 0, 0, 0.02) 25%, 
-            transparent 25%, 
-            transparent 75%, 
-            rgba(0, 0, 0, 0.02) 75%
-        ),
-        linear-gradient(45deg, 
-            rgba(0, 0, 0, 0.02) 25%, 
-            transparent 25%, 
-            transparent 75%, 
-            rgba(0, 0, 0, 0.02) 75%
-        );
-    opacity: 0.6;
-}
+        body.light-mode .hero::after {
+            background:
+                linear-gradient(45deg,
+                    rgba(0, 0, 0, 0.02) 25%,
+                    transparent 25%,
+                    transparent 75%,
+                    rgba(0, 0, 0, 0.02) 75%),
+                linear-gradient(45deg,
+                    rgba(0, 0, 0, 0.02) 25%,
+                    transparent 25%,
+                    transparent 75%,
+                    rgba(0, 0, 0, 0.02) 75%);
+            opacity: 0.6;
+        }
 
-body.light-mode .hero h1 {
-    color: #1d1d1f;
-}
+        body.light-mode .hero h1 {
+            color: #1d1d1f;
+        }
 
-body.light-mode .hero h1 i {
-    color: rgba(0, 0, 0, 0.5);
-}
+        body.light-mode .hero h1 i {
+            color: rgba(0, 0, 0, 0.5);
+        }
 
-body.light-mode .hero p {
-    color: rgba(0, 0, 0, 0.5);
-}
+        body.light-mode .hero p {
+            color: rgba(0, 0, 0, 0.5);
+        }
 
-/* Post Grid Styles */
-.posts-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 1.5rem;
-    margin-top: 0;
-    padding: 0;
-    background-color: transparent;
-}
+        /* Post Grid Styles */
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-top: 0;
+            padding: 0;
+            background-color: transparent;
+        }
 
-.post-card {
-    position: relative;
-    background: 
-        linear-gradient(
-            180deg,
-            rgba(255, 255, 255, 0.06) 0%,
-            rgba(255, 255, 255, 0.02) 50%,
-            rgba(255, 255, 255, 0) 100%
-        ),
-        rgba(25, 25, 25, 0.6);
-    border-radius: 20px;
-    overflow: hidden;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: pointer;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    display: flex;
-    flex-direction: column; 
-    backdrop-filter: blur(20px) saturate(150%);
-    -webkit-backdrop-filter: blur(20px) saturate(150%);
-    box-shadow: 
-        0 0 0 0.5px rgba(255, 255, 255, 0.05),
-        0 4px 20px rgba(0, 0, 0, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.06);
-}
+        .post-card {
+            position: relative;
+            background:
+                linear-gradient(180deg,
+                    rgba(255, 255, 255, 0.06) 0%,
+                    rgba(255, 255, 255, 0.02) 50%,
+                    rgba(255, 255, 255, 0) 100%),
+                rgba(25, 25, 25, 0.6);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(20px) saturate(150%);
+            -webkit-backdrop-filter: blur(20px) saturate(150%);
+            box-shadow:
+                0 0 0 0.5px rgba(255, 255, 255, 0.05),
+                0 4px 20px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.06);
+        }
 
-/* Inner highlight for glass depth */
-.post-card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(
-        90deg,
-        transparent 0%,
-        rgba(255, 255, 255, 0.15) 30%,
-        rgba(255, 255, 255, 0.2) 50%,
-        rgba(255, 255, 255, 0.15) 70%,
-        transparent 100%
-    );
-    z-index: 10;
-}
+        /* Inner highlight for glass depth */
+        .post-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg,
+                    transparent 0%,
+                    rgba(255, 255, 255, 0.15) 30%,
+                    rgba(255, 255, 255, 0.2) 50%,
+                    rgba(255, 255, 255, 0.15) 70%,
+                    transparent 100%);
+            z-index: 10;
+        }
 
-.post-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 
-        0 0 0 0.5px rgba(255, 255, 255, 0.08),
-        0 20px 40px rgba(0, 0, 0, 0.35),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.18);
-    background: 
-        linear-gradient(
-            180deg,
-            rgba(255, 255, 255, 0.08) 0%,
-            rgba(255, 255, 255, 0.03) 50%,
-            rgba(255, 255, 255, 0) 100%
-        ),
-        rgba(30, 30, 30, 0.7);
-}
+        .post-card:hover {
+            transform: translateY(-6px);
+            box-shadow:
+                0 0 0 0.5px rgba(255, 255, 255, 0.08),
+                0 20px 40px rgba(0, 0, 0, 0.35),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.18);
+            background:
+                linear-gradient(180deg,
+                    rgba(255, 255, 255, 0.08) 0%,
+                    rgba(255, 255, 255, 0.03) 50%,
+                    rgba(255, 255, 255, 0) 100%),
+                rgba(30, 30, 30, 0.7);
+        }
 
-.post-image {
-    height: 180px;
-    background-size: cover;
-    background-position: center;
-    width: 100%;
-    position: relative;
-    transition: transform 0.3s ease;
-}
+        .post-image {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            width: 100%;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
 
-.post-card:hover .post-image {
-    transform: scale(1.02);
-}
+        .post-card:hover .post-image {
+            transform: scale(1.02);
+        }
 
-.post-image::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 60px;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.4), transparent);
-    pointer-events: none;
-}
+        .post-image::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.4), transparent);
+            pointer-events: none;
+        }
 
-.post-content {
-    padding: 1.5rem;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-}
+        .post-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
 
-.post-title, 
-.post-title a {
-    font-size: 1.35rem;
-    font-weight: 600;
-    margin-bottom: 0.6rem;
-    color: #fff !important;
-    text-decoration: none;
-    line-height: 1.35;
-    letter-spacing: -0.01em;
-    transition: color 0.2s ease;
-}
+        .post-title,
+        .post-title a {
+            font-size: 1.35rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            color: #fff !important;
+            text-decoration: none;
+            line-height: 1.35;
+            letter-spacing: -0.01em;
+            transition: color 0.2s ease;
+        }
 
-.post-card:hover .post-title,
-.post-card:hover .post-title a {
-    color: #1DB954 !important;
-}
+        .post-card:hover .post-title,
+        .post-card:hover .post-title a {
+            color: #1DB954 !important;
+        }
 
-.post-excerpt {
-    font-size: 0.95rem;
-    margin-bottom: 1rem;
-    color: rgba(255, 255, 255, 0.6);
-    line-height: 1.55;
-    flex-grow: 1;
-}
+        .post-excerpt {
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.55;
+            flex-grow: 1;
+        }
 
-.post-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-}
+        .post-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
 
-.post-tag {
-    background: rgba(29, 185, 84, 0.15);
-    color: #1DB954;
-    padding: 0.3rem 0.75rem;
-    border-radius: 999px;
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    border: 1px solid rgba(29, 185, 84, 0.2);
-    transition: all 0.2s ease;
-}
+        .post-tag {
+            background: rgba(29, 185, 84, 0.15);
+            color: #1DB954;
+            padding: 0.3rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            border: 1px solid rgba(29, 185, 84, 0.2);
+            transition: all 0.2s ease;
+        }
 
-.post-card:hover .post-tag {
-    background: rgba(29, 185, 84, 0.25);
-    border-color: rgba(29, 185, 84, 0.4);
-}
+        .post-card:hover .post-tag {
+            background: rgba(29, 185, 84, 0.25);
+            border-color: rgba(29, 185, 84, 0.4);
+        }
 
-.post-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.4);
-    margin-top: auto;
-    padding-top: 1rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
-}
+        .post-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: auto;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
 
-.post-date,
-.post-read-time {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-}
+        .post-date,
+        .post-read-time {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
 
-.post-date i,
-.post-read-time i {
-    font-size: 0.75rem;
-    opacity: 0.7;
-}
+        .post-date i,
+        .post-read-time i {
+            font-size: 0.75rem;
+            opacity: 0.7;
+        }
 
-/* Pagination styles */
-.pagination {
-    display: flex;
-    justify-content: center;
-    gap: 0.75rem;
-    margin-top: 3rem;
-    padding-bottom: 1rem;
-}
+        /* Pagination styles */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-top: 3rem;
+            padding-bottom: 1rem;
+        }
 
-.pagination a {
-    padding: 0.6rem 1.25rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 999px;
-    transition: all 0.25s ease;
-    color: rgba(255, 255, 255, 0.7);
-    text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 500;
-}
+        .pagination a {
+            padding: 0.6rem 1.25rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 999px;
+            transition: all 0.25s ease;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
 
-.pagination a:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.2);
-    color: #fff;
-    transform: translateY(-2px);
-}
+        .pagination a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            transform: translateY(-2px);
+        }
 
-/* Light mode adjustments */
-body.light-mode .post-card {
-    background: 
-        linear-gradient(
-            180deg,
-            rgba(255, 255, 255, 0.9) 0%,
-            rgba(255, 255, 255, 0.6) 50%,
-            rgba(255, 255, 255, 0.4) 100%
-        ),
-        rgba(248, 248, 248, 0.8);
-    border-color: rgba(0, 0, 0, 0.08);
-    box-shadow: 
-        0 4px 20px rgba(0, 0, 0, 0.06),
-        inset 0 1px 0 rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-}
+        /* Light mode adjustments */
+        body.light-mode .post-card {
+            background:
+                linear-gradient(180deg,
+                    rgba(255, 255, 255, 0.9) 0%,
+                    rgba(255, 255, 255, 0.6) 50%,
+                    rgba(255, 255, 255, 0.4) 100%),
+                rgba(248, 248, 248, 0.8);
+            border-color: rgba(0, 0, 0, 0.08);
+            box-shadow:
+                0 4px 20px rgba(0, 0, 0, 0.06),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+        }
 
-body.light-mode .post-card::before {
-    background: linear-gradient(
-        90deg,
-        transparent 0%,
-        rgba(255, 255, 255, 0.7) 30%,
-        rgba(255, 255, 255, 0.9) 50%,
-        rgba(255, 255, 255, 0.7) 70%,
-        transparent 100%
-    );
-}
+        body.light-mode .post-card::before {
+            background: linear-gradient(90deg,
+                    transparent 0%,
+                    rgba(255, 255, 255, 0.7) 30%,
+                    rgba(255, 255, 255, 0.9) 50%,
+                    rgba(255, 255, 255, 0.7) 70%,
+                    transparent 100%);
+        }
 
-body.light-mode .post-card:hover {
-    background: 
-        linear-gradient(
-            180deg,
-            rgba(255, 255, 255, 1) 0%,
-            rgba(255, 255, 255, 0.8) 50%,
-            rgba(255, 255, 255, 0.6) 100%
-        ),
-        rgba(255, 255, 255, 0.9);
-    border-color: rgba(0, 0, 0, 0.12);
-    box-shadow: 
-        0 20px 40px rgba(0, 0, 0, 0.1),
-        inset 0 1px 0 rgba(255, 255, 255, 1);
-}
+        body.light-mode .post-card:hover {
+            background:
+                linear-gradient(180deg,
+                    rgba(255, 255, 255, 1) 0%,
+                    rgba(255, 255, 255, 0.8) 50%,
+                    rgba(255, 255, 255, 0.6) 100%),
+                rgba(255, 255, 255, 0.9);
+            border-color: rgba(0, 0, 0, 0.12);
+            box-shadow:
+                0 20px 40px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 1);
+        }
 
-body.light-mode .post-image::after {
-    background: linear-gradient(to top, rgba(255, 255, 255, 0.3), transparent);
-}
+        body.light-mode .post-image::after {
+            background: linear-gradient(to top, rgba(255, 255, 255, 0.3), transparent);
+        }
 
-body.light-mode .post-title, 
-body.light-mode .post-title a {
-    color: #1d1d1f !important;
-}
+        body.light-mode .post-title,
+        body.light-mode .post-title a {
+            color: #1d1d1f !important;
+        }
 
-body.light-mode .post-card:hover .post-title,
-body.light-mode .post-card:hover .post-title a {
-    color: #1DB954 !important;
-}
+        body.light-mode .post-card:hover .post-title,
+        body.light-mode .post-card:hover .post-title a {
+            color: #1DB954 !important;
+        }
 
-body.light-mode .post-excerpt {
-    color: rgba(0, 0, 0, 0.6);
-}
+        body.light-mode .post-excerpt {
+            color: rgba(0, 0, 0, 0.6);
+        }
 
-body.light-mode .post-tag {
-    background: rgba(29, 185, 84, 0.1);
-    color: #15803d;
-    border-color: rgba(29, 185, 84, 0.2);
-}
+        body.light-mode .post-tag {
+            background: rgba(29, 185, 84, 0.1);
+            color: #15803d;
+            border-color: rgba(29, 185, 84, 0.2);
+        }
 
-body.light-mode .post-card:hover .post-tag {
-    background: rgba(29, 185, 84, 0.2);
-    border-color: rgba(29, 185, 84, 0.35);
-}
+        body.light-mode .post-card:hover .post-tag {
+            background: rgba(29, 185, 84, 0.2);
+            border-color: rgba(29, 185, 84, 0.35);
+        }
 
-body.light-mode .post-meta {
-    color: rgba(0, 0, 0, 0.4);
-    border-top-color: rgba(0, 0, 0, 0.06);
-}
+        body.light-mode .post-meta {
+            color: rgba(0, 0, 0, 0.4);
+            border-top-color: rgba(0, 0, 0, 0.06);
+        }
 
-body.light-mode .pagination a {
-    background: rgba(0, 0, 0, 0.04);
-    border-color: rgba(0, 0, 0, 0.08);
-    color: rgba(0, 0, 0, 0.6);
-}
+        body.light-mode .pagination a {
+            background: rgba(0, 0, 0, 0.04);
+            border-color: rgba(0, 0, 0, 0.08);
+            color: rgba(0, 0, 0, 0.6);
+        }
 
-body.light-mode .pagination a:hover {
-    background: rgba(0, 0, 0, 0.08);
-    border-color: rgba(0, 0, 0, 0.12);
-    color: #000;
-}
+        body.light-mode .pagination a:hover {
+            background: rgba(0, 0, 0, 0.08);
+            border-color: rgba(0, 0, 0, 0.12);
+            color: #000;
+        }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .hero {
-        height: 30vh;
-        min-height: 260px;
-        margin: 0.5rem auto 2rem;
-        border-radius: 20px;
-    }
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .hero {
+                height: 30vh;
+                min-height: 260px;
+                margin: 0.5rem auto 2rem;
+                border-radius: 20px;
+            }
 
-    .hero h1 {
-        font-size: 2.5rem;
-    }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
 
-    .hero p {
-        font-size: 1rem;
-    }
-    
-    .posts-grid {
-        grid-template-columns: 1fr;
-        gap: 1.25rem;
-    }
-    
-    .post-image {
-        height: 160px;
-    }
-}
+            .hero p {
+                font-size: 1rem;
+            }
 
-@media (max-width: 480px) {
-    .hero {
-        min-height: 220px;
-        border-radius: 16px;
-    }
+            .posts-grid {
+                grid-template-columns: 1fr;
+                gap: 1.25rem;
+            }
 
-    .hero h1 {
-        font-size: 2rem;
-    }
+            .post-image {
+                height: 160px;
+            }
+        }
 
-    .post-card {
-        border-radius: 16px;
-    }
-    
-    .post-content {
-        padding: 1.25rem;
-    }
-    
-    .post-title, 
-    .post-title a {
-        font-size: 1.2rem;
-    }
-    
-    .post-excerpt {
-        font-size: 0.9rem;
-    }
-    
-    .post-tag {
-        font-size: 0.7rem;
-        padding: 0.25rem 0.6rem;
-    }
+        @media (max-width: 480px) {
+            .hero {
+                min-height: 220px;
+                border-radius: 16px;
+            }
 
-    .post-meta {
-        font-size: 0.75rem;
-    }
-    
-    .pagination a {
-        padding: 0.5rem 1rem;
-        font-size: 0.85rem;
-    }
-}
+            .hero h1 {
+                font-size: 2rem;
+            }
 
+            .post-card {
+                border-radius: 16px;
+            }
+
+            .post-content {
+                padding: 1.25rem;
+            }
+
+            .post-title,
+            .post-title a {
+                font-size: 1.2rem;
+            }
+
+            .post-excerpt {
+                font-size: 0.9rem;
+            }
+
+            .post-tag {
+                font-size: 0.7rem;
+                padding: 0.25rem 0.6rem;
+            }
+
+            .post-meta {
+                font-size: 0.75rem;
+            }
+
+            .pagination a {
+                padding: 0.5rem 1rem;
+                font-size: 0.85rem;
+            }
+        }
     </style>
 </head>
+
 <body>
     <header>
         <nav>
@@ -647,60 +625,59 @@ body.light-mode .pagination a:hover {
             </div>
         </section>
 
-      <section class="posts-grid">
-        <article class="post-card">
-          <div class="post-image" style="background-image: url('/images/username.png')"></div>
-          <div class="post-content">
-            <h2 class="post-title"><a href="/username/">Username</a></h2>
-            <p class="post-excerpt">The only description behind my mysterious username V8V88V8V88.</p>
-            <div class="post-tags">
-              <span class="post-tag">Identity</span>
-              <span class="post-tag">Personal</span>
-            </div>
-            <div class="post-meta">
-              <span class="post-date">Mar 4, 2025</span>
-              <span class="post-read-time">5 min read</span>
-            </div>
-          </div>
-        </article>
+        <section class="posts-grid">
+            <article class="post-card" style="cursor: default;">
+                <div class="post-image" style="background-image: url('/images/linux.png'); filter: grayscale(1);"></div>
+                <div class="post-content">
+                    <h2 class="post-title">My Linux Journey</h2>
+                    <p class="post-excerpt">From Pro Windows User to Linux Nerd, how my journey went.</p>
+                    <div class="post-tags">
+                        <span class="post-tag">Linux</span>
+                        <span class="post-tag">Open Source</span>
+                    </div>
+                    <div class="post-meta">
+                        <span class="post-date">Upcoming</span>
+                    </div>
+                </div>
+            </article>
 
-        <article class="post-card">
-          <div class="post-image" style="background-image: url('/images/linux.png')"></div>
-          <div class="post-content">
-            <h2 class="post-title">My Linux Journey</h2>
-            <p class="post-excerpt">From Pro Windows User to Linux Nerd — how my journey unfolded.</p>
-            <div class="post-tags">
-              <span class="post-tag">Linux</span>
-              <span class="post-tag">Open Source</span>
-            </div>
-            <div class="post-meta">
-              <span class="post-date">Aug 15, 2022</span>
-              <span class="post-read-time">8 min read</span>
-            </div>
-          </div>
-        </article>
+            <article class="post-card">
+                <div class="post-image" style="background-image: url('/images/minimal.jpg')"></div>
+                <div class="post-content">
+                    <h2 class="post-title"><a href="/minimalism/">Minimalism</a></h2>
+                    <p class="post-excerpt">How ultimate simplicity changed the design of my life.</p>
+                    <div class="post-tags">
+                        <span class="post-tag">Minimalism</span>
+                        <span class="post-tag">Philosophy</span>
+                    </div>
+                    <div class="post-meta">
+                        <span class="post-date">Oct 6, 2025</span>
+                        <span class="post-read-time">6 min read</span>
+                    </div>
+                </div>
+            </article>
 
-        <article class="post-card">
-          <div class="post-image" style="background-image: url('/images/minimal.jpg')"></div>
-          <div class="post-content">
-            <h2 class="post-title"><a href="/minimalism/">Minimalism</a></h2>
-            <p class="post-excerpt">How ultimate simplicity changed the design of my life.</p>
-            <div class="post-tags">
-              <span class="post-tag">Minimalism</span>
-              <span class="post-tag">Philosophy</span>
-            </div>
-            <div class="post-meta">
-              <span class="post-date">Oct 6, 2025</span>
-              <span class="post-read-time">6 min read</span>
-            </div>
-          </div>
-        </article>
-      </section>
+            <article class="post-card">
+                <div class="post-image" style="background-image: url('/images/username.png')"></div>
+                <div class="post-content">
+                    <h2 class="post-title"><a href="/username/">Username</a></h2>
+                    <p class="post-excerpt">The only description behind my mysterious username V8V88V8V88.</p>
+                    <div class="post-tags">
+                        <span class="post-tag">Identity</span>
+                        <span class="post-tag">Personal</span>
+                    </div>
+                    <div class="post-meta">
+                        <span class="post-date">Mar 4, 2025</span>
+                        <span class="post-read-time">5 min read</span>
+                    </div>
+                </div>
+            </article>
+        </section>
 
-      <nav class="pagination">
-        <a href="#" class="prev">← Previous</a>
-        <a href="#" class="next">Next →</a>
-      </nav>
+        <nav class="pagination">
+            <a href="#" class="prev">← Previous</a>
+            <a href="#" class="next">Next →</a>
+        </nav>
     </main>
     <footer class="site-footer">
         <div class="footer-glass">
@@ -709,89 +686,95 @@ body.light-mode .pagination a:hover {
                     <a href="/" class="footer-logo">V8V88V8V88</a>
                     <p class="footer-tagline">Linux × FOSS × Code × Design</p>
                 </div>
-                
-                    <nav class="footer-nav">
-                        <div class="footer-nav-group">
-                            <h5>Explore</h5>
-                            <a href="/">Home</a>
-                            <a href="/blogs/">Blogs</a>
-                            <a href="/projects/">Projects</a>
-          </div>
-                        
-                        <div class="footer-nav-group">
-                            <h5>More</h5>
-                            <a href="/about/">About</a>
-                            <a href="/contact/">Contact</a>
-          </div>
-                        
-                        <div class="footer-nav-group footer-socials">
-                            <h5>Socials</h5>
-                            <div class="footer-social-icons">
-                                <a href="https://github.com/v8v88v8v88" target="_blank" rel="noopener noreferrer" title="GitHub"><i class="fab fa-github"></i></a>
-                                <a href="https://t.me/V8V88V8V88" target="_blank" rel="noopener noreferrer" title="Telegram"><i class="fab fa-telegram"></i></a>
-                                <a href="https://fosstodon.org/@v8v88v8v88" rel="me" target="_blank" title="Mastodon"><i class="fab fa-mastodon"></i></a>
-                                <a href="https://twitter.com/v8v88v8v88" target="_blank" rel="noopener noreferrer" title="Twitter"><i class="fab fa-twitter"></i></a>
-                                <a href="https://www.linkedin.com/in/v8v88v8v88/" target="_blank" rel="noopener noreferrer" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                                <a href="https://www.youtube.com/c/MagicalV8" target="_blank" rel="noopener noreferrer" title="YouTube"><i class="fab fa-youtube"></i></a>
-                                <a href="https://www.reddit.com/user/v8v88v8v88" target="_blank" rel="noopener noreferrer" title="Reddit"><i class="fab fa-reddit"></i></a>
-                                <a href="https://myanimelist.net/profile/V8V88V8V88" target="_blank" rel="noopener noreferrer" title="MyAnimeList"><i class="fas fa-film"></i></a>
-          </div>
-      </div>
-                    </nav>
-            </div>
-            
-            <div class="footer-bottom-bar">
-                    <div class="footer-meta">
-                        <span class="copyright">🄯 2026</span>
-                        <span class="separator">·</span>
-                        <span class="made-with">Made with ♥ by <a href="https://github.com/V8V88V8V88">V8V88V8V88</a></span>
+
+                <nav class="footer-nav">
+                    <div class="footer-nav-group">
+                        <h5>Explore</h5>
+                        <a href="/">Home</a>
+                        <a href="/blogs/">Blogs</a>
+                        <a href="/projects/">Projects</a>
                     </div>
-                
+
+                    <div class="footer-nav-group">
+                        <h5>More</h5>
+                        <a href="/about/">About</a>
+                        <a href="/contact/">Contact</a>
+                    </div>
+
+                    <div class="footer-nav-group footer-socials">
+                        <h5>Socials</h5>
+                        <div class="footer-social-icons">
+                            <a href="https://github.com/v8v88v8v88" target="_blank" rel="noopener noreferrer"
+                                title="GitHub"><i class="fab fa-github"></i></a>
+                            <a href="https://t.me/V8V88V8V88" target="_blank" rel="noopener noreferrer"
+                                title="Telegram"><i class="fab fa-telegram"></i></a>
+                            <a href="https://fosstodon.org/@v8v88v8v88" rel="me" target="_blank" title="Mastodon"><i
+                                    class="fab fa-mastodon"></i></a>
+                            <a href="https://twitter.com/v8v88v8v88" target="_blank" rel="noopener noreferrer"
+                                title="Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="https://www.linkedin.com/in/v8v88v8v88/" target="_blank" rel="noopener noreferrer"
+                                title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            <a href="https://www.youtube.com/c/MagicalV8" target="_blank" rel="noopener noreferrer"
+                                title="YouTube"><i class="fab fa-youtube"></i></a>
+                            <a href="https://www.reddit.com/user/v8v88v8v88" target="_blank" rel="noopener noreferrer"
+                                title="Reddit"><i class="fab fa-reddit"></i></a>
+                            <a href="https://myanimelist.net/profile/V8V88V8V88" target="_blank"
+                                rel="noopener noreferrer" title="MyAnimeList"><i class="fas fa-film"></i></a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+
+            <div class="footer-bottom-bar">
+                <div class="footer-meta">
+                    <span class="copyright">🄯 2026</span>
+                    <span class="separator">·</span>
+                    <span class="made-with">Made with ♥ by <a href="https://github.com/V8V88V8V88">V8V88V8V88</a></span>
+                </div>
+
                 <div class="footer-webring">
                     <a href="https://webring.dinhe.net/prev/https://v8v88v8v88.com/" class="webring-link">←</a>
                     <a href="https://webring.dinhe.net/" class="webring-hub">Webring</a>
                     <a href="https://webring.dinhe.net/next/https://v8v88v8v88.com/" class="webring-link">→</a>
                 </div>
-                
+
                 <div class="footer-visitors">
-                  <a href="https://visitorbadge.io/status?path=https%3A%2F%2Fv8v88v8v88.com">
-                        <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fv8v88v8v88.com&label=Visitors&labelColor=%23010101&countColor=%23b1b1b1&style=flat" alt="Visitors" loading="lazy"/>
-                  </a>
-              </div>
-           </div>
-      </div>
+                    <a href="https://visitorbadge.io/status?path=https%3A%2F%2Fv8v88v8v88.com">
+                        <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fv8v88v8v88.com&label=Visitors&labelColor=%23010101&countColor=%23b1b1b1&style=flat"
+                            alt="Visitors" loading="lazy" />
+                    </a>
+                </div>
+            </div>
+        </div>
     </footer>
-    <script
-      src="https://kit.fontawesome.com/133988a847.js"
-      crossorigin="anonymous"
-      defer
-    ></script>
+    <script src="https://kit.fontawesome.com/133988a847.js" crossorigin="anonymous" defer></script>
     <script src="/js/script.js" defer></script>
     <script>
-document.addEventListener("DOMContentLoaded", function () {
-    // Post card click handler
-    document.querySelectorAll(".post-card").forEach(card => {
-        card.addEventListener("click", function () {
-            const link = this.querySelector("a");
-            if (link) {
-                window.location.href = link.href;
+        document.addEventListener("DOMContentLoaded", function () {
+            // Post card click handler
+            document.querySelectorAll(".post-card").forEach(card => {
+                card.addEventListener("click", function () {
+                    const link = this.querySelector("a");
+                    if (link) {
+                        window.location.href = link.href;
+                    }
+                });
+            });
+
+            // Hero liquid glass glow effect
+            const hero = document.querySelector(".hero");
+            if (hero) {
+                hero.addEventListener("mousemove", (e) => {
+                    const rect = hero.getBoundingClientRect();
+                    const x = ((e.clientX - rect.left) / rect.width) * 100;
+                    const y = ((e.clientY - rect.top) / rect.height) * 100;
+                    hero.style.setProperty("--mouse-x", x + "%");
+                    hero.style.setProperty("--mouse-y", y + "%");
+                });
             }
         });
-    });
+    </script>
 
-    // Hero liquid glass glow effect
-    const hero = document.querySelector(".hero");
-    if (hero) {
-        hero.addEventListener("mousemove", (e) => {
-            const rect = hero.getBoundingClientRect();
-            const x = ((e.clientX - rect.left) / rect.width) * 100;
-            const y = ((e.clientY - rect.top) / rect.height) * 100;
-            hero.style.setProperty("--mouse-x", x + "%");
-            hero.style.setProperty("--mouse-y", y + "%");
-        });
-    }
-});
-      </script>
-      
-  </body>
+</body>
+
 </html>
