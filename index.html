@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>V8V88V8V88 | Vaibhav Pratap Singh</title>
-        <meta name="description" content="Developer, Linux enthusiast, and open source contributor. Building things with Rust, C++, TypeScript & more.">
-        <link rel="canonical" href="https://v8v88v8v88.com/" />
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="css/styles.css" />
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>V8V88V8V88 | Vaibhav Pratap Singh</title>
+    <meta name="description"
+        content="Developer, Linux enthusiast, and open source contributor. Building things with Rust, C++, TypeScript & more.">
+    <link rel="canonical" href="https://v8v88v8v88.com/" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css" />
     <link rel="icon" href="/images/favicon.ico" sizes="any" />
     <style>
         /* ===== Homepage UX - Snappy & Light ===== */
-        
+
         /* Hero - Bold terminal */
         .hero h1 {
             font-family: 'JetBrains Mono', 'SF Mono', monospace;
@@ -21,7 +24,7 @@
             font-weight: 600;
             letter-spacing: -0.02em;
         }
-        
+
         .hero h1::after {
             content: '';
             display: inline-block;
@@ -33,12 +36,19 @@
             vertical-align: baseline;
             border-radius: 1px;
         }
-        
+
         @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
         }
-        
+
         /* Section header with View All */
         .section-header {
             display: flex;
@@ -46,11 +56,11 @@
             align-items: baseline;
             margin-bottom: 1.25rem;
         }
-        
+
         .section-header h2 {
             margin-bottom: 0;
         }
-        
+
         .view-all {
             font-family: 'SF Mono', 'JetBrains Mono', monospace;
             font-size: 0.7rem;
@@ -61,19 +71,19 @@
             padding: 0 !important;
             box-shadow: none !important;
         }
-        
+
         .view-all:hover {
             color: #1DB954 !important;
         }
-        
+
         body.light-mode .view-all {
             color: rgba(0, 0, 0, 0.45) !important;
         }
-        
+
         body.light-mode .view-all:hover {
             color: #0f4d1f !important;
         }
-        
+
         /* Avatar coin flip - smooth 60fps */
         .intro .avatar-flip {
             width: 120px;
@@ -82,7 +92,7 @@
             cursor: pointer;
             flex-shrink: 0;
         }
-        
+
         .intro .avatar-inner {
             position: relative;
             width: 100%;
@@ -90,11 +100,11 @@
             transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             transform-style: preserve-3d;
         }
-        
+
         .intro .avatar-flip.flipped .avatar-inner {
             transform: rotateY(180deg);
         }
-        
+
         .intro .avatar-flip img {
             position: absolute;
             top: 0;
@@ -107,18 +117,18 @@
             object-fit: cover;
             border: 2px solid rgba(255, 255, 255, 0.1);
         }
-        
+
         .intro .avatar-back {
             transform: rotateY(180deg);
         }
-        
+
         @media (max-width: 768px) {
             .intro .avatar-flip {
                 width: 100px;
                 height: 100px;
             }
         }
-        
+
         @media (max-width: 480px) {
             .intro .avatar-flip {
                 width: 80px;
@@ -129,16 +139,18 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://v8v88v8v88.com/">
     <meta property="og:title" content="V8V88V8V88 | Vaibhav Pratap Singh">
-    <meta property="og:description" content="Developer, Linux professional, and open source contributor. Building things with Rust, C++, TypeScript & more.">
+    <meta property="og:description"
+        content="Developer, Linux professional, and open source contributor. Building things with Rust, C++, TypeScript & more.">
     <meta property="og:image" content="https://v8v88v8v88.com/images/image.webp">
     <meta property="og:site_name" content="V8V88V8V88">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@v8v88v8v88">
     <meta name="twitter:creator" content="@v8v88v8v88">
     <meta name="twitter:title" content="V8V88V8V88 | Vaibhav Pratap Singh">
-    <meta name="twitter:description" content="Developer, Linux enthusiast, and open source contributor. Building things with Rust, C++, TypeScript & more.">
+    <meta name="twitter:description"
+        content="Developer, Linux enthusiast, and open source contributor. Building things with Rust, C++, TypeScript & more.">
     <meta name="twitter:image" content="https://v8v88v8v88.com/images/image.webp">
-                <script type="application/ld+json">
+    <script type="application/ld+json">
                 {
                     "@context": "https://schema.org",
                     "@type": "WebSite",
@@ -146,7 +158,7 @@
                     "name": "V8V88V8V88"
                 }
                 </script>
-        <script type="application/ld+json">
+    <script type="application/ld+json">
         {
           "@context": "https://schema.org",
           "@type": "Person",
@@ -167,304 +179,283 @@
           "knowsAbout": ["Linux", "FOSS", "Computer Science", "Software Development", "Web Design"]
         }
         </script>
-    </head>
-    <body>
-        <header>
-            <nav>
-                <div class="logo"><a href="/">V8V88V8V88</a></div>
-                <div class="nav-right">
-                    <div class="mode-toggle">
-                        <input
-                            type="checkbox"
-                            id="mode-switch"
-                            class="mode-switch"
-                            aria-label="Toggle dark mode"
-                        />
-                        <label
-                            for="mode-switch"
-                            class="mode-switch-label"
-                        ></label>
-                    </div>
-                    <button class="menu-toggle" aria-label="Toggle menu">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </button>
-                </div>
-                <ul class="nav-menu">
-                    <li><a href="/" aria-current="page">Home</a></li>
-                    <li><a href="/blogs/">Blogs</a></li>
-                    <li><a href="/projects/">Projects</a></li>
-                    <li><a href="/contact/">Contact</a></li>
-                    <li><a href="/about/">About</a></li>
-                </ul>
-            </nav>
-        </header>
-        <main>
-            <section class="hero">
-                <h1>$ &gt;[V8V88V8V88]_</h1>
-            </section>
+</head>
 
-            <section class="intro">
-                <div class="intro-content">
-                    <div class="avatar-flip" id="avatar-flip" onclick="this.classList.toggle('flipped')">
-                        <div class="avatar-inner">
-                            <img src="/images/image.webp" alt="Vaibhav" class="avatar-front" />
-                            <img src="/images/V8.webp" alt="V8" class="avatar-back" />
-                        </div>
-                    </div>
-                    <div class="intro-text">
-                        <h2>
-                            Hi, I'm
-                            <span class="vaibhav-hover" data-text="V8V88V8V88" 
-                                onmouseenter="document.getElementById('avatar-flip').classList.add('flipped')"
-                                onmouseleave="document.getElementById('avatar-flip').classList.remove('flipped')">Vaibhav</span>
-                        </h2>
-                        <p>Linux × FOSS × Code × Design</p>
+<body>
+    <header>
+        <nav>
+            <div class="logo"><a href="/">V8V88V8V88</a></div>
+            <div class="nav-right">
+                <div class="mode-toggle">
+                    <input type="checkbox" id="mode-switch" class="mode-switch" aria-label="Toggle dark mode" />
+                    <label for="mode-switch" class="mode-switch-label"></label>
+                </div>
+                <button class="menu-toggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/" aria-current="page">Home</a></li>
+                <li><a href="/blogs/">Blogs</a></li>
+                <li><a href="/projects/">Projects</a></li>
+                <li><a href="/contact/">Contact</a></li>
+                <li><a href="/about/">About</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="hero">
+            <h1>$ &gt;[V8V88V8V88]_</h1>
+        </section>
+
+        <section class="intro">
+            <div class="intro-content">
+                <div class="avatar-flip" id="avatar-flip" onclick="this.classList.toggle('flipped')">
+                    <div class="avatar-inner">
+                        <img src="/images/image.webp" alt="Vaibhav" class="avatar-front" />
+                        <img src="/images/V8.webp" alt="V8" class="avatar-back" />
                     </div>
                 </div>
-            </section>
+                <div class="intro-text">
+                    <h2>
+                        Hi, I'm
+                        <span class="vaibhav-hover" data-text="V8V88V8V88"
+                            onmouseenter="document.getElementById('avatar-flip').classList.add('flipped')"
+                            onmouseleave="document.getElementById('avatar-flip').classList.remove('flipped')">Vaibhav</span>
+                    </h2>
+                    <p>Linux × FOSS × Code × Design</p>
+                </div>
+            </div>
+        </section>
 
-            <section class="about">
-                <h2>About Me</h2>
-                <p>
-                    Hi there! I am
-                    <span data-hover="Yes, that's my real name"
-                        >Vaibhav Pratap Singh</span
-                    >, known by the Username
-                    <span data-hover="V8V88V8V88">V8</span> on the Internet. I
-                    am interested in Computers, Internet, FOSS, Linux, Design,
-                    and Coding. I am a CSE student who loves exploring new areas
-                    of interest. I am a firm believer in
-                    <a
-                        href="https://principles-wiki.net/principles:keep_it_simple_stupid"
-                        >KISS</a
-                    >
-                    and
-                    <a href="https://www.wikiwand.com/en/Unix_philosophy"
-                        >Unix philosophy</a
-                    >. I am Inquisitive and Curious by nature. Feel free to
-                    reach out to me at my social handles, although I might not
-                    respond right away :)
-                </p>
+        <section class="about">
+            <h2>About Me</h2>
+            <p>
+                Hi there! I am
+                <span data-hover="Yes, that's my real name">Vaibhav Pratap Singh</span>, known by the Username
+                <span data-hover="V8V88V8V88">V8</span> on the Internet. I
+                am interested in Computers, Internet, FOSS, Linux, Design,
+                and Coding. I am a CSE student who loves exploring new areas
+                of interest. I am a firm believer in
+                <a href="https://principles-wiki.net/principles:keep_it_simple_stupid">KISS</a>
+                and
+                <a href="https://www.wikiwand.com/en/Unix_philosophy">Unix philosophy</a>. I am Inquisitive and Curious
+                by nature. Feel free to
+                reach out to me at my social handles, although I might not
+                respond right away :)
+            </p>
 
-                <a href="https://drive.google.com/file/d/1iQFjSzPWcSA3sAt4WS-uKIUd7ReCz_hz/view?usp=sharing" class="resume-button" target="_blank">Resume</a>
-            </section>
+            <a href="https://drive.google.com/file/d/1iQFjSzPWcSA3sAt4WS-uKIUd7ReCz_hz/view?usp=sharing"
+                class="resume-button" target="_blank">Resume</a>
+        </section>
 
-            <section class="projects">
-                <div class="section-header">
+        <section class="projects">
+            <div class="section-header">
                 <h2>Projects</h2>
-                    <a href="/projects/" class="view-all">view all →</a>
-                </div>
-                <ul>
-                    <li class="project-item">
-                        <a href="https://piracyindex.vercel.app/" target="_blank">
-                            <img
-                                src="images/piracyindex.webp"
-                                alt="piracy index website"
-                                loading="lazy"
-                            />
-                            <h3>The Piracy Index Website</h3>
-                            <p>
-                                The greatest Piracy Site which indexes all the
-                                greatest piracy sites around the web.
-                            </p>
-                        </a>
-                    </li>
-                    <li class="project-item">
-                        <a
-                            href="https://github.com/V8V88V8V88/telegram-gtk4-theme"
-                            target="_blank"
-                        >
-                            <img
-                                src="images/telegram.webp"
-                                alt="telegram client with my theme"
-                                loading="lazy"
-                            />
-                            <h3>Telegram - Libadwaita Theme</h3>
-                            <p>
-                                GTK4 / Libadwaita theme for Telegram Desktop of
-                                Linux/Windows/MacOS
-                            </p>
-                        </a>
-                    </li>
-                    <li class="project-item">
-                        <a
-                            href="https://github.com/V8V88V8V88/face-recognition"
-                            target="_blank"
-                        >
-                            <img
-                                src="images/facerecognition.webp"
-                                alt="face recognition program image"
-                                loading="lazy"
-                            />
-                            <h3>Face Recognition using CV2</h3>
-                            <p>
-                                The project I had to make for some funny reasons
-                                of my college.
-                            </p>
-                        </a>
-                    </li>
-                    <li class="project-item">
-                        <a
-                            href="https://github.com/V8V88V8V88/vfetch"
-                            target="_blank"
-                        >
-                            <img
-                                src="images/vfetch.webp"
-                                alt="terminal windows running vfetch"
-                                loading="lazy"
-                            />
-                            <h3>vfetch</h3>
-                            <p>
-                                The shortest best optimized alternative for
-                                vfetch made to run in all POSIX shells
-                            </p>
-                        </a>
-                    </li>
-                </ul>
-            </section>
+                <a href="/projects/" class="view-all">view all →</a>
+            </div>
+            <ul>
+                <li class="project-item">
+                    <a href="https://github.com/v8v88v8v88/indx" target="_blank">
+                        <img src="images/indx.webp" alt="INDX Project" loading="lazy" />
+                        <h3>INDX</h3>
+                        <p>
+                            Indexing everything that can be on maps
+                        </p>
+                    </a>
+                </li>
+                <li class="project-item">
+                    <a href="https://piracyindex.vercel.app/" target="_blank">
+                        <img src="images/piracyindex.webp" alt="piracy index website" loading="lazy" />
+                        <h3>The Piracy Index Website</h3>
+                        <p>
+                            The greatest Piracy Site which indexes all the
+                            greatest piracy sites around the web.
+                        </p>
+                    </a>
+                </li>
+                <li class="project-item">
+                    <a href="https://github.com/V8V88V8V88/telegram-gtk4-theme" target="_blank">
+                        <img src="images/telegram.webp" alt="telegram client with my theme" loading="lazy" />
+                        <h3>Telegram - Libadwaita Theme</h3>
+                        <p>
+                            GTK4 / Libadwaita theme for Telegram Desktop of
+                            Linux/Windows/MacOS
+                        </p>
+                    </a>
+                </li>
+                <li class="project-item">
+                    <a href="https://github.com/V8V88V8V88/face-recognition" target="_blank">
+                        <img src="images/facerecognition.webp" alt="face recognition program image" loading="lazy" />
+                        <h3>Face Recognition using CV2</h3>
+                        <p>
+                            The project I had to make for some funny reasons
+                            of my college.
+                        </p>
+                    </a>
+                </li>
+                <li class="project-item">
+                    <a href="https://github.com/V8V88V8V88/vfetch" target="_blank">
+                        <img src="images/vfetch.webp" alt="terminal windows running vfetch" loading="lazy" />
+                        <h3>vfetch</h3>
+                        <p>
+                            The shortest best optimized alternative for
+                            vfetch made to run in all POSIX shells
+                        </p>
+                    </a>
+                </li>
+            </ul>
+        </section>
 
-            <section class="posts">
-                <div class="section-header">
+        <section class="posts">
+            <div class="section-header">
                 <h2>Blogs</h2>
-                    <a href="/blogs/" class="view-all">view all →</a>
-                </div>
-                <ul>
-                    <li>
-                        <a href="/minimalism/">
-                            <h3>Minimalism</h3>
-                            <p>
-                                How ultimate simplicity changed the design of my life.
-                            </p>
-                            <small><time>Oct 6, 2025</time></small>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/username/">
-                            <h3>Username</h3>
-                            <p>
-                                The only description of my username "V8" on
-                                internet you can find.
-                            </p>
-                            <small><time>Mar 4, 2025</time></small>
-                        </a>
-                    </li>
-                    
-                </ul>
-            </section>
+                <a href="/blogs/" class="view-all">view all →</a>
+            </div>
+            <ul>
+                <li>
+                    <a href="/minimalism/">
+                        <h3>Minimalism</h3>
+                        <p>
+                            How ultimate simplicity changed the design of my life.
+                        </p>
+                        <small><time>Oct 6, 2025</time></small>
+                    </a>
+                </li>
+                <li>
+                    <a href="/username/">
+                        <h3>Username</h3>
+                        <p>
+                            The only description of my username "V8" on
+                            internet you can find.
+                        </p>
+                        <small><time>Mar 4, 2025</time></small>
+                    </a>
+                </li>
 
-            <section class="contact">
-                <h2>Connect</h2>
-                <div class="contact-grid">
-                    <a href="https://github.com/v8v88v8v88" target="_blank" class="contact-item">
-                        <i class="fab fa-github"></i>
-                        <span>GitHub</span>
-                    </a>
-                    <a href="https://t.me/V8V88V8V88" target="_blank" class="contact-item">
-                        <i class="fab fa-telegram"></i>
-                        <span>Telegram</span>
-                    </a>
-                    <a href="https://www.youtube.com/c/MagicalV8" target="_blank" class="contact-item">
-                        <i class="fab fa-youtube"></i>
-                        <span>YouTube</span>
-                    </a>
-                    <a href="https://twitter.com/v8v88v8v88" target="_blank" class="contact-item">
-                        <i class="fab fa-twitter"></i>
-                        <span>Twitter</span>
-                    </a>
-                    <a href="https://www.reddit.com/user/v8v88v8v88" target="_blank" class="contact-item">
-                        <i class="fab fa-reddit"></i>
-                        <span>Reddit</span>
-                    </a>
-                    <a href="https://myanimelist.net/profile/V8V88V8V88" target="_blank" class="contact-item">
-                        <i class="fas fa-film"></i>
-                        <span>MyAnimeList</span>
-                    </a>
-                    <a href="https://aminoapps.com/c/indianamino/page/user/v8v88v8v88-tm-doyouknowdawae/g0Rq_zpQixfQPYM802bYq08PMPQKZB2P3bxT3" target="_blank" class="contact-item">
-                        <i class="fas fa-comments"></i>
-                        <span>Amino</span>
-                    </a>
-                    <a href="https://www.linkedin.com/in/v8v88v8v88/" target="_blank" class="contact-item">
-                        <i class="fab fa-linkedin"></i>
-                        <span>LinkedIn</span>
-                    </a>
-                    <a href="https://fosstodon.org/@v8v88v8v88" target="_blank" rel="me" class="contact-item">
-                        <i class="fab fa-mastodon"></i>
-                        <span>Mastodon</span>
-                    </a>
-                    <a href="https://v8v88v8v88.com" target="_blank" class="contact-item">
-                        <i class="fas fa-globe"></i>
-                        <span>Website</span>
-                    </a>
-                </div>
-            </section>
-        </main>
-        <footer class="site-footer">
-            <div class="footer-glass">
-                <div class="footer-main">
-                    <div class="footer-brand">
-                        <a href="/" class="footer-logo">V8V88V8V88</a>
-                        <p class="footer-tagline">Linux × FOSS × Code × Design</p>
-                    </div>
-                    
-                    <nav class="footer-nav">
-                        <div class="footer-nav-group">
-                            <h5>Explore</h5>
-                            <a href="/">Home</a>
-                            <a href="/blogs/">Blogs</a>
-                            <a href="/projects/">Projects</a>
-                        </div>
-                        
-                        <div class="footer-nav-group">
-                            <h5>More</h5>
-                            <a href="/about/">About</a>
-                            <a href="/contact/">Contact</a>
-                        </div>
-                        
-                        <div class="footer-nav-group footer-socials">
-                            <h5>Socials</h5>
-                            <div class="footer-social-icons">
-                                <a href="https://github.com/v8v88v8v88" target="_blank" rel="noopener noreferrer" title="GitHub"><i class="fab fa-github"></i></a>
-                                <a href="https://t.me/V8V88V8V88" target="_blank" rel="noopener noreferrer" title="Telegram"><i class="fab fa-telegram"></i></a>
-                                <a href="https://fosstodon.org/@v8v88v8v88" rel="me" target="_blank" title="Mastodon"><i class="fab fa-mastodon"></i></a>
-                                <a href="https://twitter.com/v8v88v8v88" target="_blank" rel="noopener noreferrer" title="Twitter"><i class="fab fa-twitter"></i></a>
-                                <a href="https://www.linkedin.com/in/v8v88v8v88/" target="_blank" rel="noopener noreferrer" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                                <a href="https://www.youtube.com/c/MagicalV8" target="_blank" rel="noopener noreferrer" title="YouTube"><i class="fab fa-youtube"></i></a>
-                                <a href="https://www.reddit.com/user/v8v88v8v88" target="_blank" rel="noopener noreferrer" title="Reddit"><i class="fab fa-reddit"></i></a>
-                                <a href="https://myanimelist.net/profile/V8V88V8V88" target="_blank" rel="noopener noreferrer" title="MyAnimeList"><i class="fas fa-film"></i></a>
-                            </div>
-                </div>
-                    </nav>
-                </div>
-                
-                <div class="footer-bottom-bar">
-                    <div class="footer-meta">
-                        <span class="copyright">🄯 2026</span>
-                        <span class="separator">·</span>
-                        <span class="made-with">Made with ♥ by <a href="https://github.com/V8V88V8V88">V8V88V8V88</a></span>
-                </div>
-                    
-                    <div class="footer-webring">
-                        <a href="https://webring.dinhe.net/prev/https://v8v88v8v88.com/" class="webring-link">←</a>
-                        <a href="https://webring.dinhe.net/" class="webring-hub">Webring</a>
-                        <a href="https://webring.dinhe.net/next/https://v8v88v8v88.com/" class="webring-link">→</a>
+            </ul>
+        </section>
+
+        <section class="contact">
+            <h2>Connect</h2>
+            <div class="contact-grid">
+                <a href="https://github.com/v8v88v8v88" target="_blank" class="contact-item">
+                    <i class="fab fa-github"></i>
+                    <span>GitHub</span>
+                </a>
+                <a href="https://t.me/V8V88V8V88" target="_blank" class="contact-item">
+                    <i class="fab fa-telegram"></i>
+                    <span>Telegram</span>
+                </a>
+                <a href="https://www.youtube.com/c/MagicalV8" target="_blank" class="contact-item">
+                    <i class="fab fa-youtube"></i>
+                    <span>YouTube</span>
+                </a>
+                <a href="https://twitter.com/v8v88v8v88" target="_blank" class="contact-item">
+                    <i class="fab fa-twitter"></i>
+                    <span>Twitter</span>
+                </a>
+                <a href="https://www.reddit.com/user/v8v88v8v88" target="_blank" class="contact-item">
+                    <i class="fab fa-reddit"></i>
+                    <span>Reddit</span>
+                </a>
+                <a href="https://myanimelist.net/profile/V8V88V8V88" target="_blank" class="contact-item">
+                    <i class="fas fa-film"></i>
+                    <span>MyAnimeList</span>
+                </a>
+                <a href="https://aminoapps.com/c/indianamino/page/user/v8v88v8v88-tm-doyouknowdawae/g0Rq_zpQixfQPYM802bYq08PMPQKZB2P3bxT3"
+                    target="_blank" class="contact-item">
+                    <i class="fas fa-comments"></i>
+                    <span>Amino</span>
+                </a>
+                <a href="https://www.linkedin.com/in/v8v88v8v88/" target="_blank" class="contact-item">
+                    <i class="fab fa-linkedin"></i>
+                    <span>LinkedIn</span>
+                </a>
+                <a href="https://fosstodon.org/@v8v88v8v88" target="_blank" rel="me" class="contact-item">
+                    <i class="fab fa-mastodon"></i>
+                    <span>Mastodon</span>
+                </a>
+                <a href="https://v8v88v8v88.com" target="_blank" class="contact-item">
+                    <i class="fas fa-globe"></i>
+                    <span>Website</span>
+                </a>
             </div>
-                    
-                    <div class="footer-visitors">
-                        <a href="https://visitorbadge.io/status?path=https%3A%2F%2Fv8v88v8v88.com">
-                            <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fv8v88v8v88.com&label=Visitors&labelColor=%23010101&countColor=%23b1b1b1&style=flat" alt="Visitors" loading="lazy"/>
-                        </a>
+        </section>
+    </main>
+    <footer class="site-footer">
+        <div class="footer-glass">
+            <div class="footer-main">
+                <div class="footer-brand">
+                    <a href="/" class="footer-logo">V8V88V8V88</a>
+                    <p class="footer-tagline">Linux × FOSS × Code × Design</p>
+                </div>
+
+                <nav class="footer-nav">
+                    <div class="footer-nav-group">
+                        <h5>Explore</h5>
+                        <a href="/">Home</a>
+                        <a href="/blogs/">Blogs</a>
+                        <a href="/projects/">Projects</a>
                     </div>
-                 </div>
+
+                    <div class="footer-nav-group">
+                        <h5>More</h5>
+                        <a href="/about/">About</a>
+                        <a href="/contact/">Contact</a>
+                    </div>
+
+                    <div class="footer-nav-group footer-socials">
+                        <h5>Socials</h5>
+                        <div class="footer-social-icons">
+                            <a href="https://github.com/v8v88v8v88" target="_blank" rel="noopener noreferrer"
+                                title="GitHub"><i class="fab fa-github"></i></a>
+                            <a href="https://t.me/V8V88V8V88" target="_blank" rel="noopener noreferrer"
+                                title="Telegram"><i class="fab fa-telegram"></i></a>
+                            <a href="https://fosstodon.org/@v8v88v8v88" rel="me" target="_blank" title="Mastodon"><i
+                                    class="fab fa-mastodon"></i></a>
+                            <a href="https://twitter.com/v8v88v8v88" target="_blank" rel="noopener noreferrer"
+                                title="Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="https://www.linkedin.com/in/v8v88v8v88/" target="_blank" rel="noopener noreferrer"
+                                title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            <a href="https://www.youtube.com/c/MagicalV8" target="_blank" rel="noopener noreferrer"
+                                title="YouTube"><i class="fab fa-youtube"></i></a>
+                            <a href="https://www.reddit.com/user/v8v88v8v88" target="_blank" rel="noopener noreferrer"
+                                title="Reddit"><i class="fab fa-reddit"></i></a>
+                            <a href="https://myanimelist.net/profile/V8V88V8V88" target="_blank"
+                                rel="noopener noreferrer" title="MyAnimeList"><i class="fas fa-film"></i></a>
+                        </div>
+                    </div>
+                </nav>
             </div>
-        </footer>
-        <!-- Psst... Did you know octopuses have three hearts? Just thought you should know. -->
-        <script
-            src="https://kit.fontawesome.com/133988a847.js"
-            crossorigin="anonymous"
-            defer
-        ></script>
-        <script src="js/script.js" defer></script>
-    </body>
+
+            <div class="footer-bottom-bar">
+                <div class="footer-meta">
+                    <span class="copyright">🄯 2026</span>
+                    <span class="separator">·</span>
+                    <span class="made-with">Made with ♥ by <a href="https://github.com/V8V88V8V88">V8V88V8V88</a></span>
+                </div>
+
+                <div class="footer-webring">
+                    <a href="https://webring.dinhe.net/prev/https://v8v88v8v88.com/" class="webring-link">←</a>
+                    <a href="https://webring.dinhe.net/" class="webring-hub">Webring</a>
+                    <a href="https://webring.dinhe.net/next/https://v8v88v8v88.com/" class="webring-link">→</a>
+                </div>
+
+                <div class="footer-visitors">
+                    <a href="https://visitorbadge.io/status?path=https%3A%2F%2Fv8v88v8v88.com">
+                        <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fv8v88v8v88.com&label=Visitors&labelColor=%23010101&countColor=%23b1b1b1&style=flat"
+                            alt="Visitors" loading="lazy" />
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Psst... Did you know octopuses have three hearts? Just thought you should know. -->
+    <script src="https://kit.fontawesome.com/133988a847.js" crossorigin="anonymous" defer></script>
+    <script src="js/script.js" defer></script>
+</body>
+
 </html>
