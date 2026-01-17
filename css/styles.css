@@ -1079,6 +1079,14 @@ body.light-mode .arrow:hover {
     border-radius: 20px;
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+body.light-mode .posts {
+    background: rgba(255, 255, 255, 0.6);
+    border-color: rgba(0, 0, 0, 0.08);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
 }
 
 .posts h2 {
@@ -1099,6 +1107,7 @@ body.light-mode .arrow:hover {
 }
 
 .posts a {
+    position: relative;
     display: flex;
     flex-direction: column;
     color: #fff;
@@ -1108,12 +1117,39 @@ body.light-mode .arrow:hover {
     border-radius: 16px;
     border: 1px solid rgba(255, 255, 255, 0.08);
     transition: all 0.25s ease;
+    overflow: hidden;
+}
+
+.posts a::after {
+    content: '→';
+    position: absolute;
+    top: 50%;
+    right: 1.75rem;
+    transform: translateY(-50%) translateX(-8px);
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.25);
+    transition: all 0.25s ease;
+    opacity: 0;
+}
+
+.posts a:hover::after {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+    color: rgba(255, 255, 255, 0.5);
 }
 
 body.light-mode .posts a {
     color: #1d1d1f;
-    background: rgba(0, 0, 0, 0.02);
-    border-color: rgba(0, 0, 0, 0.06);
+    background: rgba(255, 255, 255, 0.8);
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+body.light-mode .posts a::after {
+    color: rgba(0, 0, 0, 0.25);
+}
+
+body.light-mode .posts a:hover::after {
+    color: rgba(0, 0, 0, 0.5);
 }
 
 .posts a:hover {
@@ -1133,6 +1169,7 @@ body.light-mode .posts a:hover {
     font-weight: 600;
 }
 
+
 .posts p {
     margin-bottom: 0.6rem;
     color: rgba(255, 255, 255, 0.6);
@@ -1141,12 +1178,15 @@ body.light-mode .posts a:hover {
 }
 
 body.light-mode .posts p {
-    color: rgba(0, 0, 0, 0.55);
+    color: rgba(0, 0, 0, 0.6);
 }
 
 .posts small {
     color: rgba(255, 255, 255, 0.4);
-    font-size: 0.8rem;
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    margin-top: 0.5rem;
 }
 
 body.light-mode .posts small {
@@ -1356,20 +1396,30 @@ body.light-mode .menu-toggle span {
 /* ========================================= */
 
 .contact {
-    padding: 2rem;
+    padding: 2.5rem;
     margin: 2rem 0;
     background: rgba(255, 255, 255, 0.03);
-    border-radius: 20px;
+    border-radius: 24px;
     border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+body.light-mode .contact {
+    background: rgba(255, 255, 255, 0.6);
+    border-color: rgba(0, 0, 0, 0.08);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
 }
 
 .contact h2 {
     font-size: clamp(1.5rem, 3vw, 2rem);
     font-weight: 600;
     text-align: left;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
     color: #fff;
     padding-left: 0.25rem;
+    letter-spacing: -0.01em;
 }
 
 body.light-mode .contact h2 {
@@ -1379,7 +1429,7 @@ body.light-mode .contact h2 {
 .contact-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 1rem;
+    gap: 1.25rem;
     max-width: 100%;
     padding: 0;
 }
@@ -1390,49 +1440,78 @@ body.light-mode .contact h2 {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 1.5rem 1rem;
-    background: rgba(255, 255, 255, 0.04);
-    border-radius: 16px;
-    transition: all 0.25s ease;
+    padding: 1.75rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 18px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     overflow: hidden;
     text-decoration: none;
-    color: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.contact-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.contact-item:hover::before {
+    opacity: 1;
 }
 
 body.light-mode .contact-item {
-    background: rgba(0, 0, 0, 0.03);
-    border-color: rgba(0, 0, 0, 0.06);
-    color: rgba(0, 0, 0, 0.7);
+    background: rgba(255, 255, 255, 0.8);
+    border-color: rgba(0, 0, 0, 0.08);
+    color: rgba(0, 0, 0, 0.75);
+}
+
+body.light-mode .contact-item::before {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.05) 0%, transparent 100%);
 }
 
 .contact-item:hover {
-    transform: translateY(-3px);
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-4px) scale(1.02);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
     color: #fff;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
 }
 
 body.light-mode .contact-item:hover {
-    background: rgba(0, 0, 0, 0.05);
-    border-color: rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(0, 0, 0, 0.12);
     color: #000;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
 }
 
 .contact-item i {
-    font-size: 1.5rem;
+    font-size: 1.75rem;
     margin-bottom: 0.75rem;
-    transition: transform 0.25s ease;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
 }
 
 .contact-item:hover i {
-    transform: scale(1.1);
+    transform: scale(1.15) rotate(5deg);
 }
 
 .contact-item span {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     font-weight: 500;
-    opacity: 0.9;
+    opacity: 0.95;
+    position: relative;
+    z-index: 1;
+    letter-spacing: 0.01em;
 }
 
 /* ========================================= */
@@ -1486,34 +1565,47 @@ body.light-mode .contact-item:hover {
         height: 180px;
     }
 
+    .posts {
+        padding: 2rem 1.5rem;
+    }
+
+    .posts a {
+        padding: 1.5rem 1.5rem;
+    }
+
+    .posts a::after {
+        right: 1.5rem;
+    }
+
     .arrow {
         width: 36px;
         height: 36px;
     }
 
     .contact {
-        padding: 2rem 0;
+        padding: 2rem 1.5rem;
         margin: 1.5rem 0;
         border-radius: 20px;
     }
 
     .contact-grid {
         grid-template-columns: repeat(4, 1fr);
-        gap: 0.75rem;
-        padding: 0 1rem;
+        gap: 1rem;
+        padding: 0;
     }
 
     .contact-item {
-        padding: 1.25rem 0.75rem;
+        padding: 1.5rem 0.75rem;
+        border-radius: 16px;
     }
 
     .contact-item i {
-        font-size: 1.25rem;
-        margin-bottom: 0.5rem;
+        font-size: 1.5rem;
+        margin-bottom: 0.6rem;
     }
 
     .contact-item span {
-        font-size: 0.7rem;
+        font-size: 0.75rem;
     }
 }
 
@@ -1752,33 +1844,69 @@ body.light-mode .contact-item:hover {
         height: 160px;
     }
 
+    .posts {
+        padding: 1.5rem;
+    }
+
     .posts a {
-        padding: 1.25rem;
+        padding: 1.5rem 1.25rem;
+    }
+
+    .posts a::after {
+        right: 1.25rem;
+        font-size: 1rem;
+    }
+
+    .posts h3 {
+        font-size: 1.15rem;
+    }
+
+    .posts p {
+        font-size: 0.9rem;
     }
 
     .contact {
-        padding: 1.5rem 0;
-        border-radius: 16px;
+        padding: 1.5rem 1rem;
+        border-radius: 18px;
     }
 
     .contact-grid {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 0.5rem;
-        padding: 0 0.75rem;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.875rem;
+        padding: 0;
     }
 
     .contact-item {
-        padding: 1rem 0.5rem;
-        border-radius: 12px;
+        padding: 1.5rem 0.75rem;
+        border-radius: 14px;
     }
 
     .contact-item i {
-        font-size: 1.1rem;
-        margin-bottom: 0.4rem;
+        font-size: 1.4rem;
+        margin-bottom: 0.6rem;
     }
 
     .contact-item span {
-        font-size: 0.65rem;
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .contact-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+    }
+
+    .contact-item {
+        padding: 1.25rem 0.5rem;
+    }
+
+    .contact-item i {
+        font-size: 1.3rem;
+    }
+
+    .contact-item span {
+        font-size: 0.7rem;
     }
 }
 
