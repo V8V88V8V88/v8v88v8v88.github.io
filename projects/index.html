@@ -51,7 +51,8 @@
     font-weight: 400;
     color: #fff;
     max-width: 600px;
-    line-height: 1.4;
+    line-height: 1.6;
+    letter-spacing: 0.01em;
     margin-bottom: 1.5rem;
 }
 
@@ -77,13 +78,15 @@
 .hero-stat-value {
     font-size: 1.5rem;
     font-weight: 500;
+    line-height: 1.3;
     color: #fff;
 }
 
 .hero-stat-label {
     font-size: 0.7rem;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
+    line-height: 1.4;
     color: rgba(255, 255, 255, 0.4);
 }
 
@@ -118,10 +121,17 @@
     border-radius: 100px;
     color: rgba(255, 255, 255, 0.6);
     transition: all 0.2s ease;
+    cursor: pointer;
 }
 
 .tech-pill:hover {
     background: rgba(29, 185, 84, 0.1);
+    border-color: rgba(29, 185, 84, 0.3);
+    color: #1DB954;
+}
+
+.tech-pill.active {
+    background: rgba(29, 185, 84, 0.15);
     border-color: rgba(29, 185, 84, 0.3);
     color: #1DB954;
 }
@@ -229,6 +239,8 @@
     font-weight: 500;
     color: #fff;
     margin-bottom: 0.35rem;
+    line-height: 1.5;
+    letter-spacing: 0;
     transition: color 0.2s ease;
 }
 
@@ -238,7 +250,9 @@
 
 .project-desc {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    font-size: 0.85rem;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    letter-spacing: 0.01em;
     color: rgba(255, 255, 255, 0.6);
     white-space: nowrap;
     overflow: hidden;
@@ -270,26 +284,33 @@
 
 /* Featured/Popular Projects */
 .project-item.featured {
-    background: linear-gradient(135deg, rgba(29, 185, 84, 0.08) 0%, rgba(29, 185, 84, 0.02) 100%);
-    border: 1px solid rgba(29, 185, 84, 0.15);
-    border-radius: 10px;
-    margin: 0.25rem -1rem;
+    border-radius: 8px;
+    margin: 0 -1rem;
     padding: 1rem 1rem;
-}
-
-.project-item.featured .project-name {
-    color: #1DB954;
 }
 
 .project-item.featured .project-name::after {
     content: '★';
     margin-left: 0.5rem;
     font-size: 0.8rem;
-    opacity: 0.7;
+    color: #1DB954;
 }
 
-.project-item.featured:hover {
-    background: linear-gradient(135deg, rgba(29, 185, 84, 0.12) 0%, rgba(29, 185, 84, 0.04) 100%);
+/* Show featured styling only when featured filter is active */
+.project-list.show-featured-only .project-item.featured {
+    background: rgba(29, 185, 84, 0.08);
+    border: 1px solid rgba(29, 185, 84, 0.15);
+    border-radius: 10px;
+    margin: 0.25rem -1rem;
+    padding: 1rem 1rem;
+}
+
+.project-list.show-featured-only .project-item.featured .project-name {
+    color: #1DB954;
+}
+
+.project-list.show-featured-only .project-item.featured:hover {
+    background: rgba(29, 185, 84, 0.12);
     border-color: rgba(29, 185, 84, 0.25);
 }
 
@@ -358,17 +379,27 @@ body.light-mode .tech-pill:hover {
     color: #0f4d1f;
 }
 
-body.light-mode .project-item.featured {
-    background: linear-gradient(135deg, rgba(29, 185, 84, 0.06) 0%, rgba(29, 185, 84, 0.02) 100%);
-    border-color: rgba(15, 77, 31, 0.15);
-}
-
-body.light-mode .project-item.featured .project-name {
+body.light-mode .tech-pill.active {
+    background: rgba(29, 185, 84, 0.1);
+    border-color: rgba(15, 77, 31, 0.3);
     color: #0f4d1f;
 }
 
-body.light-mode .project-item.featured:hover {
-    background: linear-gradient(135deg, rgba(29, 185, 84, 0.1) 0%, rgba(29, 185, 84, 0.04) 100%);
+body.light-mode .project-item.featured .project-name::after {
+    color: #0f4d1f;
+}
+
+body.light-mode .project-list.show-featured-only .project-item.featured {
+    background: rgba(29, 185, 84, 0.06);
+    border-color: rgba(15, 77, 31, 0.15);
+}
+
+body.light-mode .project-list.show-featured-only .project-item.featured .project-name {
+    color: #0f4d1f;
+}
+
+body.light-mode .project-list.show-featured-only .project-item.featured:hover {
+    background: rgba(29, 185, 84, 0.1);
     border-color: rgba(15, 77, 31, 0.25);
 }
 
@@ -587,7 +618,7 @@ body.light-mode .section-label {
  ╚═╝     ╚═╝  ╚═╝ ╚═════╝  ╚════╝ ╚══════╝ ╚═════╝   ╚═╝   ╚══════╝
                 </pre>
                 <p class="hero-tagline">
-                    Things I've built, broken, and <em>shipped anyway</em>.
+                    Things I've built, contributed, forgotten, yet <em>shipped anyway</em>.
                 </p>
                 <div class="hero-stats">
                     <div class="hero-stat">
@@ -606,14 +637,15 @@ body.light-mode .section-label {
                 <div class="hero-tech">
                     <span class="hero-tech-label">I write in</span>
                     <div class="hero-tech-list">
-                        <span class="tech-pill">Rust</span>
-                        <span class="tech-pill">C/C++</span>
-                        <span class="tech-pill">Python</span>
-                        <span class="tech-pill">TypeScript</span>
-                        <span class="tech-pill">Svelte</span>
-                        <span class="tech-pill">Go</span>
-                        <span class="tech-pill">Shell</span>
-                        <span class="tech-pill">Java</span>
+                        <span class="tech-pill" data-filter-lang="all">All</span>
+                        <span class="tech-pill" data-filter-lang="Rust">Rust</span>
+                        <span class="tech-pill" data-filter-lang="C/C++">C/C++</span>
+                        <span class="tech-pill" data-filter-lang="Python">Python</span>
+                        <span class="tech-pill" data-filter-lang="TypeScript">TypeScript</span>
+                        <span class="tech-pill" data-filter-lang="Svelte">Svelte</span>
+                        <span class="tech-pill" data-filter-lang="Go">Go</span>
+                        <span class="tech-pill" data-filter-lang="Shell">Shell</span>
+                        <span class="tech-pill" data-filter-lang="Java">Java</span>
                     </div>
                 </div>
                 <div class="hero-scroll">scroll to explore</div>
@@ -627,29 +659,9 @@ body.light-mode .section-label {
             </div>
 
             <div class="project-list">
-                <span class="section-label">Themes & Desktop</span>
-                
-                <a href="https://github.com/V8V88V8V88/Telegram-GTK4-Libadwaita-Theme" target="_blank" class="project-item featured">
-                    <div class="project-info">
-                        <div class="project-name">Telegram-GTK4-Libadwaita-Theme</div>
-                        <div class="project-desc">A GTK4 - Libadwaita Inspired Theme for Telegram Desktop</div>
-                    </div>
-                    <span class="project-lang">Theme</span>
-                    <span class="project-arrow">→</span>
-                </a>
-
-                <a href="https://github.com/V8V88V8V88/dotfiles" target="_blank" class="project-item">
-                    <div class="project-info">
-                        <div class="project-name">dotfiles</div>
-                        <div class="project-desc">All the dotfiles of my linux system</div>
-                    </div>
-                    <span class="project-lang">Config</span>
-                    <span class="project-arrow">→</span>
-                </a>
-
                 <span class="section-label">Web Applications</span>
 
-                <a href="https://github.com/v8v88v8v88/indx" target="_blank" class="project-item featured">
+                <a href="https://github.com/v8v88v8v88/indx" target="_blank" class="project-item featured" data-lang="TypeScript">
                     <div class="project-info">
                         <div class="project-name">INDX</div>
                         <div class="project-desc">Indexing everything that can be on maps</div>
@@ -658,7 +670,7 @@ body.light-mode .section-label {
                     <span class="project-arrow">→</span>
                 </a>
 
-                <a href="https://github.com/thefossclub/thefossclub.github.io" target="_blank" class="project-item featured">
+                <a href="https://github.com/thefossclub/thefossclub.github.io" target="_blank" class="project-item featured" data-lang="Others">
                     <div class="project-info">
                         <div class="project-name">TheFOSSClub Site</div>
                         <div class="project-desc">Official website for The FOSS Club</div>
@@ -667,7 +679,7 @@ body.light-mode .section-label {
                     <span class="project-arrow">→</span>
                 </a>
 
-                <a href="https://github.com/V8V88V8V88/piracyindex" target="_blank" class="project-item featured">
+                <a href="https://github.com/V8V88V8V88/piracyindex" target="_blank" class="project-item featured" data-lang="TypeScript">
                     <div class="project-info">
                         <div class="project-name">piracyindex</div>
                         <div class="project-desc">The greatest piracy index of all time</div>
@@ -676,7 +688,7 @@ body.light-mode .section-label {
                     <span class="project-arrow">→</span>
                 </a>
 
-                <a href="https://github.com/V8V88V8V88/Synthio" target="_blank" class="project-item featured">
+                <a href="https://github.com/V8V88V8V88/Synthio" target="_blank" class="project-item featured" data-lang="Svelte">
                     <div class="project-info">
                         <div class="project-name">Synthio</div>
                         <div class="project-desc">A minimalist music visualizer built with Svelte</div>
@@ -685,7 +697,7 @@ body.light-mode .section-label {
                     <span class="project-arrow">→</span>
                 </a>
 
-                <a href="https://github.com/V8V88V8V88/musical-playground" target="_blank" class="project-item">
+                <a href="https://github.com/V8V88V8V88/musical-playground" target="_blank" class="project-item" data-lang="Svelte">
                     <div class="project-info">
                         <div class="project-name">musical-playground</div>
                         <div class="project-desc">Try music instruments online using svelte, vue, and tone.js</div>
@@ -694,7 +706,7 @@ body.light-mode .section-label {
                     <span class="project-arrow">→</span>
                 </a>
 
-                <a href="https://github.com/V8V88V8V88/FOSS-Hack-Delhi" target="_blank" class="project-item">
+                <a href="https://github.com/V8V88V8V88/FOSS-Hack-Delhi" target="_blank" class="project-item" data-lang="TypeScript">
                     <div class="project-info">
                         <div class="project-name">FOSS-Hack-Delhi</div>
                         <div class="project-desc">Website to promote FOSS Hack in Delhi area</div>
@@ -703,9 +715,29 @@ body.light-mode .section-label {
                     <span class="project-arrow">→</span>
                 </a>
 
+                <span class="section-label">Themes & Desktop</span>
+                
+                <a href="https://github.com/V8V88V8V88/Telegram-GTK4-Libadwaita-Theme" target="_blank" class="project-item featured" data-lang="Others">
+                    <div class="project-info">
+                        <div class="project-name">Telegram-GTK4-Libadwaita-Theme</div>
+                        <div class="project-desc">A GTK4 - Libadwaita Inspired Theme for Telegram Desktop</div>
+                    </div>
+                    <span class="project-lang">Theme</span>
+                    <span class="project-arrow">→</span>
+                </a>
+
+                <a href="https://github.com/V8V88V8V88/dotfiles" target="_blank" class="project-item" data-lang="Others">
+                    <div class="project-info">
+                        <div class="project-name">dotfiles</div>
+                        <div class="project-desc">All the dotfiles of my linux system</div>
+                    </div>
+                    <span class="project-lang">Config</span>
+                    <span class="project-arrow">→</span>
+                </a>
+
                 <span class="section-label">AI & Machine Learning</span>
 
-                <a href="https://github.com/V8V88V8V88/face-recognition" target="_blank" class="project-item featured">
+                <a href="https://github.com/V8V88V8V88/face-recognition" target="_blank" class="project-item featured" data-lang="C/C++">
                     <div class="project-info">
                         <div class="project-name">face-recognition</div>
                         <div class="project-desc">Face detection on live cameras using OpenCV and Dlib</div>
@@ -714,7 +746,7 @@ body.light-mode .section-label {
                     <span class="project-arrow">→</span>
                 </a>
 
-                <a href="https://github.com/V8V88V8V88/Vajra" target="_blank" class="project-item featured">
+                <a href="https://github.com/V8V88V8V88/Vajra" target="_blank" class="project-item featured" data-lang="TypeScript">
                     <div class="project-info">
                         <div class="project-name">Vajra</div>
                         <div class="project-desc">AI-Powered Cyber Threat Forecaster</div>
@@ -723,7 +755,7 @@ body.light-mode .section-label {
                     <span class="project-arrow">→</span>
                 </a>
 
-                <a href="https://github.com/V8V88V8V88/AI-Document-Analyzer" target="_blank" class="project-item">
+                <a href="https://github.com/V8V88V8V88/AI-Document-Analyzer" target="_blank" class="project-item" data-lang="Python">
                     <div class="project-info">
                         <div class="project-name">AI-Document-Analyzer</div>
                         <div class="project-desc">AI Powered Document Analyzer</div>
@@ -732,7 +764,7 @@ body.light-mode .section-label {
                     <span class="project-arrow">→</span>
                 </a>
 
-                <a href="https://github.com/V8V88V8V88/AI-Child-Protection" target="_blank" class="project-item">
+                <a href="https://github.com/V8V88V8V88/AI-Child-Protection" target="_blank" class="project-item" data-lang="Python">
                     <div class="project-info">
                         <div class="project-name">AI-Child-Protection</div>
                         <div class="project-desc">AI-driven parental control with face detection</div>
@@ -741,7 +773,7 @@ body.light-mode .section-label {
                     <span class="project-arrow">→</span>
                 </a>
 
-                <a href="https://github.com/V8V88V8V88/H1RE" target="_blank" class="project-item featured">
+                <a href="https://github.com/V8V88V8V88/H1RE" target="_blank" class="project-item featured" data-lang="TypeScript">
                     <div class="project-info">
                         <div class="project-name">H1RE</div>
                         <div class="project-desc">AI-powered resume analyzer for starters</div>
@@ -750,7 +782,7 @@ body.light-mode .section-label {
                     <span class="project-arrow">→</span>
                 </a>
 
-                <a href="https://github.com/V8V88V8V88/cnn-image-classification" target="_blank" class="project-item">
+                <a href="https://github.com/V8V88V8V88/cnn-image-classification" target="_blank" class="project-item" data-lang="Others">
                     <div class="project-info">
                         <div class="project-name">cnn-image-classification</div>
                         <div class="project-desc">CNN to classify images in CIFAR-10 dataset</div>
@@ -759,7 +791,7 @@ body.light-mode .section-label {
                     <span class="project-arrow">→</span>
                 </a>
 
-                <a href="https://github.com/V8V88V8V88/T2S" target="_blank" class="project-item">
+                <a href="https://github.com/V8V88V8V88/T2S" target="_blank" class="project-item" data-lang="Others">
                     <div class="project-info">
                         <div class="project-name">T2S</div>
                         <div class="project-desc">Text to speech using AI</div>
@@ -770,7 +802,7 @@ body.light-mode .section-label {
 
                 <span class="section-label">Rust Projects</span>
 
-                <a href="https://github.com/V8V88V8V88/H3IST" target="_blank" class="project-item featured">
+                <a href="https://github.com/V8V88V8V88/H3IST" target="_blank" class="project-item featured" data-lang="Rust">
                     <div class="project-info">
                         <div class="project-name">H3IST</div>
                         <div class="project-desc">A next-generation elevator control system</div>
@@ -779,7 +811,7 @@ body.light-mode .section-label {
                     <span class="project-arrow">→</span>
                 </a>
 
-                <a href="https://github.com/V8V88V8V88/MarkVue" target="_blank" class="project-item">
+                <a href="https://github.com/V8V88V8V88/MarkVue" target="_blank" class="project-item" data-lang="Rust">
                     <div class="project-info">
                         <div class="project-name">MarkVue</div>
                         <div class="project-desc">GTK-based Markdown viewer with real-time preview</div>
@@ -788,7 +820,7 @@ body.light-mode .section-label {
                     <span class="project-arrow">→</span>
                 </a>
 
-                <a href="https://github.com/V8V88V8V88/yama" target="_blank" class="project-item featured">
+                <a href="https://github.com/V8V88V8V88/yama" target="_blank" class="project-item featured" data-lang="Rust">
                     <div class="project-info">
                         <div class="project-name">yama</div>
                         <div class="project-desc">Lightweight package manager using C and Rust</div>
@@ -797,7 +829,7 @@ body.light-mode .section-label {
                     <span class="project-arrow">→</span>
                 </a>
 
-                <a href="https://github.com/V8V88V8V88/DeskImage" target="_blank" class="project-item">
+                <a href="https://github.com/V8V88V8V88/DeskImage" target="_blank" class="project-item" data-lang="Rust">
                     <div class="project-info">
                         <div class="project-name">DeskImage</div>
                         <div class="project-desc">CLI tool that generates .Desktop entries for AppImages</div>
@@ -806,7 +838,7 @@ body.light-mode .section-label {
                     <span class="project-arrow">→</span>
                 </a>
 
-                <a href="https://github.com/V8V88V8V88/BudgetWiser" target="_blank" class="project-item featured">
+                <a href="https://github.com/V8V88V8V88/BudgetWiser" target="_blank" class="project-item featured" data-lang="Rust">
                     <div class="project-info">
                         <div class="project-name">BudgetWiser</div>
                         <div class="project-desc">A Rust program to track your expenses</div>
@@ -815,7 +847,7 @@ body.light-mode .section-label {
                     <span class="project-arrow">→</span>
                 </a>
 
-                <a href="https://github.com/V8V88V8V88/rusty-snake" target="_blank" class="project-item">
+                <a href="https://github.com/V8V88V8V88/rusty-snake" target="_blank" class="project-item" data-lang="Rust">
                     <div class="project-info">
                         <div class="project-name">rusty-snake</div>
                         <div class="project-desc">A simple snake game built with Rust and Piston</div>
@@ -824,7 +856,7 @@ body.light-mode .section-label {
                     <span class="project-arrow">→</span>
                 </a>
 
-                <a href="https://github.com/V8V88V8V88/iced-calculator" target="_blank" class="project-item">
+                <a href="https://github.com/V8V88V8V88/iced-calculator" target="_blank" class="project-item" data-lang="Rust">
                     <div class="project-info">
                         <div class="project-name">iced-calculator</div>
                         <div class="project-desc">Simple calculator made using iced kit</div>
@@ -833,7 +865,7 @@ body.light-mode .section-label {
                     <span class="project-arrow">→</span>
                 </a>
 
-                <a href="https://github.com/V8V88V8V88/Rust-RISCV-Compiler" target="_blank" class="project-item featured">
+                <a href="https://github.com/V8V88V8V88/Rust-RISCV-Compiler" target="_blank" class="project-item featured" data-lang="Rust">
                     <div class="project-info">
                         <div class="project-name">Rust-RISCV-Compiler</div>
                         <div class="project-desc">RISC-V compiler in Rust</div>
@@ -842,7 +874,7 @@ body.light-mode .section-label {
                     <span class="project-arrow">→</span>
                 </a>
 
-                <a href="https://github.com/V8V88V8V88/mini-vm" target="_blank" class="project-item featured">
+                <a href="https://github.com/V8V88V8V88/mini-vm" target="_blank" class="project-item featured" data-lang="Rust">
                     <div class="project-info">
                         <div class="project-name">mini-vm</div>
                         <div class="project-desc">Minimal virtual machine</div>
@@ -853,7 +885,7 @@ body.light-mode .section-label {
 
                 <span class="section-label">CLI & System Tools</span>
 
-                <a href="https://github.com/V8V88V8V88/vfetch" target="_blank" class="project-item featured">
+                <a href="https://github.com/V8V88V8V88/vfetch" target="_blank" class="project-item featured" data-lang="Shell">
                     <div class="project-info">
                         <div class="project-name">vfetch</div>
                         <div class="project-desc">A minimal system information fetcher</div>
@@ -862,7 +894,7 @@ body.light-mode .section-label {
                     <span class="project-arrow">→</span>
                 </a>
 
-                <a href="https://github.com/V8V88V8V88/Fedorable" target="_blank" class="project-item featured">
+                <a href="https://github.com/V8V88V8V88/Fedorable" target="_blank" class="project-item featured" data-lang="Python">
                     <div class="project-info">
                         <div class="project-name">Fedorable</div>
                         <div class="project-desc">Simple script for maintaining Fedora Linux</div>
@@ -871,7 +903,7 @@ body.light-mode .section-label {
                     <span class="project-arrow">→</span>
                 </a>
 
-                <a href="https://github.com/V8V88V8V88/nanoHTTP" target="_blank" class="project-item featured">
+                <a href="https://github.com/V8V88V8V88/nanoHTTP" target="_blank" class="project-item featured" data-lang="C/C++">
                     <div class="project-info">
                         <div class="project-name">nanoHTTP</div>
                         <div class="project-desc">Nano lightweight HTTP server in C</div>
@@ -880,7 +912,7 @@ body.light-mode .section-label {
                     <span class="project-arrow">→</span>
                 </a>
 
-                <a href="https://github.com/V8V88V8V88/todo-list" target="_blank" class="project-item">
+                <a href="https://github.com/V8V88V8V88/todo-list" target="_blank" class="project-item" data-lang="C/C++">
                     <div class="project-info">
                         <div class="project-name">todo-list</div>
                         <div class="project-desc">Simple CLI todo list in C</div>
@@ -889,7 +921,7 @@ body.light-mode .section-label {
                     <span class="project-arrow">→</span>
                 </a>
 
-                <a href="https://github.com/V8V88V8V88/dirSim" target="_blank" class="project-item">
+                <a href="https://github.com/V8V88V8V88/dirSim" target="_blank" class="project-item" data-lang="Python">
                     <div class="project-info">
                         <div class="project-name">dirSim</div>
                         <div class="project-desc">Lightweight directory and file system simulator</div>
@@ -898,7 +930,7 @@ body.light-mode .section-label {
                     <span class="project-arrow">→</span>
                 </a>
 
-                <a href="https://github.com/V8V88V8V88/simple-round-robin-scheduler" target="_blank" class="project-item">
+                <a href="https://github.com/V8V88V8V88/simple-round-robin-scheduler" target="_blank" class="project-item" data-lang="C/C++">
                     <div class="project-info">
                         <div class="project-name">simple-round-robin-scheduler</div>
                         <div class="project-desc">Round robin scheduler made during OS lectures</div>
@@ -907,7 +939,7 @@ body.light-mode .section-label {
                     <span class="project-arrow">→</span>
                 </a>
 
-                <a href="https://github.com/V8V88V8V88/canva-linux" target="_blank" class="project-item">
+                <a href="https://github.com/V8V88V8V88/canva-linux" target="_blank" class="project-item" data-lang="Python">
                     <div class="project-info">
                         <div class="project-name">canva-linux</div>
                         <div class="project-desc">Canva for Linux</div>
@@ -916,7 +948,7 @@ body.light-mode .section-label {
                     <span class="project-arrow">→</span>
                 </a>
 
-                <a href="https://github.com/V8V88V8V88/linux-keylogger" target="_blank" class="project-item">
+                <a href="https://github.com/V8V88V8V88/linux-keylogger" target="_blank" class="project-item" data-lang="C/C++">
                     <div class="project-info">
                         <div class="project-name">linux-keylogger</div>
                         <div class="project-desc">Basically what you read</div>
@@ -927,7 +959,7 @@ body.light-mode .section-label {
 
                 <span class="section-label">GNOME & GTK</span>
 
-                <a href="https://github.com/V8V88V8V88/GNOME-bluetooth-battery-monitor" target="_blank" class="project-item">
+                <a href="https://github.com/V8V88V8V88/GNOME-bluetooth-battery-monitor" target="_blank" class="project-item" data-lang="Others">
                     <div class="project-info">
                         <div class="project-name">GNOME-bluetooth-battery-monitor</div>
                         <div class="project-desc">Displays battery level in the GNOME shell</div>
@@ -936,7 +968,7 @@ body.light-mode .section-label {
                     <span class="project-arrow">→</span>
                 </a>
 
-                <a href="https://github.com/V8V88V8V88/gtk-emoji-picker" target="_blank" class="project-item">
+                <a href="https://github.com/V8V88V8V88/gtk-emoji-picker" target="_blank" class="project-item" data-lang="Python">
                     <div class="project-info">
                         <div class="project-name">gtk-emoji-picker</div>
                         <div class="project-desc">GTK4-based emoji picker with global shortcut</div>
@@ -947,7 +979,7 @@ body.light-mode .section-label {
 
                 <span class="section-label">Other</span>
 
-                <a href="https://github.com/V8V88V8V88/LogiChain" target="_blank" class="project-item">
+                <a href="https://github.com/V8V88V8V88/LogiChain" target="_blank" class="project-item" data-lang="Java">
                     <div class="project-info">
                         <div class="project-name">LogiChain</div>
                         <div class="project-desc">Supply Chain Management System in Java</div>
@@ -956,7 +988,7 @@ body.light-mode .section-label {
                     <span class="project-arrow">→</span>
                 </a>
 
-                <a href="https://github.com/V8V88V8V88/SkibidiSpeak" target="_blank" class="project-item">
+                <a href="https://github.com/V8V88V8V88/SkibidiSpeak" target="_blank" class="project-item" data-lang="TypeScript">
                     <div class="project-info">
                         <div class="project-name">SkibidiSpeak</div>
                         <div class="project-desc">Ohio language translator for understanding gen alpha</div>
@@ -965,7 +997,7 @@ body.light-mode .section-label {
                     <span class="project-arrow">→</span>
                 </a>
 
-                <a href="https://github.com/V8V88V8V88/Sauce_Run" target="_blank" class="project-item">
+                <a href="https://github.com/V8V88V8V88/Sauce_Run" target="_blank" class="project-item" data-lang="Others">
                     <div class="project-info">
                         <div class="project-name">Sauce_Run</div>
                         <div class="project-desc">Endless runner game made in Redot engine</div>
@@ -974,7 +1006,7 @@ body.light-mode .section-label {
                     <span class="project-arrow">→</span>
                 </a>
 
-                <a href="https://github.com/V8V88V8V88/golang" target="_blank" class="project-item">
+                <a href="https://github.com/V8V88V8V88/golang" target="_blank" class="project-item" data-lang="Go">
                     <div class="project-info">
                         <div class="project-name">golang</div>
                         <div class="project-desc">Go experiments</div>
@@ -1041,23 +1073,130 @@ body.light-mode .section-label {
         <script src="https://kit.fontawesome.com/133988a847.js" crossorigin="anonymous" defer></script>
         <script src="/js/script.js" defer></script>
         <script>
+            // Language mapping for projects
+            const langMap = {
+                'TypeScript': 'TypeScript',
+                'Rust': 'Rust',
+                'Python': 'Python',
+                'Svelte': 'Svelte',
+                'Go': 'Go',
+                'Shell': 'Shell',
+                'Java': 'Java',
+                'C++': 'C/C++',
+                'C': 'C/C++',
+                'JavaScript': 'Others',
+                'HTML': 'Others',
+                'Theme': 'Others',
+                'Config': 'Others',
+                'Jupyter': 'Others',
+                'CSS': 'Others',
+                'GDScript': 'Others'
+            };
+
+            // Initialize data-lang attributes for all projects
+            function initializeProjectLangs() {
+                const projectItems = document.querySelectorAll('.project-item');
+                projectItems.forEach(item => {
+                    if (!item.dataset.lang) {
+                        const langSpan = item.querySelector('.project-lang');
+                        if (langSpan) {
+                            const langText = langSpan.textContent.trim();
+                            item.dataset.lang = langMap[langText] || 'Others';
+                        }
+                    }
+                });
+            }
+
             // Filter functionality
             document.addEventListener('DOMContentLoaded', () => {
+                initializeProjectLangs();
+                
                 const filterBtns = document.querySelectorAll('.filter-btn');
                 const projectList = document.querySelector('.project-list');
+                const techPills = document.querySelectorAll('.tech-pill');
                 
+                // Set "All" as active by default
+                const allPill = document.querySelector('.tech-pill[data-filter-lang="all"]');
+                if (allPill) allPill.classList.add('active');
+                
+                // Existing featured/all filter
                 filterBtns.forEach(btn => {
                     btn.addEventListener('click', () => {
-                        // Update active state
                         filterBtns.forEach(b => b.classList.remove('active'));
                         btn.classList.add('active');
                         
-                        // Apply filter
                         const filter = btn.dataset.filter;
                         if (filter === 'featured') {
                             projectList.classList.add('show-featured-only');
                         } else {
                             projectList.classList.remove('show-featured-only');
+                        }
+                    });
+                });
+
+                // Tech pill language filter
+                techPills.forEach(pill => {
+                    pill.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const selectedLang = pill.dataset.filterLang;
+                        
+                        // Update active state for tech pills
+                        techPills.forEach(p => p.classList.remove('active'));
+                        pill.classList.add('active');
+                        
+                        // Filter projects
+                        const projectItems = document.querySelectorAll('.project-item');
+                        const sectionLabels = document.querySelectorAll('.section-label');
+                        let hasOthers = false;
+                        
+                        projectItems.forEach(item => {
+                            const itemLang = item.dataset.lang || 'Others';
+                            if (selectedLang === 'all' || itemLang === selectedLang) {
+                                item.style.display = '';
+                                if (itemLang === 'Others') hasOthers = true;
+                            } else {
+                                item.style.display = 'none';
+                            }
+                        });
+                        
+                        // Show/hide section labels based on visible projects
+                        sectionLabels.forEach(label => {
+                            const nextItems = [];
+                            let sibling = label.nextElementSibling;
+                            while (sibling && !sibling.classList.contains('section-label')) {
+                                if (sibling.classList.contains('project-item')) {
+                                    nextItems.push(sibling);
+                                }
+                                sibling = sibling.nextElementSibling;
+                            }
+                            
+                            const hasVisible = nextItems.some(item => item.style.display !== 'none');
+                            label.style.display = hasVisible ? '' : 'none';
+                        });
+                        
+                        // Add Others section if needed
+                        if (selectedLang === 'all' || selectedLang === 'Others') {
+                            let othersSection = document.querySelector('.section-label[data-section="others"]');
+                            const othersProjects = Array.from(projectItems).filter(item => 
+                                item.dataset.lang === 'Others' && item.style.display !== 'none'
+                            );
+                            
+                            if (!othersSection && othersProjects.length > 0) {
+                                othersSection = document.createElement('span');
+                                othersSection.className = 'section-label';
+                                othersSection.setAttribute('data-section', 'others');
+                                othersSection.textContent = 'Others';
+                                
+                                // Insert before first Others project
+                                if (othersProjects[0]) {
+                                    othersProjects[0].parentNode.insertBefore(othersSection, othersProjects[0]);
+                                }
+                            } else if (othersSection && othersProjects.length === 0) {
+                                othersSection.remove();
+                            }
+                        } else {
+                            const othersSection = document.querySelector('.section-label[data-section="others"]');
+                            if (othersSection) othersSection.remove();
                         }
                     });
                 });
