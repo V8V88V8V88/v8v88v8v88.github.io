@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 - Page Not Found | V8V88V8V88</title>
+    <meta name="description" content="Page not found. The page you're looking for doesn't exist.">
+    <link rel="canonical" href="https://v8v88v8v88.com/404/" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="icon" href="/images/favicon.ico" sizes="any" />
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .error-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .error-code {
+            font-family: 'JetBrains Mono', 'SF Mono', monospace;
+            font-size: clamp(4rem, 10vw, 8rem);
+            font-weight: 700;
+            color: #1DB954;
+            margin-bottom: 1rem;
+            line-height: 1;
+        }
+        
+        body.light-mode .error-code {
+            color: #0f4d1f;
+        }
+        
+        .error-title {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-family: 'EB Garamond', Georgia, serif;
+        }
+        
+        .error-message {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        body.light-mode .error-message {
+            color: rgba(0, 0, 0, 0.6);
+        }
+        
+        .error-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .error-link {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: rgba(29, 185, 84, 0.1);
+            border: 1px solid rgba(29, 185, 84, 0.3);
+            border-radius: 8px;
+            color: #1DB954;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .error-link:hover {
+            background: rgba(29, 185, 84, 0.2);
+            border-color: rgba(29, 185, 84, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        body.light-mode .error-link {
+            background: rgba(29, 185, 84, 0.08);
+            border-color: rgba(15, 77, 31, 0.3);
+            color: #0f4d1f;
+        }
+        
+        body.light-mode .error-link:hover {
+            background: rgba(29, 185, 84, 0.15);
+            border-color: rgba(15, 77, 31, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-code">404</div>
+        <h1 class="error-title">Page Not Found</h1>
+        <p class="error-message">
+            The page you're looking for doesn't exist or has been moved.
+            <br>Let's get you back on track.
+        </p>
+        <div class="error-actions">
+            <a href="/" class="error-link">← Go Home</a>
+            <a href="/blogs/" class="error-link">Read Blogs</a>
+            <a href="/projects/" class="error-link">View Projects</a>
+        </div>
+    </div>
+    
+    <script src="/js/script.js" defer></script>
+</body>
+</html>
