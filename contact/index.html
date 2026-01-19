@@ -294,7 +294,7 @@
         .terminal-title {
             flex: 1;
             text-align: center;
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'SF Mono', 'Consolas', 'Monaco', 'Courier New', monospace;
             font-size: 0.75rem;
             color: rgba(255, 255, 255, 0.4);
             margin-right: 52px;
@@ -302,9 +302,11 @@
 
         .terminal-body {
             padding: 1.5rem;
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'SF Mono', 'Consolas', 'Monaco', 'Courier New', monospace;
             font-size: 0.95rem;
             line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         .terminal-line {
@@ -539,11 +541,11 @@
         /* ========================================= */
 
         body.light-mode .terminal-window {
-            background: rgba(255, 255, 255, 0.95);
-            border: 1px solid rgba(0, 0, 0, 0.12);
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(0, 0, 0, 0.08);
             box-shadow:
-                0 25px 50px rgba(0, 0, 0, 0.1),
-                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+                0 25px 50px rgba(0, 0, 0, 0.05),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6);
         }
 
         body.light-mode .terminal-header {
@@ -556,7 +558,7 @@
         }
 
         body.light-mode .terminal-body {
-            background: rgba(248, 248, 248, 1);
+            background: transparent;
         }
 
         body.light-mode .terminal-prompt {
@@ -753,31 +755,24 @@
                 <div class="terminal-body" id="terminal-body">
                     <div class="terminal-history" id="terminal-history">
                         <div class="terminal-line">
-                            <span class="terminal-prompt">❯</span>
+                            <span class="terminal-prompt">$</span>
                             <span class="terminal-command"> whoami</span>
                         </div>
                         <div class="terminal-line terminal-output">
                             Vaibhav Pratap Singh (V8V88V8V88)
                         </div>
                         <div class="terminal-line" style="margin-top: 0.75rem;">
-                            <span class="terminal-prompt">❯</span>
+                            <span class="terminal-prompt">$</span>
                             <span class="terminal-command"> echo "hello stalker!"</span>
                         </div>
                         <div class="terminal-line terminal-output">
                             hello stalker!
                         </div>
-                        <div class="terminal-line" style="margin-top: 0.75rem;">
-                            <span class="terminal-prompt">❯</span>
-                            <span class="terminal-command"> help</span>
-                        </div>
-                        <div class="terminal-line terminal-output" style="color: rgba(255,255,255,0.5);">
-                            available commands: whoami, cat, ls, echo, help, clear, neofetch
-                        </div>
                     </div>
                     <div class="terminal-input-line">
-                        <span class="terminal-prompt">❯</span>
+                        <span class="terminal-prompt">$</span>
                         <input type="text" id="terminal-input" class="terminal-input" autocomplete="off"
-                            spellcheck="false" autofocus placeholder="type a command...">
+                            spellcheck="false" autofocus placeholder="type a command or type help">
                     </div>
                 </div>
             </div>
@@ -986,7 +981,11 @@
 
         const commands = {
             whoami: () => 'Vaibhav Pratap Singh (V8V88V8V88)',
-            help: () => '<span style="color: rgba(255,255,255,0.5);">available commands: whoami, cat, ls, echo, help, clear, neofetch</span>',
+            help: () => {
+                const isLightMode = document.body.classList.contains('light-mode');
+                const color = isLightMode ? 'rgba(0, 0, 0, 0.5)' : 'rgba(255, 255, 255, 0.5)';
+                return `<span style="color: ${color};">available commands: whoami, cat, ls, echo, help, clear, neofetch</span>`;
+            },
             ls: () => 'contact.json  README.md  socials/',
             cat: (args) => {
                 if (args === 'contact.json') {
@@ -1028,8 +1027,48 @@ I'm always open to collaborate on cool projects.`;
         // Command history for up/down arrow
         let cmdHistory = [];
         let historyIndex = -1;
+        let tabCompletionIndex = -1;
+        let tabCompletions = [];
+
+        function getCommandCompletions(input) {
+            const cmdList = Object.keys(commands);
+            const trimmed = input.trim().toLowerCase();
+            if (!trimmed) return cmdList;
+            return cmdList.filter(cmd => cmd.startsWith(trimmed));
+        }
 
         terminalInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+                e.preventDefault();
+                const input = terminalInput.value;
+                const parts = input.trim().split(/\s+/);
+                const currentWord = parts[parts.length - 1].toLowerCase();
+                
+                if (parts.length === 1) {
+                    const completions = getCommandCompletions(currentWord);
+                    if (completions.length === 0) {
+                        return;
+                    } else if (completions.length === 1) {
+                        terminalInput.value = completions[0] + ' ';
+                        tabCompletionIndex = -1;
+                        tabCompletions = [];
+                    } else {
+                        if (tabCompletionIndex === -1 || tabCompletions.length === 0 || tabCompletions[0] !== completions[0]) {
+                            tabCompletions = completions;
+                            tabCompletionIndex = 0;
+                        } else {
+                            tabCompletionIndex = (tabCompletionIndex + 1) % tabCompletions.length;
+                        }
+                        const prefix = input.substring(0, input.length - currentWord.length);
+                        terminalInput.value = prefix + tabCompletions[tabCompletionIndex];
+                    }
+                }
+                return;
+            } else {
+                tabCompletionIndex = -1;
+                tabCompletions = [];
+            }
+
             if (e.key === 'Enter') {
                 const input = terminalInput.value.trim();
                 if (!input) return;
@@ -1047,7 +1086,7 @@ I'm always open to collaborate on cool projects.`;
                 const cmdLine = document.createElement('div');
                 cmdLine.className = 'terminal-line';
                 cmdLine.style.marginTop = '0.75rem';
-                cmdLine.innerHTML = `<span class="terminal-prompt">❯</span><span class="terminal-command"> ${escapeHtml(input)}</span>`;
+                cmdLine.innerHTML = `<span class="terminal-prompt">$</span><span class="terminal-command"> ${escapeHtml(input)}</span>`;
                 terminalHistory.appendChild(cmdLine);
 
                 // Execute command
