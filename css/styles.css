@@ -1943,9 +1943,10 @@ main.username-post {
     margin: 0 auto;
     padding: 7rem var(--spacing-post) 4rem;
     font-family: var(--font-serif-post);
-    font-size: 24px;
+    font-size: 22px;
     color: var(--text-color-post);
-    letter-spacing: -0.022em;
+    letter-spacing: 0.01em;
+    line-height: 1.75;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-color: transparent;
@@ -1972,13 +1973,16 @@ main.username-post h2 {
 }
 
 main.username-post p {
-    margin-bottom: 1.2rem;
+    margin-bottom: 1.5rem;
     color: var(--text-color-post);
+    line-height: 1.75;
+    letter-spacing: 0.01em;
 }
 
 main.username-post .lead {
     font-size: var(--lead-font-size-post);
-    line-height: 1.5;
+    line-height: 1.6;
+    letter-spacing: 0.01em;
     margin-bottom: 2rem;
     color: var(--text-accent-post);
 }
@@ -2014,28 +2018,42 @@ main.username-post .section-divider {
 }
 
 main.username-post blockquote {
-    border-left: 2px solid var(--text-accent-post);
-    padding-left: var(--spacing-post);
-    margin: 2rem 0;
-    font-style: italic;
-    color: var(--text-muted-post);
+    border: none;
+    padding: 0;
+    margin: 2.5rem 0;
+    font-style: normal;
+    color: var(--text-color-post);
+    max-width: 100%;
+    width: 100%;
 }
 
 main.username-post blockquote p {
-    font-size: 22px;
-    line-height: 1.6;
-    color: var(--text-muted-post);
+    font-size: 1.15rem;
+    line-height: 1.75;
+    letter-spacing: 0;
+    color: var(--text-color-post);
+    margin-bottom: 0.75rem;
 }
 
-main.username-post blockquote footer {
-    margin-top: 1rem;
+main.username-post blockquote p::before {
+    content: '"';
+    margin-right: 0.15em;
+}
+
+main.username-post blockquote p::after {
+    content: '"';
+    margin-left: 0.15em;
+}
+
+main.username-post blockquote i {
+    display: block;
     text-align: right;
-    font-style: normal;
-    font-size: 15px;
+    font-style: italic;
+    font-size: 0.95rem;
     color: var(--text-muted-post);
-    background-color: transparent;
-    border: none;
-    padding: 0;
+    margin-top: 0.75rem;
+    margin-right: 0;
+    width: 100%;
 }
 
 
@@ -2082,22 +2100,15 @@ body.light-mode main.username-post .section-divider {
 }
 
 body.light-mode main.username-post blockquote {
-    border-left-color: #d1d1d1;
-    background-color: transparent;
-    margin-left: 0;
-    margin-right: 0;
+    color: #1d1d1f;
 }
 
 body.light-mode main.username-post blockquote p {
-    color: #6e6e73;
+    color: #1d1d1f;
 }
 
 body.light-mode main.username-post blockquote i {
-    color: #6e6e73;
-}
-
-body.light-mode main.username-post blockquote footer {
-    color: #6e6e73;
+    color: rgba(0, 0, 0, 0.5);
 }
 
 
