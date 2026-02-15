@@ -1935,15 +1935,16 @@ main.username-post {
     --text-accent-post: rgba(255, 255, 255, 0.9);
     --divider-color-post: rgba(255, 255, 255, 0.1);
     --font-serif-post: "EB Garamond", "Helvetica Neue", "Segoe UI", sans-serif;
-    --lead-font-size-post: 26px;
     --heading-font-weight-post: 700;
     --spacing-post: 1.5rem;
 
     max-width: 1000px;
+    transform: scale(0.94);
+    transform-origin: top center;
     margin: 0 auto;
     padding: 7rem var(--spacing-post) 4rem;
     font-family: var(--font-serif-post);
-    font-size: 22px;
+    font-size: 26px;
     color: var(--text-color-post);
     letter-spacing: 0.01em;
     line-height: 1.75;
@@ -1979,14 +1980,6 @@ main.username-post p {
     letter-spacing: 0.01em;
 }
 
-main.username-post .lead {
-    font-size: var(--lead-font-size-post);
-    line-height: 1.6;
-    letter-spacing: 0.01em;
-    margin-bottom: 2rem;
-    color: var(--text-accent-post);
-}
-
 main.username-post strong {
     font-weight: 600;
 }
@@ -2017,46 +2010,6 @@ main.username-post .section-divider {
     margin: 2.5rem 0;
 }
 
-main.username-post blockquote {
-    border: none;
-    padding: 0;
-    margin: 2.5rem 0;
-    font-style: normal;
-    color: var(--text-color-post);
-    max-width: 100%;
-    width: 100%;
-}
-
-main.username-post blockquote p {
-    font-size: 1.15rem;
-    line-height: 1.75;
-    letter-spacing: 0;
-    color: var(--text-color-post);
-    margin-bottom: 0.75rem;
-}
-
-main.username-post blockquote p::before {
-    content: '"';
-    margin-right: 0.15em;
-}
-
-main.username-post blockquote p::after {
-    content: '"';
-    margin-left: 0.15em;
-}
-
-main.username-post blockquote i {
-    display: block;
-    text-align: right;
-    font-style: italic;
-    font-size: 0.95rem;
-    color: var(--text-muted-post);
-    margin-top: 0.75rem;
-    margin-right: 0;
-    width: 100%;
-}
-
-
 /* Light Mode adjustments for username post */
 body.light-mode main.username-post {
     color: #1d1d1f;
@@ -2069,10 +2022,6 @@ body.light-mode main.username-post h2 {
 
 body.light-mode main.username-post p {
     color: #1d1d1f;
-}
-
-body.light-mode main.username-post .lead {
-    color: #333;
 }
 
 body.light-mode main.username-post strong {
@@ -2099,19 +2048,6 @@ body.light-mode main.username-post .section-divider {
     background: rgba(0, 0, 0, 0.1);
 }
 
-body.light-mode main.username-post blockquote {
-    color: #1d1d1f;
-}
-
-body.light-mode main.username-post blockquote p {
-    color: #1d1d1f;
-}
-
-body.light-mode main.username-post blockquote i {
-    color: rgba(0, 0, 0, 0.5);
-}
-
-
 body.light-mode main.username-post section {
     background-color: #f8f8f8;
     margin-bottom: 2rem;
@@ -2121,8 +2057,9 @@ body.light-mode main.username-post section {
 /* Media query adjustments for username post */
 @media (max-width: 768px) {
     main.username-post {
-        font-size: 18px;
+        font-size: 20px;
         padding: 5rem var(--spacing-post) 3rem;
+        transform: scale(1);
     }
 
     main.username-post h1 {
@@ -2134,25 +2071,11 @@ body.light-mode main.username-post section {
         font-size: 24px;
         margin: 1.5rem 0 0.8rem;
     }
-
-    main.username-post .lead {
-        font-size: 20px;
-    }
-
-    main.username-post p,
-    main.username-post blockquote p {
-        font-size: 18px;
-    }
 }
 
 @media (max-width: 480px) {
-    main.username-post .lead {
+    main.username-post {
         font-size: 18px;
-    }
-
-    main.username-post p,
-    main.username-post blockquote p {
-        font-size: 16px;
     }
 }
 
