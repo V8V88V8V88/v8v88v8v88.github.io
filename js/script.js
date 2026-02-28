@@ -230,100 +230,61 @@ const scrollToTopBtn = document.createElement('button');
 scrollToTopBtn.className = 'scroll-to-top';
 scrollToTopBtn.setAttribute('aria-label', 'Scroll to top');
 scrollToTopBtn.innerHTML = '<i class="fas fa-arrow-up"></i>';
-scrollToTopBtn.style.cssText = `
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: rgba(29, 185, 84, 0.2);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #1DB954;
-  cursor: pointer;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.3s ease;
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.2rem;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-`;
-
-// Update button style based on theme
-function updateScrollButtonStyle() {
-  if (document.body.classList.contains('light-mode')) {
-    scrollToTopBtn.style.background = 'rgba(15, 77, 31, 0.15)';
-    scrollToTopBtn.style.borderColor = 'rgba(15, 77, 31, 0.25)';
-    scrollToTopBtn.style.color = '#0f4d1f';
-    scrollToTopBtn.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.1)';
-  } else {
-    scrollToTopBtn.style.background = 'rgba(29, 185, 84, 0.2)';
-    scrollToTopBtn.style.borderColor = 'rgba(255, 255, 255, 0.2)';
-    scrollToTopBtn.style.color = '#1DB954';
-    scrollToTopBtn.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.2)';
-  }
-}
-
-// Initialize style
-updateScrollButtonStyle();
-
-// Listen for theme changes
-const observer = new MutationObserver(() => {
-  updateScrollButtonStyle();
-});
-observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
 
 scrollToTopBtn.addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-scrollToTopBtn.addEventListener('mouseenter', () => {
-  scrollToTopBtn.style.transform = 'translateY(-4px)';
-  if (document.body.classList.contains('light-mode')) {
-    scrollToTopBtn.style.background = 'rgba(15, 77, 31, 0.25)';
-    scrollToTopBtn.style.borderColor = 'rgba(15, 77, 31, 0.35)';
-    scrollToTopBtn.style.boxShadow = '0 12px 40px rgba(0, 0, 0, 0.15)';
-  } else {
-    scrollToTopBtn.style.background = 'rgba(29, 185, 84, 0.3)';
-    scrollToTopBtn.style.borderColor = 'rgba(255, 255, 255, 0.3)';
-    scrollToTopBtn.style.boxShadow = '0 12px 40px rgba(0, 0, 0, 0.3)';
-  }
-});
-
-scrollToTopBtn.addEventListener('mouseleave', () => {
-  scrollToTopBtn.style.transform = 'translateY(0)';
-  updateScrollButtonStyle();
-});
-
 document.body.appendChild(scrollToTopBtn);
 
-// Show/hide scroll to top button
-window.addEventListener('scroll', () => {
-  if (window.pageYOffset > 300) {
-    scrollToTopBtn.style.opacity = '1';
-    scrollToTopBtn.style.visibility = 'visible';
-  } else {
-    scrollToTopBtn.style.opacity = '0';
-    scrollToTopBtn.style.visibility = 'hidden';
-  }
+function updateScrollButtonVisibility() {
+  scrollToTopBtn.classList.toggle('visible', window.pageYOffset > 300);
+}
+window.addEventListener('scroll', updateScrollButtonVisibility);
+updateScrollButtonVisibility();
+
+// Guestbook floating button + modal
+const guestbookBtn = document.createElement('button');
+guestbookBtn.className = 'guestbook-btn';
+guestbookBtn.setAttribute('aria-label', 'Open Guestbook');
+guestbookBtn.innerHTML = '<i class="fas fa-pen guestbook-btn-icon"></i><span class="guestbook-btn-label">Guestbook</span>';
+
+const guestbookOverlay = document.createElement('div');
+guestbookOverlay.className = 'guestbook-modal-overlay';
+guestbookOverlay.setAttribute('aria-hidden', 'true');
+guestbookOverlay.innerHTML = `
+  <div class="guestbook-modal" role="dialog" aria-label="Guestbook">
+    <div class="guestbook-modal-header">
+      <span>✦ GUESTBOOK</span>
+      <button class="guestbook-modal-close" aria-label="Close guestbook">×</button>
+    </div>
+    <iframe src="https://v8v88v8v88.atabook.org/" title="Guestbook" loading="lazy"></iframe>
+  </div>
+`;
+
+document.body.appendChild(guestbookBtn);
+document.body.appendChild(guestbookOverlay);
+
+function openGuestbook() {
+  guestbookOverlay.classList.add('open');
+  guestbookOverlay.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeGuestbook() {
+  guestbookOverlay.classList.remove('open');
+  guestbookOverlay.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+
+guestbookBtn.addEventListener('click', openGuestbook);
+
+guestbookOverlay.querySelector('.guestbook-modal-close').addEventListener('click', closeGuestbook);
+
+guestbookOverlay.addEventListener('click', (e) => {
+  if (e.target === guestbookOverlay) closeGuestbook();
 });
 
-// Add responsive styles for scroll to top button
-const style = document.createElement('style');
-style.textContent = `
-  @media (max-width: 768px) {
-    .scroll-to-top {
-      bottom: 1.5rem;
-      right: 1.5rem;
-      width: 45px;
-      height: 45px;
-      font-size: 1rem;
-    }
-  }
-`;
-document.head.appendChild(style);
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && guestbookOverlay.classList.contains('open')) closeGuestbook();
+});

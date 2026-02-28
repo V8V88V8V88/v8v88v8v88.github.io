@@ -439,14 +439,20 @@
 
         .contact-card {
             position: relative;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: linear-gradient(135deg,
+                    rgba(255, 255, 255, 0.08) 0%,
+                    rgba(255, 255, 255, 0.04) 50%,
+                    rgba(255, 255, 255, 0.06) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 16px;
             padding: 1.75rem 1.5rem;
             text-align: center;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                0 4px 24px rgba(0, 0, 0, 0.2);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -459,21 +465,24 @@
             top: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 60%;
+            width: 70%;
             height: 1px;
             background: linear-gradient(90deg,
                     transparent,
-                    rgba(255, 255, 255, 0.2),
+                    rgba(255, 255, 255, 0.35),
                     transparent);
         }
 
         .contact-card:hover {
             transform: translateY(-6px);
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(255, 255, 255, 0.15);
+            background: linear-gradient(135deg,
+                    rgba(255, 255, 255, 0.12) 0%,
+                    rgba(255, 255, 255, 0.06) 50%,
+                    rgba(255, 255, 255, 0.09) 100%);
+            border-color: rgba(255, 255, 255, 0.18);
             box-shadow:
-                0 20px 40px rgba(0, 0, 0, 0.3),
-                0 0 0 1px rgba(255, 255, 255, 0.05);
+                inset 0 1px 0 rgba(255, 255, 255, 0.15),
+                0 20px 40px rgba(0, 0, 0, 0.35);
         }
 
         .contact-icon {
@@ -542,20 +551,22 @@
         /* ========================================= */
 
         body.light-mode .terminal-window {
-            background: rgba(255, 255, 255, 0.6);
-            border: 1px solid rgba(0, 0, 0, 0.08);
+            background: #f5f5f7;
+            border: 1px solid rgba(0, 0, 0, 0.12);
             box-shadow:
-                0 25px 50px rgba(0, 0, 0, 0.05),
-                inset 0 1px 0 rgba(255, 255, 255, 0.6);
+                0 4px 6px rgba(0, 0, 0, 0.04),
+                0 20px 40px rgba(0, 0, 0, 0.08),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
         }
 
         body.light-mode .terminal-header {
-            background: rgba(0, 0, 0, 0.02);
-            border-bottom-color: rgba(0, 0, 0, 0.06);
+            background: rgba(0, 0, 0, 0.04);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         }
 
         body.light-mode .terminal-title {
-            color: rgba(0, 0, 0, 0.4);
+            color: rgba(0, 0, 0, 0.5);
+            font-weight: 500;
         }
 
         body.light-mode .terminal-body {
@@ -591,23 +602,22 @@
         }
 
         body.light-mode .contact-card {
-            background: rgba(255, 255, 255, 0.8);
+            background: #f8f8f8;
             border-color: rgba(0, 0, 0, 0.08);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
         }
 
         body.light-mode .contact-card::before {
             background: linear-gradient(90deg,
                     transparent,
-                    rgba(0, 0, 0, 0.08),
+                    rgba(0, 0, 0, 0.06),
                     transparent);
         }
 
         body.light-mode .contact-card:hover {
-            background: rgba(255, 255, 255, 0.95);
+            background: #f5f5f5;
             border-color: rgba(0, 0, 0, 0.12);
-            box-shadow:
-                0 20px 40px rgba(0, 0, 0, 0.08),
-                0 0 0 1px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
         }
 
         body.light-mode .contact-icon {
@@ -748,9 +758,9 @@
         <section class="terminal-hero" id="terminal-hero">
             <div class="terminal-window" id="terminal-window">
                 <div class="terminal-header">
-                    <span class="terminal-dot red" id="btn-close" title="Close"></span>
-                    <span class="terminal-dot yellow" id="btn-minimize" title="Minimize"></span>
-                    <span class="terminal-dot green" id="btn-maximize" title="Maximize"></span>
+                    <span class="terminal-dot red" id="btn-close" title="Close" aria-label="Close terminal" role="button"></span>
+                    <span class="terminal-dot yellow" id="btn-minimize" title="Minimize" aria-label="Minimize terminal" role="button"></span>
+                    <span class="terminal-dot green" id="btn-maximize" title="Maximize" aria-label="Maximize terminal" role="button"></span>
                     <span class="terminal-title">v8v88v8v88@fedora ~ /contact</span>
                 </div>
                 <div class="terminal-body" id="terminal-body">
@@ -797,43 +807,43 @@
                 <i class="fab fa-github contact-icon"></i>
                 <h3>GitHub</h3>
 
-                <a href="https://github.com/v8v88v8v88" target="_blank" class="contact-btn">View Profile</a>
+                <a href="https://github.com/v8v88v8v88" target="_blank" rel="noopener noreferrer" class="contact-btn">View Profile</a>
             </div>
             <div class="contact-card">
                 <i class="fab fa-telegram contact-icon"></i>
                 <h3>Telegram</h3>
 
-                <a href="https://t.me/V8V88V8V88" target="_blank" class="contact-btn">Message Me</a>
+                <a href="https://t.me/V8V88V8V88" target="_blank" rel="noopener noreferrer" class="contact-btn">Message Me</a>
             </div>
             <div class="contact-card">
                 <i class="fab fa-linkedin contact-icon"></i>
                 <h3>LinkedIn</h3>
 
-                <a href="https://www.linkedin.com/in/v8v88v8v88/" target="_blank" class="contact-btn">Connect</a>
+                <a href="https://www.linkedin.com/in/v8v88v8v88/" target="_blank" rel="noopener noreferrer" class="contact-btn">Connect</a>
             </div>
             <div class="contact-card">
                 <i class="fab fa-youtube contact-icon"></i>
                 <h3>YouTube</h3>
 
-                <a href="https://www.youtube.com/c/MagicalV8" target="_blank" class="contact-btn">Subscribe</a>
+                <a href="https://www.youtube.com/c/MagicalV8" target="_blank" rel="noopener noreferrer" class="contact-btn">Subscribe</a>
             </div>
             <div class="contact-card">
                 <i class="fab fa-mastodon contact-icon"></i>
                 <h3>Mastodon</h3>
 
-                <a href="https://fosstodon.org/@v8v88v8v88" target="_blank" rel="me" class="contact-btn">Follow</a>
+                <a href="https://fosstodon.org/@v8v88v8v88" target="_blank" rel="me noopener noreferrer" class="contact-btn">Follow</a>
             </div>
             <div class="contact-card">
                 <i class="fab fa-twitter contact-icon"></i>
                 <h3>Twitter</h3>
 
-                <a href="https://twitter.com/v8v88v8v88" target="_blank" class="contact-btn">Follow</a>
+                <a href="https://twitter.com/v8v88v8v88" target="_blank" rel="noopener noreferrer" class="contact-btn">Follow</a>
             </div>
             <div class="contact-card">
                 <i class="fab fa-reddit contact-icon"></i>
                 <h3>Reddit</h3>
 
-                <a href="https://www.reddit.com/user/v8v88v8v88" target="_blank" class="contact-btn">Connect</a>
+                <a href="https://www.reddit.com/user/v8v88v8v88" target="_blank" rel="noopener noreferrer" class="contact-btn">Connect</a>
             </div>
         </section>
     </main>
@@ -867,7 +877,7 @@
                                 title="GitHub"><i class="fab fa-github"></i></a>
                             <a href="https://t.me/V8V88V8V88" target="_blank" rel="noopener noreferrer"
                                 title="Telegram"><i class="fab fa-telegram"></i></a>
-                            <a href="https://fosstodon.org/@v8v88v8v88" rel="me" target="_blank" title="Mastodon"><i
+                            <a href="https://fosstodon.org/@v8v88v8v88" rel="me noopener noreferrer" target="_blank" title="Mastodon"><i
                                     class="fab fa-mastodon"></i></a>
                             <a href="https://twitter.com/v8v88v8v88" target="_blank" rel="noopener noreferrer"
                                 title="Twitter"><i class="fab fa-twitter"></i></a>
@@ -992,8 +1002,8 @@
                 if (args === 'contact.json') {
                     return `{
   "email": "<a href="mailto:v8v88v8v88@protonmail.com" class="terminal-link">v8v88v8v88@protonmail.com</a>",
-  "github": "<a href="https://github.com/v8v88v8v88" target="_blank" class="terminal-link">github.com/v8v88v8v88</a>",
-  "telegram": "<a href="https://t.me/V8V88V8V88" target="_blank" class="terminal-link">t.me/V8V88V8V88</a>",
+  "github": "<a href="https://github.com/v8v88v8v88" target="_blank" rel="noopener noreferrer" class="terminal-link">github.com/v8v88v8v88</a>",
+  "telegram": "<a href="https://t.me/V8V88V8V88" target="_blank" rel="noopener noreferrer" class="terminal-link">t.me/V8V88V8V88</a>",
   "status": "Open to collaborate"
 }`;
                 } else if (args === 'README.md') {

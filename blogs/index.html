@@ -407,33 +407,6 @@
             opacity: 0.7;
         }
 
-        /* Pagination styles */
-        .pagination {
-            display: flex;
-            justify-content: center;
-            gap: 0.75rem;
-            margin-top: 3rem;
-            padding-bottom: 1rem;
-        }
-
-        .pagination a {
-            padding: 0.6rem 1.25rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 999px;
-            transition: all 0.25s ease;
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        .pagination a:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.2);
-            color: #fff;
-            transform: translateY(-2px);
-        }
 
         /* Light mode adjustments */
         body.light-mode .post-card {
@@ -467,7 +440,7 @@
                     rgba(255, 255, 255, 0.8) 50%,
                     rgba(255, 255, 255, 0.6) 100%),
                 rgba(255, 255, 255, 0.9);
-            border-color: rgba(0, 0, 0, 0.12);
+            border-color: rgba(0, 0, 0, 0.18);
             box-shadow:
                 0 20px 40px rgba(0, 0, 0, 0.1),
                 inset 0 1px 0 rgba(255, 255, 255, 1);
@@ -484,7 +457,7 @@
 
         body.light-mode .post-card:hover .post-title,
         body.light-mode .post-card:hover .post-title a {
-            color: #1DB954 !important;
+            color: #15803d !important;
         }
 
         body.light-mode .post-excerpt {
@@ -507,17 +480,6 @@
             border-top-color: rgba(0, 0, 0, 0.06);
         }
 
-        body.light-mode .pagination a {
-            background: rgba(0, 0, 0, 0.04);
-            border-color: rgba(0, 0, 0, 0.08);
-            color: rgba(0, 0, 0, 0.6);
-        }
-
-        body.light-mode .pagination a:hover {
-            background: rgba(0, 0, 0, 0.08);
-            border-color: rgba(0, 0, 0, 0.12);
-            color: #000;
-        }
 
         /* Responsive adjustments */
         @media (max-width: 768px) {
@@ -582,10 +544,7 @@
                 font-size: 0.75rem;
             }
 
-            .pagination a {
-                padding: 0.5rem 1rem;
-                font-size: 0.85rem;
-            }
+
         }
     </style>
 </head>
@@ -674,10 +633,6 @@
             </article>
         </section>
 
-        <nav class="pagination">
-            <a href="#" class="prev">← Previous</a>
-            <a href="#" class="next">Next →</a>
-        </nav>
     </main>
     <footer class="site-footer">
         <div class="footer-glass">
