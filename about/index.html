@@ -70,28 +70,35 @@
 
 /* Base Bento Item */
 .bento-item {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 20px;
     padding: 1.75rem;
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.06),
+        0 4px 24px rgba(0, 0, 0, 0.2);
 }
 
 .bento-item::before {
     content: '';
     position: absolute;
     top: 0;
-    left: 0;
-    right: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70%;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
 }
 
 .bento-item:hover {
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(255, 255, 255, 0.05);
     border-color: rgba(255, 255, 255, 0.15);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        0 8px 32px rgba(0, 0, 0, 0.25);
     transform: translateY(-4px);
 }
 
@@ -157,7 +164,6 @@
     align-items: center;
     justify-content: center;
     min-height: 280px;
-    background: rgba(0, 0, 0, 0.3);
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.6rem;
     line-height: 1.2;
@@ -464,42 +470,6 @@
     background: rgba(255, 255, 255, 0.1);
 }
 
-/* Connect */
-.bento-connect {
-    grid-column: span 6;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.connect-links {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-}
-
-.connect-link {
-    width: 48px;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 1.25rem;
-    transition: all 0.3s ease;
-    text-decoration: none;
-}
-
-.connect-link:hover {
-    color: #1DB954;
-    border-color: rgba(29, 185, 84, 0.3);
-    background: rgba(29, 185, 84, 0.1);
-    transform: translateY(-3px);
-}
-
 /* ========================================= */
 /* ==           Light Mode                 == */
 /* ========================================= */
@@ -507,15 +477,17 @@
 body.light-mode .bento-item {
     background: #f8f8f8;
     border-color: rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 body.light-mode .bento-item::before {
-    background: linear-gradient(90deg, transparent, rgba(0,0,0,0.03), transparent);
+    background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.06), transparent);
 }
 
 body.light-mode .bento-item:hover {
     background: #fff;
     border-color: rgba(0, 0, 0, 0.12);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
 }
 
 body.light-mode .section-label {
@@ -549,7 +521,6 @@ body.light-mode .hero-subtitle {
 }
 
 body.light-mode .bento-ascii {
-    background: rgba(0, 0, 0, 0.03);
     color: #0f4d1f;
 }
 
@@ -648,18 +619,6 @@ body.light-mode .cta-btn.secondary {
     background: rgba(0, 0, 0, 0.03);
     color: #1d1d1f;
     border-color: rgba(0, 0, 0, 0.1);
-}
-
-body.light-mode .connect-link {
-    background: rgba(0, 0, 0, 0.02);
-    border-color: rgba(0, 0, 0, 0.08);
-    color: rgba(0, 0, 0, 0.6);
-}
-
-body.light-mode .connect-link:hover {
-    color: #0f4d1f;
-    border-color: rgba(15, 77, 31, 0.3);
-    background: rgba(15, 77, 31, 0.08);
 }
 
 /* ========================================= */
@@ -835,7 +794,7 @@ body.light-mode .connect-link:hover {
                 </div>
 
                 <div class="bento-item bento-stats">
-                    <p class="section-label">Cups of Thanda Pani</p>
+                    <p class="section-label">Glass of Thanda Pani</p>
                     <span class="stat-number">∞</span>
                     <span class="stat-label">daily required</span>
                 </div>
@@ -943,7 +902,7 @@ body.light-mode .connect-link:hover {
                     <div class="footer-meta">
                         <span class="copyright">🄯 2026</span>
                         <span class="separator">·</span>
-                        <span class="made-with">Made with ♥ by <a href="https://github.com/V8V88V8V88">V8V88V8V88</a></span>
+                        <span class="made-with">Made with ♥ by <a href="https://github.com/V8V88V8V88" target="_blank" rel="noopener noreferrer">Vaibhav</a></span>
                     </div>
                     
                     <div class="footer-webring">

@@ -25,12 +25,12 @@
 
 /* Hero Section */
 .projects-hero {
-    min-height: 70vh;
+    min-height: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    padding: 120px 0 4rem;
+    padding: 120px 0 2.5rem;
     position: relative;
 }
 
@@ -136,29 +136,6 @@
     color: #1DB954;
 }
 
-.hero-scroll {
-    position: absolute;
-    bottom: 2rem;
-    left: 0;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    color: rgba(255, 255, 255, 0.3);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    animation: bounce 2s infinite;
-}
-
-.hero-scroll::before {
-    content: '↓';
-    font-size: 1rem;
-}
-
-@keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(5px); }
-}
-
 /* Divider */
 .projects-divider {
     width: 100%;
@@ -210,6 +187,7 @@
 .project-list {
     display: flex;
     flex-direction: column;
+    gap: 0.75rem;
 }
 
 .project-item {
@@ -359,10 +337,6 @@ body.light-mode .hero-stat-label {
     color: rgba(0, 0, 0, 0.4);
 }
 
-body.light-mode .hero-scroll {
-    color: rgba(0, 0, 0, 0.3);
-}
-
 body.light-mode .hero-tech-label {
     color: rgba(0, 0, 0, 0.35);
 }
@@ -473,8 +447,7 @@ body.light-mode .section-label {
     }
     
     .projects-hero {
-        min-height: 60vh;
-        padding: 100px 0 3rem;
+        padding: 100px 0 2rem;
     }
     
     .hero-ascii {
@@ -524,8 +497,7 @@ body.light-mode .section-label {
         }
 
     .projects-hero {
-        min-height: 55vh;
-        padding: 90px 0 2rem;
+        padding: 90px 0 1.5rem;
     }
     
     .hero-ascii {
@@ -550,10 +522,6 @@ body.light-mode .section-label {
         font-size: 0.6rem;
         }
 
-    .hero-scroll {
-        display: none;
-    }
-    
     .hero-tech {
         margin-top: 1rem;
     }
@@ -647,7 +615,6 @@ body.light-mode .section-label {
                         <span class="tech-pill" data-filter-lang="Shell">Shell</span>
                     </div>
                 </div>
-                <div class="hero-scroll">scroll to explore</div>
             </section>
 
             <div class="projects-divider"></div>
@@ -1045,12 +1012,12 @@ body.light-mode .section-label {
                     <div class="footer-meta">
                         <span class="copyright">🄯 2026</span>
                         <span class="separator">·</span>
-                        <span class="made-with">Made with ♥ by <a href="https://github.com/V8V88V8V88">V8V88V8V88</a></span>
+                        <span class="made-with">Made with ♥ by <a href="https://github.com/V8V88V8V88" target="_blank" rel="noopener noreferrer">Vaibhav</a></span>
                     </div>
                     <div class="footer-webring">
-                        <a href="https://webring.dinhe.net/prev/https://v8v88v8v88.com/" class="webring-link">←</a>
-                        <a href="https://webring.dinhe.net/" class="webring-hub">Webring</a>
-                        <a href="https://webring.dinhe.net/next/https://v8v88v8v88.com/" class="webring-link">→</a>
+                        <a href="https://webring.dinhe.net/prev/https://v8v88v8v88.com/" class="webring-link" target="_blank" rel="noopener noreferrer">←</a>
+                        <a href="https://webring.dinhe.net/" class="webring-hub" target="_blank" rel="noopener noreferrer">Webring</a>
+                        <a href="https://webring.dinhe.net/next/https://v8v88v8v88.com/" class="webring-link" target="_blank" rel="noopener noreferrer">→</a>
                     </div>
                     <div class="footer-visitors">
                         <a href="https://visitorbadge.io/status?path=https%3A%2F%2Fv8v88v8v88.com">

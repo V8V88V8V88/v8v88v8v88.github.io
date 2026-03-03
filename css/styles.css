@@ -33,6 +33,17 @@ body.light-mode {
     color: #000;
 }
 
+a:focus-visible,
+button:focus-visible {
+    outline: 2px solid #1DB954;
+    outline-offset: 2px;
+}
+
+body.light-mode a:focus-visible,
+body.light-mode button:focus-visible {
+    outline-color: #0f4d1f;
+}
+
 main,
 footer,
 .resume-button,
@@ -395,11 +406,6 @@ body.light-mode .webring-hub {
 body.light-mode .webring-link:hover,
 body.light-mode .webring-hub:hover {
     color: #000;
-}
-
-body.light-mode .webring-link:hover,
-body.light-mode .webring-hub:hover {
-    color: #fff;
 }
 
 .footer-main {
@@ -928,14 +934,6 @@ body.light-mode .projects {
     padding-left: 0.25rem;
 }
 
-.projects-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.5rem 0;
-}
-
 .projects ul {
     display: flex;
     overflow-x: auto;
@@ -1011,11 +1009,6 @@ body.light-mode .project-item img {
 
 .project-item:hover img {
     transform: scale(1.02);
-}
-
-.project-details,
-.footer-section {
-    padding: 0 0.25rem;
 }
 
 .project-item h3 {
@@ -1308,11 +1301,20 @@ body.light-mode .intro-text p {
     border-radius: 1rem;
     position: relative;
     cursor: pointer;
-    outline: 0;
+    outline: none;
     transition:
         background-color 0.3s ease,
         border-color 0.3s ease,
         box-shadow 0.3s ease;
+}
+
+.mode-switch:focus-visible {
+    outline: 2px solid #1DB954;
+    outline-offset: 2px;
+}
+
+body.light-mode .mode-switch:focus-visible {
+    outline-color: #0f4d1f;
 }
 
 .mode-switch:hover {
@@ -1360,20 +1362,6 @@ body.light-mode .mode-switch-label {
     color: #555;
 }
 
-.mode-switch-text {
-    display: inline-block;
-    transition: opacity 0.3s ease;
-}
-
-.mode-switch:checked+.mode-switch-label .mode-switch-text {
-    opacity: 0;
-}
-
-.mode-switch:checked+.mode-switch-label .mode-switch-text::before {
-    content: "Dark Mode";
-    opacity: 1;
-}
-
 /* Menu Toggle for Mobile */
 .menu-toggle {
     display: none;
@@ -1399,10 +1387,6 @@ body.light-mode .mode-switch-label {
 
 body.light-mode .menu-toggle span {
     background: rgba(0, 0, 0, 0.8);
-}
-
-body.light-mode .menu-toggle span {
-    background: rgba(0, 0, 0, 0.7);
 }
 
 /* ========================================= */
@@ -2003,13 +1987,6 @@ main.username-post .back-button:hover {
     color: var(--text-color-post);
 }
 
-main.username-post .section-divider {
-    border: none;
-    height: 1px;
-    background: var(--divider-color-post);
-    margin: 2.5rem 0;
-}
-
 /* Light Mode adjustments for username post */
 body.light-mode main.username-post {
     color: #1d1d1f;
@@ -2044,10 +2021,6 @@ body.light-mode main.username-post .back-button:hover {
     color: #000;
 }
 
-body.light-mode main.username-post .section-divider {
-    background: rgba(0, 0, 0, 0.1);
-}
-
 body.light-mode main.username-post section {
     background-color: #f8f8f8;
     margin-bottom: 2rem;
@@ -2076,290 +2049,6 @@ body.light-mode main.username-post section {
 @media (max-width: 480px) {
     main.username-post {
         font-size: 18px;
-    }
-}
-
-/* ========================================= */
-/* ==         Posts Page Specific         == */
-/* ========================================= */
-
-/* Hero styles for Posts Page */
-main.posts-page section.hero {
-    position: relative;
-    height: 40vh;
-    min-height: 400px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    margin-top: 2rem;
-    margin-bottom: 4rem;
-    margin-left: auto;
-    margin-right: auto;
-    border-radius: 24px;
-    background: #000;
-}
-
-main.posts-page section.hero::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg,
-            rgba(32, 32, 32, 0.8) 0%,
-            rgba(40, 44, 52, 0.8) 50%,
-            rgba(32, 32, 32, 0.8) 100%);
-    z-index: 1;
-}
-
-main.posts-page section.hero::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background:
-        linear-gradient(45deg,
-            rgba(68, 71, 90, 0.1) 25%,
-            transparent 25%,
-            transparent 75%,
-            rgba(68, 71, 90, 0.1) 75%),
-        linear-gradient(45deg,
-            rgba(68, 71, 90, 0.1) 25%,
-            transparent 25%,
-            transparent 75%,
-            rgba(68, 71, 90, 0.1) 75%);
-    background-size: 60px 60px;
-    background-position: 0 0, 30px 30px;
-    opacity: 0.5;
-    z-index: 2;
-    animation: gradientMove 15s linear infinite;
-}
-
-main.posts-page section.hero .hero-content {
-    position: relative;
-    z-index: 3;
-    text-align: center;
-    max-width: 800px;
-    padding: 0 2rem;
-}
-
-main.posts-page section.hero h1 {
-    font-size: 4rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    background: linear-gradient(to right, #c2c2c2, #ffffff);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
-    color: transparent;
-}
-
-main.posts-page section.hero p {
-    font-size: 1.5rem;
-    color: rgba(255, 255, 255, 0.7);
-    max-width: 600px;
-    margin: 0 auto;
-    line-height: 1.6;
-}
-
-/* Light Mode Styles for Posts Page Hero */
-body.light-mode main.posts-page section.hero::before {
-    background: linear-gradient(135deg,
-            rgba(245, 245, 247, 0.8) 0%,
-            rgba(250, 250, 252, 0.8) 50%,
-            rgba(245, 245, 247, 0.8) 100%);
-}
-
-body.light-mode main.posts-page section.hero::after {
-    background:
-        linear-gradient(45deg,
-            rgba(200, 200, 200, 0.1) 25%,
-            transparent 25%,
-            transparent 75%,
-            rgba(200, 200, 200, 0.1) 75%),
-        linear-gradient(45deg,
-            rgba(200, 200, 200, 0.1) 25%,
-            transparent 25%,
-            transparent 75%,
-            rgba(200, 200, 200, 0.1) 75%);
-}
-
-body.light-mode main.posts-page section.hero h1 {
-    background: linear-gradient(to right, #333, #000);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
-}
-
-body.light-mode main.posts-page section.hero p {
-    color: rgba(0, 0, 0, 0.7);
-}
-
-/* Post Grid Styles */
-main.posts-page section.posts-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: 4rem;
-    padding: 0;
-    background-color: transparent;
-}
-
-main.posts-page .post-card {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 1rem;
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    display: flex;
-    flex-direction: column;
-}
-
-main.posts-page .post-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    border-color: rgba(255, 255, 255, 0.2);
-}
-
-main.posts-page .post-image {
-    height: 200px;
-    background-size: cover;
-    background-position: center;
-    width: 100%;
-}
-
-main.posts-page .post-content {
-    padding: 1.5rem;
-    flex-grow: 1;
-}
-
-main.posts-page .post-title,
-main.posts-page .post-title a {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    color: #fff;
-    text-decoration: none;
-    line-height: 1.3;
-}
-
-main.posts-page .post-excerpt {
-    font-size: 1rem;
-    margin-bottom: 1rem;
-    color: #aaa;
-    line-height: 1.5;
-}
-
-main.posts-page .post-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.9rem;
-    color: #666;
-    margin-top: auto;
-    padding-top: 1rem;
-}
-
-main.posts-page .post-date {
-    display: flex;
-    align-items: center;
-}
-
-main.posts-page .post-date i,
-main.posts-page .post-read-time i {
-    margin-right: 0.5rem;
-    color: #666;
-}
-
-main.posts-page .post-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: 0.5rem;
-    margin-bottom: 1rem;
-}
-
-main.posts-page .post-tag {
-    background-color: rgba(255, 255, 255, 0.2);
-    color: #fff;
-    padding: 0.2rem 0.5rem;
-    border-radius: 1rem;
-    font-size: 0.8rem;
-}
-
-/* Light mode adjustments for posts page grid */
-body.light-mode main.posts-page .post-card {
-    background-color: rgba(0, 0, 0, 0.05);
-    border-color: rgba(0, 0, 0, 0.1);
-}
-
-body.light-mode main.posts-page .post-card:hover {
-    background-color: rgba(0, 0, 0, 0.08);
-    border-color: rgba(0, 0, 0, 0.15);
-}
-
-body.light-mode main.posts-page .post-title,
-body.light-mode main.posts-page .post-title a {
-    color: #000;
-}
-
-body.light-mode main.posts-page .post-excerpt {
-    color: #555;
-}
-
-body.light-mode main.posts-page .post-meta {
-    color: #333;
-}
-
-body.light-mode main.posts-page .post-date i,
-body.light-mode main.posts-page .post-read-time i {
-    color: #333;
-}
-
-body.light-mode main.posts-page .post-tag {
-    background-color: rgba(0, 0, 0, 0.1);
-    color: #000;
-}
-
-body.light-mode main.posts-page .pagination a {
-    background-color: rgba(0, 0, 0, 0.1);
-    color: #000;
-}
-
-body.light-mode main.posts-page .pagination a:hover {
-    background-color: rgba(0, 0, 0, 0.2);
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    main.posts-page section.hero {
-        padding: 3rem 1rem;
-    }
-
-    main.posts-page section.hero h1 {
-        font-size: 3rem;
-    }
-
-    main.posts-page section.hero p {
-        font-size: 1rem;
-    }
-}
-
-/* Animation for the grid pattern */
-@keyframes gradientMove {
-    0% {
-        background-position: 0 0, 30px 30px;
-    }
-
-    100% {
-        background-position: 60px 60px, 90px 90px;
     }
 }
 
