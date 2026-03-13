@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fixing Linux Location | V8V88V8V88</title>
+    <meta name="description" content="How I fixed completely broken location on Fedora using GeoClue, BeaconDB, and a bit of WiFi mapping." />
+    <link rel="canonical" href="https://v8v88v8v88.com/linux-location-geoclue/" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" href="/images/favicon.ico" sizes="any" />
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://v8v88v8v88.com/linux-location-geoclue/">
+    <meta property="og:title" content="Fixing Linux Location | V8V88V8V88">
+    <meta property="og:description" content="Because Mozilla Location Service is dead, GeoClue on Linux started dropping me in Tokyo. This is how I fixed it with BeaconDB.">
+    <meta property="og:image" content="https://v8v88v8v88.com/images/linux.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Fixing Linux Location | V8V88V8V88">
+    <meta name="twitter:description" content="Because Mozilla Location Service is dead, GeoClue on Linux started dropping me in Tokyo. This is how I fixed it with BeaconDB.">
+    <meta name="twitter:image" content="https://v8v88v8v88.com/images/linux.png">
+    <link rel="stylesheet" href="/css/styles.css" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://v8v88v8v88.com/linux-location-geoclue/"
+      },
+      "headline": "Fixing Linux Location | V8V88V8V88",
+      "description": "How I fixed completely broken location on Fedora using GeoClue, BeaconDB, and a bit of WiFi mapping.",
+      "image": "https://v8v88v8v88.com/images/linux.png",
+      "author": {
+        "@type": "Person",
+        "name": "Vaibhav Pratap Singh",
+        "alternateName": "V8V88V8V88",
+        "url": "https://v8v88v8v88.com/"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "V8V88V8V88",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://v8v88v8v88.com/images/favicon.ico"
+        }
+      },
+      "datePublished": "2026-03-13",
+      "dateModified": "2026-03-13"
+    }
+    </script>
+</head>
+<body>
+<header>
+  <nav>
+      <div class="logo"><a href="/">V8V88V8V88</a></div>
+      <div class="nav-right">
+          <div class="mode-toggle">
+        <input
+          type="checkbox"
+          id="mode-switch"
+          class="mode-switch"
+          aria-label="Toggle dark mode"
+        />
+              <label
+                  for="mode-switch"
+                  class="mode-switch-label"
+              ></label>
+          </div>
+          <button class="menu-toggle" aria-label="Toggle menu">
+              <span></span>
+              <span></span>
+              <span></span>
+          </button>
+      </div>
+      <ul class="nav-menu">
+          <li><a href="/">Home</a></li>
+          <li><a href="/blogs/">Blogs</a></li>
+          <li><a href="/projects/">Projects</a></li>
+          <li><a href="/contact/">Contact</a></li>
+          <li><a href="/about/">About</a></li>
+      </ul>
+  </nav>
+</header>
+
+<main class="blog-post">
+  <br>
+  <a href="/blogs/" class="back-button">
+    ← Back to Blogs
+  </a>
+  <h1>Fixing Broken Location on Linux</h1>
+
+  <p>
+    Because MLS has been dead for about two years now, location on Linux has been a complete hit or miss.
+    Most people don’t even realise why their maps are wrong, they just assume Linux is broken and move on.
+  </p>
+
+  <p>
+    I didn’t move on. I spent way too long trying to fix it — went through Google Maps API, BeaconDB,
+    editing configs, none of it worked. Until today. Writing this down so you don’t have to go through the same thing.
+  </p>
+
+  <h2>What was happening?</h2>
+
+  <p>
+    I opened GNOME Maps, hit “Show My Location” and it dropped a pin in Tokyo. I’m in Noida.
+    I haven’t been to Japan. Ever.
+  </p>
+
+  <p>
+    Tried it in the browser, same thing. Google Maps — Tokyo, OpenStreetMap — Tokyo. Apple Maps — Tokyo.
+    At this point I’m convinced my laptop thinks I am some anime guy or something.
+  </p>
+
+  <p>
+    First thing I checked was VPN. Nothing running. Then I checked my IP:
+  </p>
+
+  <pre><code>curl ipinfo.io
+</code></pre>
+
+  <pre><code>"city": "Noida",
+"country": "IN"
+</code></pre>
+
+  <p>
+    IP is fine. So it’s not that. Something deeper was broken.
+  </p>
+
+  <h2>How Linux even knows where you are</h2>
+
+  <p>
+    Here’s the thing most people don’t know — Linux has no built-in location service like Android or iPhone.
+    No Google, no Apple, nothing. Instead there’s this daemon called <strong>GeoClue</strong> that all your apps talk to
+    when they need your location.
+  </p>
+
+  <p>
+    GeoClue figures out where you are by checking a few things — WiFi networks around you, cell towers,
+    your IP address as a last resort. For WiFi, it was using <strong>Mozilla Location Services (MLS)</strong>,
+    basically a giant crowd-sourced database that matched nearby WiFi networks to real-world coordinates.
+  </p>
+
+  <p>
+    Mozilla killed MLS in July 2024. Just shut it down. And Fedora’s GeoClue config still had it set as the default.
+    So every time any app asked for my location, GeoClue was hitting a dead API and getting back garbage,
+    which happened to be Tokyo coordinates.
+  </p>
+
+  <h2>Diagnosing it properly</h2>
+
+  <p>
+    There’s a test binary that ships with GeoClue:
+  </p>
+
+  <pre><code>/usr/libexec/geoclue-2.0/demos/where-am-i
+</code></pre>
+
+  <p>Output:</p>
+
+  <pre><code>Latitude: 35.657700°
+Longitude: 139.708000°
+Accuracy: 25000 meters
+Description: ipf fallback (from WiFi data)
+</code></pre>
+
+  <p>
+    Tokyo. And that <code>ipf fallback</code> part is the key — GeoClue had already switched to BeaconDB
+    (the community replacement for MLS) but BeaconDB had zero data for my area.
+    No one had ever submitted WiFi networks from around here. So it fell back to IP lookup which returned Tokyo garbage.
+  </p>
+
+  <p>
+    There was also a fun bonus problem — a file at <code>/etc/geoclue/conf.d/99-beacondb.conf</code> was silently
+    overriding whatever I put in the main config. So every time I edited <code>/etc/geoclue/geoclue.conf</code>
+    and thought I fixed it, that conf.d file was just ignoring my changes. Took me embarrassingly long to find that.
+  </p>
+
+  <h2>The actual fix</h2>
+
+  <p>
+    The root problem was that BeaconDB had no WiFi data for my area. The solution was to just… put it there myself.
+  </p>
+
+  <h3>1. Get NeoStumbler on your Android phone</h3>
+
+  <p>
+    NeoStumbler is an open source app that scans nearby WiFi networks, grabs your GPS position,
+    and submits everything to BeaconDB. Think of it as contributing to a map — except the map is a WiFi location database.
+  </p>
+
+  <ul>
+    <li>Download from F-Droid or GitHub</li>
+    <li>Go to Settings → Endpoint → pick BeaconDB (or it auto-detects)</li>
+    <li>Turn on WiFi and GPS on your phone</li>
+  </ul>
+
+  <h3>2. Turn on Location</h3>
+
+  <p>
+    NeoStumbler needs a real GPS lock. It won’t submit anything if it can’t confirm where you are via satellite.
+    So go outside (but within WiFi range obviously), wait for the GPS to lock in, and walk around a bit.
+    Even 10 minutes around your block is enough to get going.
+  </p>
+
+  <p>
+    I collected 16 reports and it worked. More is obviously better — aim for 100+ if you want solid coverage —
+    but even a little helps.
+  </p>
+
+  <h3>3. Fix the config</h3>
+
+  <p>
+    First, remove the overriding BeaconDB config so the main file is actually respected:
+  </p>
+
+  <pre><code>sudo rm /etc/geoclue/conf.d/99-beacondb.conf
+</code></pre>
+
+  <p>Then edit the main config:</p>
+
+  <pre><code>sudo nano /etc/geoclue/geoclue.conf
+</code></pre>
+
+  <p>
+    Set <code>[ip]</code> to use a fallback that actually works
+    (<code>reallyfreegeoip</code> is kinda meh but at least returns the right country):
+  </p>
+
+  <pre><code>[ip]
+enable=true
+method=reallyfreegeoip
+</code></pre>
+
+  <p>Set <code>[wifi]</code> to BeaconDB:</p>
+
+  <pre><code>[wifi]
+enable=true
+url=https://api.beacondb.net/v1/geolocate
+</code></pre>
+
+  <p>Restart GeoClue:</p>
+
+  <pre><code>sudo systemctl restart geoclue
+</code></pre>
+
+  <h3>4. Wait a few minutes</h3>
+
+  <p>
+    BeaconDB takes 5–10 minutes to process submitted data. Grab a chai/coffee or thanda pani.
+  </p>
+
+  <h3>5. Test</h3>
+
+  <pre><code>/usr/libexec/geoclue-2.0/demos/where-am-i
+</code></pre>
+
+  <pre><code>Latitude: 28.535100°
+Longitude: 77.391000°
+Accuracy: 50 meters
+Description: WiFi
+</code></pre>
+
+  <p>
+    50 meters. Noida. Nice.
+  </p>
+
+  <h2>Quick summary of what was wrong</h2>
+
+  <ul>
+    <li>MLS is dead since July 2024, GeoClue config still pointed at it</li>
+    <li>BeaconDB had no data for my area so it fell back to a broken IP lookup</li>
+    <li><code>/etc/geoclue/conf.d/99-beacondb.conf</code> was overriding all my config changes silently</li>
+  </ul>
+
+  <h2>Optional stuff</h2>
+
+  <h3>When GNOME Maps still shows the wrong place</h3>
+
+  <p>
+    GeoClue returns a fast (wrong) GeoIP result first, then the accurate WiFi result about a minute later.
+    GNOME Maps grabs the first one and stops. You can disable the IP source entirely so it only ever returns WiFi:
+  </p>
+
+  <pre><code>sudo nano /etc/geoclue/geoclue.conf
+</code></pre>
+
+  <pre><code>[ip]
+enable=false
+</code></pre>
+
+  <p>
+    Apps will take a few seconds longer to get your location but it’ll be correct.
+  </p>
+
+  <h3>Pre-warming GeoClue at login</h3>
+
+  <p>
+    If you want GeoClue pre-warmed at login, create <code>~/.local/bin/geoclue-warmup.sh</code>:
+  </p>
+
+  <pre><code>nano ~/.local/bin/geoclue-warmup.sh
+
+#!/bin/bash
+/usr/libexec/geoclue-2.0/demos/where-am-i &
+sleep 90
+kill %1
+</code></pre>
+
+  <pre><code>chmod +x ~/.local/bin/geoclue-warmup.sh
+</code></pre>
+
+  <p>
+    And add an autostart entry at <code>~/.config/autostart/geoclue-warmup.desktop</code>:
+  </p>
+
+  <pre><code>nano ~/.config/autostart/geoclue-warmup.desktop</code></pre>
+  <pre><code>[Desktop Entry]
+Type=Application
+Name=Geoclue Warmup
+Exec=/bin/bash /home/YOUR_USERNAME/.local/bin/geoclue-warmup.sh
+StartupNotify=false
+Terminal=false
+</code></pre>
+
+  <p>
+    If you’re dealing with wrong location on Debian, Arch, Fedora 41, 42, 43 or any other distro,
+    this is almost certainly your problem. MLS being dead broke a lot of things quietly and most people
+    have no idea why their location is wrong.
+  </p>
+
+  <p>
+    Go submit some NeoStumbler reports. You’ll fix yourself and help the next person too.
+  </p>
+
+  <p><i>- V8</i></p>
+</main>
+
+    <footer class="site-footer">
+        <div class="footer-glass">
+            <div class="footer-main">
+                <div class="footer-brand">
+                    <a href="/" class="footer-logo">V8V88V8V88</a>
+                    <p class="footer-tagline">Linux × FOSS × Code × Design</p>
+                </div>
+                
+                    <nav class="footer-nav">
+                        <div class="footer-nav-group">
+                            <h5>Explore</h5>
+                            <a href="/">Home</a>
+                            <a href="/blogs/">Blogs</a>
+                            <a href="/projects/">Projects</a>
+        </div>
+                        
+                        <div class="footer-nav-group">
+                            <h5>More</h5>
+                            <a href="/about/">About</a>
+                            <a href="/contact/">Contact</a>
+        </div>
+                        
+                        <div class="footer-nav-group footer-socials">
+                            <h5>Socials</h5>
+                            <div class="footer-social-icons">
+                                <a href="https://github.com/v8v88v8v88" target="_blank" rel="noopener noreferrer" title="GitHub"><i class="fab fa-github"></i></a>
+                                <a href="https://t.me/V8V88V8V88" target="_blank" rel="noopener noreferrer" title="Telegram"><i class="fab fa-telegram"></i></a>
+                                <a href="https://fosstodon.org/@v8v88v8v88" rel="me noopener noreferrer" target="_blank" title="Mastodon"><i class="fab fa-mastodon"></i></a>
+                                <a href="https://twitter.com/v8v88v8v88" target="_blank" rel="noopener noreferrer" title="Twitter"><i class="fab fa-twitter"></i></a>
+                                <a href="https://www.linkedin.com/in/v8v88v8v88/" target="_blank" rel="noopener noreferrer" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                                <a href="https://www.youtube.com/c/MagicalV8" target="_blank" rel="noopener noreferrer" title="YouTube"><i class="fab fa-youtube"></i></a>
+                                <a href="https://www.instagram.com/v8v88v8v88" target="_blank" rel="noopener noreferrer" title="Instagram"><i class="fab fa-instagram"></i></a>
+                                <a href="https://www.reddit.com/user/v8v88v8v88" target="_blank" rel="noopener noreferrer" title="Reddit"><i class="fab fa-reddit"></i></a>
+        </div>
+      </div>
+                    </nav>
+            </div>
+            
+            <div class="footer-bottom-bar">
+                    <div class="footer-meta">
+                        <span class="copyright">🄯 2026</span>
+                        <span class="separator">·</span>
+                        <span class="made-with">Made with ♥ by <a href="https://github.com/V8V88V8V88" target="_blank" rel="noopener noreferrer">Vaibhav</a></span>
+                    </div>
+                
+                <div class="footer-webring">
+                    <a href="https://webring.dinhe.net/prev/https://v8v88v8v88.com/" class="webring-link" target="_blank" rel="noopener noreferrer">←</a>
+                    <a href="https://webring.dinhe.net/" class="webring-hub" target="_blank" rel="noopener noreferrer">Webring</a>
+                    <a href="https://webring.dinhe.net/next/https://v8v88v8v88.com/" class="webring-link" target="_blank" rel="noopener noreferrer">→</a>
+                </div>
+                
+                <div class="footer-visitors">
+                    <a href="https://visitorbadge.io/status?path=https%3A%2F%2Fv8v88v8v88.com">
+                        <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fv8v88v8v88.com&label=Visitors&labelColor=%23010101&countColor=%23b1b1b1&style=flat" alt="Visitors" loading="lazy"/>
+              </a>
+            </div>
+        </div>
+      </div>
+    </footer>
+    <script
+      src="https://kit.fontawesome.com/133988a847.js"
+      crossorigin="anonymous"
+      defer
+    ></script>
+    <script src="/js/script.js" defer></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('main.blog-post pre').forEach(function(pre) {
+            var wrapper = document.createElement('div');
+            wrapper.className = 'code-block';
+            pre.parentNode.insertBefore(wrapper, pre);
+            wrapper.appendChild(pre);
+
+            var btn = document.createElement('button');
+            btn.className = 'copy-btn';
+            btn.textContent = 'Copy';
+            btn.addEventListener('click', function() {
+                var code = pre.querySelector('code');
+                var text = code ? code.textContent : pre.textContent;
+                navigator.clipboard.writeText(text).then(function() {
+                    btn.textContent = 'Copied';
+                    btn.classList.add('copied');
+                    setTimeout(function() {
+                        btn.textContent = 'Copy';
+                        btn.classList.remove('copied');
+                    }, 2000);
+                });
+            });
+            wrapper.appendChild(btn);
+        });
+    });
+    </script>
+
+  </body>
+</html>
+
