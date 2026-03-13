@@ -14,11 +14,11 @@
     <meta property="og:url" content="https://v8v88v8v88.com/linux-location-geoclue/">
     <meta property="og:title" content="Fixing Linux Location | V8V88V8V88">
     <meta property="og:description" content="Because Mozilla Location Service is dead, GeoClue on Linux started dropping me in Tokyo. This is how I fixed it with BeaconDB.">
-    <meta property="og:image" content="https://v8v88v8v88.com/images/linux.png">
+    <meta property="og:image" content="https://v8v88v8v88.com/images/beacondb.webp">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Fixing Linux Location | V8V88V8V88">
     <meta name="twitter:description" content="Because Mozilla Location Service is dead, GeoClue on Linux started dropping me in Tokyo. This is how I fixed it with BeaconDB.">
-    <meta name="twitter:image" content="https://v8v88v8v88.com/images/linux.png">
+    <meta name="twitter:image" content="https://v8v88v8v88.com/images/beacondb.webp">
     <link rel="stylesheet" href="/css/styles.css" />
     <script type="application/ld+json">
     {
@@ -30,7 +30,7 @@
       },
       "headline": "Fixing Linux Location | V8V88V8V88",
       "description": "How I fixed completely broken location on Fedora using GeoClue, BeaconDB, and a bit of WiFi mapping.",
-      "image": "https://v8v88v8v88.com/images/linux.png",
+      "image": "https://v8v88v8v88.com/images/beacondb.webp",
       "author": {
         "@type": "Person",
         "name": "Vaibhav Pratap Singh",
@@ -96,7 +96,7 @@
   </p>
 
   <p>
-    I didn’t move on. I spent way too long trying to fix it — went through Google Maps API, BeaconDB,
+    I didn’t move on. I spent way too long trying to fix it, went through Google Maps API, BeaconDB,
     editing configs, none of it worked. Until today. Writing this down so you don’t have to go through the same thing.
   </p>
 
@@ -108,7 +108,7 @@
   </p>
 
   <p>
-    Tried it in the browser, same thing. Google Maps — Tokyo, OpenStreetMap — Tokyo. Apple Maps — Tokyo.
+    Tried it in the browser, same thing. Google Maps, Tokyo, OpenStreetMap, Tokyo. Apple Maps, Tokyo.
     At this point I’m convinced my laptop thinks I am some anime guy or something.
   </p>
 
@@ -130,13 +130,13 @@
   <h2>How Linux even knows where you are</h2>
 
   <p>
-    Here’s the thing most people don’t know — Linux has no built-in location service like Android or iPhone.
+    Here’s the thing most people don’t know, Linux has no built-in location service like Android or iPhone.
     No Google, no Apple, nothing. Instead there’s this daemon called <strong>GeoClue</strong> that all your apps talk to
     when they need your location.
   </p>
 
   <p>
-    GeoClue figures out where you are by checking a few things — WiFi networks around you, cell towers,
+    GeoClue figures out where you are by checking a few things, WiFi networks around you, cell towers,
     your IP address as a last resort. For WiFi, it was using <strong>Mozilla Location Services (MLS)</strong>,
     basically a giant crowd-sourced database that matched nearby WiFi networks to real-world coordinates.
   </p>
@@ -165,13 +165,13 @@ Description: ipf fallback (from WiFi data)
 </code></pre>
 
   <p>
-    Tokyo. And that <code>ipf fallback</code> part is the key — GeoClue had already switched to BeaconDB
+    Tokyo. And that <code>ipf fallback</code> part is the key, GeoClue had already switched to BeaconDB
     (the community replacement for MLS) but BeaconDB had zero data for my area.
     No one had ever submitted WiFi networks from around here. So it fell back to IP lookup which returned Tokyo garbage.
   </p>
 
   <p>
-    There was also a fun bonus problem — a file at <code>/etc/geoclue/conf.d/99-beacondb.conf</code> was silently
+    There was also a fun bonus problem, a file at <code>/etc/geoclue/conf.d/99-beacondb.conf</code> was silently
     overriding whatever I put in the main config. So every time I edited <code>/etc/geoclue/geoclue.conf</code>
     and thought I fixed it, that conf.d file was just ignoring my changes. Took me embarrassingly long to find that.
   </p>
@@ -186,7 +186,7 @@ Description: ipf fallback (from WiFi data)
 
   <p>
     NeoStumbler is an open source app that scans nearby WiFi networks, grabs your GPS position,
-    and submits everything to BeaconDB. Think of it as contributing to a map — except the map is a WiFi location database.
+    and submits everything to BeaconDB. Think of it as contributing to a map, except the map is a WiFi location database.
   </p>
 
   <ul>
@@ -204,7 +204,7 @@ Description: ipf fallback (from WiFi data)
   </p>
 
   <p>
-    I collected 16 reports and it worked. More is obviously better — aim for 100+ if you want solid coverage —
+    I collected 16 reports and it worked. More is obviously better, aim for 100+ if you want solid coverage,
     but even a little helps.
   </p>
 
