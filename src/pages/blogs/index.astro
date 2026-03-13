@@ -1,0 +1,609 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const blogSchema = {
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "url": "https://v8v88v8v88.com/blogs/",
+  "name": "V8V88V8V88 Blog",
+  "description": "Blog posts by V8V88V8V88 on Linux, Minimalism, Identity, and more.",
+  "publisher": {
+    "@type": "Person",
+    "name": "Vaibhav Pratap Singh",
+    "alternateName": "V8V88V8V88",
+    "url": "https://v8v88v8v88.com/"
+  }
+};
+---
+<BaseLayout
+  title="Blogs | V8V88V8V88"
+  description="Blog posts by V8V88V8V88 on Linux, Minimalism, Identity, and more."
+  canonical="https://v8v88v8v88.com/blogs/"
+  ogImage="https://v8v88v8v88.com/images/username.png"
+  showRss={true}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(blogSchema)} />
+  </Fragment>
+
+  <main>
+    <section class="hero">
+      <div class="hero-glow"></div>
+      <div class="hero-highlight"></div>
+      <div class="hero-content">
+        <h1>I write, <i>maybe?</i></h1>
+        <p>The ultimate answer to the life, the universe, and everything</p>
+      </div>
+    </section>
+
+    <section class="posts-grid">
+      <article class="post-card">
+        <div class="post-image" style="background-image: url('/images/beacondb.webp')"></div>
+        <div class="post-content">
+          <h2 class="post-title"><a href="/linux-location-geoclue/">Fixing Broken Location on Linux</a></h2>
+          <p class="post-excerpt">How GeoClue, BeaconDB, and a bit of WiFi mapping fixed my laptop from thinking it's in Tokyo.</p>
+          <div class="post-tags">
+            <span class="post-tag">Linux</span>
+            <span class="post-tag">GeoClue</span>
+            <span class="post-tag">BeaconDB</span>
+          </div>
+          <div class="post-meta">
+            <span class="post-date">Mar 13, 2026</span>
+            <span class="post-read-time">7 min read</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="post-card">
+        <div class="post-image" style="background-image: url('/images/minimal.jpg')"></div>
+        <div class="post-content">
+          <h2 class="post-title"><a href="/minimalism/">Minimalism</a></h2>
+          <p class="post-excerpt">How ultimate simplicity changed the design of my life.</p>
+          <div class="post-tags">
+            <span class="post-tag">Minimalism</span>
+            <span class="post-tag">Philosophy</span>
+          </div>
+          <div class="post-meta">
+            <span class="post-date">Oct 6, 2025</span>
+            <span class="post-read-time">6 min read</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="post-card">
+        <div class="post-image" style="background-image: url('/images/username.png')"></div>
+        <div class="post-content">
+          <h2 class="post-title"><a href="/username/">Username</a></h2>
+          <p class="post-excerpt">The only description behind my mysterious username V8V88V8V88.</p>
+          <div class="post-tags">
+            <span class="post-tag">Identity</span>
+            <span class="post-tag">Personal</span>
+          </div>
+          <div class="post-meta">
+            <span class="post-date">Mar 4, 2025</span>
+            <span class="post-read-time">5 min read</span>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <script is:inline>
+    document.addEventListener("DOMContentLoaded", function () {
+      document.querySelectorAll(".post-card").forEach(card => {
+        card.addEventListener("click", function () {
+          const link = this.querySelector("a");
+          if (link) {
+            window.location.href = link.href;
+          }
+        });
+      });
+
+      const hero = document.querySelector(".hero");
+      if (hero) {
+        hero.addEventListener("mousemove", (e) => {
+          const rect = hero.getBoundingClientRect();
+          const x = ((e.clientX - rect.left) / rect.width) * 100;
+          const y = ((e.clientY - rect.top) / rect.height) * 100;
+          hero.style.setProperty("--mouse-x", x + "%");
+          hero.style.setProperty("--mouse-y", y + "%");
+        });
+      }
+    });
+  </script>
+</BaseLayout>
+
+<style>
+  .hero {
+    position: relative;
+    height: 35vh;
+    min-height: 320px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    margin: 2rem auto 5rem;
+    border-radius: 24px;
+    background: linear-gradient(145deg, #0a0a0a 0%, #1a1a1a 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: border-color 0.4s ease, box-shadow 0.4s ease;
+    isolation: isolate;
+  }
+
+  .hero:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.05),
+      0 8px 40px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
+    z-index: 1;
+    transition: opacity 0.4s ease;
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(255, 255, 255, 0.08) 0%,
+        rgba(255, 255, 255, 0.03) 25%,
+        transparent 50%);
+  }
+
+  .hero:hover .hero-glow {
+    opacity: 1;
+  }
+
+  .hero-highlight {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.3) 20%,
+        rgba(255, 255, 255, 0.5) 50%,
+        rgba(255, 255, 255, 0.3) 80%,
+        transparent 100%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: 10;
+  }
+
+  .hero:hover .hero-highlight {
+    opacity: 1;
+  }
+
+  .hero::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+      linear-gradient(45deg,
+        rgba(255, 255, 255, 0.02) 25%,
+        transparent 25%,
+        transparent 75%,
+        rgba(255, 255, 255, 0.02) 75%),
+      linear-gradient(45deg,
+        rgba(255, 255, 255, 0.02) 25%,
+        transparent 25%,
+        transparent 75%,
+        rgba(255, 255, 255, 0.02) 75%);
+    background-size: 40px 40px;
+    background-position: 0 0, 20px 20px;
+    opacity: 0.5;
+    z-index: 3;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    max-width: 700px;
+    padding: 0 2rem;
+  }
+
+  .hero h1 {
+    font-family: "EB Garamond", Georgia, serif;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+    color: #fff;
+    letter-spacing: -0.02em;
+  }
+
+  .hero h1 i {
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .hero p {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: rgba(255, 255, 255, 0.5);
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.6;
+    font-weight: 400;
+  }
+
+  :global(body.light-mode) .hero {
+    background: linear-gradient(145deg, #f8f8f8 0%, #efefef 100%);
+    border-color: rgba(0, 0, 0, 0.08);
+  }
+
+  :global(body.light-mode) .hero:hover {
+    border-color: rgba(0, 0, 0, 0.12);
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.5),
+      0 8px 40px rgba(0, 0, 0, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  }
+
+  :global(body.light-mode) .hero::before {
+    background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255, 255, 255, 0.5) 0%, transparent 50%);
+  }
+
+  :global(body.light-mode) .hero-glow {
+    background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(255, 255, 255, 0.6) 0%,
+        rgba(255, 255, 255, 0.2) 25%,
+        transparent 50%);
+  }
+
+  :global(body.light-mode) .hero-highlight {
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.8) 20%,
+        rgba(255, 255, 255, 1) 50%,
+        rgba(255, 255, 255, 0.8) 80%,
+        transparent 100%);
+  }
+
+  :global(body.light-mode) .hero::after {
+    background:
+      linear-gradient(45deg,
+        rgba(0, 0, 0, 0.02) 25%,
+        transparent 25%,
+        transparent 75%,
+        rgba(0, 0, 0, 0.02) 75%),
+      linear-gradient(45deg,
+        rgba(0, 0, 0, 0.02) 25%,
+        transparent 25%,
+        transparent 75%,
+        rgba(0, 0, 0, 0.02) 75%);
+    opacity: 0.6;
+  }
+
+  :global(body.light-mode) .hero h1 {
+    color: #1d1d1f;
+  }
+
+  :global(body.light-mode) .hero h1 i {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  :global(body.light-mode) .hero p {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+    margin-top: 0;
+    padding: 0;
+    background-color: transparent;
+  }
+
+  .post-card {
+    position: relative;
+    background:
+      linear-gradient(180deg,
+        rgba(255, 255, 255, 0.06) 0%,
+        rgba(255, 255, 255, 0.02) 50%,
+        rgba(255, 255, 255, 0) 100%),
+      rgba(25, 25, 25, 0.6);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    box-shadow:
+      0 0 0 0.5px rgba(255, 255, 255, 0.05),
+      0 4px 20px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+
+  .post-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.15) 30%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0.15) 70%,
+        transparent 100%);
+    z-index: 10;
+  }
+
+  .post-card:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      0 0 0 0.5px rgba(255, 255, 255, 0.08),
+      0 20px 40px rgba(0, 0, 0, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.18);
+    background:
+      linear-gradient(180deg,
+        rgba(255, 255, 255, 0.08) 0%,
+        rgba(255, 255, 255, 0.03) 50%,
+        rgba(255, 255, 255, 0) 100%),
+      rgba(30, 30, 30, 0.7);
+  }
+
+  .post-image {
+    height: 180px;
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    position: relative;
+    transition: transform 0.3s ease;
+  }
+
+  .post-card:hover .post-image {
+    transform: scale(1.02);
+  }
+
+  .post-image::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.4), transparent);
+    pointer-events: none;
+  }
+
+  .post-content {
+    padding: 1.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .post-title,
+  .post-title a {
+    font-size: 1.35rem;
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+    color: #fff !important;
+    text-decoration: none;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    transition: color 0.2s ease;
+  }
+
+  .post-card:hover .post-title,
+  .post-card:hover .post-title a {
+    color: #16a34a !important;
+  }
+
+  .post-excerpt {
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.55;
+    flex-grow: 1;
+  }
+
+  .post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .post-tag {
+    background: rgba(29, 185, 84, 0.15);
+    color: #1DB954;
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    border: 1px solid rgba(29, 185, 84, 0.2);
+    transition: all 0.2s ease;
+  }
+
+  .post-card:hover .post-tag {
+    background: rgba(29, 185, 84, 0.25);
+    border-color: rgba(29, 185, 84, 0.4);
+  }
+
+  .post-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.4);
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .post-date,
+  .post-read-time {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .post-date i,
+  .post-read-time i {
+    font-size: 0.75rem;
+    opacity: 0.7;
+  }
+
+  :global(body.light-mode) .post-card {
+    background:
+      linear-gradient(180deg,
+        rgba(255, 255, 255, 0.9) 0%,
+        rgba(255, 255, 255, 0.6) 50%,
+        rgba(255, 255, 255, 0.4) 100%),
+      rgba(248, 248, 248, 0.8);
+    border-color: rgba(0, 0, 0, 0.08);
+    box-shadow:
+      0 4px 20px rgba(0, 0, 0, 0.06),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+  }
+
+  :global(body.light-mode) .post-card::before {
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.7) 30%,
+        rgba(255, 255, 255, 0.9) 50%,
+        rgba(255, 255, 255, 0.7) 70%,
+        transparent 100%);
+  }
+
+  :global(body.light-mode) .post-card:hover {
+    background:
+      linear-gradient(180deg,
+        rgba(255, 255, 255, 1) 0%,
+        rgba(255, 255, 255, 0.8) 50%,
+        rgba(255, 255, 255, 0.6) 100%),
+      rgba(255, 255, 255, 0.9);
+    border-color: rgba(0, 0, 0, 0.18);
+    box-shadow:
+      0 20px 40px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 1);
+  }
+
+  :global(body.light-mode) .post-image::after {
+    background: linear-gradient(to top, rgba(255, 255, 255, 0.3), transparent);
+  }
+
+  :global(body.light-mode) .post-title,
+  :global(body.light-mode) .post-title a {
+    color: #1d1d1f !important;
+  }
+
+  :global(body.light-mode) .post-card:hover .post-title,
+  :global(body.light-mode) .post-card:hover .post-title a {
+    color: #0f4d1f !important;
+  }
+
+  :global(body.light-mode) .post-excerpt {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  :global(body.light-mode) .post-tag {
+    background: rgba(29, 185, 84, 0.1);
+    color: #15803d;
+    border-color: rgba(29, 185, 84, 0.2);
+  }
+
+  :global(body.light-mode) .post-card:hover .post-tag {
+    background: rgba(29, 185, 84, 0.2);
+    border-color: rgba(29, 185, 84, 0.35);
+  }
+
+  :global(body.light-mode) .post-meta {
+    color: rgba(0, 0, 0, 0.4);
+    border-top-color: rgba(0, 0, 0, 0.06);
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      height: 30vh;
+      min-height: 260px;
+      margin: 0.5rem auto 2rem;
+      border-radius: 20px;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+    }
+
+    .hero p {
+      font-size: 1rem;
+    }
+
+    .posts-grid {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    .post-image {
+      height: 160px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero {
+      min-height: 220px;
+      border-radius: 16px;
+    }
+
+    .hero h1 {
+      font-size: 2rem;
+    }
+
+    .post-card {
+      border-radius: 16px;
+    }
+
+    .post-content {
+      padding: 1.25rem;
+    }
+
+    .post-title,
+    .post-title a {
+      font-size: 1.2rem;
+    }
+
+    .post-excerpt {
+      font-size: 0.9rem;
+    }
+
+    .post-tag {
+      font-size: 0.7rem;
+      padding: 0.25rem 0.6rem;
+    }
+
+    .post-meta {
+      font-size: 0.75rem;
+    }
+  }
+</style>

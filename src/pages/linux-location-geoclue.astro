@@ -1,0 +1,253 @@
+---
+import BlogPost from '../layouts/BlogPost.astro';
+---
+<BlogPost
+  title="Fixing Broken Location on Linux"
+  description="How I fixed completely broken location on Fedora using GeoClue, BeaconDB, and a bit of WiFi mapping."
+  date="2026-03-13"
+  image="/images/beacondb.webp"
+  slug="linux-location-geoclue"
+>
+<p>
+    Because MLS has been dead for about two years now, location on Linux has been a complete hit or miss.
+    Most people don't even realise why their maps are wrong, they just assume Linux is broken and move on.
+</p>
+
+<p>
+    I didn't move on. I spent way too long trying to fix it, went through Google Maps API, BeaconDB,
+    editing configs, none of it worked. Until today. Writing this down so you don't have to go through the same thing.
+</p>
+
+<h2>What was happening?</h2>
+
+<p>
+    I opened GNOME Maps, hit "Show My Location" and it dropped a pin in Tokyo. I'm in Noida.
+    I haven't been to Japan. Ever.
+</p>
+
+<p>
+    Tried it in the browser, same thing. Google Maps, Tokyo, OpenStreetMap, Tokyo. Apple Maps, Tokyo.
+    At this point I'm convinced my laptop thinks I am some anime guy or something.
+</p>
+
+<p>
+    First thing I checked was VPN. Nothing running. Then I checked my IP:
+</p>
+
+<pre><code>curl ipinfo.io
+</code></pre>
+
+<pre><code>"city": "Noida",
+"country": "IN"
+</code></pre>
+
+<p>
+    IP is fine. So it's not that. Something deeper was broken.
+</p>
+
+<h2>How Linux even knows where you are</h2>
+
+<p>
+    Here's the thing most people don't know, Linux has no built-in location service like Android or iPhone.
+    No Google, no Apple, nothing. Instead there's this daemon called <strong>GeoClue</strong> that all your apps talk to
+    when they need your location.
+</p>
+
+<p>
+    GeoClue figures out where you are by checking a few things, WiFi networks around you, cell towers,
+    your IP address as a last resort. For WiFi, it was using <strong>Mozilla Location Services (MLS)</strong>,
+    basically a giant crowd-sourced database that matched nearby WiFi networks to real-world coordinates.
+</p>
+
+<p>
+    Mozilla killed MLS in July 2024. Just shut it down. And Fedora's GeoClue config still had it set as the default.
+    So every time any app asked for my location, GeoClue was hitting a dead API and getting back garbage,
+    which happened to be Tokyo coordinates.
+</p>
+
+<h2>Diagnosing it properly</h2>
+
+<p>
+    There's a test binary that ships with GeoClue:
+</p>
+
+<pre><code>/usr/libexec/geoclue-2.0/demos/where-am-i
+</code></pre>
+
+<p>Output:</p>
+
+<pre><code>Latitude: 35.657700°
+Longitude: 139.708000°
+Accuracy: 25000 meters
+Description: ipf fallback (from WiFi data)
+</code></pre>
+
+<p>
+    Tokyo. And that <code>ipf fallback</code> part is the key, GeoClue had already switched to BeaconDB
+    (the community replacement for MLS) but BeaconDB had zero data for my area.
+    No one had ever submitted WiFi networks from around here. So it fell back to IP lookup which returned Tokyo garbage.
+</p>
+
+<p>
+    There was also a fun bonus problem, a file at <code>/etc/geoclue/conf.d/99-beacondb.conf</code> was silently
+    overriding whatever I put in the main config. So every time I edited <code>/etc/geoclue/geoclue.conf</code>
+    and thought I fixed it, that conf.d file was just ignoring my changes. Took me embarrassingly long to find that.
+</p>
+
+<h2>The actual fix</h2>
+
+<p>
+    The root problem was that BeaconDB had no WiFi data for my area. The solution was to just… put it there myself.
+</p>
+
+<h3>1. Get NeoStumbler on your Android phone</h3>
+
+<p>
+    NeoStumbler is an open source app that scans nearby WiFi networks, grabs your GPS position,
+    and submits everything to BeaconDB. Think of it as contributing to a map, except the map is a WiFi location database.
+</p>
+
+<ul>
+    <li>Download from F-Droid or GitHub</li>
+    <li>Go to Settings → Endpoint → pick BeaconDB (or it auto-detects)</li>
+    <li>Turn on WiFi and GPS on your phone</li>
+</ul>
+
+<h3>2. Turn on Location</h3>
+
+<p>
+    NeoStumbler needs a real GPS lock. It won't submit anything if it can't confirm where you are via satellite.
+    So go outside (but within WiFi range obviously), wait for the GPS to lock in, and walk around a bit.
+    Even 10 minutes around your block is enough to get going.
+</p>
+
+<p>
+    I collected 16 reports and it worked. More is obviously better, aim for 100+ if you want solid coverage,
+    but even a little helps.
+</p>
+
+<h3>3. Fix the config</h3>
+
+<p>
+    First, remove the overriding BeaconDB config so the main file is actually respected:
+</p>
+
+<pre><code>sudo rm /etc/geoclue/conf.d/99-beacondb.conf
+</code></pre>
+
+<p>Then edit the main config:</p>
+
+<pre><code>sudo nano /etc/geoclue/geoclue.conf
+</code></pre>
+
+<p>
+    Set <code>[ip]</code> to use a fallback that actually works
+    (<code>reallyfreegeoip</code> is kinda meh but at least returns the right country):
+</p>
+
+<pre><code>[ip]
+enable=true
+method=reallyfreegeoip
+</code></pre>
+
+<p>Set <code>[wifi]</code> to BeaconDB:</p>
+
+<pre><code>[wifi]
+enable=true
+url=https://api.beacondb.net/v1/geolocate
+</code></pre>
+
+<p>Restart GeoClue:</p>
+
+<pre><code>sudo systemctl restart geoclue
+</code></pre>
+
+<h3>4. Wait a few minutes</h3>
+
+<p>
+    BeaconDB takes 5–10 minutes to process submitted data. Grab a chai/coffee or thanda pani.
+</p>
+
+<h3>5. Test</h3>
+
+<pre><code>/usr/libexec/geoclue-2.0/demos/where-am-i
+</code></pre>
+
+<pre><code>Latitude: 28.535100°
+Longitude: 77.391000°
+Accuracy: 50 meters
+Description: WiFi
+</code></pre>
+
+<p>
+    50 meters. Noida. Nice.
+</p>
+
+<h2>Quick summary of what was wrong</h2>
+
+<ul>
+    <li>MLS is dead since July 2024, GeoClue config still pointed at it</li>
+    <li>BeaconDB had no data for my area so it fell back to a broken IP lookup</li>
+    <li><code>/etc/geoclue/conf.d/99-beacondb.conf</code> was overriding all my config changes silently</li>
+</ul>
+
+<h2>Optional stuff</h2>
+
+<h3>When GNOME Maps still shows the wrong place</h3>
+
+<p>
+    GeoClue returns a fast (wrong) GeoIP result first, then the accurate WiFi result about a minute later.
+    GNOME Maps grabs the first one and stops. You can disable the IP source entirely so it only ever returns WiFi:
+</p>
+
+<pre><code>sudo nano /etc/geoclue/geoclue.conf
+</code></pre>
+
+<pre><code>[ip]
+enable=false
+</code></pre>
+
+<p>
+    Apps will take a few seconds longer to get your location but it'll be correct.
+</p>
+
+<h3>Pre-warming GeoClue at login</h3>
+
+<p>
+    If you want GeoClue pre-warmed at login, create <code>~/.local/bin/geoclue-warmup.sh</code>:
+</p>
+
+<pre><code>nano ~/.local/bin/geoclue-warmup.sh
+
+#!/bin/bash
+/usr/libexec/geoclue-2.0/demos/where-am-i &
+sleep 90
+kill %1
+</code></pre>
+
+<pre><code>chmod +x ~/.local/bin/geoclue-warmup.sh
+</code></pre>
+
+<p>
+    And add an autostart entry at <code>~/.config/autostart/geoclue-warmup.desktop</code>:
+</p>
+
+<pre><code>nano ~/.config/autostart/geoclue-warmup.desktop</code></pre>
+<pre><code>[Desktop Entry]
+Type=Application
+Name=Geoclue Warmup
+Exec=/bin/bash /home/YOUR_USERNAME/.local/bin/geoclue-warmup.sh
+StartupNotify=false
+Terminal=false
+</code></pre>
+
+<p>
+    If you're dealing with wrong location on Debian, Arch, Fedora 41, 42, 43 or any other distro,
+    this is almost certainly your problem. MLS being dead broke a lot of things quietly and most people
+    have no idea why their location is wrong.
+</p>
+
+<p>
+    Go submit some NeoStumbler reports. You'll fix yourself and help the next person too.
+</p>
+</BlogPost>

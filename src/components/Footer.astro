@@ -1,0 +1,65 @@
+---
+interface Props {
+  showRss?: boolean;
+}
+const { showRss = false } = Astro.props;
+---
+<footer class="site-footer">
+  <div class="footer-glass">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <a href="/" class="footer-logo">V8V88V8V88</a>
+        <p class="footer-tagline">Linux × FOSS × Code × Design</p>
+      </div>
+      <nav class="footer-nav">
+        <div class="footer-nav-group">
+          <h5>Explore</h5>
+          <a href="/">Home</a>
+          <a href="/blogs/">Blogs</a>
+          <a href="/projects/">Projects</a>
+        </div>
+        <div class="footer-nav-group">
+          <h5>More</h5>
+          <a href="/about/">About</a>
+          <a href="/contact/">Contact</a>
+        </div>
+        <div class="footer-nav-group footer-socials">
+          <h5>Socials</h5>
+          <div class="footer-social-icons">
+            <a href="https://github.com/v8v88v8v88" target="_blank" rel="noopener noreferrer" title="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://t.me/V8V88V8V88" target="_blank" rel="noopener noreferrer" title="Telegram"><i class="fab fa-telegram"></i></a>
+            <a href="https://fosstodon.org/@v8v88v8v88" rel="me noopener noreferrer" target="_blank" title="Mastodon"><i class="fab fa-mastodon"></i></a>
+            <a href="https://twitter.com/v8v88v8v88" target="_blank" rel="noopener noreferrer" title="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.linkedin.com/in/v8v88v8v88/" target="_blank" rel="noopener noreferrer" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="https://www.youtube.com/c/MagicalV8" target="_blank" rel="noopener noreferrer" title="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.instagram.com/v8v88v8v88" target="_blank" rel="noopener noreferrer" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.reddit.com/user/v8v88v8v88" target="_blank" rel="noopener noreferrer" title="Reddit"><i class="fab fa-reddit"></i></a>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div class="footer-bottom-bar">
+      <div class="footer-meta">
+        <span class="copyright">🄯 2026</span>
+        <span class="separator">·</span>
+        <span class="made-with">Made with ♥ by <a href="https://github.com/V8V88V8V88" target="_blank" rel="noopener noreferrer">Vaibhav</a></span>
+        {showRss && (
+          <>
+            <span class="separator">·</span>
+            <a href="/feed.xml" class="footer-rss" title="Subscribe via RSS">RSS</a>
+          </>
+        )}
+      </div>
+      <div class="footer-webring">
+        <a href="https://webring.dinhe.net/prev/https://v8v88v8v88.com/" class="webring-link" target="_blank" rel="noopener noreferrer">←</a>
+        <a href="https://webring.dinhe.net/" class="webring-hub" target="_blank" rel="noopener noreferrer">Webring</a>
+        <a href="https://webring.dinhe.net/next/https://v8v88v8v88.com/" class="webring-link" target="_blank" rel="noopener noreferrer">→</a>
+      </div>
+      <div class="footer-visitors">
+        <a href="https://visitorbadge.io/status?path=https%3A%2F%2Fv8v88v8v88.com">
+          <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fv8v88v8v88.com&label=Visitors&labelColor=%23010101&countColor=%23b1b1b1&style=flat" alt="Visitors" loading="lazy" />
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>

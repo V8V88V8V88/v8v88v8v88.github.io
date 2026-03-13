@@ -1,0 +1,83 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  date: string;
+  dateModified?: string;
+  image: string;
+  slug: string;
+}
+
+const { title, description, date, dateModified, image, slug } = Astro.props;
+const canonical = `https://v8v88v8v88.com/${slug}/`;
+const fullImage = image.startsWith('http') ? image : `https://v8v88v8v88.com${image}`;
+---
+<BaseLayout
+  title={`${title} | V8V88V8V88`}
+  description={description}
+  canonical={canonical}
+  ogType="article"
+  ogImage={fullImage}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "mainEntityOfPage": { "@type": "WebPage", "@id": canonical },
+      "headline": `${title} | V8V88V8V88`,
+      "description": description,
+      "image": fullImage,
+      "author": {
+        "@type": "Person",
+        "name": "Vaibhav Pratap Singh",
+        "alternateName": "V8V88V8V88",
+        "url": "https://v8v88v8v88.com/"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "V8V88V8V88",
+        "logo": { "@type": "ImageObject", "url": "https://v8v88v8v88.com/images/favicon.ico" }
+      },
+      "datePublished": date,
+      "dateModified": dateModified || date
+    })} />
+  </Fragment>
+
+  <main class="blog-post">
+    <br />
+    <a href="/blogs/" class="back-button">← Back to Blogs</a>
+    <h1>{title}</h1>
+    <slot />
+    <p><i>- V8</i></p>
+  </main>
+
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('main.blog-post pre').forEach(function(pre) {
+        var wrapper = document.createElement('div');
+        wrapper.className = 'code-block';
+        pre.parentNode.insertBefore(wrapper, pre);
+        wrapper.appendChild(pre);
+
+        var btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'Copy';
+        btn.addEventListener('click', function() {
+          var code = pre.querySelector('code');
+          var text = code ? code.textContent : pre.textContent;
+          navigator.clipboard.writeText(text).then(function() {
+            btn.textContent = 'Copied';
+            btn.classList.add('copied');
+            setTimeout(function() {
+              btn.textContent = 'Copy';
+              btn.classList.remove('copied');
+            }, 2000);
+          });
+        });
+        wrapper.appendChild(btn);
+      });
+    });
+  </script>
+</BaseLayout>
