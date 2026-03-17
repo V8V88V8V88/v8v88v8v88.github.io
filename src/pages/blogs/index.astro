@@ -1,5 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getAllPosts, formatDate } from '../../data/posts';
+
+const posts = getAllPosts();
 
 const blogSchema = {
   "@context": "https://schema.org",
@@ -32,59 +35,31 @@ const blogSchema = {
       <div class="hero-highlight"></div>
       <div class="hero-content">
         <h1>I write, <i>maybe?</i></h1>
-        <p>The ultimate answer to the life, the universe, and everything</p>
+        <p>The answer to the ultimate question of life, the universe, and everything...</p>
       </div>
     </section>
 
     <section class="posts-grid">
-      <article class="post-card">
-        <div class="post-image" style="background-image: url('/images/beacondb.webp')"></div>
-        <div class="post-content">
-          <h2 class="post-title"><a href="/linux-location-geoclue/">Fixing Broken Location on Linux</a></h2>
-          <p class="post-excerpt">How GeoClue, BeaconDB, and a bit of WiFi mapping fixed my laptop from thinking it's in Tokyo.</p>
-          <div class="post-tags">
-            <span class="post-tag">Linux</span>
-            <span class="post-tag">GeoClue</span>
-            <span class="post-tag">BeaconDB</span>
+      {posts.map((post) => (
+        <article class="post-card">
+          <div class="post-image" style={`background-image: url('${post.image}')`}></div>
+          <div class="post-content">
+            <h2 class="post-title"><a href={`/${post.slug}/`}>{post.title}</a></h2>
+            <p class="post-excerpt">{post.description}</p>
+            {post.tags && (
+              <div class="post-tags">
+                {post.tags.map((tag) => (
+                  <span class="post-tag">{tag}</span>
+                ))}
+              </div>
+            )}
+            <div class="post-meta">
+              <span class="post-date">{formatDate(post.date)}</span>
+              {post.readTime && <span class="post-read-time">{post.readTime}</span>}
+            </div>
           </div>
-          <div class="post-meta">
-            <span class="post-date">Mar 13, 2026</span>
-            <span class="post-read-time">7 min read</span>
-          </div>
-        </div>
-      </article>
-
-      <article class="post-card">
-        <div class="post-image" style="background-image: url('/images/minimal.jpg')"></div>
-        <div class="post-content">
-          <h2 class="post-title"><a href="/minimalism/">Minimalism</a></h2>
-          <p class="post-excerpt">How ultimate simplicity changed the design of my life.</p>
-          <div class="post-tags">
-            <span class="post-tag">Minimalism</span>
-            <span class="post-tag">Philosophy</span>
-          </div>
-          <div class="post-meta">
-            <span class="post-date">Oct 6, 2025</span>
-            <span class="post-read-time">6 min read</span>
-          </div>
-        </div>
-      </article>
-
-      <article class="post-card">
-        <div class="post-image" style="background-image: url('/images/username.png')"></div>
-        <div class="post-content">
-          <h2 class="post-title"><a href="/username/">Username</a></h2>
-          <p class="post-excerpt">The only description behind my mysterious username V8V88V8V88.</p>
-          <div class="post-tags">
-            <span class="post-tag">Identity</span>
-            <span class="post-tag">Personal</span>
-          </div>
-          <div class="post-meta">
-            <span class="post-date">Mar 4, 2025</span>
-            <span class="post-read-time">5 min read</span>
-          </div>
-        </div>
-      </article>
+        </article>
+      ))}
     </section>
   </main>
 

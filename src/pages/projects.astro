@@ -1,5 +1,32 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+let contributions: { date: string; count: number; level: number }[] = [];
+let totalContributions = 0;
+
+try {
+  const res = await fetch('https://github-contributions-api.jogruber.de/v4/V8V88V8V88?y=last');
+  const data = await res.json();
+  contributions = data.contributions || [];
+  totalContributions = data.total?.lastYear || 0;
+} catch {}
+
+const weeks: { date: string; count: number; level: number }[][] = [];
+if (contributions.length > 0) {
+  let week: typeof contributions = [];
+  const firstDay = new Date(contributions[0].date).getDay();
+  for (let i = 0; i < firstDay; i++) {
+    week.push({ date: '', count: 0, level: -1 });
+  }
+  for (const day of contributions) {
+    week.push(day);
+    if (week.length === 7) {
+      weeks.push(week);
+      week = [];
+    }
+  }
+  if (week.length > 0) weeks.push(week);
+}
 ---
 <BaseLayout
   title="Projects | V8V88V8V88"
@@ -17,8 +44,38 @@ import BaseLayout from '../layouts/BaseLayout.astro';
  ╚═╝     ╚═╝  ╚═╝ ╚═════╝  ╚════╝ ╚══════╝ ╚═════╝   ╚═╝   ╚══════╝
       </pre>
       <p class="hero-tagline">
-        Things I've built, contributed, forgotten, yet <em>shipped anyway</em>.
+        That I've built, contributed, and <em>shipped</em>.
       </p>
+
+      {weeks.length > 0 && (
+        <div class="contrib-chart">
+          <div class="contrib-header">
+            <span class="contrib-count">{totalContributions} contributions in the last year</span>
+          </div>
+          <div class="contrib-grid">
+            {weeks.map((week) => (
+              <div class="contrib-week">
+                {week.map((day) => (
+                  <div
+                    class={`contrib-cell ${day.level === -1 ? 'empty' : `level-${day.level}`}`}
+                    title={day.date ? `${day.count} contributions on ${day.date}` : ''}
+                  />
+                ))}
+              </div>
+            ))}
+          </div>
+          <div class="contrib-legend">
+            <span class="contrib-legend-label">Less</span>
+            <div class="contrib-cell level-0" />
+            <div class="contrib-cell level-1" />
+            <div class="contrib-cell level-2" />
+            <div class="contrib-cell level-3" />
+            <div class="contrib-cell level-4" />
+            <span class="contrib-legend-label">More</span>
+          </div>
+        </div>
+      )}
+
       <div class="hero-stats">
         <div class="hero-stat">
           <span class="hero-stat-value">35+</span>
@@ -52,7 +109,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
     <div class="filter-controls">
       <button class="filter-btn active" data-filter="all">All Projects</button>
-      <button class="filter-btn" data-filter="featured">★ Featured Only</button>
+      <button class="filter-btn" data-filter="featured">Featured Only ★</button>
     </div>
 
     <div class="project-list">
@@ -1039,6 +1096,146 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   .project-desc {
     font-size: 0.75rem;
+  }
+}
+
+.contrib-chart {
+  margin: 1rem 0 1rem;
+  width: 100%;
+  max-width: 780px;
+  overflow: hidden;
+}
+
+.contrib-header {
+  margin-bottom: 0.75rem;
+}
+
+.contrib-count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.01em;
+}
+
+.contrib-grid {
+  display: grid;
+  grid-template-columns: repeat(53, 1fr);
+  gap: 2px;
+  width: 100%;
+}
+
+.contrib-week {
+  display: grid;
+  grid-template-rows: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.contrib-cell {
+  aspect-ratio: 1;
+  width: 100%;
+  border-radius: 2px;
+  transition: outline 0.15s ease;
+}
+
+.contrib-cell:hover:not(.empty) {
+  outline: 1px solid rgba(255, 255, 255, 0.4);
+  outline-offset: 1px;
+}
+
+.contrib-cell.empty {
+  visibility: hidden;
+}
+
+.contrib-cell.level-0 {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.contrib-cell.level-1 {
+  background: rgba(29, 185, 84, 0.25);
+}
+
+.contrib-cell.level-2 {
+  background: rgba(29, 185, 84, 0.5);
+}
+
+.contrib-cell.level-3 {
+  background: rgba(29, 185, 84, 0.75);
+}
+
+.contrib-cell.level-4 {
+  background: #1DB954;
+}
+
+.contrib-legend {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 0.6rem;
+  justify-content: flex-end;
+}
+
+.contrib-legend .contrib-cell {
+  width: 10px;
+  height: 10px;
+  aspect-ratio: unset;
+  cursor: default;
+}
+
+.contrib-legend .contrib-cell:hover {
+  outline: none;
+}
+
+.contrib-legend-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+:global(body.light-mode) .contrib-count {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+:global(body.light-mode) .contrib-cell.level-0 {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+:global(body.light-mode) .contrib-cell.level-1 {
+  background: rgba(29, 185, 84, 0.2);
+}
+
+:global(body.light-mode) .contrib-cell.level-2 {
+  background: rgba(29, 185, 84, 0.4);
+}
+
+:global(body.light-mode) .contrib-cell.level-3 {
+  background: rgba(29, 185, 84, 0.6);
+}
+
+:global(body.light-mode) .contrib-cell.level-4 {
+  background: #15803d;
+}
+
+:global(body.light-mode) .contrib-cell:hover:not(.empty) {
+  outline-color: rgba(0, 0, 0, 0.3);
+}
+
+:global(body.light-mode) .contrib-legend-label {
+  color: rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 480px) {
+  .contrib-grid {
+    gap: 1px;
+  }
+
+  .contrib-week {
+    gap: 1px;
+  }
+
+  .contrib-cell {
+    border-radius: 1px;
   }
 }
 </style>
