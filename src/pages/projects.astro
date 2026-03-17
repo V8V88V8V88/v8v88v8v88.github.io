@@ -1,32 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-
-let contributions: { date: string; count: number; level: number }[] = [];
-let totalContributions = 0;
-
-try {
-  const res = await fetch('https://github-contributions-api.jogruber.de/v4/V8V88V8V88?y=last');
-  const data = await res.json();
-  contributions = data.contributions || [];
-  totalContributions = data.total?.lastYear || 0;
-} catch {}
-
-const weeks: { date: string; count: number; level: number }[][] = [];
-if (contributions.length > 0) {
-  let week: typeof contributions = [];
-  const firstDay = new Date(contributions[0].date).getDay();
-  for (let i = 0; i < firstDay; i++) {
-    week.push({ date: '', count: 0, level: -1 });
-  }
-  for (const day of contributions) {
-    week.push(day);
-    if (week.length === 7) {
-      weeks.push(week);
-      week = [];
-    }
-  }
-  if (week.length > 0) weeks.push(week);
-}
 ---
 <BaseLayout
   title="Projects | V8V88V8V88"
@@ -47,34 +20,21 @@ if (contributions.length > 0) {
         That I've built, contributed, and <em>shipped</em>.
       </p>
 
-      {weeks.length > 0 && (
-        <div class="contrib-chart">
-          <div class="contrib-header">
-            <span class="contrib-count">{totalContributions} contributions in the last year</span>
-          </div>
-          <div class="contrib-grid">
-            {weeks.map((week) => (
-              <div class="contrib-week">
-                {week.map((day) => (
-                  <div
-                    class={`contrib-cell ${day.level === -1 ? 'empty' : `level-${day.level}`}`}
-                    title={day.date ? `${day.count} contributions on ${day.date}` : ''}
-                  />
-                ))}
-              </div>
-            ))}
-          </div>
-          <div class="contrib-legend">
-            <span class="contrib-legend-label">Less</span>
-            <div class="contrib-cell level-0" />
-            <div class="contrib-cell level-1" />
-            <div class="contrib-cell level-2" />
-            <div class="contrib-cell level-3" />
-            <div class="contrib-cell level-4" />
-            <span class="contrib-legend-label">More</span>
-          </div>
+      <div class="contrib-chart" id="contrib-chart">
+        <div class="contrib-header">
+          <span class="contrib-count" id="contrib-count"></span>
         </div>
-      )}
+        <div class="contrib-grid" id="contrib-grid"></div>
+        <div class="contrib-legend">
+          <span class="contrib-legend-label">Less</span>
+          <div class="contrib-cell level-0"></div>
+          <div class="contrib-cell level-1"></div>
+          <div class="contrib-cell level-2"></div>
+          <div class="contrib-cell level-3"></div>
+          <div class="contrib-cell level-4"></div>
+          <span class="contrib-legend-label">More</span>
+        </div>
+      </div>
 
       <div class="hero-stats">
         <div class="hero-stat">
@@ -461,6 +421,51 @@ if (contributions.length > 0) {
       </a>
     </div>
   </main>
+
+  <script is:inline>
+    (function() {
+      var chart = document.getElementById('contrib-chart');
+      var grid = document.getElementById('contrib-grid');
+      var countEl = document.getElementById('contrib-count');
+      if (!chart || !grid || !countEl) return;
+
+      fetch('https://github-contributions-api.jogruber.de/v4/V8V88V8V88?y=last')
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          var contributions = data.contributions || [];
+          var total = data.total && data.total.lastYear || 0;
+          countEl.textContent = total + ' contributions in the last year';
+
+          if (contributions.length === 0) { chart.style.display = 'none'; return; }
+
+          var weeks = [];
+          var week = [];
+          var firstDay = new Date(contributions[0].date).getDay();
+          for (var i = 0; i < firstDay; i++) week.push({ date: '', count: 0, level: -1 });
+          for (var j = 0; j < contributions.length; j++) {
+            week.push(contributions[j]);
+            if (week.length === 7) { weeks.push(week); week = []; }
+          }
+          if (week.length > 0) weeks.push(week);
+
+          var frag = document.createDocumentFragment();
+          for (var w = 0; w < weeks.length; w++) {
+            var weekDiv = document.createElement('div');
+            weekDiv.className = 'contrib-week';
+            for (var d = 0; d < weeks[w].length; d++) {
+              var day = weeks[w][d];
+              var cell = document.createElement('div');
+              cell.className = 'contrib-cell ' + (day.level === -1 ? 'empty' : 'level-' + day.level);
+              if (day.date) cell.title = day.count + ' contributions on ' + day.date;
+              weekDiv.appendChild(cell);
+            }
+            frag.appendChild(weekDiv);
+          }
+          grid.appendChild(frag);
+        })
+        .catch(function() { chart.style.display = 'none'; });
+    })();
+  </script>
 
   <script is:inline>
     const langMap = {
@@ -1117,53 +1122,53 @@ if (contributions.length > 0) {
   letter-spacing: 0.01em;
 }
 
-.contrib-grid {
+:global(.contrib-grid) {
   display: grid;
   grid-template-columns: repeat(53, 1fr);
   gap: 2px;
   width: 100%;
 }
 
-.contrib-week {
+:global(.contrib-week) {
   display: grid;
   grid-template-rows: repeat(7, 1fr);
   gap: 2px;
 }
 
-.contrib-cell {
+:global(.contrib-cell) {
   aspect-ratio: 1;
   width: 100%;
   border-radius: 2px;
   transition: outline 0.15s ease;
 }
 
-.contrib-cell:hover:not(.empty) {
+:global(.contrib-cell:hover:not(.empty)) {
   outline: 1px solid rgba(255, 255, 255, 0.4);
   outline-offset: 1px;
 }
 
-.contrib-cell.empty {
+:global(.contrib-cell.empty) {
   visibility: hidden;
 }
 
-.contrib-cell.level-0 {
+:global(.contrib-cell.level-0) {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.contrib-cell.level-1 {
+:global(.contrib-cell.level-1) {
   background: rgba(29, 185, 84, 0.25);
 }
 
-.contrib-cell.level-2 {
+:global(.contrib-cell.level-2) {
   background: rgba(29, 185, 84, 0.5);
 }
 
-.contrib-cell.level-3 {
+:global(.contrib-cell.level-3) {
   background: rgba(29, 185, 84, 0.75);
 }
 
-.contrib-cell.level-4 {
+:global(.contrib-cell.level-4) {
   background: #1DB954;
 }
 
@@ -1175,14 +1180,14 @@ if (contributions.length > 0) {
   justify-content: flex-end;
 }
 
-.contrib-legend .contrib-cell {
+.contrib-legend :global(.contrib-cell) {
   width: 10px;
   height: 10px;
   aspect-ratio: unset;
   cursor: default;
 }
 
-.contrib-legend .contrib-cell:hover {
+.contrib-legend :global(.contrib-cell:hover) {
   outline: none;
 }
 
@@ -1196,28 +1201,28 @@ if (contributions.length > 0) {
   color: rgba(0, 0, 0, 0.4);
 }
 
-:global(body.light-mode) .contrib-cell.level-0 {
+:global(body.light-mode .contrib-cell.level-0) {
   background: rgba(0, 0, 0, 0.04);
   border-color: rgba(0, 0, 0, 0.08);
 }
 
-:global(body.light-mode) .contrib-cell.level-1 {
+:global(body.light-mode .contrib-cell.level-1) {
   background: rgba(29, 185, 84, 0.2);
 }
 
-:global(body.light-mode) .contrib-cell.level-2 {
+:global(body.light-mode .contrib-cell.level-2) {
   background: rgba(29, 185, 84, 0.4);
 }
 
-:global(body.light-mode) .contrib-cell.level-3 {
+:global(body.light-mode .contrib-cell.level-3) {
   background: rgba(29, 185, 84, 0.6);
 }
 
-:global(body.light-mode) .contrib-cell.level-4 {
+:global(body.light-mode .contrib-cell.level-4) {
   background: #15803d;
 }
 
-:global(body.light-mode) .contrib-cell:hover:not(.empty) {
+:global(body.light-mode .contrib-cell:hover:not(.empty)) {
   outline-color: rgba(0, 0, 0, 0.3);
 }
 
@@ -1226,15 +1231,15 @@ if (contributions.length > 0) {
 }
 
 @media (max-width: 480px) {
-  .contrib-grid {
+  :global(.contrib-grid) {
     gap: 1px;
   }
 
-  .contrib-week {
+  :global(.contrib-week) {
     gap: 1px;
   }
 
-  .contrib-cell {
+  :global(.contrib-cell) {
     border-radius: 1px;
   }
 }
