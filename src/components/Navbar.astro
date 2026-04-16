@@ -1,3 +1,17 @@
+---
+const currentPath = Astro.url.pathname;
+
+function isCurrent(path: string) {
+  const normalizedLinkPath = path.endsWith('/') && path !== '/' ? path.slice(0, -1) : path;
+  const normalizedCurrentPath = currentPath.endsWith('/') && currentPath !== '/' ? currentPath.slice(0, -1) : currentPath;
+
+  return normalizedLinkPath === normalizedCurrentPath ||
+    (normalizedLinkPath === "/" && normalizedCurrentPath === "/") ||
+    (normalizedLinkPath !== "/" &&
+      normalizedLinkPath !== "" &&
+      normalizedCurrentPath.startsWith(normalizedLinkPath + "/"));
+}
+---
 <header>
   <nav>
     <div class="logo"><a href="/">V8V88V8V88</a></div>
@@ -5,6 +19,21 @@
       <div class="mode-toggle">
         <input type="checkbox" id="mode-switch" class="mode-switch" aria-label="Toggle dark mode" />
         <label for="mode-switch" class="mode-switch-label"></label>
+        <script is:inline>
+          (function () {
+            try {
+              var root = document.documentElement;
+              var light = root.classList.contains("light-mode");
+              var b = document.body;
+              if (b) {
+                b.classList.remove("light-mode", "dark-mode");
+                b.classList.add(light ? "light-mode" : "dark-mode");
+              }
+              var sw = document.getElementById("mode-switch");
+              if (sw) sw.checked = !light;
+            } catch (_) {}
+          })();
+        </script>
       </div>
       <button class="menu-toggle" aria-label="Toggle menu">
         <span></span>
@@ -13,11 +42,11 @@
       </button>
     </div>
     <ul class="nav-menu">
-      <li><a href="/">Home</a></li>
-      <li><a href="/blogs/">Blogs</a></li>
-      <li><a href="/projects/">Projects</a></li>
-      <li><a href="/contact/">Contact</a></li>
-      <li><a href="/about/">About</a></li>
+      <li><a href="/" aria-current={isCurrent('/') ? 'page' : undefined}>Home</a></li>
+      <li><a href="/blogs/" aria-current={isCurrent('/blogs/') ? 'page' : undefined}>Blogs</a></li>
+      <li><a href="/projects/" aria-current={isCurrent('/projects/') ? 'page' : undefined}>Projects</a></li>
+      <li><a href="/contact/" aria-current={isCurrent('/contact/') ? 'page' : undefined}>Contact</a></li>
+      <li><a href="/about/" aria-current={isCurrent('/about/') ? 'page' : undefined}>About</a></li>
     </ul>
   </nav>
 </header>

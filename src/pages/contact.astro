@@ -59,18 +59,20 @@ import { contactPageContacts, getSameAsUrls, getTerminalContactJson } from '../d
       </div>
     </section>
 
-    <div class="section-header">
-      <button class="terminal-reopen" id="terminal-reopen" title="Open Terminal"></button>
-      <h2>All the ways to reach me</h2>
-    </div>
+    <section class="contact">
+      <div class="section-header">
+        <button class="terminal-reopen" id="terminal-reopen" title="Open Terminal"></button>
+        <h2>All the ways to reach me</h2>
+      </div>
 
-    <section class="contact-grid">
-      {contactPageContacts.map((c) => (
-        <a href={c.url} target={c.url.startsWith('mailto:') ? undefined : '_blank'} rel={c.rel ? `${c.rel} noopener noreferrer` : 'noopener noreferrer'} class="contact-card">
-          <i class={`${c.icon} contact-icon`}></i>
-          <span>{c.label}</span>
-        </a>
-      ))}
+      <div class="contact-grid">
+        {contactPageContacts.map((c) => (
+          <a href={c.url} target={c.url.startsWith('mailto:') ? undefined : '_blank'} rel={c.rel ? `${c.rel} noopener noreferrer` : 'noopener noreferrer'} class="contact-card">
+            <i class={`${c.icon} contact-icon`}></i>
+            <span>{c.label}</span>
+          </a>
+        ))}
+      </div>
     </section>
   </main>
 
@@ -649,13 +651,29 @@ I'm always open to collaborate on cool projects.`;
     background: rgba(0, 0, 0, 0.25);
   }
 
-  .contact-grid {
+  .contact-page .contact .contact-grid {
     max-width: 1100px;
     margin: 0 auto;
-    padding: 0 2rem 4rem;
+    padding: 0 0 1rem;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 1.25rem;
+  }
+
+  .contact-page .contact .section-header h2 {
+    font-size: 0.75rem;
+    font-weight: 500;
+    font-family: 'JetBrains Mono', monospace;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: 0;
+    padding-left: 0;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  :global(body.light-mode) .contact-page .contact .section-header h2 {
+    color: rgba(0, 0, 0, 0.4);
   }
 
   .contact-card {
@@ -729,18 +747,10 @@ I'm always open to collaborate on cool projects.`;
     letter-spacing: 0.02em;
   }
 
-  .section-header {
+  .contact-page .contact .section-header {
     text-align: center;
     margin-bottom: 2rem;
-    padding: 0 2rem;
-  }
-
-  .section-header h2 {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.4);
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
+    padding: 0;
   }
 
   :global(body.light-mode) .terminal-window {
@@ -825,12 +835,8 @@ I'm always open to collaborate on cool projects.`;
     color: #1d1d1f;
   }
 
-  :global(body.light-mode) .section-header h2 {
-    color: rgba(0, 0, 0, 0.4);
-  }
-
   @media (max-width: 1024px) {
-    .contact-grid {
+    .contact-page .contact .contact-grid {
       grid-template-columns: repeat(4, 1fr);
     }
   }
@@ -850,9 +856,14 @@ I'm always open to collaborate on cool projects.`;
       padding: 1rem;
     }
 
-    .contact-grid {
+    .contact-page .contact {
+      margin-left: 1rem;
+      margin-right: 1rem;
+    }
+
+    .contact-page .contact .contact-grid {
       grid-template-columns: repeat(2, 1fr);
-      padding: 0 1rem 3rem;
+      padding: 0 0 2rem;
       gap: 1rem;
     }
 
@@ -877,7 +888,7 @@ I'm always open to collaborate on cool projects.`;
       line-height: 1.6;
     }
 
-    .contact-grid {
+    .contact-page .contact .contact-grid {
       grid-template-columns: repeat(3, 1fr);
       gap: 0.75rem;
     }
@@ -898,7 +909,7 @@ I'm always open to collaborate on cool projects.`;
   }
 
   @media (max-width: 360px) {
-    .contact-grid {
+    .contact-page .contact .contact-grid {
       grid-template-columns: repeat(2, 1fr);
     }
   }

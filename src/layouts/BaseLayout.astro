@@ -28,7 +28,7 @@ const {
 } = Astro.props;
 ---
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="theme-preload">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -231,15 +231,6 @@ const {
       });
     }
 
-    function getInitialTheme() {
-      var savedTheme = localStorage.getItem('theme');
-      if (savedTheme) return savedTheme;
-      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) return 'light';
-      return 'dark';
-    }
-
-    setTheme(getInitialTheme());
-
     if (window.matchMedia) {
       window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', function(e) {
         if (!localStorage.getItem('theme')) {
@@ -247,6 +238,12 @@ const {
         }
       });
     }
+
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        document.documentElement.classList.remove('theme-preload');
+      });
+    });
 
     document.addEventListener("DOMContentLoaded", function() {
       var header = document.querySelector("header");
@@ -263,20 +260,6 @@ const {
           header.style.setProperty("--mouse-y", "50%");
         });
       }
-
-      var navLinks = document.querySelectorAll(".nav-menu a");
-      var currentPath = window.location.pathname;
-      navLinks.forEach(function(link) {
-        link.removeAttribute("aria-current");
-        var linkPath = link.getAttribute("href");
-        var normalizedLinkPath = linkPath.endsWith('/') && linkPath !== '/' ? linkPath.slice(0, -1) : linkPath;
-        var normalizedCurrentPath = currentPath.endsWith('/') && currentPath !== '/' ? currentPath.slice(0, -1) : currentPath;
-        if (normalizedLinkPath === normalizedCurrentPath ||
-          (normalizedLinkPath === "/" && normalizedCurrentPath === "/") ||
-          (normalizedLinkPath !== "/" && normalizedLinkPath !== "" && normalizedCurrentPath.startsWith(normalizedLinkPath + "/"))) {
-          link.setAttribute("aria-current", "page");
-        }
-      });
 
       var scrollToTopBtn = document.createElement('button');
       scrollToTopBtn.className = 'scroll-to-top';
