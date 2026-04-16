@@ -8,6 +8,24 @@ html {
     scroll-behavior: smooth;
 }
 
+html.light-mode {
+    color-scheme: light;
+}
+
+html.dark-mode {
+    color-scheme: dark;
+}
+
+html.light-mode body {
+    background-color: #fff;
+    color: #000;
+}
+
+html.dark-mode body {
+    background-color: #000;
+    color: #fff;
+}
+
 body {
     font-family:
         "SF Pro Display",

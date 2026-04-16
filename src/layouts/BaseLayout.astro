@@ -32,6 +32,19 @@ const {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script is:inline>
+    (function () {
+      try {
+        var t = localStorage.getItem("theme");
+        if (!t) {
+          t = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+        }
+        var root = document.documentElement;
+        root.classList.remove("light-mode", "dark-mode");
+        root.classList.add(t === "light" ? "light-mode" : "dark-mode");
+      } catch (_) {}
+    })();
+  </script>
   <title>{title}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonical} />
@@ -153,13 +166,18 @@ const {
     var navbarSwitch = document.getElementById('mode-switch');
 
     function setTheme(theme) {
+      var root = document.documentElement;
       if (theme === 'light') {
         body.classList.add('light-mode');
         body.classList.remove('dark-mode');
+        root.classList.add('light-mode');
+        root.classList.remove('dark-mode');
         localStorage.setItem('theme', 'light');
       } else {
         body.classList.remove('light-mode');
         body.classList.add('dark-mode');
+        root.classList.remove('light-mode');
+        root.classList.add('dark-mode');
         localStorage.setItem('theme', 'dark');
       }
       updateSwitchesVisualState(theme);
