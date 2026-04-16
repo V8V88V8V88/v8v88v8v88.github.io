@@ -993,22 +993,22 @@ body.light-mode .project-item a {
     color: #1d1d1f;
 }
 
-.project-item img {
+.project-thumb {
     width: 100%;
     height: 220px;
-    object-fit: cover;
     border-radius: 12px;
+    object-fit: cover;
     margin-bottom: 1rem;
     border: 1px solid rgba(255, 255, 255, 0.08);
-    transition: all 0.3s ease;
+    background: #050505;
 }
 
-body.light-mode .project-item img {
-    border-color: rgba(0, 0, 0, 0.06);
+.project-thumb-placeholder {
+    background: #000;
 }
 
-.project-item:hover img {
-    transform: scale(1.02);
+body.light-mode .project-thumb {
+    border-color: rgba(0, 0, 0, 0.08);
 }
 
 .project-item h3 {
@@ -1074,6 +1074,12 @@ body.light-mode .arrow:hover {
 
 .arrow.right {
     right: 0.5rem;
+}
+
+.arrow.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-50%) scale(0.92);
 }
 
 /* ========================================= */

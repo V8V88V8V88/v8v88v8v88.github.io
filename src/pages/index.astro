@@ -2,8 +2,27 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getAllPosts, formatDate } from '../data/posts';
 import { contactPageContacts, getSameAsUrls } from '../data/contacts';
+import { getProjects } from '../data/projects';
 
 const posts = getAllPosts();
+const allProjects = await getProjects();
+const homepageOrder = ['XE', 'indx', 'GNOME-bluetooth-battery-monitor', 'MarkView', 'MarkVue'];
+const featuredProjects = [...allProjects]
+  .sort((a, b) => {
+    const aIndex = homepageOrder.findIndex(name => name.toLowerCase() === a.name.toLowerCase());
+    const bIndex = homepageOrder.findIndex(name => name.toLowerCase() === b.name.toLowerCase());
+
+    if (aIndex !== -1 || bIndex !== -1) {
+      if (aIndex === -1) return 1;
+      if (bIndex === -1) return -1;
+      return aIndex - bIndex;
+    }
+
+    if (a.image !== b.image) return a.image ? -1 : 1;
+    if (a.featured !== b.featured) return a.featured ? -1 : 1;
+    return b.stars - a.stars;
+  })
+  .slice(0, 6);
 ---
 <BaseLayout
   title="V8V88V8V88 | Vaibhav Pratap Singh"
@@ -67,18 +86,18 @@ const posts = getAllPosts();
     <section class="about">
       <h2>About Me</h2>
       <p>
-        Hi there! I'm
-        <span>Vaibhav Pratap Singh</span>, known online as
-        <span>V8</span>. A computer science student with a minor in AI & ML, and a strong interest in computers, the internet, <a href="https://en.wikipedia.org/wiki/Linux" target="_blank" rel="noopener noreferrer">Linux</a>, <a href="https://en.wikipedia.org/wiki/Free_and_open-source_software" target="_blank" rel="noopener noreferrer">FOSS</a>, design, and coding. Naturally drawn toward understanding how systems work under the hood, with a growing focus on <a href="https://en.wikipedia.org/wiki/Low-level_programming_language" target="_blank" rel="noopener noreferrer">low-level programming</a> and <a href="https://www.rust-lang.org/" target="_blank" rel="noopener noreferrer">Rust</a>.
+        Hey, I'm <span>Vaibhav</span>. Most people online know me as <span>V8</span>.
+
+        I'm a CS student from India, and computers have been a genuine obsession for as long as I can remember. Not just using them, but understanding what's actually going on underneath. That curiosity is what pulled me toward <a href="https://en.wikipedia.org/wiki/Linux" target="_blank" rel="noopener noreferrer">Linux</a>, <a href="https://en.wikipedia.org/wiki/Free_and_open-source_software" target="_blank" rel="noopener noreferrer">FOSS</a>, <a href="https://en.wikipedia.org/wiki/Systems_programming" target="_blank" rel="noopener noreferrer">Systems programming</a>, and lately, <a href="https://www.rust-lang.org/" target="_blank" rel="noopener noreferrer">Rust</a>.
       </p>
       <p>
-        Most learning and building are shaped by
-        <a href="https://principles-wiki.net/principles:keep_it_simple_stupid" target="_blank" rel="noopener noreferrer">KISS</a>
-        and the
-        <a href="https://www.wikiwand.com/en/Unix_philosophy" target="_blank" rel="noopener noreferrer">Unix philosophy</a>, driven by curiosity and hands-on experimentation. Along the way, experience has also grown across full-stack development (mainly for practical and earning needs), as well as graphic design and video editing, which came naturally while working across different areas of computers. Interests often extend beyond code into reading, philosophy, history, geography, and scientific literature, usually wherever curiosity leads.
+        Most of how I build and learn comes down to keeping things simple and purposeful. <a href="https://principles-wiki.net/principles:keep_it_simple_stupid" target="_blank" rel="noopener noreferrer">KISS</a> and the <a href="https://en.wikipedia.org/wiki/Unix_philosophy" target="_blank" rel="noopener noreferrer">Unix philosophy</a> just make sense to me. <a href="https://en.wikipedia.org/wiki/Solution_stack" target="_blank" rel="noopener noreferrer">Full-stack dev</a> came along out of necessity and freelance work. Graphic design and video editing just kind of happened. as they do when you spend enough time across different corners of the computer <i>ki duniya</i>.
       </p>
       <p>
-        Feel free to reach out via <a href="/contact/">social handles</a>, replies might take some time.
+        Outside of code, I read a lot (or try to). philosophy, history, geography, science. Wherever curiosity takes me.
+      </p>
+      <p>
+        If you want to get in touch, feel free to reach out through any of my <a href="/contact/">social handles</a>. I'll get back to you, just maybe not instantly.
       </p>
       <a href="https://drive.google.com/file/d/1iQFjSzPWcSA3sAt4WS-uKIUd7ReCz_hz/view?usp=sharing" class="resume-button" target="_blank" rel="noopener noreferrer">Resume</a>
     </section>
@@ -86,7 +105,7 @@ const posts = getAllPosts();
     <div class="stats-row">
       <span>~ 8+ years in the game</span>
       <span class="stats-dot">·</span>
-      <span>60+ projects</span>
+      <span>{allProjects.length}+ projects</span>
       <span class="stats-dot">·</span>
       <span>visit my github ~</span>
     </div>
@@ -97,41 +116,19 @@ const posts = getAllPosts();
         <a href="/projects/" class="view-all">view all →</a>
       </div>
       <ul>
-        <li class="project-item">
-          <a href="https://github.com/v8v88v8v88/indx" target="_blank" rel="noopener noreferrer">
-            <img src="/images/indx.webp" alt="INDX Project" loading="lazy" />
-            <h3>INDX</h3>
-            <p>Indexing everything that can be on maps</p>
-          </a>
-        </li>
-        <li class="project-item">
-          <a href="https://piracyindex.vercel.app/" target="_blank" rel="noopener noreferrer">
-            <img src="/images/piracyindex.webp" alt="piracy index website" loading="lazy" />
-            <h3>The Piracy Index Website</h3>
-            <p>The greatest Piracy Site which indexes all the greatest piracy sites around the web.</p>
-          </a>
-        </li>
-        <li class="project-item">
-          <a href="https://github.com/V8V88V8V88/telegram-gtk4-theme" target="_blank" rel="noopener noreferrer">
-            <img src="/images/telegram.webp" alt="telegram client with my theme" loading="lazy" />
-            <h3>Telegram - Libadwaita Theme</h3>
-            <p>GTK4 / Libadwaita theme for Telegram Desktop of Linux/Windows/MacOS</p>
-          </a>
-        </li>
-        <li class="project-item">
-          <a href="https://github.com/V8V88V8V88/face-recognition" target="_blank" rel="noopener noreferrer">
-            <img src="/images/facerecognition.webp" alt="face recognition program image" loading="lazy" />
-            <h3>Face Recognition using CV2</h3>
-            <p>The project I had to make for some funny reasons of my college.</p>
-          </a>
-        </li>
-        <li class="project-item">
-          <a href="https://github.com/V8V88V8V88/vfetch" target="_blank" rel="noopener noreferrer">
-            <img src="/images/vfetch.webp" alt="terminal windows running vfetch" loading="lazy" />
-            <h3>vfetch</h3>
-            <p>The shortest best optimized alternative for vfetch made to run in all POSIX shells</p>
-          </a>
-        </li>
+        {featuredProjects.map(project => (
+          <li class="project-item">
+            <a href={project.url} target="_blank" rel="noopener noreferrer">
+              {project.image ? (
+                <img src={project.image} alt={`${project.name} project cover`} loading="lazy" class="project-thumb" />
+              ) : (
+                <div class="project-thumb project-thumb-placeholder" aria-hidden="true"></div>
+              )}
+              <h3>{project.name}</h3>
+              <p>{project.description}</p>
+            </a>
+          </li>
+        ))}
       </ul>
     </section>
 
@@ -189,6 +186,22 @@ const posts = getAllPosts();
       document.querySelector(".projects").append(rightArrow);
       leftArrow.addEventListener("click", function() { projectsContainer.scrollLeft -= projectsContainer.offsetWidth; });
       rightArrow.addEventListener("click", function() { projectsContainer.scrollLeft += projectsContainer.offsetWidth; });
+
+      function updateArrows() {
+        var maxScrollLeft = projectsContainer.scrollWidth - projectsContainer.clientWidth;
+        var canScroll = maxScrollLeft > 2;
+        if (!canScroll) {
+          leftArrow.classList.add("hidden");
+          rightArrow.classList.add("hidden");
+          return;
+        }
+        leftArrow.classList.toggle("hidden", projectsContainer.scrollLeft <= 2);
+        rightArrow.classList.toggle("hidden", projectsContainer.scrollLeft >= maxScrollLeft - 2);
+      }
+
+      projectsContainer.addEventListener("scroll", updateArrows, { passive: true });
+      window.addEventListener("resize", updateArrows);
+      updateArrows();
     }
     var cliCmd = document.querySelector(".cli-cmd");
     if (cliCmd) {

@@ -1,5 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getProjects, groupByCategory } from '../data/projects';
+
+const projects = await getProjects();
+const grouped = groupByCategory(projects);
+const languages = new Set(projects.map(p => p.language));
+const repoCount = projects.length;
+const langCount = languages.size;
 ---
 <BaseLayout
   title="Projects | V8V88V8V88"
@@ -38,11 +45,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
       <div class="hero-stats">
         <div class="hero-stat">
-          <span class="hero-stat-value">35+</span>
+          <span class="hero-stat-value">{repoCount}+</span>
           <span class="hero-stat-label">Repositories</span>
         </div>
         <div class="hero-stat">
-          <span class="hero-stat-value">8+</span>
+          <span class="hero-stat-value">{langCount}+</span>
           <span class="hero-stat-label">Languages</span>
         </div>
         <div class="hero-stat">
@@ -73,352 +80,23 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
 
     <div class="project-list">
-      <span class="section-label">Web Applications</span>
-
-      <a href="https://github.com/v8v88v8v88/indx" target="_blank" rel="noopener noreferrer" class="project-item featured" data-lang="TypeScript">
-        <div class="project-info">
-          <div class="project-name">INDX</div>
-          <div class="project-desc">Indexing everything that can be on maps</div>
-        </div>
-        <span class="project-lang">TypeScript</span>
-        <span class="project-arrow">→</span>
-      </a>
-
-      <a href="https://github.com/thefossclub/thefossclub.github.io" target="_blank" rel="noopener noreferrer" class="project-item featured" data-lang="Others">
-        <div class="project-info">
-          <div class="project-name">TheFOSSClub Site</div>
-          <div class="project-desc">Official website for The FOSS Club</div>
-        </div>
-        <span class="project-lang">HTML</span>
-        <span class="project-arrow">→</span>
-      </a>
-
-      <a href="https://github.com/V8V88V8V88/piracyindex" target="_blank" rel="noopener noreferrer" class="project-item featured" data-lang="TypeScript">
-        <div class="project-info">
-          <div class="project-name">piracyindex</div>
-          <div class="project-desc">The greatest piracy index of all time</div>
-        </div>
-        <span class="project-lang">TypeScript</span>
-        <span class="project-arrow">→</span>
-      </a>
-
-      <a href="https://github.com/V8V88V8V88/Synthio" target="_blank" rel="noopener noreferrer" class="project-item featured" data-lang="Svelte">
-        <div class="project-info">
-          <div class="project-name">Synthio</div>
-          <div class="project-desc">A minimalist music visualizer built with Svelte</div>
-        </div>
-        <span class="project-lang">Svelte</span>
-        <span class="project-arrow">→</span>
-      </a>
-
-      <a href="https://github.com/V8V88V8V88/musical-playground" target="_blank" rel="noopener noreferrer" class="project-item" data-lang="Svelte">
-        <div class="project-info">
-          <div class="project-name">musical-playground</div>
-          <div class="project-desc">Try music instruments online using svelte, vue, and tone.js</div>
-        </div>
-        <span class="project-lang">Svelte</span>
-        <span class="project-arrow">→</span>
-      </a>
-
-      <a href="https://github.com/V8V88V8V88/FOSS-Hack-Delhi" target="_blank" rel="noopener noreferrer" class="project-item" data-lang="TypeScript">
-        <div class="project-info">
-          <div class="project-name">FOSS-Hack-Delhi</div>
-          <div class="project-desc">Website to promote FOSS Hack in Delhi area</div>
-        </div>
-        <span class="project-lang">TypeScript</span>
-        <span class="project-arrow">→</span>
-      </a>
-
-      <span class="section-label">Themes & Desktop</span>
-
-      <a href="https://github.com/V8V88V8V88/Telegram-GTK4-Libadwaita-Theme" target="_blank" rel="noopener noreferrer" class="project-item featured" data-lang="Others">
-        <div class="project-info">
-          <div class="project-name">Telegram-GTK4-Libadwaita-Theme</div>
-          <div class="project-desc">A GTK4 - Libadwaita Inspired Theme for Telegram Desktop</div>
-        </div>
-        <span class="project-lang">Theme</span>
-        <span class="project-arrow">→</span>
-      </a>
-
-      <a href="https://github.com/V8V88V8V88/dotfiles" target="_blank" rel="noopener noreferrer" class="project-item" data-lang="Others">
-        <div class="project-info">
-          <div class="project-name">dotfiles</div>
-          <div class="project-desc">All the dotfiles of my linux system</div>
-        </div>
-        <span class="project-lang">Config</span>
-        <span class="project-arrow">→</span>
-      </a>
-
-      <span class="section-label">AI & Machine Learning</span>
-
-      <a href="https://github.com/V8V88V8V88/face-recognition" target="_blank" rel="noopener noreferrer" class="project-item featured" data-lang="C/C++">
-        <div class="project-info">
-          <div class="project-name">face-recognition</div>
-          <div class="project-desc">Face detection on live cameras using OpenCV and Dlib</div>
-        </div>
-        <span class="project-lang">C++</span>
-        <span class="project-arrow">→</span>
-      </a>
-
-      <a href="https://github.com/V8V88V8V88/Vajra" target="_blank" rel="noopener noreferrer" class="project-item featured" data-lang="TypeScript">
-        <div class="project-info">
-          <div class="project-name">Vajra</div>
-          <div class="project-desc">AI-Powered Cyber Threat Forecaster</div>
-        </div>
-        <span class="project-lang">TypeScript</span>
-        <span class="project-arrow">→</span>
-      </a>
-
-      <a href="https://github.com/V8V88V8V88/AI-Document-Analyzer" target="_blank" rel="noopener noreferrer" class="project-item" data-lang="Python">
-        <div class="project-info">
-          <div class="project-name">AI-Document-Analyzer</div>
-          <div class="project-desc">AI Powered Document Analyzer</div>
-        </div>
-        <span class="project-lang">Python</span>
-        <span class="project-arrow">→</span>
-      </a>
-
-      <a href="https://github.com/V8V88V8V88/AI-Child-Protection" target="_blank" rel="noopener noreferrer" class="project-item" data-lang="Python">
-        <div class="project-info">
-          <div class="project-name">AI-Child-Protection</div>
-          <div class="project-desc">AI-driven parental control with face detection</div>
-        </div>
-        <span class="project-lang">Python</span>
-        <span class="project-arrow">→</span>
-      </a>
-
-      <a href="https://github.com/V8V88V8V88/H1RE" target="_blank" rel="noopener noreferrer" class="project-item featured" data-lang="TypeScript">
-        <div class="project-info">
-          <div class="project-name">H1RE</div>
-          <div class="project-desc">AI-powered resume analyzer for starters</div>
-        </div>
-        <span class="project-lang">TypeScript</span>
-        <span class="project-arrow">→</span>
-      </a>
-
-      <a href="https://github.com/V8V88V8V88/cnn-image-classification" target="_blank" rel="noopener noreferrer" class="project-item" data-lang="Others">
-        <div class="project-info">
-          <div class="project-name">cnn-image-classification</div>
-          <div class="project-desc">CNN to classify images in CIFAR-10 dataset</div>
-        </div>
-        <span class="project-lang">Jupyter</span>
-        <span class="project-arrow">→</span>
-      </a>
-
-      <a href="https://github.com/V8V88V8V88/T2S" target="_blank" rel="noopener noreferrer" class="project-item" data-lang="Others">
-        <div class="project-info">
-          <div class="project-name">T2S</div>
-          <div class="project-desc">Text to speech using AI</div>
-        </div>
-        <span class="project-lang">CSS</span>
-        <span class="project-arrow">→</span>
-      </a>
-
-      <span class="section-label">Rust Projects</span>
-
-      <a href="https://github.com/V8V88V8V88/H3IST" target="_blank" rel="noopener noreferrer" class="project-item featured" data-lang="Rust">
-        <div class="project-info">
-          <div class="project-name">H3IST</div>
-          <div class="project-desc">A next-generation elevator control system</div>
-        </div>
-        <span class="project-lang">Rust</span>
-        <span class="project-arrow">→</span>
-      </a>
-
-      <a href="https://github.com/V8V88V8V88/MarkVue" target="_blank" rel="noopener noreferrer" class="project-item" data-lang="Rust">
-        <div class="project-info">
-          <div class="project-name">MarkVue</div>
-          <div class="project-desc">GTK-based Markdown viewer with real-time preview</div>
-        </div>
-        <span class="project-lang">Rust</span>
-        <span class="project-arrow">→</span>
-      </a>
-
-      <a href="https://github.com/V8V88V8V88/yama" target="_blank" rel="noopener noreferrer" class="project-item featured" data-lang="Rust">
-        <div class="project-info">
-          <div class="project-name">yama</div>
-          <div class="project-desc">Lightweight package manager using C and Rust</div>
-        </div>
-        <span class="project-lang">Rust</span>
-        <span class="project-arrow">→</span>
-      </a>
-
-      <a href="https://github.com/V8V88V8V88/DeskImage" target="_blank" rel="noopener noreferrer" class="project-item" data-lang="Rust">
-        <div class="project-info">
-          <div class="project-name">DeskImage</div>
-          <div class="project-desc">CLI tool that generates .Desktop entries for AppImages</div>
-        </div>
-        <span class="project-lang">Rust</span>
-        <span class="project-arrow">→</span>
-      </a>
-
-      <a href="https://github.com/V8V88V8V88/BudgetWiser" target="_blank" rel="noopener noreferrer" class="project-item featured" data-lang="Rust">
-        <div class="project-info">
-          <div class="project-name">BudgetWiser</div>
-          <div class="project-desc">A Rust program to track your expenses</div>
-        </div>
-        <span class="project-lang">Rust</span>
-        <span class="project-arrow">→</span>
-      </a>
-
-      <a href="https://github.com/V8V88V8V88/rusty-snake" target="_blank" rel="noopener noreferrer" class="project-item" data-lang="Rust">
-        <div class="project-info">
-          <div class="project-name">rusty-snake</div>
-          <div class="project-desc">A simple snake game built with Rust and Piston</div>
-        </div>
-        <span class="project-lang">Rust</span>
-        <span class="project-arrow">→</span>
-      </a>
-
-      <a href="https://github.com/V8V88V8V88/iced-calculator" target="_blank" rel="noopener noreferrer" class="project-item" data-lang="Rust">
-        <div class="project-info">
-          <div class="project-name">iced-calculator</div>
-          <div class="project-desc">Simple calculator made using iced kit</div>
-        </div>
-        <span class="project-lang">Rust</span>
-        <span class="project-arrow">→</span>
-      </a>
-
-      <a href="https://github.com/V8V88V8V88/Rust-RISCV-Compiler" target="_blank" rel="noopener noreferrer" class="project-item featured" data-lang="Rust">
-        <div class="project-info">
-          <div class="project-name">Rust-RISCV-Compiler</div>
-          <div class="project-desc">RISC-V compiler in Rust</div>
-        </div>
-        <span class="project-lang">Rust</span>
-        <span class="project-arrow">→</span>
-      </a>
-
-      <a href="https://github.com/V8V88V8V88/mini-vm" target="_blank" rel="noopener noreferrer" class="project-item featured" data-lang="Rust">
-        <div class="project-info">
-          <div class="project-name">mini-vm</div>
-          <div class="project-desc">Minimal virtual machine</div>
-        </div>
-        <span class="project-lang">Rust</span>
-        <span class="project-arrow">→</span>
-      </a>
-
-      <span class="section-label">CLI & System Tools</span>
-
-      <a href="https://github.com/V8V88V8V88/vfetch" target="_blank" rel="noopener noreferrer" class="project-item featured" data-lang="Shell">
-        <div class="project-info">
-          <div class="project-name">vfetch</div>
-          <div class="project-desc">A minimal system information fetcher</div>
-        </div>
-        <span class="project-lang">Shell</span>
-        <span class="project-arrow">→</span>
-      </a>
-
-      <a href="https://github.com/V8V88V8V88/Fedorable" target="_blank" rel="noopener noreferrer" class="project-item featured" data-lang="Python">
-        <div class="project-info">
-          <div class="project-name">Fedorable</div>
-          <div class="project-desc">Simple script for maintaining Fedora Linux</div>
-        </div>
-        <span class="project-lang">Python</span>
-        <span class="project-arrow">→</span>
-      </a>
-
-      <a href="https://github.com/V8V88V8V88/nanoHTTP" target="_blank" rel="noopener noreferrer" class="project-item featured" data-lang="C/C++">
-        <div class="project-info">
-          <div class="project-name">nanoHTTP</div>
-          <div class="project-desc">Nano lightweight HTTP server in C</div>
-        </div>
-        <span class="project-lang">C</span>
-        <span class="project-arrow">→</span>
-      </a>
-
-      <a href="https://github.com/V8V88V8V88/todo-list" target="_blank" rel="noopener noreferrer" class="project-item" data-lang="C/C++">
-        <div class="project-info">
-          <div class="project-name">todo-list</div>
-          <div class="project-desc">Simple CLI todo list in C</div>
-        </div>
-        <span class="project-lang">C</span>
-        <span class="project-arrow">→</span>
-      </a>
-
-      <a href="https://github.com/V8V88V8V88/dirSim" target="_blank" rel="noopener noreferrer" class="project-item" data-lang="Python">
-        <div class="project-info">
-          <div class="project-name">dirSim</div>
-          <div class="project-desc">Lightweight directory and file system simulator</div>
-        </div>
-        <span class="project-lang">Python</span>
-        <span class="project-arrow">→</span>
-      </a>
-
-      <a href="https://github.com/V8V88V8V88/simple-round-robin-scheduler" target="_blank" rel="noopener noreferrer" class="project-item" data-lang="C/C++">
-        <div class="project-info">
-          <div class="project-name">simple-round-robin-scheduler</div>
-          <div class="project-desc">Round robin scheduler made during OS lectures</div>
-        </div>
-        <span class="project-lang">C</span>
-        <span class="project-arrow">→</span>
-      </a>
-
-      <a href="https://github.com/V8V88V8V88/canva-linux" target="_blank" rel="noopener noreferrer" class="project-item" data-lang="Python">
-        <div class="project-info">
-          <div class="project-name">canva-linux</div>
-          <div class="project-desc">Canva for Linux</div>
-        </div>
-        <span class="project-lang">Python</span>
-        <span class="project-arrow">→</span>
-      </a>
-
-      <a href="https://github.com/V8V88V8V88/linux-keylogger" target="_blank" rel="noopener noreferrer" class="project-item" data-lang="C/C++">
-        <div class="project-info">
-          <div class="project-name">linux-keylogger</div>
-          <div class="project-desc">Basically what you read</div>
-        </div>
-        <span class="project-lang">C++</span>
-        <span class="project-arrow">→</span>
-      </a>
-
-      <span class="section-label">GNOME & GTK</span>
-
-      <a href="https://github.com/V8V88V8V88/GNOME-bluetooth-battery-monitor" target="_blank" rel="noopener noreferrer" class="project-item" data-lang="Others">
-        <div class="project-info">
-          <div class="project-name">GNOME-bluetooth-battery-monitor</div>
-          <div class="project-desc">Displays battery level in the GNOME shell</div>
-        </div>
-        <span class="project-lang">JavaScript</span>
-        <span class="project-arrow">→</span>
-      </a>
-
-      <a href="https://github.com/V8V88V8V88/gtk-emoji-picker" target="_blank" rel="noopener noreferrer" class="project-item" data-lang="Python">
-        <div class="project-info">
-          <div class="project-name">gtk-emoji-picker</div>
-          <div class="project-desc">GTK4-based emoji picker with global shortcut</div>
-        </div>
-        <span class="project-lang">Python</span>
-        <span class="project-arrow">→</span>
-      </a>
-
-      <span class="section-label">Other</span>
-
-      <a href="https://github.com/V8V88V8V88/SkibidiSpeak" target="_blank" rel="noopener noreferrer" class="project-item" data-lang="TypeScript">
-        <div class="project-info">
-          <div class="project-name">SkibidiSpeak</div>
-          <div class="project-desc">Ohio language translator for understanding gen alpha</div>
-        </div>
-        <span class="project-lang">TypeScript</span>
-        <span class="project-arrow">→</span>
-      </a>
-
-      <a href="https://github.com/V8V88V8V88/Sauce_Run" target="_blank" rel="noopener noreferrer" class="project-item" data-lang="Others">
-        <div class="project-info">
-          <div class="project-name">Sauce_Run</div>
-          <div class="project-desc">Endless runner game made in Redot engine</div>
-        </div>
-        <span class="project-lang">GDScript</span>
-        <span class="project-arrow">→</span>
-      </a>
-
-      <a href="https://github.com/V8V88V8V88/golang" target="_blank" rel="noopener noreferrer" class="project-item" data-lang="Go">
-        <div class="project-info">
-          <div class="project-name">golang</div>
-          <div class="project-desc">Go experiments</div>
-        </div>
-        <span class="project-lang">Go</span>
-        <span class="project-arrow">→</span>
-      </a>
+      {grouped.map(group => (
+        <Fragment>
+          <span class="section-label">{group.category}</span>
+          {group.projects.map(project => (
+            <a href={project.url} target="_blank" rel="noopener noreferrer"
+              class={`project-item${project.featured ? ' featured' : ''}`}
+              data-lang={project.langFilter}>
+              <div class="project-info">
+                <div class="project-name">{project.name}</div>
+                <div class="project-desc">{project.description}</div>
+              </div>
+              <span class="project-lang">{project.language}</span>
+              <span class="project-arrow">→</span>
+            </a>
+          ))}
+        </Fragment>
+      ))}
     </div>
   </main>
 
