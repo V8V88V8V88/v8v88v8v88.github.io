@@ -753,7 +753,7 @@ body.light-mode a {
 }
 
 body.light-mode a:hover {
-    color: #115c24;
+    color: #0f4d1f;
 }
 
 /* Resume Button */
@@ -795,7 +795,7 @@ body.light-mode a:hover {
 }
 
 .resume-button:hover {
-    background: linear-gradient(135deg, #115c24 0%, #22d964 100%);
+    background: linear-gradient(135deg, #0f4d1f 0%, #22d964 100%);
     color: #fff;
     transform: translateY(-3px);
     box-shadow: 0 6px 20px rgba(29, 185, 84, 0.4);
@@ -810,7 +810,7 @@ body.light-mode .resume-button {
 }
 
 body.light-mode .resume-button:hover {
-    background: linear-gradient(135deg, #115c24 0%, #22d964 100%);
+    background: linear-gradient(135deg, #0f4d1f 0%, #22d964 100%);
     color: #fff;
     box-shadow: 0 6px 20px rgba(29, 185, 84, 0.35);
 }
@@ -870,7 +870,7 @@ body.light-mode .about a:not(.resume-button) {
 }
 
 body.light-mode .about a:not(.resume-button):hover {
-    color: #115c24;
+    color: #0f4d1f;
 }
 
 /* ========================================= */
@@ -1018,6 +1018,35 @@ body.light-mode .project-thumb {
     line-height: 1.3;
 }
 
+.project-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+    margin-bottom: 0.4rem;
+}
+
+.project-meta h3 {
+    margin-bottom: 0;
+}
+
+.project-stack-tag {
+    flex-shrink: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    color: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 999px;
+    padding: 0.15rem 0.45rem;
+}
+
+body.light-mode .project-stack-tag {
+    color: rgba(0, 0, 0, 0.55);
+    border-color: rgba(0, 0, 0, 0.12);
+    background: rgba(0, 0, 0, 0.03);
+}
+
 .project-item p {
     font-size: 0.875rem;
     color: rgba(255, 255, 255, 0.6);
@@ -1097,9 +1126,8 @@ body.light-mode .arrow:hover {
 }
 
 body.light-mode .posts {
-    background: rgba(255, 255, 255, 0.6);
-    border-color: rgba(0, 0, 0, 0.08);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+    background: rgba(0, 0, 0, 0.02);
+    border-color: rgba(0, 0, 0, 0.06);
 }
 
 .posts h2 {
@@ -1112,7 +1140,7 @@ body.light-mode .posts {
     list-style-type: none;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.65rem;
 }
 
 .posts li {
@@ -1125,11 +1153,11 @@ body.light-mode .posts {
     flex-direction: column;
     color: #fff;
     text-decoration: none;
-    background: rgba(255, 255, 255, 0.03);
-    padding: 1.5rem 1.75rem;
-    border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    transition: all 0.25s ease;
+    background: rgba(255, 255, 255, 0.025);
+    padding: 1.25rem 1.4rem;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    transition: all 0.2s ease;
     overflow: hidden;
 }
 
@@ -1153,8 +1181,8 @@ body.light-mode .posts {
 
 body.light-mode .posts a {
     color: #1d1d1f;
-    background: rgba(255, 255, 255, 0.8);
-    border-color: rgba(0, 0, 0, 0.08);
+    background: rgba(0, 0, 0, 0.025);
+    border-color: rgba(0, 0, 0, 0.07);
 }
 
 body.light-mode .posts a::after {
@@ -1166,8 +1194,7 @@ body.light-mode .posts a:hover::after {
 }
 
 .posts a:hover {
-    transform: translateY(-3px);
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.05);
     border-color: rgba(255, 255, 255, 0.12);
 }
 
@@ -1177,28 +1204,29 @@ body.light-mode .posts a:hover {
 }
 
 .posts h3 {
-    font-size: 1.15rem;
-    margin-bottom: 0.4rem;
+    font-size: 1.05rem;
+    margin-bottom: 0.35rem;
     font-weight: 600;
+    letter-spacing: -0.01em;
 }
 
-
 .posts p {
-    margin-bottom: 0.6rem;
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 0.9rem;
-    line-height: 1.5;
+    margin-bottom: 0;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.84rem;
+    line-height: 1.55;
 }
 
 body.light-mode .posts p {
-    color: rgba(0, 0, 0, 0.6);
+    color: rgba(0, 0, 0, 0.55);
 }
 
 .posts small {
-    color: rgba(255, 255, 255, 0.4);
-    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.35);
+    font-size: 0.72rem;
+    font-family: 'JetBrains Mono', monospace;
     font-weight: 400;
-    letter-spacing: 0.01em;
+    letter-spacing: 0.02em;
     margin-top: 0.5rem;
 }
 
@@ -1228,7 +1256,7 @@ body.scrolling main {
     padding: 2rem 2.5rem;
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 24px;
+    border-radius: 20px;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
 }
@@ -1400,10 +1428,10 @@ body.light-mode .menu-toggle span {
 /* ========================================= */
 
 .contact {
-    padding: 2.5rem;
+    padding: 2rem;
     margin: 2rem 0;
     background: rgba(255, 255, 255, 0.03);
-    border-radius: 24px;
+    border-radius: 20px;
     border: 1px solid rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
@@ -1411,9 +1439,8 @@ body.light-mode .menu-toggle span {
 }
 
 body.light-mode .contact {
-    background: rgba(255, 255, 255, 0.6);
-    border-color: rgba(0, 0, 0, 0.08);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+    background: rgba(0, 0, 0, 0.02);
+    border-color: rgba(0, 0, 0, 0.06);
 }
 
 .contact h2 {
@@ -1574,11 +1601,11 @@ body.light-mode .contact-item:hover {
     }
 
     .posts a {
-        padding: 1.5rem 1.5rem;
+        padding: 1.15rem 1.25rem;
     }
 
     .posts a::after {
-        right: 1.5rem;
+        right: 1.25rem;
     }
 
     .arrow {
@@ -1615,11 +1642,10 @@ body.light-mode .contact-item:hover {
 
 @media (max-width: 767px) {
     header {
-        padding: 0.45rem 1.5rem;
+        padding: 0.55rem 1.75rem;
         border-radius: 999px;
-        width: auto;
-        max-width: calc(100% - 12px);
-        /* Bring back a subtle blur on mobile header */
+        width: calc(100% - 48px);
+        max-width: 600px;
         background: rgba(15, 15, 15, 0.95);
         backdrop-filter: blur(22px) saturate(140%);
         -webkit-backdrop-filter: blur(22px) saturate(140%);
@@ -1638,6 +1664,7 @@ body.light-mode .contact-item:hover {
     nav {
         flex-wrap: nowrap;
         gap: 0;
+        width: 100%;
     }
 
     .logo a {
@@ -1648,7 +1675,7 @@ body.light-mode .contact-item:hover {
     .nav-right {
         display: flex;
         align-items: center;
-        gap: 0.25rem;
+        gap: 0.4rem;
         flex-shrink: 0;
     }
 
@@ -1805,7 +1832,8 @@ body.light-mode .contact-item:hover {
 
 @media (max-width: 480px) {
     header {
-        padding: 0.4rem 1.25rem;
+        padding: 0.5rem 1.5rem;
+        width: calc(100% - 32px);
     }
 
     .logo a {
@@ -1853,20 +1881,20 @@ body.light-mode .contact-item:hover {
     }
 
     .posts a {
-        padding: 1.5rem 1.25rem;
+        padding: 1.1rem 1rem;
     }
 
     .posts a::after {
-        right: 1.25rem;
-        font-size: 1rem;
+        right: 1rem;
+        font-size: 0.9rem;
     }
 
     .posts h3 {
-        font-size: 1.15rem;
+        font-size: 1rem;
     }
 
     .posts p {
-        font-size: 0.9rem;
+        font-size: 0.82rem;
     }
 
     .contact {
@@ -2138,7 +2166,7 @@ body.light-mode main.blog-post .copy-btn:hover {
 }
 
 body.light-mode main.blog-post .copy-btn.copied {
-    color: #15803d;
+    color: #0f4d1f;
     border-color: rgba(29, 185, 84, 0.3);
     background: rgba(29, 185, 84, 0.08);
 }
