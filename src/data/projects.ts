@@ -196,7 +196,70 @@ interface GitHubRepo {
   pushed_at?: string | null;
 }
 
+const REPOS_CACHE_TTL_MS = 10 * 60 * 1000;
+let reposCache: { data: GitHubRepo[]; expiresAt: number } | null = null;
+let reposInFlight: Promise<GitHubRepo[]> | null = null;
+let githubRateLimitedUntil = 0;
+let hasLoggedRateLimitWarning = false;
+
+function nowMs(): number {
+  return Date.now();
+}
+
+function getCachedRepos(): GitHubRepo[] | null {
+  if (reposCache && reposCache.expiresAt > nowMs()) {
+    return reposCache.data;
+  }
+  return null;
+}
+
+function setReposCache(data: GitHubRepo[]): GitHubRepo[] {
+  reposCache = {
+    data,
+    expiresAt: nowMs() + REPOS_CACHE_TTL_MS,
+  };
+  return data;
+}
+
+function logGitHubWarningOnce(message: string): void {
+  if (hasLoggedRateLimitWarning) return;
+  hasLoggedRateLimitWarning = true;
+  console.warn(message);
+}
+
+function parseRateLimitResetMs(response: Response): number {
+  const resetHeader = response.headers.get('x-ratelimit-reset');
+  const retryAfterHeader = response.headers.get('retry-after');
+
+  if (retryAfterHeader) {
+    const retryAfterSec = Number(retryAfterHeader);
+    if (Number.isFinite(retryAfterSec) && retryAfterSec > 0) {
+      return nowMs() + retryAfterSec * 1000;
+    }
+  }
+
+  if (resetHeader) {
+    const resetSec = Number(resetHeader);
+    if (Number.isFinite(resetSec) && resetSec > 0) {
+      // small buffer to avoid retrying exactly at boundary
+      return resetSec * 1000 + 1000;
+    }
+  }
+
+  // Conservative fallback cooldown
+  return nowMs() + 5 * 60 * 1000;
+}
+
 async function fetchGitHubRepos(): Promise<GitHubRepo[]> {
+  const cached = getCachedRepos();
+  if (cached) return cached;
+
+  if (nowMs() < githubRateLimitedUntil) {
+    return fallbackRepos;
+  }
+
+  if (reposInFlight) return reposInFlight;
+
   const headers: Record<string, string> = {
     'Accept': 'application/vnd.github.v3+json',
   };
@@ -205,7 +268,8 @@ async function fetchGitHubRepos(): Promise<GitHubRepo[]> {
     headers['Authorization'] = `Bearer ${token}`;
   }
 
-  try {
+  reposInFlight = (async () => {
+    try {
     const repos: GitHubRepo[] = [];
     let page = 1;
 
@@ -214,7 +278,12 @@ async function fetchGitHubRepos(): Promise<GitHubRepo[]> {
       const response = await fetch(url, { headers });
 
       if (!response.ok) {
-        console.warn(`GitHub API error: ${response.status} ${response.statusText}`);
+        if (response.status === 403) {
+          githubRateLimitedUntil = parseRateLimitResetMs(response);
+          logGitHubWarningOnce('GitHub API rate limit reached. Using fallback data temporarily.');
+        } else {
+          console.warn(`GitHub API error: ${response.status} ${response.statusText}`);
+        }
         break;
       }
 
@@ -230,14 +299,27 @@ async function fetchGitHubRepos(): Promise<GitHubRepo[]> {
       const response = await fetch(url, { headers });
       if (response.ok) {
         repos.push(await response.json());
+      } else if (response.status === 403) {
+        githubRateLimitedUntil = parseRateLimitResetMs(response);
+        logGitHubWarningOnce('GitHub API rate limit reached while loading additional repos. Using available data.');
       }
     }
 
-    return repos;
-  } catch (err) {
-    console.warn('Failed to fetch GitHub repos, using fallback:', err);
-    return fallbackRepos;
-  }
+      if (repos.length > 0) {
+        hasLoggedRateLimitWarning = false;
+        githubRateLimitedUntil = 0;
+        return setReposCache(repos);
+      }
+      return fallbackRepos;
+    } catch (err) {
+      console.warn('Failed to fetch GitHub repos, using fallback:', err);
+      return fallbackRepos;
+    } finally {
+      reposInFlight = null;
+    }
+  })();
+
+  return reposInFlight;
 }
 
 export async function getProjects(): Promise<Project[]> {

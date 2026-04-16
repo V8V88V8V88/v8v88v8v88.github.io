@@ -171,10 +171,45 @@ const {
       }
     }
 
+    var themeAudioCtx;
+    function playThemeClick(theme) {
+      try {
+        if (!themeAudioCtx) themeAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (themeAudioCtx.state === 'suspended') themeAudioCtx.resume();
+        var t = themeAudioCtx.currentTime;
+        var isLight = theme === 'light';
+
+        function playHit(startTime, startFreq, endFreq, duration, volume) {
+          var osc = themeAudioCtx.createOscillator();
+          var gain = themeAudioCtx.createGain();
+          osc.connect(gain);
+          gain.connect(themeAudioCtx.destination);
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(startFreq, startTime);
+          osc.frequency.exponentialRampToValueAtTime(endFreq, startTime + duration);
+          gain.gain.setValueAtTime(volume, startTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+          osc.start(startTime);
+          osc.stop(startTime + duration);
+        }
+
+        if (isLight) {
+          // USB plug-in feel: quick, brighter upward two-note chirp.
+          playHit(t, 660, 740, 0.1, 0.085);
+          playHit(t + 0.09, 830, 930, 0.1, 0.08);
+        } else {
+          // USB unplug feel: lower, softer downward two-note chirp.
+          playHit(t, 620, 540, 0.11, 0.085);
+          playHit(t + 0.11, 460, 390, 0.12, 0.075);
+        }
+      } catch (_) {}
+    }
+
     if (navbarSwitch) {
       navbarSwitch.addEventListener('change', function () {
         var newTheme = this.checked ? 'dark' : 'light';
         setTheme(newTheme);
+        playThemeClick(newTheme);
       });
     }
 

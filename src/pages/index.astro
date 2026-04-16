@@ -55,10 +55,12 @@ const featuredProjects = [...allProjects]
   <main>
     <section class="hero">
       <h1>$ &gt;[V8V88V8V88]_</h1>
-      <div class="cli-cmd" data-cmd="curl https://v8v88v8v88.com/api/cli" title="Click to copy">
-        <span class="cli-prompt">$</span>
-        <span class="cli-text">curl v8v88v8v88.com/api/cli</span>
-        <i class="cli-icon fas fa-copy"></i>
+      <div class="hero-cli-slot">
+        <div class="cli-cmd" data-cmd="curl https://v8v88v8v88.com/api/cli" title="Click to copy">
+          <span class="cli-prompt">$</span>
+          <span class="cli-text">curl v8v88v8v88.com/api/cli</span>
+          <i class="cli-icon fas fa-copy"></i>
+        </div>
       </div>
     </section>
 
@@ -208,6 +210,67 @@ const featuredProjects = [...allProjects]
       updateArrows();
     }
     var cliCmd = document.querySelector(".cli-cmd");
+    var heroH1 = document.querySelector(".hero h1");
+    var heroTapCount = 0;
+    var audioCtx;
+    function playPop(kind) {
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === "suspended") audioCtx.resume();
+        var t = audioCtx.currentTime;
+        var osc = audioCtx.createOscillator();
+        var gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.type = "triangle";
+        var f0, f1, dur, vol;
+        if (kind === "tap") {
+          f0 = 360; f1 = 250; dur = 0.09; vol = 0.08;
+        } else if (kind === "show") {
+          f0 = 640; f1 = 820; dur = 0.12; vol = 0.085;
+        } else {
+          f0 = 420; f1 = 260; dur = 0.13; vol = 0.085;
+        }
+        osc.frequency.setValueAtTime(f0, t);
+        osc.frequency.exponentialRampToValueAtTime(f1, t + dur);
+        gain.gain.setValueAtTime(vol, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + dur);
+        osc.start(t);
+        osc.stop(t + dur);
+      } catch (_) {}
+    }
+    if (heroH1 && cliCmd) {
+      heroH1.addEventListener("click", function() {
+        if (cliCmd.classList.contains("hiding")) return;
+        var showing = cliCmd.classList.contains("revealed");
+        heroTapCount++;
+        heroH1.classList.remove("tap-pulse");
+        void heroH1.offsetWidth;
+        heroH1.classList.add("tap-pulse");
+        if (heroTapCount < 2) {
+          playPop("tap");
+          return;
+        }
+        heroTapCount = 0;
+        playPop("tap");
+        if (showing) {
+          cliCmd.classList.remove("revealed");
+          cliCmd.classList.add("hiding");
+          setTimeout(function() { playPop("hide"); }, 220);
+          cliCmd.addEventListener("animationend", function handler(e) {
+            if (e.target !== cliCmd) return;
+            cliCmd.classList.remove("hiding");
+            heroH1.classList.remove("shimmer-off");
+            cliCmd.removeEventListener("animationend", handler);
+          });
+        } else {
+          cliCmd.classList.remove("hiding");
+          cliCmd.classList.add("revealed");
+          heroH1.classList.add("shimmer-off");
+          setTimeout(function() { playPop("show"); }, 220);
+        }
+      });
+    }
     if (cliCmd) {
       var cliText = cliCmd.querySelector(".cli-text");
       var cliIcon = cliCmd.querySelector(".cli-icon");
@@ -240,17 +303,83 @@ const featuredProjects = [...allProjects]
     display: grid;
     justify-items: center;
     gap: 0.35rem;
-    padding: 0.5rem 0;
-    margin-bottom: 0.75rem;
+    padding: 0.5rem 0 0.25rem;
+    margin-bottom: 0.6rem;
+  }
+  .hero-cli-slot {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 1.35rem;
+    width: 100%;
+  }
+  :global(main) .intro {
+    margin-top: 0;
   }
   .hero h1 {
     font-family: 'JetBrains Mono', 'SF Mono', monospace;
     font-size: clamp(1.5rem, 4vw, 2.4rem);
     font-weight: 600;
     letter-spacing: -0.02em;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.5) 0%,
+      rgba(255, 255, 255, 0.5) 40%,
+      rgba(255, 255, 255, 1) 44%,
+      rgba(255, 255, 255, 1) 56%,
+      rgba(255, 255, 255, 0.5) 60%,
+      rgba(255, 255, 255, 0.5) 100%
+    );
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: titleShimmer 6s linear infinite;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.1s ease;
+  }
+  .hero h1:active {
+    transform: scale(0.985);
+  }
+  .hero h1.tap-pulse {
+    animation: titleShimmer 6s linear infinite, tapFlash 0.4s ease-out;
+  }
+  .hero h1.shimmer-off {
+    animation: none;
+    background: none;
+    -webkit-background-clip: unset;
+    background-clip: unset;
+    -webkit-text-fill-color: unset;
     color: rgba(255, 255, 255, 0.85);
   }
+  .hero h1.shimmer-off.tap-pulse {
+    animation: tapFlash 0.4s ease-out;
+  }
+  @keyframes tapFlash {
+    0% { filter: brightness(1.35); }
+    100% { filter: brightness(1); }
+  }
   :global(body.light-mode) .hero h1 {
+    background: linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.5) 0%,
+      rgba(0, 0, 0, 0.5) 40%,
+      rgba(0, 0, 0, 1) 44%,
+      rgba(0, 0, 0, 1) 56%,
+      rgba(0, 0, 0, 0.5) 60%,
+      rgba(0, 0, 0, 0.5) 100%
+    );
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  :global(body.light-mode) .hero h1.shimmer-off {
+    background: none;
+    -webkit-background-clip: unset;
+    background-clip: unset;
+    -webkit-text-fill-color: unset;
     color: rgba(0, 0, 0, 0.8);
   }
   .hero h1::after {
@@ -268,6 +397,10 @@ const featuredProjects = [...allProjects]
     0%, 100% { opacity: 1; }
     50% { opacity: 0; }
   }
+  @keyframes titleShimmer {
+    0% { background-position: 200% center; }
+    100% { background-position: -100% center; }
+  }
   .cli-cmd {
     display: inline-flex;
     align-items: center;
@@ -275,15 +408,73 @@ const featuredProjects = [...allProjects]
     font-family: 'SF Mono', 'JetBrains Mono', monospace;
     font-size: 0.72rem;
     background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: 100px;
     padding: 0.4rem 0.9rem;
     cursor: pointer;
     user-select: none;
-    transition: all 0.3s ease;
+    transition: background 0.3s ease, border-color 0.3s ease;
     position: relative;
     overflow: hidden;
     max-width: 90vw;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .cli-cmd.revealed {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    animation: revealPill 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+  .cli-cmd.revealed .cli-text {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.25) 0%,
+      rgba(255, 255, 255, 0.25) 40%,
+      rgba(255, 255, 255, 0.95) 44%,
+      rgba(255, 255, 255, 0.95) 56%,
+      rgba(255, 255, 255, 0.25) 60%,
+      rgba(255, 255, 255, 0.25) 100%
+    );
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: pillTextShimmer 6s linear infinite;
+  }
+  .cli-cmd.hiding {
+    visibility: visible;
+    pointer-events: none;
+    animation: hidePill 0.3s ease-in forwards;
+  }
+  @keyframes pillTextShimmer {
+    0% { background-position: 200% center; }
+    100% { background-position: -100% center; }
+  }
+  @keyframes revealPill {
+    from {
+      opacity: 0;
+      transform: translateY(-6px) scale(0.95);
+      filter: blur(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+    }
+  }
+  @keyframes hidePill {
+    from {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-6px) scale(0.95);
+      filter: blur(4px);
+    }
   }
   .cli-cmd::after {
     content: '';
@@ -294,10 +485,11 @@ const featuredProjects = [...allProjects]
     transition: opacity 0.4s ease;
     box-shadow: 0 0 20px rgba(29, 185, 84, 0.4), inset 0 0 12px rgba(29, 185, 84, 0.1);
     pointer-events: none;
+    z-index: 2;
   }
   .cli-cmd:hover {
     background: rgba(255, 255, 255, 0.07);
-    border-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.28);
   }
   .cli-cmd.copied {
     border-color: rgba(29, 185, 84, 0.3);
@@ -321,19 +513,45 @@ const featuredProjects = [...allProjects]
     letter-spacing: 0.02em;
     transition: color 0.3s ease;
   }
-  .cli-cmd:hover .cli-text {
+  .cli-cmd.revealed:hover .cli-text {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0.4) 40%,
+      rgba(255, 255, 255, 1) 44%,
+      rgba(255, 255, 255, 1) 56%,
+      rgba(255, 255, 255, 0.4) 60%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .cli-cmd:not(.revealed):hover .cli-text {
     color: rgba(255, 255, 255, 0.55);
   }
   .cli-cmd.copied .cli-text {
+    animation: none !important;
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    background-clip: unset !important;
+    -webkit-text-fill-color: unset !important;
+    color: #1DB954 !important;
+  }
+  .cli-cmd.copied .cli-prompt {
     color: #1DB954;
   }
   .cli-icon {
     font-size: 0.65rem;
     color: rgba(255, 255, 255, 0.2);
-    transition: all 0.3s ease;
+    transition: color 0.3s ease;
+  }
+  .cli-cmd.revealed .cli-icon {
+    color: rgba(255, 255, 255, 0.5);
   }
   .cli-cmd:hover .cli-icon {
-    color: rgba(255, 255, 255, 0.45);
+    color: rgba(255, 255, 255, 0.6);
   }
   .cli-cmd.copied .cli-icon {
     color: #1DB954;
@@ -346,11 +564,11 @@ const featuredProjects = [...allProjects]
   }
   :global(body.light-mode) .cli-cmd {
     background: rgba(0, 0, 0, 0.03);
-    border-color: rgba(0, 0, 0, 0.06);
+    border-color: rgba(0, 0, 0, 0.12);
   }
   :global(body.light-mode) .cli-cmd:hover {
     background: rgba(0, 0, 0, 0.05);
-    border-color: rgba(0, 0, 0, 0.1);
+    border-color: rgba(0, 0, 0, 0.18);
   }
   :global(body.light-mode) .cli-cmd.copied {
     border-color: rgba(29, 185, 84, 0.25);
@@ -362,17 +580,53 @@ const featuredProjects = [...allProjects]
   :global(body.light-mode) .cli-text {
     color: rgba(0, 0, 0, 0.25);
   }
-  :global(body.light-mode) .cli-cmd:hover .cli-text {
-    color: rgba(0, 0, 0, 0.5);
-  }
   :global(body.light-mode) .cli-cmd.copied .cli-text {
     color: #0f4d1f;
+  }
+  :global(body.light-mode) .cli-cmd.copied .cli-prompt {
+    color: #0f4d1f;
+  }
+  :global(body.light-mode) .cli-cmd.revealed .cli-text {
+    background: linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.18) 0%,
+      rgba(0, 0, 0, 0.18) 40%,
+      rgba(0, 0, 0, 0.85) 44%,
+      rgba(0, 0, 0, 0.85) 56%,
+      rgba(0, 0, 0, 0.18) 60%,
+      rgba(0, 0, 0, 0.18) 100%
+    );
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  :global(body.light-mode) .cli-cmd.revealed:hover .cli-text {
+    background: linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.3) 0%,
+      rgba(0, 0, 0, 0.3) 40%,
+      rgba(0, 0, 0, 0.95) 44%,
+      rgba(0, 0, 0, 0.95) 56%,
+      rgba(0, 0, 0, 0.3) 60%,
+      rgba(0, 0, 0, 0.3) 100%
+    );
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  :global(body.light-mode) .cli-cmd:not(.revealed):hover .cli-text {
+    color: rgba(0, 0, 0, 0.5);
   }
   :global(body.light-mode) .cli-icon {
     color: rgba(0, 0, 0, 0.2);
   }
+  :global(body.light-mode) .cli-cmd.revealed .cli-icon {
+    color: rgba(0, 0, 0, 0.5);
+  }
   :global(body.light-mode) .cli-cmd:hover .cli-icon {
-    color: rgba(0, 0, 0, 0.4);
+    color: rgba(0, 0, 0, 0.6);
   }
   :global(body.light-mode) .cli-cmd.copied .cli-icon {
     color: #0f4d1f;
@@ -641,6 +895,13 @@ const featuredProjects = [...allProjects]
   }
 
   @media (max-width: 768px) {
+    .hero {
+      margin-bottom: 1rem;
+      padding-bottom: 0.2rem;
+    }
+    .hero-cli-slot {
+      min-height: 1.85rem;
+    }
     .cli-cmd {
       font-size: 0.62rem;
       gap: 0.35rem;
@@ -680,6 +941,13 @@ const featuredProjects = [...allProjects]
   }
 
   @media (max-width: 480px) {
+    .hero {
+      margin-bottom: 0.85rem;
+      padding-bottom: 0.15rem;
+    }
+    .hero-cli-slot {
+      min-height: 1.75rem;
+    }
     .cli-cmd {
       font-size: 0.58rem;
       gap: 0.3rem;
