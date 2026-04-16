@@ -66,7 +66,7 @@ const featuredProjects = [...allProjects]
 
     <section class="intro">
       <div class="intro-content">
-        <div class="avatar-flip" id="avatar-flip" onclick="this.classList.toggle('flipped')">
+        <div class="avatar-flip" id="avatar-flip">
           <div class="avatar-inner">
             <img src="/images/image.webp" alt="Vaibhav" class="avatar-front" />
             <img src="/images/V8.webp" alt="V8" class="avatar-back" />
@@ -74,10 +74,8 @@ const featuredProjects = [...allProjects]
         </div>
         <div class="intro-text">
           <h2>
-            Hi, I'm
-            <span class="vaibhav-hover" data-text="V8V88V8V88"
-              onmouseenter="document.getElementById('avatar-flip').classList.add('flipped')"
-              onmouseleave="document.getElementById('avatar-flip').classList.remove('flipped')">Vaibhav</span>
+            Hey, I'm
+            <span class="vaibhav-hover" role="button" tabindex="0" aria-pressed="false" data-default="Vaibhav" data-alt="V8">Vaibhav</span>
           </h2>
         </div>
       </div>
@@ -174,12 +172,46 @@ const featuredProjects = [...allProjects]
 
   <script is:inline>
     var vaibhavHover = document.querySelector(".vaibhav-hover");
-    var hoverText = vaibhavHover ? vaibhavHover.dataset.text : "";
-    if (vaibhavHover) {
-      vaibhavHover.textContent = "Vaibhav";
-      vaibhavHover.addEventListener("mouseenter", function() { vaibhavHover.textContent = hoverText; });
-      vaibhavHover.addEventListener("mouseleave", function() { vaibhavHover.textContent = "Vaibhav"; });
+    var avatarFlip = document.getElementById("avatar-flip");
+    var vaibhavLocked = false;
+
+    function setVaibhavState(active) {
+      if (!vaibhavHover) return;
+      vaibhavHover.classList.toggle("is-alt", active);
+      vaibhavHover.setAttribute("aria-pressed", String(active));
+      vaibhavHover.textContent = active ? (vaibhavHover.getAttribute("data-alt") || "V8") : (vaibhavHover.getAttribute("data-default") || "Vaibhav");
+      if (avatarFlip) avatarFlip.classList.toggle("flipped", active);
     }
+
+    function toggleVaibhavState() {
+      if (!vaibhavHover) return;
+      var nextActive = !vaibhavHover.classList.contains("is-alt");
+      vaibhavLocked = nextActive;
+      setVaibhavState(nextActive);
+    }
+
+    if (vaibhavHover) {
+      vaibhavHover.addEventListener("mouseenter", function() {
+        if (!vaibhavLocked) setVaibhavState(true);
+      });
+      vaibhavHover.addEventListener("mouseleave", function() {
+        if (!vaibhavLocked) setVaibhavState(false);
+      });
+      vaibhavHover.addEventListener("click", function() {
+        toggleVaibhavState();
+      });
+      vaibhavHover.addEventListener("keydown", function(e) {
+        if (e.key !== "Enter" && e.key !== " ") return;
+        e.preventDefault();
+        toggleVaibhavState();
+      });
+    }
+    if (avatarFlip) {
+      avatarFlip.addEventListener("click", function() {
+        toggleVaibhavState();
+      });
+    }
+
     var projectsContainer = document.querySelector(".projects ul");
     if (projectsContainer) {
       var leftArrow = document.createElement("div");

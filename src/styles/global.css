@@ -1246,14 +1246,16 @@ body.scrolling main {
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 1.2rem;
     margin-bottom: 3rem;
 }
 
 .intro-content {
     display: flex;
     align-items: center;
-    gap: 2rem;
-    padding: 2rem 2.5rem;
+    justify-content: center;
+    gap: 1.25rem;
+    padding: 1.05rem 1.25rem;
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 20px;
@@ -1268,8 +1270,8 @@ body.light-mode .intro-content {
 }
 
 .intro img {
-    width: 120px;
-    height: 120px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
     object-fit: cover;
     aspect-ratio: 1 / 1;
@@ -1288,7 +1290,7 @@ body.light-mode .intro img {
 
 .intro-text h2 {
     font-size: clamp(1.75rem, 4vw, 2.5rem);
-    margin-bottom: 0.25rem;
+    margin-bottom: 0;
     font-weight: 600;
 }
 
@@ -1300,20 +1302,17 @@ body.light-mode .intro img {
     letter-spacing: 0.02em;
 }
 
-/* Vaibhav → V8V88V8V88 hover effect */
 .vaibhav-hover {
+    display: inline-block;
     cursor: pointer;
+    vertical-align: baseline;
+    white-space: nowrap;
+    transition: opacity 0.2s ease, filter 0.2s ease;
 }
 
-.vaibhav-hover:hover {
+.vaibhav-hover.is-alt {
     font-family: "EB Garamond", Georgia, serif;
     font-style: italic;
-    font-size: 0;
-}
-
-.vaibhav-hover:hover::before {
-    content: "V8V88V8V88";
-    font-size: clamp(1.75rem, 4vw, 2.5rem);
 }
 
 body.light-mode .intro-text p {
@@ -1563,17 +1562,20 @@ body.light-mode .contact-item:hover {
         padding: 1rem 0;
     }
 
+    .intro {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
     .intro-content {
         flex-direction: column;
-        align-items: center;
-        text-align: center;
-        padding: 1.5rem;
-        gap: 1rem;
+        padding: 1rem;
+        gap: 0.9rem;
     }
 
     .intro img {
-        width: 100px;
-        height: 100px;
+        width: 88px;
+        height: 88px;
     }
 
     .intro-text {
@@ -1849,13 +1851,13 @@ body.light-mode .contact-item:hover {
     }
 
     .intro-content {
-        padding: 1.25rem;
-        gap: 0.75rem;
+        padding: 0.9rem;
+        gap: 0.7rem;
     }
 
     .intro img {
-        width: 80px;
-        height: 80px;
+        width: 76px;
+        height: 76px;
     }
 
     .about {
