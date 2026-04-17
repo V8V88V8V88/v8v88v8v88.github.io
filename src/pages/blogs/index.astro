@@ -89,6 +89,12 @@ const blogSchema = {
 </BaseLayout>
 
 <style>
+  main {
+    padding: 4rem 2rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
   .hero {
     position: relative;
     height: 35vh;
@@ -97,7 +103,7 @@ const blogSchema = {
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    margin: 2rem auto 5.75rem;
+    margin: 1rem auto 5.75rem;
     border-radius: 24px;
     background: linear-gradient(145deg, #0a0a0a 0%, #1a1a1a 100%);
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -526,9 +532,9 @@ const blogSchema = {
 
     .hero {
       height: auto;
-      min-height: 232px;
-      padding: 2rem 1.35rem;
-      margin: 0.35rem auto 1.85rem;
+      min-height: min(36vh, 256px);
+      padding: 1.95rem 1.35rem;
+      margin: 0.35rem auto 2.85rem;
       border-radius: 20px;
     }
 
@@ -537,63 +543,64 @@ const blogSchema = {
     }
 
     .hero h1 {
-      font-size: clamp(1.95rem, 5.4vw, 2.55rem);
-      margin-bottom: 0.5rem;
+      font-size: clamp(2.28rem, 6.4vw, 2.95rem);
+      margin-bottom: 0.55rem;
     }
 
     .hero p {
-      font-size: 1.02rem;
-      line-height: 1.5;
+      font-size: 1.12rem;
+      line-height: 1.55;
     }
 
     .posts-grid {
       grid-template-columns: 1fr;
-      gap: 0.75rem;
-      margin-top: 0.25rem;
+      gap: 0.55rem;
+      margin-top: 0.5rem;
     }
 
     .post-image {
-      height: 118px;
+      height: 96px;
     }
 
     .post-image::after {
-      height: 36px;
+      height: 28px;
     }
 
     .post-content {
-      padding: 0.85rem 1rem;
+      padding: 0.65rem 0.85rem;
     }
 
     .post-title,
     .post-title a {
-      font-size: 1.15rem;
-      margin-bottom: 0.45rem;
+      font-size: 1.05rem;
+      margin-bottom: 0.35rem;
+      line-height: 1.3;
     }
 
     .post-excerpt {
-      font-size: 0.88rem;
-      line-height: 1.4;
-      margin-bottom: 0.5rem;
+      font-size: 0.84rem;
+      line-height: 1.38;
+      margin-bottom: 0.4rem;
       flex-grow: 0;
       display: -webkit-box;
       -webkit-box-orient: vertical;
-      -webkit-line-clamp: 3;
+      -webkit-line-clamp: 2;
       overflow: hidden;
     }
 
     .post-tags {
-      margin-bottom: 0.5rem;
-      gap: 0.35rem;
+      margin-bottom: 0.4rem;
+      gap: 0.3rem;
     }
 
     .post-tag {
-      padding: 0.22rem 0.55rem;
-      font-size: 0.68rem;
+      padding: 0.18rem 0.48rem;
+      font-size: 0.65rem;
     }
 
     .post-meta {
-      padding-top: 0.55rem;
-      font-size: 0.72rem;
+      padding-top: 0.45rem;
+      font-size: 0.7rem;
     }
   }
 
@@ -603,18 +610,18 @@ const blogSchema = {
     }
 
     .hero {
-      min-height: 210px;
+      min-height: min(38vh, 238px);
       padding: 1.75rem 1.1rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2.9rem;
       border-radius: 16px;
     }
 
     .hero h1 {
-      font-size: 1.82rem;
+      font-size: 2.08rem;
     }
 
     .hero p {
-      font-size: 0.96rem;
+      font-size: 1.09rem;
     }
 
     .post-card {
@@ -622,32 +629,36 @@ const blogSchema = {
     }
 
     .post-image {
-      height: 108px;
+      height: 88px;
+    }
+
+    .post-image::after {
+      height: 24px;
     }
 
     .post-content {
-      padding: 0.75rem 0.9rem;
+      padding: 0.6rem 0.8rem;
     }
 
     .post-title,
     .post-title a {
-      font-size: 1.08rem;
+      font-size: 1.02rem;
     }
 
     .post-excerpt {
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       flex-grow: 0;
-      -webkit-line-clamp: 3;
+      -webkit-line-clamp: 2;
     }
 
     .post-tag {
-      font-size: 0.65rem;
-      padding: 0.2rem 0.5rem;
+      font-size: 0.62rem;
+      padding: 0.16rem 0.45rem;
     }
 
     .post-meta {
-      font-size: 0.7rem;
-      padding-top: 0.45rem;
+      font-size: 0.68rem;
+      padding-top: 0.4rem;
     }
   }
 </style>
