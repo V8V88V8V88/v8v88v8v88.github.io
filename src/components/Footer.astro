@@ -51,9 +51,9 @@ const { showRss = false } = Astro.props;
         )}
       </div>
       <div class="footer-webring">
-        <a href="https://webring.dinhe.net/prev/https://v8v88v8v88.com/" class="webring-link" target="_blank" rel="noopener noreferrer">←</a>
-        <a href="https://webring.dinhe.net/" class="webring-hub" target="_blank" rel="noopener noreferrer">Webring</a>
-        <a href="https://webring.dinhe.net/next/https://v8v88v8v88.com/" class="webring-link" target="_blank" rel="noopener noreferrer">→</a>
+        <a data-vaibring="prev" href="#" class="webring-link">←</a>
+        <a data-vaibring="random" href="#" class="webring-hub">Vaibring</a>
+        <a data-vaibring="next" href="#" class="webring-link">→</a>
       </div>
       <div class="footer-visitors">
         <a href="https://visitorbadge.io/status?path=https%3A%2F%2Fv8v88v8v88.com">
@@ -61,5 +61,11 @@ const { showRss = false } = Astro.props;
         </a>
       </div>
     </div>
+    <script
+      src="https://v8v88v8v88.github.io/vaibring/webring/minimal.js"
+      data-ring="https://v8v88v8v88.github.io/vaibring/webring/sites.json"
+      async
+      is:inline
+    ></script>
   </div>
 </footer>
