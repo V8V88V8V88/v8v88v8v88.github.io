@@ -78,13 +78,13 @@ footer,
 
 header {
     position: fixed;
-    top: 12px;
+    top: 10px;
     left: 50%;
     transform: translateX(-50%);
     width: auto;
     max-width: calc(100% - 24px);
     z-index: 100;
-    padding: 0.55rem 2rem;
+    padding: 0.44rem 1.75rem;
     border-radius: 999px;
 
     background:
@@ -298,9 +298,9 @@ nav ul {
 nav a {
     color: rgba(255, 255, 255, 0.9);
     text-decoration: none;
-    padding: 0.5rem 1.1rem;
+    padding: 0.4rem 1rem;
     border-radius: 999px;
-    font-size: 0.95rem;
+    font-size: 0.92rem;
     font-weight: 500;
     letter-spacing: -0.01em;
     position: relative;
@@ -351,7 +351,7 @@ html.light-mode nav a[aria-current="page"] {
 
 .logo a {
     font-weight: 600;
-    font-size: 1.05rem;
+    font-size: 1rem;
     letter-spacing: -0.02em;
     color: #fff;
     transition: opacity 0.25s ease;
@@ -708,20 +708,21 @@ body.light-mode .footer-tagline {
 
 @media (max-width: 768px) {
     .site-footer {
-        padding: 0 1rem 1rem;
-        margin-top: 3rem;
+        padding: 0 0.875rem 0.75rem;
+        margin-top: 2rem;
     }
 
     .footer-glass {
-        padding: 2rem 1.5rem;
+        padding: 1.25rem 1rem;
         border-radius: 20px;
     }
 
     .footer-main {
         flex-direction: column;
-        gap: 2rem;
+        gap: 1.15rem;
         text-align: center;
         align-items: center;
+        padding-bottom: 1.1rem;
     }
 
     .footer-brand {
@@ -736,20 +737,35 @@ body.light-mode .footer-tagline {
     .footer-nav {
         width: 100%;
         justify-content: center;
-        gap: 2.5rem;
+        gap: 1.35rem;
         flex-wrap: wrap;
     }
 
     .footer-nav-group {
         align-items: center;
         min-width: 100px;
+        gap: 0.45rem;
+    }
+
+    .footer-nav-group h5 {
+        margin-bottom: 0.35rem;
+    }
+
+    .footer-social-icons {
+        gap: 0.5rem;
+    }
+
+    .footer-social-icons a {
+        width: 2rem;
+        height: 2rem;
     }
 
     .footer-bottom-bar {
         display: flex;
         flex-direction: column;
         text-align: center;
-        gap: 1rem;
+        gap: 0.65rem;
+        padding-top: 1rem;
     }
 
     .footer-bottom-bar .footer-meta,
@@ -761,12 +777,13 @@ body.light-mode .footer-tagline {
     .footer-meta {
         flex-wrap: wrap;
         justify-content: center;
+        font-size: 0.75rem;
     }
 }
 
 @media (max-width: 480px) {
     .footer-glass {
-        padding: 1.5rem 1rem;
+        padding: 1rem 0.875rem;
         border-radius: 16px;
     }
 
@@ -777,7 +794,7 @@ body.light-mode .footer-tagline {
     }
 
     .footer-nav {
-        gap: 1.5rem;
+        gap: 1.1rem;
     }
 
     .footer-nav-group {
@@ -785,7 +802,11 @@ body.light-mode .footer-tagline {
     }
 
     .footer-logo {
-        font-size: 1.3rem;
+        font-size: 1.25rem;
+    }
+
+    .footer-tagline {
+        font-size: 0.8rem;
     }
 }
 
@@ -1423,8 +1444,8 @@ html.theme-preload .mode-switch::before {
 
 .mode-switch {
     appearance: none;
-    width: 2.5rem;
-    height: 1.35rem;
+    width: 2.35rem;
+    height: 1.22rem;
     background: rgba(255, 255, 255, 0.15);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 1rem;
@@ -1469,8 +1490,8 @@ html.light-mode .mode-switch:hover {
     position: absolute;
     top: 2px;
     left: 2px;
-    width: 1rem;
-    height: 1rem;
+    width: 0.9rem;
+    height: 0.9rem;
     background: linear-gradient(180deg, #fff 0%, #e0e0e0 100%);
     border-radius: 50%;
     box-shadow:
@@ -1480,7 +1501,7 @@ html.light-mode .mode-switch:hover {
 }
 
 .mode-switch:checked::before {
-    transform: translateX(1.1rem);
+    transform: translateX(1.05rem);
 }
 
 .mode-switch-label {
@@ -1501,17 +1522,17 @@ html.light-mode .mode-switch-label {
     background: none;
     border: none;
     cursor: pointer;
-    padding: 8px;
+    padding: 6px;
     z-index: 1000;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 4px;
+    gap: 3px;
 }
 
 .menu-toggle span {
     display: block;
-    width: 18px;
+    width: 17px;
     height: 2px;
     background: rgba(255, 255, 255, 0.9);
     border-radius: 2px;
@@ -1700,15 +1721,37 @@ body.light-mode .contact-item:hover {
     }
 
     .posts {
-        padding: 2rem 1.5rem;
+        padding: 1rem 0.95rem;
+        margin: 1.35rem 0;
+    }
+
+    .posts ul {
+        gap: 0.4rem;
     }
 
     .posts a {
-        padding: 1.15rem 1.25rem;
+        padding: 0.75rem 0.9rem;
+        padding-right: 2.2rem;
     }
 
     .posts a::after {
-        right: 1.25rem;
+        right: 1rem;
+    }
+
+    .posts h3 {
+        font-size: 1rem;
+    }
+
+    .posts p {
+        font-size: 0.82rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .posts small {
+        margin-top: 0.32rem;
     }
 
     .arrow {
@@ -1745,7 +1788,7 @@ body.light-mode .contact-item:hover {
 
 @media (max-width: 767px) {
     header {
-        padding: 0.55rem 1.75rem;
+        padding: 0.42rem 1.5rem;
         border-radius: 999px;
         width: calc(100% - 48px);
         max-width: 600px;
@@ -1779,20 +1822,20 @@ body.light-mode .contact-item:hover {
     }
 
     .logo a {
-        font-size: 0.95rem;
+        font-size: 0.92rem;
         margin-right: 0;
     }
 
     .nav-right {
         display: flex;
         align-items: center;
-        gap: 0.4rem;
+        gap: 0.35rem;
         flex-shrink: 0;
     }
 
     .nav-menu {
         position: fixed;
-        top: 60px;
+        top: 52px;
         left: 50%;
         transform: translateX(-50%);
         width: calc(100% - 40px);
@@ -1947,12 +1990,12 @@ body.light-mode .contact-item:hover {
     }
 
     header {
-        padding: 0.55rem 2rem;
+        padding: 0.44rem 1.75rem;
     }
 
     nav a {
-        padding: 0.45rem 1.1rem;
-        font-size: 0.95rem;
+        padding: 0.38rem 1rem;
+        font-size: 0.92rem;
     }
 }
 
@@ -1962,12 +2005,12 @@ body.light-mode .contact-item:hover {
 
 @media (max-width: 480px) {
     header {
-        padding: 0.5rem 1.5rem;
+        padding: 0.4rem 1.35rem;
         width: calc(100% - 32px);
     }
 
     .logo a {
-        font-size: 0.95rem;
+        font-size: 0.92rem;
     }
 
     main {
@@ -2007,24 +2050,40 @@ body.light-mode .contact-item:hover {
     }
 
     .posts {
-        padding: 1.5rem;
+        padding: 0.85rem 0.75rem;
+        margin: 1.1rem 0;
+    }
+
+    .posts ul {
+        gap: 0.38rem;
     }
 
     .posts a {
-        padding: 1.1rem 1rem;
+        padding: 0.68rem 0.78rem;
+        padding-right: 2rem;
+        border-radius: 12px;
     }
 
     .posts a::after {
-        right: 1rem;
-        font-size: 0.9rem;
+        right: 0.85rem;
+        font-size: 0.85rem;
     }
 
     .posts h3 {
-        font-size: 1rem;
+        font-size: 0.95rem;
     }
 
     .posts p {
-        font-size: 0.82rem;
+        font-size: 0.78rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .posts small {
+        font-size: 0.66rem;
+        margin-top: 0.28rem;
     }
 
     .contact {
