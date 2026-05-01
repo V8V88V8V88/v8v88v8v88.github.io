@@ -91,7 +91,7 @@ header {
     border: 1px solid rgba(255, 255, 255, 0.1);
 
     box-shadow:
-        0 0 0 0.5px rgba(255, 255, 255, 0.05),
+        0 1px 0 0 rgba(255, 255, 255, 0.06),
         0 4px 24px rgba(0, 0, 0, 0.15),
         0 1px 3px rgba(0, 0, 0, 0.1),
         inset 0 1px 0 rgba(255, 255, 255, 0.05);
@@ -148,7 +148,7 @@ body.scrolling header {
             rgba(255, 255, 255, 0) 100%),
         rgba(20, 20, 20, 0.35);
     box-shadow:
-        0 0 0 0.5px rgba(255, 255, 255, 0.06),
+        0 1px 0 0 rgba(255, 255, 255, 0.08),
         0 8px 32px rgba(0, 0, 0, 0.25),
         0 2px 6px rgba(0, 0, 0, 0.15),
         inset 0 1px 0 rgba(255, 255, 255, 0.05);
@@ -163,15 +163,14 @@ body.light-mode header {
             rgba(255, 255, 255, 0.1) 100%),
         rgba(245, 245, 247, 0.2);
 
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    border: 1.5px solid rgba(0, 0, 0, 0.20);
 
     box-shadow:
         0 0 0 0.5px rgba(255, 255, 255, 0.4),
         0 4px 30px rgba(0, 0, 0, 0.06),
         0 1px 3px rgba(0, 0, 0, 0.03),
         inset 0 1px 0 rgba(255, 255, 255, 0.95),
-        inset -1px 0 0 rgba(255, 255, 255, 0.7),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.02);
+        inset 0 0 0 1px rgba(255, 255, 255, 0.5);
 
     backdrop-filter: blur(60px) saturate(200%);
     -webkit-backdrop-filter: blur(60px) saturate(200%);
@@ -186,15 +185,14 @@ html.light-mode header {
             rgba(255, 255, 255, 0.1) 100%),
         rgba(245, 245, 247, 0.2);
 
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    border: 1.5px solid rgba(0, 0, 0, 0.20);
 
     box-shadow:
         0 0 0 0.5px rgba(255, 255, 255, 0.4),
         0 4px 30px rgba(0, 0, 0, 0.06),
         0 1px 3px rgba(0, 0, 0, 0.03),
         inset 0 1px 0 rgba(255, 255, 255, 0.95),
-        inset -1px 0 0 rgba(255, 255, 255, 0.7),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.02);
+        inset 0 0 0 1px rgba(255, 255, 255, 0.5);
 
     backdrop-filter: blur(60px) saturate(200%);
     -webkit-backdrop-filter: blur(60px) saturate(200%);
