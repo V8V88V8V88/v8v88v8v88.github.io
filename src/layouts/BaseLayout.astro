@@ -309,6 +309,115 @@ const {
         if (e.key === 'Escape' && guestbookOverlay.classList.contains('open')) closeGuestbook();
       });
     });
+
+    /* ---- Subtle floating astrophage particles background ---- */
+    (function() {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      var canvas = document.createElement('canvas');
+      canvas.id = 'bg-canvas';
+      canvas.setAttribute('aria-hidden', 'true');
+      document.body.insertBefore(canvas, document.body.firstChild);
+
+      var ctx = canvas.getContext('2d');
+      var dpr = window.devicePixelRatio || 1;
+      var w, h, particles = [];
+      var mouseX = -9999, mouseY = -9999;
+      var PARTICLE_COUNT = Math.min(Math.floor((window.innerWidth + window.innerHeight) / 3.5), 600);
+      var PUSH_RADIUS = 90;
+      var PUSH_STRENGTH = 1.8;
+
+      function isLight() {
+        return document.body.classList.contains('light-mode') ||
+               document.documentElement.classList.contains('light-mode');
+      }
+
+      function createParticle() {
+        return {
+          x: Math.random() * w,
+          y: Math.random() * h,
+          r: 0.6 + Math.random() * 1.2,
+          vx: (Math.random() - 0.5) * 0.15,
+          vy: (Math.random() - 0.5) * 0.15,
+          baseAlpha: 0.15 + Math.random() * 0.4,
+          phase: Math.random() * 6.283,
+          speed: 0.03 + Math.random() * 0.06
+        };
+      }
+
+      var frame = 0;
+
+      function resize() {
+        w = window.innerWidth;
+        h = window.innerHeight;
+        canvas.width = w * dpr;
+        canvas.height = h * dpr;
+        canvas.style.width = w + 'px';
+        canvas.style.height = h + 'px';
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        if (particles.length === 0) {
+          for (var i = 0; i < PARTICLE_COUNT; i++) particles.push(createParticle());
+        }
+      }
+
+      function step() {
+        ctx.clearRect(0, 0, w, h);
+        var light = isLight();
+        var col = light ? '15,77,31' : '255,255,255';
+        frame++;
+
+        for (var i = 0; i < particles.length; i++) {
+          var p = particles[i];
+
+          // Drift
+          p.x += p.vx;
+          p.y += p.vy;
+
+          // Mouse push
+          var dx = p.x - mouseX;
+          var dy = p.y - mouseY;
+          var dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < PUSH_RADIUS && dist > 0) {
+            var force = (1 - dist / PUSH_RADIUS) * PUSH_STRENGTH;
+            p.x += (dx / dist) * force;
+            p.y += (dy / dist) * force;
+          }
+
+          // Wrap edges
+          if (p.x < -10) p.x = w + 10;
+          if (p.x > w + 10) p.x = -10;
+          if (p.y < -10) p.y = h + 10;
+          if (p.y > h + 10) p.y = -10;
+
+          // Shimmer
+          var shimmer = 0.5 + 0.5 * Math.sin(p.phase + frame * p.speed);
+          var alpha = p.baseAlpha * (0.3 + 0.7 * shimmer);
+          if (light) alpha = Math.min(1.0, alpha * 1.8); // Boost contrast for light mode
+
+          // Draw
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, 6.283);
+          ctx.fillStyle = 'rgba(' + col + ',' + alpha + ')';
+          ctx.fill();
+        }
+
+        requestAnimationFrame(step);
+      }
+
+      window.addEventListener('mousemove', function(e) {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      }, { passive: true });
+
+      document.addEventListener('mouseleave', function() {
+        mouseX = -9999;
+        mouseY = -9999;
+      });
+
+      window.addEventListener('resize', resize);
+      resize();
+      step();
+    })();
   </script>
 </body>
 </html>

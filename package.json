@@ -7,9 +7,9 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "@astrojs/compiler-rs": "^0.1.7",
+    "@astrojs/compiler-rs": "^0.1.10",
     "@astrojs/rss": "^4.0.18",
     "@astrojs/sitemap": "^3.7.2",
-    "astro": "^6.1.7"
+    "astro": "^6.2.1"
   }
 }
