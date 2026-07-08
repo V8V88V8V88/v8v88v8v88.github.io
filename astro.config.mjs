@@ -7,9 +7,4 @@ export default defineConfig({
   build: {
     format: 'directory',
   },
-  experimental: {
-    queuedRendering: {
-      enabled: true,
-    },
-  },
 });
