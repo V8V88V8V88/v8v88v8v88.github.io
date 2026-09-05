@@ -243,7 +243,6 @@ const langFilterMap: Record<string, string> = {
   'Rust': 'Rust',
   'Python': 'Python',
   'Svelte': 'Svelte',
-  'Go': 'Go',
   'Shell': 'Shell',
   'C++': 'C/C++',
   'C': 'C/C++',

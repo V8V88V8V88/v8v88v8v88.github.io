@@ -6,6 +6,7 @@
 
 html {
     scroll-behavior: smooth;
+    overflow-x: clip;
 }
 
 html.light-mode {
@@ -27,6 +28,8 @@ html.dark-mode body {
 }
 
 body {
+    overflow-x: clip;
+    width: 100%;
     font-family:
         "SF Pro Display",
         -apple-system,
@@ -1884,7 +1887,7 @@ body.light-mode .contact-item:hover {
         padding: 1.5rem;
     }
 
-    .project-item img {
+    .projects .project-item img {
         height: 180px;
     }
 
@@ -1956,15 +1959,22 @@ body.light-mode .contact-item:hover {
 
 @media (max-width: 767px) {
     header {
-        padding: 0.42rem 1.5rem;
+        padding: 0.42rem 1.35rem;
         border-radius: 999px;
-        width: calc(100% - 48px);
-        max-width: 600px;
+        position: fixed;
+        top: 10px;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        transform: none;
+        width: calc(100% - 32px);
+        max-width: 580px;
         background: rgba(15, 15, 15, 0.95);
         backdrop-filter: blur(22px) saturate(140%);
         -webkit-backdrop-filter: blur(22px) saturate(140%);
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
         border: 1px solid rgba(255, 255, 255, 0.12);
+        box-sizing: border-box;
     }
 
     body.light-mode header {
@@ -2004,10 +2014,13 @@ body.light-mode .contact-item:hover {
     .nav-menu {
         position: fixed;
         top: 52px;
-        left: 50%;
-        transform: translateX(-50%);
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        transform: none;
         width: calc(100% - 40px);
         max-width: 300px;
+        box-sizing: border-box;
         display: none;
         flex-direction: column;
         align-items: center;
@@ -2173,8 +2186,14 @@ body.light-mode .contact-item:hover {
 
 @media (max-width: 480px) {
     header {
-        padding: 0.4rem 1.35rem;
-        width: calc(100% - 32px);
+        padding: 0.38rem 1.1rem;
+        left: 0;
+        right: 0;
+        width: calc(100% - 24px);
+        max-width: 100%;
+        transform: none;
+        margin: 0 auto;
+        box-sizing: border-box;
     }
 
     .logo a {
@@ -2213,7 +2232,7 @@ body.light-mode .contact-item:hover {
         border-radius: 16px;
     }
 
-    .project-item img {
+    .projects .project-item img {
         height: 160px;
     }
 

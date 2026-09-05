@@ -75,7 +75,6 @@ function getHostedLabel(url: string): string {
         <span class="tech-pill" data-filter-lang="Python">Python</span>
         <span class="tech-pill" data-filter-lang="TypeScript">TypeScript</span>
         <span class="tech-pill" data-filter-lang="Svelte">Svelte</span>
-        <span class="tech-pill" data-filter-lang="Go">Go</span>
         <span class="tech-pill" data-filter-lang="Shell">Shell</span>
       </div>
 
@@ -168,10 +167,10 @@ function getHostedLabel(url: string): string {
       'Rust': 'Rust',
       'Python': 'Python',
       'Svelte': 'Svelte',
-      'Go': 'Go',
       'Shell': 'Shell',
       'C++': 'C/C++',
       'C': 'C/C++',
+      'Go': 'Others',
       'JavaScript': 'Others',
       'HTML': 'Others',
       'Theme': 'Others',
@@ -286,7 +285,10 @@ function getHostedLabel(url: string): string {
   min-height: 100vh;
   padding: 0 2rem 4rem;
   max-width: 900px;
+  width: 100%;
   margin: 0 auto;
+  overflow-x: clip;
+  box-sizing: border-box;
 }
 
 .projects-hero {
@@ -297,6 +299,9 @@ function getHostedLabel(url: string): string {
   align-items: flex-start;
   padding: 120px 0 2rem;
   position: relative;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .hero-ascii {
@@ -308,6 +313,9 @@ function getHostedLabel(url: string): string {
   margin-bottom: 2rem;
   opacity: 0.9;
   text-shadow: 0 0 20px rgba(29, 185, 84, 0.4);
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
 }
 
 .hero-tagline {
@@ -447,6 +455,10 @@ function getHostedLabel(url: string): string {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .project-item {
@@ -722,39 +734,6 @@ function getHostedLabel(url: string): string {
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-@media (max-width: 640px) {
-  .project-preview {
-    left: 0.75rem;
-    top: 50%;
-    width: 2.85rem;
-    height: 2.85rem;
-    transform: translateY(-50%) rotate(0deg);
-  }
-
-  .project-item:has(.project-preview) .project-main-link {
-    padding-left: 3.6rem;
-  }
-
-  .project-item:hover .project-preview,
-  .project-item:focus-within .project-preview {
-    left: 0.75rem;
-    top: 50%;
-    width: 2.85rem;
-    height: 2.85rem;
-    transform: translateY(-50%) scale(1.05);
-  }
-
-  .project-item:hover .project-main-link,
-  .project-item:focus-within .project-main-link {
-    padding-left: 3.6rem;
-  }
-
-  .project-item:hover .project-hover-info,
-  .project-item:focus-within .project-hover-info {
-    right: 0.75rem;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .project-item,
   .project-preview,
@@ -897,16 +876,25 @@ function getHostedLabel(url: string): string {
 
 @media (max-width: 768px) {
   .projects-page {
-    padding: 0 1.5rem 3rem;
+    padding: 0 1.25rem 3rem;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: clip;
+    box-sizing: border-box;
   }
 
   .projects-hero {
-    padding: 100px 0 2rem;
+    padding: 95px 0 1.75rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .hero-ascii {
     font-size: 0.3rem;
     margin-bottom: 0.85rem;
+    max-width: 100%;
+    overflow-x: hidden;
   }
 
   .hero-tagline {
@@ -915,10 +903,14 @@ function getHostedLabel(url: string): string {
 
   .contrib-chart {
     margin-top: 0.25rem;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
   }
 
   .hero-stats {
-    gap: 2rem;
+    gap: 1.75rem;
   }
 
   .hero-stat-value {
@@ -930,7 +922,10 @@ function getHostedLabel(url: string): string {
     flex-direction: column;
     align-items: stretch;
     gap: 0.75rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.35rem;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
   }
 
   .hero-tech-list {
@@ -941,11 +936,13 @@ function getHostedLabel(url: string): string {
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    gap: 0.4rem;
-    padding: 0.2rem 0;
-    margin: 0 -1.5rem;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+    gap: 0.38rem;
+    padding: 0.25rem 0;
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
   }
 
   .hero-tech-list::-webkit-scrollbar {
@@ -954,7 +951,7 @@ function getHostedLabel(url: string): string {
 
   .tech-pill {
     font-size: 0.65rem;
-    padding: 0.3rem 0.6rem;
+    padding: 0.28rem 0.6rem;
     flex-shrink: 0;
     white-space: nowrap;
   }
@@ -969,15 +966,61 @@ function getHostedLabel(url: string): string {
 
   .filter-btn {
     font-size: 0.65rem;
-    padding: 0.35rem 0.75rem;
+    padding: 0.32rem 0.75rem;
     white-space: nowrap;
+  }
+
+  .project-list {
+    gap: 0.55rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .project-item {
     grid-template-columns: 1fr auto;
-    gap: 1rem;
-    padding: 0.72rem 0.75rem;
-    margin: 0 -0.75rem;
+    gap: 0.8rem;
+    padding: 0.55rem 0.8rem;
+    margin: 0;
+    min-height: 3.9rem;
+    border-radius: 14px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .project-item.featured,
+  .project-list.show-featured-only .project-item.featured {
+    padding: 0.55rem 0.8rem;
+    margin: 0;
+    border-radius: 14px;
+  }
+
+  .project-preview {
+    left: 0.8rem;
+    top: 50%;
+    width: 2.75rem;
+    height: 2.75rem;
+    transform: translateY(-50%) rotate(0deg);
+  }
+
+  .project-preview img {
+    border-radius: 8px;
+  }
+
+  .project-item:has(.project-preview) .project-main-link,
+  .project-item:hover .project-main-link,
+  .project-item:focus-within .project-main-link {
+    padding-left: 3.55rem;
+  }
+
+  .project-item:hover .project-preview,
+  .project-item:focus-within .project-preview {
+    left: 0.8rem;
+    top: 50%;
+    width: 2.75rem;
+    height: 2.75rem;
+    transform: translateY(-50%) scale(1.04);
   }
 
   .project-lang {
@@ -985,26 +1028,41 @@ function getHostedLabel(url: string): string {
   }
 
   .project-name {
-    font-size: 0.95rem;
+    font-size: 0.92rem;
   }
 
   .project-desc {
-    font-size: 0.8rem;
+    font-size: 0.78rem;
+  }
+
+  .project-item:hover .project-hover-info,
+  .project-item:focus-within .project-hover-info {
+    right: 0.8rem;
+    bottom: 0.4rem;
   }
 }
 
 @media (max-width: 480px) {
   .projects-page {
-    padding: 0 1rem 2rem;
+    padding: 0 0.85rem 2rem;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: clip;
+    box-sizing: border-box;
   }
 
   .projects-hero {
-    padding: 90px 0 1.5rem;
+    padding: 85px 0 1.25rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .hero-ascii {
     font-size: 0.22rem;
     margin-bottom: 0.65rem;
+    max-width: 100%;
+    overflow-x: hidden;
   }
 
   .hero-tagline {
@@ -1014,10 +1072,14 @@ function getHostedLabel(url: string): string {
 
   .contrib-chart {
     margin: 0.25rem 0 1rem;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
   }
 
   .hero-stats {
-    gap: 1.5rem;
+    gap: 1.25rem;
     flex-wrap: wrap;
   }
 
@@ -1030,69 +1092,128 @@ function getHostedLabel(url: string): string {
   }
 
   .projects-toolbar {
-    gap: 0.65rem;
-    margin-bottom: 1.25rem;
+    gap: 0.6rem;
+    margin-bottom: 1.1rem;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
   }
 
   .hero-tech-list {
-    margin: 0 -1rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    gap: 0.35rem;
+    margin: 0;
+    padding: 0.2rem 0;
+    gap: 0.32rem;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
   }
 
   .tech-pill {
     font-size: 0.6rem;
-    padding: 0.25rem 0.5rem;
+    padding: 0.22rem 0.5rem;
   }
 
   .filter-controls {
     gap: 0.4rem;
+    width: 100%;
   }
 
   .filter-btn {
     font-size: 0.62rem;
-    padding: 0.3rem 0.65rem;
+    padding: 0.28rem 0.65rem;
+  }
+
+  .section-label {
+    font-size: 0.62rem;
+    margin: 1.25rem 0 0.65rem;
+    padding: 0.75rem 0 0.25rem;
+  }
+
+  .project-list {
+    gap: 0.45rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .project-item {
-    padding: 0.68rem 0.5rem;
-    margin: 0 -0.5rem;
+    padding: 0.44rem 0.6rem;
+    margin: 0;
+    min-height: 3.45rem;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .project-item.featured,
+  .project-list.show-featured-only .project-item.featured {
+    padding: 0.44rem 0.6rem;
+    margin: 0;
+    border-radius: 12px;
   }
 
   .project-preview {
-    left: 0.55rem;
-    width: 2.55rem;
-    height: 2.55rem;
+    left: 0.6rem;
+    top: 50%;
+    width: 2.35rem;
+    height: 2.35rem;
+    transform: translateY(-50%) rotate(0deg);
   }
 
-  .project-item:has(.project-preview) .project-main-link {
-    padding-left: 3.15rem;
+  .project-preview img {
+    border-radius: 7px;
+  }
+
+  .project-item:has(.project-preview) .project-main-link,
+  .project-item:hover .project-main-link,
+  .project-item:focus-within .project-main-link {
+    padding-left: 2.95rem;
   }
 
   .project-item:hover .project-preview,
   .project-item:focus-within .project-preview {
-    left: 0.55rem;
-    width: 2.55rem;
-    height: 2.55rem;
+    left: 0.6rem;
+    top: 50%;
+    width: 2.35rem;
+    height: 2.35rem;
+    transform: translateY(-50%) scale(1.04);
   }
 
-  .project-item:hover .project-main-link,
-  .project-item:focus-within .project-main-link {
-    padding-left: 3.15rem;
+  .project-item:hover,
+  .project-item:focus-within {
+    transform: none;
   }
 
   .project-name {
-    font-size: 0.9rem;
+    font-size: 0.82rem;
+    line-height: 1.25;
   }
 
   .project-desc {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
+    line-height: 1.3;
+    margin-top: 0.12rem;
   }
 
   .project-item:hover .project-hover-info,
   .project-item:focus-within .project-hover-info {
-    right: 0.5rem;
+    right: 0.6rem;
+    bottom: 0.32rem;
+  }
+
+  .project-hosted {
+    font-size: 0.7rem;
+  }
+
+  .project-item:has(.project-hosted):hover,
+  .project-item:has(.project-hosted):focus-within,
+  .project-item.featured:has(.project-hosted):hover,
+  .project-item.featured:has(.project-hosted):focus-within,
+  .project-list.show-featured-only .project-item.featured:has(.project-hosted):hover,
+  .project-list.show-featured-only .project-item.featured:has(.project-hosted):focus-within {
+    padding-bottom: 1.3rem;
   }
 }
 
@@ -1100,7 +1221,9 @@ function getHostedLabel(url: string): string {
   margin: 1rem 0 1rem;
   width: 100%;
   max-width: 780px;
-  overflow: hidden;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
 }
 
 .contrib-header {
@@ -1116,9 +1239,10 @@ function getHostedLabel(url: string): string {
 
 :global(.contrib-grid) {
   display: grid;
-  grid-template-columns: repeat(53, 1fr);
+  grid-template-columns: repeat(53, minmax(0, 1fr));
   gap: 2px;
   width: 100%;
+  min-width: 0;
 }
 
 :global(.contrib-week) {
