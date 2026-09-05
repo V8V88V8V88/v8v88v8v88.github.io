@@ -5,7 +5,9 @@ export interface Project {
   description: string;
   url: string;
   language: string;
-  image: string | null;
+  image: string;
+  hasCustomImage?: boolean;
+  homepage: string | null;
   stars: number;
   category: string;
   featured: boolean;
@@ -58,13 +60,51 @@ const categoryOverrides: Record<string, string> = {
 };
 
 const descriptionOverrides: Record<string, string> = {
-  'thefossclub.github.io': 'Official website for The FOSS Club',
-  'piracyindex': 'The greatest piracy index of all time',
-  'face-recognition': 'Face detection on live cameras using OpenCV and Dlib',
-  'Telegram-GTK4-Libadwaita-Theme': 'A GTK4 - Libadwaita Inspired Theme for Telegram Desktop',
-  'vfetch': 'A minimal system information fetcher',
-  'Fedorable': 'Simple script for maintaining Fedora Linux',
-  'nanoHTTP': 'Nano lightweight HTTP server in C',
+  'thefossclub.github.io': 'Official website for The FOSS Club, bringing together people who learn, build, and share open-source software.',
+  'indx': 'An interactive map for indexing places, projects, and anything worth discovering through a focused TypeScript interface.',
+  'Synthio': 'A minimalist music visualizer built with Svelte, turning live audio into an expressive and responsive visual experience.',
+  'piracyindex': 'A curated piracy index that brings useful sources together in one fast, searchable, and easy-to-navigate place.',
+  'vaibring': 'A carefully curated webring for discovering thoughtful personal websites, independent creators, and interesting corners of the web.',
+  'neolekh': 'A simple, text-focused Hugo portfolio theme with dark mode and lightweight GoatCounter analytics for a distraction-free presence.',
+  'thefossclub-app': 'A Svelte companion for The FOSS Club, making community resources, events, and updates easier to discover and revisit.',
+  'musical-playground': 'An interactive music playground for trying instruments online, combining Svelte, Vue, and Tone.js in one playful space.',
+  'RQG': 'A small random code generator built as an FCC experiment, providing a quick way to create and test generated code snippets.',
+  'FOSS-Hack-Delhi': 'A community-focused website promoting FOSS Hack in Delhi, with event information and an invitation to build together.',
+  'Telegram-GTK4-Libadwaita-Theme': 'A GTK4 and Libadwaita-inspired theme for Telegram Desktop, bringing a cleaner and more native Linux visual language.',
+  'dotfiles': 'A personal collection of Linux configuration files that documents the tools, preferences, and everyday setup behind the system.',
+  'face-recognition': 'A live-camera face detection project using OpenCV and Dlib to explore practical computer vision workflows and recognition basics.',
+  'Vajra': 'An AI-powered cyber threat forecaster for critical infrastructure, focused on turning security signals into earlier and clearer warnings.',
+  'H1RE': 'An AI-powered resume analyzer for starters that reviews CVs, estimates ATS readiness, and suggests practical improvements.',
+  'AI-Child-Protection': 'An adaptive parental-control system using face detection and age estimation to make digital safety more responsive and difficult to bypass.',
+  'cnn-image-classification': 'A convolutional neural network experiment for classifying CIFAR-10 images, covering the core steps of training and evaluation.',
+  'T2S': 'A text-to-speech experiment that explores how written content can be converted into natural audio through an accessible interface.',
+  'XE': 'A transpiled programming language project exploring its own syntax, compiler pipeline, and the ideas involved in building a language from scratch.',
+  'MarkVue': 'A sleek GTK-based Markdown viewer that lets you write content and see the rendered output update in real time.',
+  'yama': 'A lightweight package manager using C and Rust, designed to keep software installation and dependency handling simple and efficient.',
+  'rusty-snake': 'A compact Snake game built with Rust and Piston, combining a familiar arcade loop with a hands-on game-development exercise.',
+  'Rust-RISCV-Compiler': 'A Rust implementation of a RISC-V compiler, exploring instruction translation and the foundations of a small compilation pipeline.',
+  'mini-vm': 'A minimal stack-based virtual machine with assembler, disassembler, and debugger pieces for exploring how runtimes execute programs.',
+  'H3IST': 'A next-generation elevator control system built in Rust, modelling coordinated movement, requests, and the constraints of real-time control.',
+  'BudgetWiser': 'A Rust expense tracker for recording spending and understanding personal finances through a small, focused command-line workflow.',
+  'iced-calculator': 'A simple calculator built with the Iced toolkit and Rust, created to explore native interfaces and clean event-driven interactions.',
+  'gtk-markdown-viewer': 'A lightweight GTK Markdown viewer focused on reading and rendering formatted notes in a simple native desktop window.',
+  'Fedorable': 'A small Fedora maintenance utility that gathers common system tasks into a practical script for a smoother Linux workflow.',
+  'vfetch': 'A minimal system-information fetcher that presents useful hardware and software details in a fast, terminal-friendly format.',
+  'canva-linux': 'A Linux-focused Canva concept exploring how familiar visual design workflows could feel at home in an open desktop environment.',
+  'nanoHTTP': 'A tiny HTTP server written in C, keeping the request and response path understandable while exploring the building blocks of web servers.',
+  'DeskImage': 'A Rust CLI tool that generates Desktop Entry files for AppImages, removing repetitive setup work from the Linux application workflow.',
+  'simple-round-robin-scheduler': 'A small round-robin scheduler written in C during operating-systems coursework, demonstrating fair time-sliced task execution.',
+  'linux-keylogger': 'A low-level Linux input experiment written in C++, intended to study keyboard-event handling and the responsibilities of system software.',
+  'GNOME-bluetooth-battery-monitor': 'A GNOME Shell utility that surfaces Bluetooth device battery levels so important peripherals are easier to keep track of.',
+  'gtk-emoji-picker': 'A GTK4 emoji picker opened with a global shortcut, designed to make expressive input quick and natural across the desktop.',
+  'v8v88v8v88.github.io': 'A personal portfolio site combining Linux, FOSS, code, and design into a small space for experiments, projects, and writing.',
+  'Passvyn': 'A Python password manager focused on secure local storage, giving sensitive credentials a private and straightforward place to live.',
+  'LogiChain': 'A supply-chain management system project in Java, modelling how products and information move through connected business processes.',
+  'PDFpaglu': 'An AI-powered document analyzer that helps turn uploaded documents into clearer, more useful summaries and extracted insights.',
+  'helium-copr': 'A GitHub Action for working with Helium COPR packages, automating part of the build and publishing workflow for Fedora software.',
+  'Jina-IDS': 'An intrusion-detection system written in Python, exploring how suspicious activity can be observed, classified, and surfaced to users.',
+  'Sauce_Run': 'An endless runner made with the Godot engine, built around quick reactions, repeated runs, and a playful arcade-style challenge.',
+  'chemical-equipment-visualizer': 'A hybrid web and desktop tool for visualizing and analysing chemical equipment data through Django REST, React, and PyQt5.',
 };
 
 const projectImageMap: Record<string, string> = {
@@ -79,8 +119,17 @@ const projectImageMap: Record<string, string> = {
   'vfetch': '/images/vfetch.webp',
 };
 
-function getProjectImage(name: string): string | null {
-  return projectImageMap[name.toLowerCase()] || null;
+function getProjectImage(name: string, htmlUrl: string): string {
+  const curatedImage = projectImageMap[name.toLowerCase()];
+  if (curatedImage) return curatedImage;
+
+  const repoPath = htmlUrl.replace('https://github.com/', '').replace(/\/$/, '');
+  return `https://opengraph.githubassets.com/1/${repoPath}`;
+}
+
+function getProjectDescription(repo: GitHubRepo): string {
+  const description = descriptionOverrides[repo.name] || repo.description;
+  return description?.trim() || `${repo.name} — an open-source project by ${GITHUB_USERNAME}.`;
 }
 
 const fallbackRepos: GitHubRepo[] = [
@@ -189,6 +238,7 @@ interface GitHubRepo {
   name: string;
   description: string | null;
   html_url: string;
+  homepage?: string | null;
   language: string | null;
   stargazers_count: number;
   fork: boolean;
@@ -349,10 +399,12 @@ export async function getProjects(): Promise<Project[]> {
   return eligibleRepos
     .map(repo => ({
       name: repo.name,
-      description: descriptionOverrides[repo.name] || repo.description || '',
+      description: getProjectDescription(repo),
       url: repo.html_url,
       language: repo.language || 'Unknown',
-      image: getProjectImage(repo.name),
+      image: getProjectImage(repo.name, repo.html_url),
+      hasCustomImage: Boolean(projectImageMap[repo.name.toLowerCase()]),
+      homepage: repo.homepage?.trim() || null,
       stars: repo.stargazers_count,
       category: categoryOverrides[repo.name] || getDefaultCategory(repo.language),
       featured: featuredNames.has(repo.name),

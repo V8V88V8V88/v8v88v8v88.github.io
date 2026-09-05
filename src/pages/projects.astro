@@ -5,8 +5,14 @@ import { getProjects, groupByCategory } from '../data/projects';
 const projects = await getProjects();
 const grouped = groupByCategory(projects);
 const languages = new Set(projects.map(p => p.language));
-const repoCount = projects.length;
-const langCount = languages.size;
+
+function getHostedLabel(url: string): string {
+  try {
+    return new URL(url).hostname.replace(/^www\./, '');
+  } catch {
+    return url;
+  }
+}
 ---
 <BaseLayout
   title="Projects | V8V88V8V88"
@@ -45,38 +51,38 @@ const langCount = languages.size;
 
       <div class="hero-stats">
         <div class="hero-stat">
-          <span class="hero-stat-value">{repoCount}+</span>
-          <span class="hero-stat-label">Repositories</span>
+          <span class="hero-stat-value">55+</span>
+          <span class="hero-stat-label">Projects</span>
         </div>
         <div class="hero-stat">
-          <span class="hero-stat-value">{langCount}+</span>
-          <span class="hero-stat-label">Languages</span>
+          <span class="hero-stat-value">8+</span>
+          <span class="hero-stat-label">Years Experience</span>
         </div>
         <div class="hero-stat">
           <span class="hero-stat-value">∞</span>
           <span class="hero-stat-label">Side quests</span>
         </div>
       </div>
-      <div class="hero-tech">
-        <span class="hero-tech-label">I write in</span>
-        <div class="hero-tech-list">
-          <span class="tech-pill" data-filter-lang="all">All</span>
-          <span class="tech-pill" data-filter-lang="Rust">Rust</span>
-          <span class="tech-pill" data-filter-lang="C/C++">C/C++</span>
-          <span class="tech-pill" data-filter-lang="Python">Python</span>
-          <span class="tech-pill" data-filter-lang="TypeScript">TypeScript</span>
-          <span class="tech-pill" data-filter-lang="Svelte">Svelte</span>
-          <span class="tech-pill" data-filter-lang="Go">Go</span>
-          <span class="tech-pill" data-filter-lang="Shell">Shell</span>
-        </div>
-      </div>
     </section>
 
     <div class="projects-divider"></div>
 
-    <div class="filter-controls">
-      <button class="filter-btn active" data-filter="all">All Projects</button>
-      <button class="filter-btn" data-filter="featured">Featured Only ★</button>
+    <div class="projects-toolbar">
+      <div class="hero-tech-list">
+        <span class="tech-pill" data-filter-lang="all">All</span>
+        <span class="tech-pill" data-filter-lang="Rust">Rust</span>
+        <span class="tech-pill" data-filter-lang="C/C++">C/C++</span>
+        <span class="tech-pill" data-filter-lang="Python">Python</span>
+        <span class="tech-pill" data-filter-lang="TypeScript">TypeScript</span>
+        <span class="tech-pill" data-filter-lang="Svelte">Svelte</span>
+        <span class="tech-pill" data-filter-lang="Go">Go</span>
+        <span class="tech-pill" data-filter-lang="Shell">Shell</span>
+      </div>
+
+      <div class="filter-controls">
+        <button class="filter-btn active" data-filter="all">All Projects</button>
+        <button class="filter-btn" data-filter="featured">Featured Only ★</button>
+      </div>
     </div>
 
     <div class="project-list">
@@ -84,16 +90,27 @@ const langCount = languages.size;
         <Fragment>
           <span class="section-label">{group.category}</span>
           {group.projects.map(project => (
-            <a href={project.url} target="_blank" rel="noopener noreferrer"
+            <div
               class={`project-item${project.featured ? ' featured' : ''}`}
               data-lang={project.langFilter}>
-              <div class="project-info">
-                <div class="project-name">{project.name}</div>
-                <div class="project-desc">{project.description}</div>
-              </div>
-              <span class="project-lang">{project.language}</span>
-              <span class="project-arrow">→</span>
-            </a>
+              <a class="project-main-link" href={project.url} target="_blank" rel="noopener noreferrer">
+                <div class="project-info">
+                  <div class="project-name">{project.name}</div>
+                  <div class="project-desc">{project.description}</div>
+                </div>
+                <span class="project-lang">{project.language}</span>
+              </a>
+              {project.homepage && (
+                <div class="project-hover-info">
+                  <a class="project-hosted" href={project.homepage} target="_blank" rel="noopener noreferrer" title={project.homepage} aria-label={`Open ${getHostedLabel(project.homepage)}`}>{getHostedLabel(project.homepage)}</a>
+                </div>
+              )}
+              {project.image && (
+                <div class={`project-preview${project.hasCustomImage ? ' has-custom-image' : ' is-fallback-image'}`} aria-hidden="true">
+                  <img src={project.image} alt="" loading="lazy" />
+                </div>
+              )}
+            </div>
           ))}
         </Fragment>
       ))}
@@ -183,7 +200,6 @@ const langCount = languages.size;
       const filterBtns = document.querySelectorAll('.filter-btn');
       const projectList = document.querySelector('.project-list');
       const techPills = document.querySelectorAll('.tech-pill');
-
       const allPill = document.querySelector('.tech-pill[data-filter-lang="all"]');
       if (allPill) allPill.classList.add('active');
 
@@ -279,7 +295,7 @@ const langCount = languages.size;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  padding: 120px 0 2.5rem;
+  padding: 120px 0 2rem;
   position: relative;
 }
 
@@ -296,11 +312,11 @@ const langCount = languages.size;
 
 .hero-tagline {
   font-family: 'EB Garamond', Georgia, serif;
-  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-size: clamp(1.35rem, 2.7vw, 2.15rem);
   font-weight: 400;
   color: #fff;
-  max-width: 600px;
-  line-height: 1.6;
+  max-width: none;
+  line-height: 1.4;
   letter-spacing: 0.01em;
   margin-bottom: 1.5rem;
 }
@@ -339,30 +355,26 @@ const langCount = languages.size;
   color: rgba(255, 255, 255, 0.4);
 }
 
-.hero-tech {
-  margin-top: 2rem;
+.projects-toolbar {
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.hero-tech-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  color: rgba(255, 255, 255, 0.35);
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  margin-bottom: 2rem;
 }
 
 .hero-tech-list {
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.45rem;
 }
 
 .tech-pill {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.7rem;
+  line-height: 1.3;
   padding: 0.35rem 0.75rem;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -388,19 +400,22 @@ const langCount = languages.size;
   width: 100%;
   height: 1px;
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1) 20%, rgba(255, 255, 255, 0.1) 80%, transparent);
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 .filter-controls {
   display: flex;
-  gap: 0.5rem;
-  margin-bottom: 2rem;
+  align-items: center;
+  gap: 0.45rem;
+  flex-shrink: 0;
+  margin-bottom: 0;
 }
 
 .filter-btn {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.7rem;
-  padding: 0.5rem 1rem;
+  line-height: 1.3;
+  padding: 0.35rem 0.85rem;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 100px;
@@ -435,23 +450,96 @@ const langCount = languages.size;
 }
 
 .project-item {
-  display: grid;
-  grid-template-columns: 1fr auto auto;
-  gap: 1.5rem;
-  align-items: center;
-  padding: 1rem 1rem;
+  padding: 0.8rem 1rem;
   margin: 0 -1rem;
-  border-radius: 12px;
+  border-radius: 16px;
   text-decoration: none;
-  transition: all 0.2s ease;
+  position: relative;
+  overflow: visible;
+  z-index: 0;
+  transition: background 0.2s ease, border-color 0.35s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.45s ease;
   border: 1px solid rgba(255, 255, 255, 0.05);
   background: rgba(255, 255, 255, 0.02);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
 }
 
-.project-item:hover {
+.project-main-link {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1.5rem;
+  align-items: center;
+  color: #fff;
+  text-decoration: none;
+  transition: padding-left 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.project-main-link:focus-visible {
+  outline: 1px solid rgba(29, 185, 84, 0.7);
+  outline-offset: 0.35rem;
+  border-radius: 0.2rem;
+}
+
+.project-item:hover,
+.project-item:focus-within {
   background: rgba(29, 185, 84, 0.08);
+  border-color: rgba(29, 185, 84, 0.22);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.22);
+  transform: translateY(-2px) scale(1.012);
+  z-index: 5;
+}
+
+.project-item:has(.project-hosted):hover,
+.project-item:has(.project-hosted):focus-within {
+  padding-bottom: 1.55rem;
+}
+
+.project-item:hover .project-main-link,
+.project-item:focus-within .project-main-link {
+  padding-left: 9.8rem;
+}
+
+.project-preview {
+  position: absolute;
+  left: -1.2rem;
+  top: 50%;
+  width: 10.45rem;
+  height: 10.45rem;
+  overflow: visible;
+  opacity: 0;
+  transform: translateY(-52%) rotate(-4deg) scale(0.85);
+  transform-origin: center right;
+  transition: opacity 0.25s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+  will-change: opacity, transform;
+}
+
+.project-item:hover .project-preview,
+.project-item:focus-within .project-preview {
+  opacity: 1;
+  transform: translateY(-52%) rotate(-4deg) scale(1);
+}
+
+.project-preview img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: none;
+  outline: none;
+  border-radius: 14px;
+  box-shadow:
+    0 16px 36px -8px rgba(0, 0, 0, 0.7),
+    0 8px 18px -4px rgba(0, 0, 0, 0.45);
+  transition: filter 0.35s ease, box-shadow 0.35s ease;
+}
+
+.project-item:hover .project-preview img,
+.project-item:focus-within .project-preview img {
+  filter: saturate(1.08) contrast(1.03);
+  box-shadow:
+    0 28px 56px -12px rgba(0, 0, 0, 0.85),
+    0 14px 28px -6px rgba(0, 0, 0, 0.6);
 }
 
 .project-info {
@@ -460,11 +548,11 @@ const langCount = languages.size;
 
 .project-name {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 1rem;
+  font-size: 0.98rem;
   font-weight: 500;
   color: #fff;
-  margin-bottom: 0.35rem;
-  line-height: 1.5;
+  margin-bottom: 0.16rem;
+  line-height: 1.35;
   letter-spacing: 0;
   transition: color 0.2s ease;
 }
@@ -473,15 +561,84 @@ const langCount = languages.size;
   color: #1DB954;
 }
 
+.project-item:focus-within .project-name {
+  color: #1DB954;
+}
+
+.project-hover-info {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  left: auto;
+  right: 1rem;
+  bottom: 0.5rem;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-0.25rem);
+  color: rgba(255, 255, 255, 0.42);
+  justify-content: flex-end;
+  pointer-events: none;
+  z-index: 2;
+  transition: max-height 0.35s ease, opacity 0.25s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.project-item:hover .project-hover-info,
+.project-item:focus-within .project-hover-info {
+  max-height: 3rem;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.project-hosted {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: rgba(29, 185, 84, 0.9);
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+.project-hosted:hover {
+  color: #1DB954;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.project-hosted:focus-visible {
+  outline: 1px solid rgba(29, 185, 84, 0.7);
+  outline-offset: 0.2rem;
+  border-radius: 0.15rem;
+}
+
 .project-desc {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  font-size: 0.875rem;
-  line-height: 1.6;
+  font-size: 0.84rem;
+  line-height: 1.45;
+  max-height: 1.45em;
   letter-spacing: 0.01em;
   color: rgba(255, 255, 255, 0.6);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  transition: max-height 0.35s ease, color 0.2s ease;
+}
+
+.project-item:hover .project-desc,
+.project-item:focus-within .project-desc {
+  display: -webkit-box;
+  max-height: 2.9em;
+  white-space: normal;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .project-lang {
@@ -496,21 +653,10 @@ const langCount = languages.size;
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.project-arrow {
-  font-size: 1.1rem;
-  color: rgba(255, 255, 255, 0.3);
-  transition: all 0.2s ease;
-}
-
-.project-item:hover .project-arrow {
-  color: #1DB954;
-  transform: translateX(4px);
-}
-
 .project-item.featured {
-  border-radius: 8px;
+  border-radius: 16px;
   margin: 0 -1rem;
-  padding: 1rem 1rem;
+  padding: 0.8rem 1rem;
 }
 
 .project-item.featured .project-name::after {
@@ -523,9 +669,9 @@ const langCount = languages.size;
 .project-list.show-featured-only .project-item.featured {
   background: rgba(29, 185, 84, 0.08);
   border: 1px solid rgba(29, 185, 84, 0.15);
-  border-radius: 10px;
+  border-radius: 16px;
   margin: 0.25rem -1rem;
-  padding: 1rem 1rem;
+  padding: 0.8rem 1rem;
 }
 
 .project-list.show-featured-only .project-item.featured .project-name {
@@ -537,6 +683,13 @@ const langCount = languages.size;
   border-color: rgba(29, 185, 84, 0.25);
 }
 
+.project-item.featured:has(.project-hosted):hover,
+.project-item.featured:has(.project-hosted):focus-within,
+.project-list.show-featured-only .project-item.featured:has(.project-hosted):hover,
+.project-list.show-featured-only .project-item.featured:has(.project-hosted):focus-within {
+  padding-bottom: 1.55rem;
+}
+
 .section-label {
   display: block;
   font-family: 'JetBrains Mono', monospace;
@@ -545,9 +698,59 @@ const langCount = languages.size;
   color: #1DB954;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  margin: 2rem 0 0.75rem;
-  padding: 1.5rem 0 0.5rem;
+  margin: 2.2rem 0 1.35rem;
+  padding: 1.25rem 0 0.5rem;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+@media (max-width: 640px) {
+  .project-preview {
+    left: -0.5rem;
+    top: calc(100% + 0.5rem);
+    width: 8.8rem;
+    height: 8.8rem;
+    transform-origin: top left;
+    transform: rotate(-3deg) scale(0.84);
+  }
+
+  .project-item:hover .project-preview,
+  .project-item:focus-within .project-preview {
+    transform: rotate(-3deg) scale(1);
+  }
+
+  .project-item:hover .project-main-link,
+  .project-item:focus-within .project-main-link {
+    padding-left: 0;
+  }
+
+  .project-item:hover .project-hover-info,
+  .project-item:focus-within .project-hover-info {
+    right: 0.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-item,
+  .project-preview,
+  .project-preview img,
+  .project-hover-info,
+  .project-main-link,
+  .project-name,
+  .project-desc {
+    transition-duration: 0.01ms;
+  }
+}
+
+:global(body.light-mode) .project-main-link {
+  color: #1d1d1f;
+}
+
+:global(body.light-mode) .project-hover-info {
+  color: rgba(0, 0, 0, 0.48);
+}
+
+:global(body.light-mode) .project-hosted {
+  color: #0f4d1f;
 }
 
 .section-label:first-child {
@@ -575,10 +778,6 @@ const langCount = languages.size;
 
 :global(body.light-mode) .hero-stat-label {
   color: rgba(0, 0, 0, 0.4);
-}
-
-:global(body.light-mode) .hero-tech-label {
-  color: rgba(0, 0, 0, 0.35);
 }
 
 :global(body.light-mode) .tech-pill {
@@ -665,14 +864,6 @@ const langCount = languages.size;
   border-color: rgba(0, 0, 0, 0.1);
 }
 
-:global(body.light-mode) .project-arrow {
-  color: rgba(0, 0, 0, 0.3);
-}
-
-:global(body.light-mode) .project-item:hover .project-arrow {
-  color: #0f4d1f;
-}
-
 :global(body.light-mode) .section-label {
   color: #0f4d1f;
   border-top-color: rgba(0, 0, 0, 0.08);
@@ -689,6 +880,15 @@ const langCount = languages.size;
 
   .hero-ascii {
     font-size: 0.3rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .hero-tagline {
+    margin-bottom: 0.5rem;
+  }
+
+  .contrib-chart {
+    margin-top: 0.25rem;
   }
 
   .hero-stats {
@@ -699,13 +899,52 @@ const langCount = languages.size;
     font-size: 1.25rem;
   }
 
-  .hero-tech {
-    margin-top: 1.5rem;
+  .projects-toolbar {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-tech-list {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    gap: 0.4rem;
+    padding: 0.2rem 0;
+    margin: 0 -1.5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .hero-tech-list::-webkit-scrollbar {
+    display: none;
   }
 
   .tech-pill {
     font-size: 0.65rem;
     padding: 0.3rem 0.6rem;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  .filter-controls {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.45rem;
+    width: 100%;
+  }
+
+  .filter-btn {
+    font-size: 0.65rem;
+    padding: 0.35rem 0.75rem;
+    white-space: nowrap;
   }
 
   .project-item {
@@ -739,11 +978,16 @@ const langCount = languages.size;
 
   .hero-ascii {
     font-size: 0.22rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.65rem;
   }
 
   .hero-tagline {
-    font-size: 1.25rem;
+    font-size: 1.18rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .contrib-chart {
+    margin: 0.25rem 0 1rem;
   }
 
   .hero-stats {
@@ -759,17 +1003,30 @@ const langCount = languages.size;
     font-size: 0.6rem;
   }
 
-  .hero-tech {
-    margin-top: 1rem;
+  .projects-toolbar {
+    gap: 0.65rem;
+    margin-bottom: 1.25rem;
   }
 
-  .hero-tech-label {
-    font-size: 0.6rem;
+  .hero-tech-list {
+    margin: 0 -1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    gap: 0.35rem;
   }
 
   .tech-pill {
     font-size: 0.6rem;
     padding: 0.25rem 0.5rem;
+  }
+
+  .filter-controls {
+    gap: 0.4rem;
+  }
+
+  .filter-btn {
+    font-size: 0.62rem;
+    padding: 0.3rem 0.65rem;
   }
 
   .project-item {
@@ -783,6 +1040,11 @@ const langCount = languages.size;
 
   .project-desc {
     font-size: 0.75rem;
+  }
+
+  .project-item:hover .project-hover-info,
+  .project-item:focus-within .project-hover-info {
+    right: 0.5rem;
   }
 }
 
