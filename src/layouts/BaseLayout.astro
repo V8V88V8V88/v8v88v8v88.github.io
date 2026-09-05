@@ -13,6 +13,7 @@ interface Props {
   twitterCreator?: string;
   showRss?: boolean;
   showFontAwesome?: boolean;
+  showFooter?: boolean;
 }
 
 const {
@@ -25,6 +26,7 @@ const {
   twitterCreator,
   showRss = false,
   showFontAwesome = true,
+  showFooter = true,
 } = Astro.props;
 ---
 <!DOCTYPE html>
@@ -71,7 +73,7 @@ const {
 <body>
   <Navbar />
   <slot />
-  <Footer showRss={showRss} />
+  {showFooter && <Footer showRss={showRss} />}
   <!-- Psst... Did you know octopuses have three hearts? Just thought you should know. -->
   {showFontAwesome && <script src="https://kit.fontawesome.com/133988a847.js" crossorigin="anonymous" defer is:inline></script>}
   <script is:inline>

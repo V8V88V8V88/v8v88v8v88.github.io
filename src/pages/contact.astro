@@ -1,11 +1,18 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { contactPageContacts, getSameAsUrls, getTerminalContactJson } from '../data/contacts';
+const dockItems = [
+  ...contactPageContacts.slice(0, 2),
+  { id: 'terminal', label: 'Terminal', url: '', icon: '', rel: '' },
+  ...contactPageContacts.slice(2),
+];
+import { neofetchMarkup } from '../data/terminal';
 ---
 <BaseLayout
   title="Contact | V8V88V8V88"
   description="Contact Vaibhav (V8V88V8V88) via Email, GitHub, Telegram, LinkedIn, YouTube, Mastodon, Twitter, or Reddit."
   canonical="https://v8v88v8v88.com/contact/"
+  showFooter={false}
 >
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify({
@@ -27,11 +34,11 @@ import { contactPageContacts, getSameAsUrls, getTerminalContactJson } from '../d
   <main class="contact-page">
     <section class="terminal-hero" id="terminal-hero">
       <div class="terminal-window" id="terminal-window">
-        <div class="terminal-header">
+        <div class="terminal-header" id="terminal-header" tabindex="0" aria-label="Move terminal with arrow keys; double-click to maximize" title="Drag to move · Double-click to maximize">
           <div class="terminal-controls">
-            <span class="terminal-dot red" id="btn-close" title="Close" aria-label="Close terminal" role="button"></span>
-            <span class="terminal-dot yellow" id="btn-minimize" title="Minimize" aria-label="Minimize terminal" role="button"></span>
-            <span class="terminal-dot green" id="btn-maximize" title="Maximize" aria-label="Maximize terminal" role="button"></span>
+            <button type="button" class="terminal-dot red" id="btn-close" title="Close" aria-label="Close terminal"></button>
+            <button type="button" class="terminal-dot yellow" id="btn-minimize" title="Minimize" aria-label="Minimize terminal"></button>
+            <button type="button" class="terminal-dot green" id="btn-maximize" title="Maximize" aria-label="Maximize terminal"></button>
           </div>
           <span class="terminal-title">v8v88v8v88@fedora ~ /contact</span>
           <div class="terminal-header-spacer" aria-hidden="true"></div>
@@ -40,17 +47,12 @@ import { contactPageContacts, getSameAsUrls, getTerminalContactJson } from '../d
           <div class="terminal-history" id="terminal-history">
             <div class="terminal-line">
               <span class="terminal-prompt">$</span>
-              <span class="terminal-command"> whoami</span>
+              <span class="terminal-command"> neofetch</span>
             </div>
-            <div class="terminal-line terminal-output">
-              Vaibhav Pratap Singh (V8V88V8V88)
-            </div>
-            <div class="terminal-line" style="margin-top: 0.75rem;">
-              <span class="terminal-prompt">$</span>
-              <span class="terminal-command"> echo "hello stalker!"</span>
-            </div>
-            <div class="terminal-line terminal-output">
-              hello stalker!
+            <div class="terminal-line terminal-output" set:html={neofetchMarkup} />
+            <div class="terminal-line terminal-output terminal-welcome">
+              Welcome to my corner of the internet.<br />
+              Type <span class="terminal-accent">help</span> to explore, or <span class="terminal-accent">tg</span>, <span class="terminal-accent">gh</span>, <span class="terminal-accent">ig</span> to say hello.
             </div>
           </div>
           <div class="terminal-input-line">
@@ -59,97 +61,93 @@ import { contactPageContacts, getSameAsUrls, getTerminalContactJson } from '../d
               spellcheck="false" autofocus placeholder="type a command or type help">
           </div>
         </div>
+        {['n', 'e', 's', 'w', 'ne', 'se', 'sw', 'nw'].map((direction) => (
+          <div class={`terminal-resize terminal-resize-${direction}`} data-resize={direction} aria-hidden="true"></div>
+        ))}
+        <button type="button" class="terminal-resize-keyboard" id="terminal-resize-keyboard" aria-label="Resize terminal using arrow keys" title="Drag edges to resize · Focus here and use arrow keys">⌟</button>
       </div>
     </section>
 
     <section class="contact">
-      <div class="section-header">
-        <button class="terminal-reopen" id="terminal-reopen" title="Open Terminal"></button>
-        <h2>All the ways to reach me</h2>
-      </div>
-
-      <div class="contact-grid">
-        {contactPageContacts.map((c) => (
-          <a href={c.url} target={c.url.startsWith('mailto:') ? undefined : '_blank'} rel={c.rel ? `${c.rel} noopener noreferrer` : 'noopener noreferrer'} class="contact-card">
-            <i class={`${c.icon} contact-icon`}></i>
-            <span>{c.label}</span>
-          </a>
-        ))}
+      <div class="dock-container">
+        <nav class="macos-dock" id="macos-dock" aria-label="Quick contact dock">
+          <div class="dock-tooltip" id="dock-tooltip" aria-hidden="true"></div>
+          {dockItems.map((c) => c.id === 'terminal' ? (
+            <button
+              type="button"
+              class="dock-item dock-item-terminal"
+              id="dock-item-terminal"
+              data-label="Terminal"
+              data-contact="terminal"
+              aria-label="Minimize terminal"
+            >
+              <div class="dock-icon-tile">
+                <svg class="dock-glyph dock-terminal-glyph" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="2.5" y="4" width="19" height="16" rx="3" />
+                  <path d="m6.5 9 3 3-3 3M13 15h4" />
+                </svg>
+              </div>
+              <span class="dock-dot" aria-hidden="true"></span>
+            </button>
+          ) : (
+            <a
+              href={c.url}
+              target={c.url.startsWith('mailto:') ? undefined : '_blank'}
+              rel={c.rel ? `${c.rel} noopener noreferrer` : 'noopener noreferrer'}
+              class="dock-item"
+              data-label={c.label}
+              data-contact={c.id}
+              aria-label={c.label}
+            >
+              <div class="dock-icon-tile">
+                <i class={`${c.icon} dock-glyph`}></i>
+              </div>
+              <span class="dock-dot" aria-hidden="true"></span>
+            </a>
+          ))}
+        </nav>
       </div>
     </section>
   </main>
 
-  <script is:inline define:vars={{ terminalContactJson: getTerminalContactJson() }}>
-    const terminal = document.getElementById('terminal-window');
-    const terminalHero = document.getElementById('terminal-hero');
+  <script>
+    import '../scripts/terminal-window.js';
+  </script>
+  <script is:inline define:vars={{ terminalContactJson: getTerminalContactJson(), terminalContacts: contactPageContacts, neofetchMarkup }}>
     const btnClose = document.getElementById('btn-close');
-    const btnMinimize = document.getElementById('btn-minimize');
-    const btnMaximize = document.getElementById('btn-maximize');
-    const reopenBtn = document.getElementById('terminal-reopen');
-
-    let isMaximized = false;
-
-    btnClose.addEventListener('click', () => {
-      terminal.classList.remove('maximized', 'minimized');
-      terminal.classList.add('closed');
-      isMaximized = false;
-      setTimeout(() => {
-        terminalHero.classList.add('collapsed');
-        reopenBtn.classList.add('visible');
-      }, 400);
-    });
-
-    btnMinimize.addEventListener('click', () => {
-      if (isMaximized) {
-        terminal.classList.remove('maximized');
-        isMaximized = false;
-      } else {
-        terminal.classList.remove('maximized');
-        terminal.classList.add('minimized');
-        setTimeout(() => {
-          reopenBtn.classList.add('visible');
-        }, 500);
-      }
-    });
-
-    btnMaximize.addEventListener('click', () => {
-      if (isMaximized) {
-        terminal.classList.remove('maximized');
-        isMaximized = false;
-      } else {
-        terminal.classList.remove('minimized', 'closed');
-        terminal.classList.add('maximized');
-        isMaximized = true;
-      }
-    });
-
-    reopenBtn.addEventListener('click', () => {
-      terminalHero.classList.remove('collapsed');
-      terminal.classList.remove('closed', 'minimized');
-      terminal.style.visibility = 'visible';
-      terminal.style.opacity = '1';
-      terminal.style.transform = 'scale(1)';
-      reopenBtn.classList.remove('visible');
-      isMaximized = false;
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && isMaximized) {
-        terminal.classList.remove('maximized');
-        isMaximized = false;
-      }
-    });
 
     const terminalInput = document.getElementById('terminal-input');
     const terminalHistory = document.getElementById('terminal-history');
     const terminalBody = document.getElementById('terminal-body');
 
+    const aliases = {
+      email: ['mail'], github: ['gh'], telegram: ['tg'], youtube: ['yt'],
+      instagram: ['ig', 'insta'], twitter: ['x'], reddit: ['rd'],
+      myanimelist: ['mal'], linkedin: ['li'], mastodon: ['masto'],
+    };
+    const shortcuts = new Map();
+    for (const contact of terminalContacts) {
+      for (const name of [contact.id, contact.label.toLowerCase(), ...(aliases[contact.id] || [])]) {
+        shortcuts.set(name, contact);
+      }
+    }
+    shortcuts.set('terminal', { label: 'Terminal', url: '/contact/' });
+
+    function openShortcut(contact) {
+      // Keep this synchronous with Enter so browsers recognize the user gesture.
+      if (contact.url.startsWith('mailto:')) window.location.href = contact.url;
+      else window.open(contact.url, '_blank', 'noopener,noreferrer');
+      return `Opening <a href="${escapeHtml(contact.url)}" target="_blank" rel="noopener noreferrer" class="terminal-link">${escapeHtml(contact.label)}</a>…`;
+    }
+
     const commands = {
       whoami: () => 'Vaibhav Pratap Singh (V8V88V8V88)',
       help: () => {
-        const isLightMode = document.body.classList.contains('light-mode');
-        const color = isLightMode ? 'rgba(0, 0, 0, 0.5)' : 'rgba(255, 255, 255, 0.5)';
-        return `<span style="color: ${color};">available commands: whoami, cat, ls, echo, help, clear, neofetch</span>`;
+        const profiles = terminalContacts.map((contact) => {
+          const names = [contact.id, ...(aliases[contact.id] || [])].join(' / ');
+          return `<a href="${escapeHtml(contact.url)}" target="_blank" rel="noopener noreferrer" class="terminal-link">${escapeHtml(contact.label)}</a> — ${escapeHtml(names)}`;
+        }).join('\n');
+        return `commands: whoami, cat, ls, echo, help, clear, neofetch\n\nType a platform name or alias, then Enter to open it in a new tab.\nGreen platform names are clickable, including in command output.\nCtrl+click (⌘+click on Mac) opens the link in a new tab.\nEmail opens your mail app. Tab completes a command.\n\n${profiles}\n\nterminal: open a fresh terminal in a new tab`;
       },
       ls: () => 'contact.json  README.md  socials/',
       cat: (args) => {
@@ -164,13 +162,7 @@ I'm always open to collaborate on cool projects.`;
       },
       echo: (args) => args || '',
       clear: () => 'CLEAR',
-      neofetch: () => `<span style="color: #1DB954;">        ⠀⠀⣠⣤⣤⣤⣤⣤⣄⡀</span>        <span style="color: #1DB954;">v8v88v8v88</span>@<span style="color: #1DB954;">fedora</span>
-<span style="color: #1DB954;">     ⠀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦</span>       ─────────────────
-<span style="color: #1DB954;">    ⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿</span>       <span style="color: #1DB954;">OS:</span> Fedora Linux
-<span style="color: #1DB954;">    ⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿</span>       <span style="color: #1DB954;">DE:</span> GNOME
-<span style="color: #1DB954;">    ⠀⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟</span>       <span style="color: #1DB954;">Shell:</span> fish
-<span style="color: #1DB954;">     ⠀⠈⠛⠿⣿⣿⣿⣿⣿⠿⠛⠁</span>        <span style="color: #1DB954;">Editor:</span> Neovim
-<span style="color: #1DB954;">        ⠀⠀⠉⠉⠉⠉⠉</span>           <span style="color: #1DB954;">Status:</span> Open to work`,
+      neofetch: () => neofetchMarkup,
       pwd: () => '/home/v8v88v8v88/contact',
       date: () => new Date().toString(),
       cd: () => 'nice try :)',
@@ -190,7 +182,7 @@ I'm always open to collaborate on cool projects.`;
     let tabCompletions = [];
 
     function getCommandCompletions(input) {
-      const cmdList = Object.keys(commands);
+      const cmdList = [...new Set([...Object.keys(commands), ...shortcuts.keys()])];
       const trimmed = input.trim().toLowerCase();
       if (!trimmed) return cmdList;
       return cmdList.filter(cmd => cmd.startsWith(trimmed));
@@ -229,6 +221,8 @@ I'm always open to collaborate on cool projects.`;
       }
 
       if (e.key === 'Enter') {
+        if (e.isComposing || e.repeat) return;
+        e.preventDefault();
         const input = terminalInput.value.trim();
         if (!input) return;
 
@@ -246,10 +240,15 @@ I'm always open to collaborate on cool projects.`;
         terminalHistory.appendChild(cmdLine);
 
         let output;
+        let outputIsHtml = false;
         if (cmd === 'clear') {
           terminalHistory.innerHTML = '';
-        } else if (commands[cmd]) {
+        } else if (shortcuts.has(cmd)) {
+          output = openShortcut(shortcuts.get(cmd));
+          outputIsHtml = true;
+        } else if (Object.hasOwn(commands, cmd)) {
           output = commands[cmd](args);
+          outputIsHtml = cmd === 'help' || cmd === 'neofetch' || (cmd === 'cat' && args === 'contact.json');
         } else if (cmd) {
           output = `command not found: ${cmd}. type 'help' for available commands.`;
         }
@@ -257,7 +256,7 @@ I'm always open to collaborate on cool projects.`;
         if (output && output !== 'CLEAR') {
           const outputLine = document.createElement('div');
           outputLine.className = 'terminal-line terminal-output';
-          outputLine.innerHTML = output.replace(/\n/g, '<br>');
+          outputLine.innerHTML = (outputIsHtml ? output : escapeHtml(output)).replace(/\n/g, '<br>');
           terminalHistory.appendChild(outputLine);
         }
 
@@ -284,9 +283,84 @@ I'm always open to collaborate on cool projects.`;
       }
     });
 
-    terminalBody.addEventListener('click', () => {
-      terminalInput.focus();
+    terminalBody.addEventListener('click', (event) => {
+      if (!event.target.closest('a') && !window.getSelection()?.toString()) terminalInput.focus();
     });
+
+    // macOS Liquid Glass Dock Magnification & Tooltips
+    const dock = document.getElementById('macos-dock');
+    const tooltip = document.getElementById('dock-tooltip');
+
+    if (dock) {
+      const dockItems = Array.from(dock.querySelectorAll('.dock-item'));
+      const isPointerFine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+      const dockReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+      if (isPointerFine) {
+        const maxScale = 1.25;
+        const effectDistance = 95; // pixels range of magnification
+
+        let dockAnimId = null;
+
+        dock.addEventListener('mousemove', (e) => {
+          if (dockAnimId) cancelAnimationFrame(dockAnimId);
+          dockAnimId = requestAnimationFrame(() => {
+            const mouseX = e.clientX;
+            if (dockReducedMotion.matches) return;
+
+            dockItems.forEach((item) => {
+              const rect = item.getBoundingClientRect();
+              const itemCenterX = rect.left + rect.width / 2;
+              const dist = Math.abs(mouseX - itemCenterX);
+
+              if (dist < effectDistance) {
+                // Smooth cosine curve for authentic macOS dock magnification
+                const progress = (dist / effectDistance) * (Math.PI / 2);
+                const scale = 1 + (maxScale - 1) * Math.cos(progress);
+                const translateY = (scale - 1) * -16;
+                item.style.transform = `scale(${scale.toFixed(3)}) translateY(${translateY.toFixed(1)}px)`;
+              } else {
+                item.style.transform = '';
+              }
+            });
+          });
+        });
+
+        dock.addEventListener('mouseleave', () => {
+          if (dockAnimId) cancelAnimationFrame(dockAnimId);
+          dockItems.forEach((item) => {
+            item.style.transform = '';
+          });
+          if (tooltip) {
+            tooltip.classList.remove('visible');
+          }
+        });
+
+        // Dynamic Apple Tooltip
+        dockItems.forEach((item) => {
+          item.addEventListener('mouseenter', () => {
+            if (tooltip) {
+              const label = item.getAttribute('data-label');
+              tooltip.textContent = label;
+              const dockRect = dock.getBoundingClientRect();
+              const itemRect = item.getBoundingClientRect();
+              const leftOffset = itemRect.left + itemRect.width / 2 - dockRect.left;
+              tooltip.style.left = `${leftOffset}px`;
+              tooltip.classList.add('visible');
+            }
+          });
+
+          item.addEventListener('mousemove', () => {
+            if (tooltip) {
+              const dockRect = dock.getBoundingClientRect();
+              const itemRect = item.getBoundingClientRect();
+              const leftOffset = itemRect.left + itemRect.width / 2 - dockRect.left;
+              tooltip.style.left = `${leftOffset}px`;
+            }
+          });
+        });
+      }
+    }
 
     function escapeHtml(text) {
       const div = document.createElement('div');
@@ -298,17 +372,39 @@ I'm always open to collaborate on cool projects.`;
 
 <style>
   .contact-page {
-    min-height: 100vh;
-    padding-top: 100px;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 72px;
+    padding-bottom: 16px;
+    box-sizing: border-box;
+    position: relative;
+    overflow-x: clip;
   }
 
   .terminal-hero {
     max-width: 900px;
-    margin: 0 auto 3rem;
-    padding: 0 2rem;
+    width: 100%;
+    margin: auto auto;
+    padding: 0 1.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
   }
 
   .terminal-window {
+    container-type: inline-size;
+    width: 100%;
+    height: min(440px, calc(100dvh - 156px));
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    z-index: 40;
     background:
       radial-gradient(140% 100% at 50% 0%, rgba(255, 255, 255, 0.04) 0%, transparent 60%),
       rgba(8, 8, 8, 0.82);
@@ -348,6 +444,7 @@ I'm always open to collaborate on cool projects.`;
   }
 
   .terminal-header {
+    flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -358,7 +455,82 @@ I'm always open to collaborate on cool projects.`;
       rgba(8, 8, 8, 0.45);
     border-bottom: 1px solid rgba(255, 255, 255, 0.07);
     position: relative;
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
   }
+
+  .terminal-window.is-dragging {
+    transition: none !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    z-index: 900 !important;
+    cursor: grabbing !important;
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.06),
+      0 38px 90px -10px rgba(0, 0, 0, 0.94),
+      0 18px 36px -6px rgba(0, 0, 0, 0.7),
+      inset 0 1px 1px 0 rgba(255, 255, 255, 0.2),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+  }
+
+  .terminal-window.is-dragging .terminal-header {
+    cursor: grabbing !important;
+  }
+
+  .terminal-window.is-animating {
+    will-change: transform, opacity, filter;
+    pointer-events: none !important;
+  }
+
+  .terminal-window.is-minimized {
+    visibility: hidden !important;
+    pointer-events: none !important;
+    opacity: 0 !important;
+  }
+
+  .terminal-window.is-resizing {
+    transition: none;
+    user-select: none;
+  }
+
+  .terminal-resize {
+    position: absolute;
+    z-index: 20;
+    touch-action: none;
+  }
+
+  .terminal-resize-n, .terminal-resize-s { left: 18px; right: 18px; height: 8px; cursor: ns-resize; }
+  .terminal-resize-n { top: 0; }
+  .terminal-resize-s { bottom: 0; }
+  .terminal-resize-e, .terminal-resize-w { top: 18px; bottom: 18px; width: 8px; cursor: ew-resize; }
+  .terminal-resize-e { right: 0; }
+  .terminal-resize-w { left: 0; }
+  .terminal-resize-ne, .terminal-resize-se, .terminal-resize-sw, .terminal-resize-nw { width: 18px; height: 18px; }
+  .terminal-resize-ne { top: 0; right: 0; cursor: nesw-resize; }
+  .terminal-resize-se { bottom: 0; right: 0; cursor: nwse-resize; }
+  .terminal-resize-sw { bottom: 0; left: 0; cursor: nesw-resize; }
+  .terminal-resize-nw { top: 0; left: 0; cursor: nwse-resize; }
+
+  .terminal-resize-keyboard {
+    position: absolute;
+    right: 5px;
+    bottom: 4px;
+    padding: 0;
+    width: 14px;
+    height: 16px;
+    border: 0;
+    background: transparent;
+    color: #888;
+    font-size: 17px;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .terminal-resize-keyboard:focus-visible { outline: 1px solid #1ed760; }
+  .terminal-header:focus-visible { outline: 1px solid #1ed760; outline-offset: -3px; }
+  .terminal-dot:focus-visible, .dock-item:focus-visible { outline: 2px solid #1ed760; outline-offset: 3px; }
 
   .terminal-controls {
     display: flex;
@@ -377,6 +549,7 @@ I'm always open to collaborate on cool projects.`;
   }
 
   .terminal-dot {
+    padding: 0;
     width: 12px;
     height: 12px;
     min-width: 12px;
@@ -484,158 +657,17 @@ I'm always open to collaborate on cool projects.`;
     filter: brightness(0.85);
   }
 
-  .terminal-window.closed {
-    animation: terminalClose 0.4s ease forwards;
-  }
-
-  .terminal-window.minimized {
-    animation: magicLamp 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  }
-
   .terminal-window.maximized {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
-    width: 100vw !important;
-    max-width: 100vw !important;
-    height: 100vh !important;
-    margin: 0 !important;
-    border-radius: 0 !important;
-    z-index: 9999 !important;
-    animation: terminalMaximize 0.3s ease forwards;
+    border-radius: 14px;
   }
 
-  .terminal-window.maximized .terminal-body {
-    height: calc(100vh - 50px);
-    overflow-y: auto;
+  .terminal-window.maximized .terminal-header {
+    cursor: default;
   }
 
-
-  @keyframes terminalClose {
-    0% {
-      opacity: 1;
-      transform: scale(1);
-    }
-    100% {
-      opacity: 0;
-      transform: scale(0.8);
-      visibility: hidden;
-    }
-  }
-
-  @keyframes magicLamp {
-    0% {
-      opacity: 1;
-      transform: scale(1) translateY(0);
-      transform-origin: bottom center;
-    }
-    50% {
-      opacity: 0.8;
-      transform: scale(0.5, 0.1) translateY(100%);
-      transform-origin: bottom center;
-    }
-    100% {
-      opacity: 0;
-      transform: scale(0.1, 0.02) translateY(200%);
-      transform-origin: bottom center;
-      visibility: hidden;
-    }
-  }
-
-  @keyframes terminalMaximize {
-    0% {
-      opacity: 0.9;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-
-  .terminal-hero.collapsed {
-    margin-bottom: 0;
-  }
-
-  .terminal-hero.collapsed .terminal-window {
+  .terminal-window.maximized .terminal-resize,
+  .terminal-window.maximized .terminal-resize-keyboard {
     display: none;
-  }
-
-  .terminal-reopen {
-    display: none;
-    width: 48px;
-    height: 48px;
-    padding: 0;
-    background: linear-gradient(180deg, #000 0%, #1a1a1a 100%);
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-bottom: 1rem;
-    box-shadow:
-      0 4px 12px rgba(0, 0, 0, 0.3),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .terminal-reopen::before {
-    content: '>_';
-    font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #fff;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-  .terminal-reopen:hover {
-    transform: translateY(-3px) scale(1.05);
-    box-shadow:
-      0 8px 20px rgba(0, 0, 0, 0.4),
-      inset 0 1px 0 rgba(255, 255, 255, 0.15);
-  }
-
-  .terminal-reopen:active {
-    transform: translateY(-1px) scale(1.02);
-  }
-
-  .terminal-reopen.visible {
-    display: inline-block;
-    animation: bounceIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  }
-
-  @keyframes bounceIn {
-    0% {
-      opacity: 0;
-      transform: scale(0.3);
-    }
-    50% {
-      transform: scale(1.1);
-    }
-    100% {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-
-  :global(body.light-mode) .terminal-reopen {
-    background: linear-gradient(180deg, #f5f5f5 0%, #e0e0e0 100%);
-    box-shadow:
-      0 4px 12px rgba(0, 0, 0, 0.15),
-      inset 0 1px 0 rgba(255, 255, 255, 0.9);
-  }
-
-  :global(body.light-mode) .terminal-reopen::before {
-    color: #1d1d1f;
-  }
-
-  :global(body.light-mode) .terminal-reopen:hover {
-    box-shadow:
-      0 8px 20px rgba(0, 0, 0, 0.2),
-      inset 0 1px 0 rgba(255, 255, 255, 1);
   }
 
   .terminal-title {
@@ -654,6 +686,11 @@ I'm always open to collaborate on cool projects.`;
   }
 
   .terminal-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
     padding: 1.5rem;
     font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
     font-size: 0.95rem;
@@ -662,36 +699,95 @@ I'm always open to collaborate on cool projects.`;
     -moz-osx-font-smoothing: grayscale;
   }
 
-  .terminal-line {
+  .terminal-window :global(.terminal-line) {
     margin-bottom: 0.5rem;
   }
 
-  .terminal-prompt {
+  .terminal-window :global(.terminal-prompt) {
     color: #1ed760;
     font-weight: 600;
   }
 
-  .terminal-command {
+  .terminal-window :global(.terminal-command) {
     color: #fff;
   }
 
-  .terminal-output {
+  .terminal-window :global(.terminal-output) {
     color: rgba(255, 255, 255, 0.7);
     padding-left: 0;
   }
 
-  .terminal-comment {
+  .terminal-window :global(.neofetch) {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    gap: 24px;
+    margin: 12px 0 18px;
+    line-height: 1.65;
+  }
+
+  .terminal-window :global(.neofetch-logo) {
+    margin: 0;
+    padding: 8px 0 0;
+    background: none;
+    border: 0;
+    box-shadow: none;
+    color: #1db954;
+    font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0;
+    width: max-content;
+    max-width: none;
+    line-height: 1.15;
+    white-space: pre;
+    overflow: visible;
+  }
+
+  .terminal-window :global(.neofetch-row) { display: grid; grid-template-columns: 65px minmax(0, 1fr); gap: 8px; }
+  .terminal-window :global(.neofetch-user),
+  .terminal-window :global(.neofetch-label),
+  .terminal-window :global(.terminal-accent) { color: #1db954; }
+  .terminal-window :global(.neofetch-user) { font-weight: 600; }
+  .terminal-window :global(.neofetch-user span) { color: #ddd; font-weight: 400; }
+  .terminal-window :global(.neofetch-rule) { color: #777; overflow: hidden; white-space: nowrap; }
+  .terminal-window :global(.neofetch-palette) { display: flex; gap: 3px; margin-top: 12px; }
+  .terminal-window :global(.neofetch-palette span) { width: 20px; height: 9px; border-radius: 2px; background: #184530; }
+  .terminal-window :global(.neofetch-palette span:nth-child(2)) { background: #236245; }
+  .terminal-window :global(.neofetch-palette span:nth-child(3)) { background: #2d8058; }
+  .terminal-window :global(.neofetch-palette span:nth-child(4)) { background: #399f70; }
+  .terminal-window :global(.neofetch-palette span:nth-child(5)) { background: #71b895; }
+  .terminal-window :global(.neofetch-palette span:nth-child(6)) { background: #b5d8c6; }
+  .terminal-welcome { font-size: 0.85em; }
+
+  :global(body.light-mode) .terminal-window :global(.neofetch-logo),
+  :global(body.light-mode) .terminal-window :global(.neofetch-user),
+  :global(body.light-mode) .terminal-window :global(.neofetch-label),
+  :global(body.light-mode) .terminal-window :global(.terminal-accent) { color: #0f6438; }
+  :global(body.light-mode) .terminal-window :global(.neofetch-user span) { color: #414950; }
+
+  @container (max-width: 480px) {
+    .terminal-window :global(.neofetch) { grid-template-columns: max-content minmax(0, 1fr); gap: 12px; }
+    .terminal-window :global(.neofetch-logo) { font-size: 9px; padding-top: 12px; }
+    .terminal-window :global(.neofetch-row) { grid-template-columns: 44px minmax(0, 1fr); gap: 4px; }
+  }
+
+  @container (max-width: 360px) {
+    .terminal-window :global(.neofetch) { grid-template-columns: minmax(0, 1fr); }
+    .terminal-window :global(.neofetch-logo) { padding-top: 0; }
+  }
+
+  .terminal-window :global(.terminal-comment) {
     color: rgba(255, 255, 255, 0.35);
     font-style: italic;
   }
 
-  .terminal-link {
+  .terminal-window :global(.terminal-link) {
     color: #1DB954;
     text-decoration: none;
     transition: color 0.2s ease;
   }
 
-  .terminal-link:hover {
+  .terminal-window :global(.terminal-link:hover) {
     color: #22d35e;
     text-decoration: underline;
   }
@@ -713,12 +809,14 @@ I'm always open to collaborate on cool projects.`;
   }
 
   .terminal-input-line {
+    flex-shrink: 0;
     display: flex;
     align-items: center;
     margin-top: 0.75rem;
   }
 
   .terminal-input {
+    min-width: 0;
     flex: 1;
     background: transparent;
     border: none;
@@ -735,12 +833,10 @@ I'm always open to collaborate on cool projects.`;
   }
 
   .terminal-history {
-    max-height: 300px;
-    overflow-y: auto;
-  }
-
-  .terminal-window.maximized .terminal-history {
-    max-height: calc(100vh - 120px);
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    overflow-wrap: anywhere;
   }
 
   .terminal-history::-webkit-scrollbar {
@@ -777,107 +873,306 @@ I'm always open to collaborate on cool projects.`;
     background: rgba(0, 0, 0, 0.25);
   }
 
-  .contact-page .contact .contact-grid {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 0 1rem;
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 1.25rem;
-  }
-
-  .contact-page .contact .section-header h2 {
-    font-size: 0.75rem;
-    font-weight: 500;
-    font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
+  .contact-page .contact {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    max-width: 1050px;
+    width: 100%;
+    margin-top: auto;
+    margin-left: auto;
+    margin-right: auto;
     margin-bottom: 0;
-    padding-left: 0;
-    color: rgba(255, 255, 255, 0.4);
-  }
-
-  :global(body.light-mode) .contact-page .contact .section-header h2 {
-    color: rgba(0, 0, 0, 0.4);
-  }
-
-  .contact-card {
-    position: relative;
-    background: linear-gradient(135deg,
-      rgba(255, 255, 255, 0.04) 0%,
-      rgba(255, 255, 255, 0.02) 50%,
-      rgba(255, 255, 255, 0.03) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 16px;
-    height: 118px;
-    padding: 1.25rem 0.9rem;
+    padding: 0 1rem 0;
     text-align: center;
-    text-decoration: none;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: fixed;
+    bottom: max(16px, env(safe-area-inset-bottom));
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 950;
+    box-sizing: border-box;
+  }
+
+  .dock-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 0 2px;
+    position: relative;
+    max-width: 100%;
+  }
+
+  /* macOS Sequoia Liquid Glass Dock Tray */
+  .macos-dock {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    border-radius: 26px;
+    background: rgba(26, 29, 34, 0.22);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    box-shadow:
+      0 16px 48px -12px rgba(0, 0, 0, 0.65),
+      0 3px 8px rgba(0, 0, 0, 0.14);
+    user-select: none;
+    touch-action: manipulation;
+  }
+
+  /* Floating Apple-style Tooltip */
+  .dock-tooltip {
+    position: absolute;
+    top: -36px;
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.02) 100%),
+      rgba(16, 20, 28, 0.88);
+    border: 0.5px solid rgba(255, 255, 255, 0.24);
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.05),
-      0 4px 24px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+    color: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro', system-ui, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    padding: 3px 9px;
+    border-radius: 7px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.16s ease, transform 0.16s cubic-bezier(0.34, 1.56, 0.64, 1);
+    white-space: nowrap;
+    z-index: 100;
+  }
+
+  .dock-tooltip.visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .dock-tooltip::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    width: 6px;
+    height: 6px;
+    background: rgba(16, 20, 28, 0.9);
+    border-right: 0.5px solid rgba(255, 255, 255, 0.24);
+    border-bottom: 0.5px solid rgba(255, 255, 255, 0.24);
+  }
+
+  /* Dock Items */
+  .macos-dock .dock-item,
+  .macos-dock .dock-item:hover {
+    background: transparent;
+    border-radius: 12px;
+  }
+
+  .macos-dock .dock-item:hover {
+    transform: none;
+  }
+
+  .dock-item {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0.75rem;
+    text-decoration: none;
     cursor: pointer;
+    transform-origin: bottom center;
+    will-change: transform;
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    padding: 2px 0;
   }
 
-  .contact-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 70%;
-    height: 1px;
-    background: linear-gradient(90deg,
-      transparent,
-      rgba(255, 255, 255, 0.2),
-      transparent);
-  }
-
-  .contact-card:hover {
-    transform: translateY(-6px);
-    background: linear-gradient(135deg,
-      rgba(255, 255, 255, 0.08) 0%,
-      rgba(255, 255, 255, 0.04) 50%,
-      rgba(255, 255, 255, 0.06) 100%);
-    border-color: rgba(255, 255, 255, 0.15);
+  /* Translucent Liquid Glass Squircle Tiles (macOS Sequoia Tinted/Glass Spec) */
+  .dock-icon-tile {
+    width: 44px;
+    height: 44px;
+    border-radius: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.055);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.1),
-      0 20px 40px rgba(0, 0, 0, 0.4);
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      0 4px 10px -4px rgba(0, 0, 0, 0.3);
+    transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
   }
 
-  .contact-icon {
-    font-size: 2rem;
-    color: rgba(255, 255, 255, 0.8);
-    transition: all 0.3s ease;
+  /* Frosted Silver/White Iconography */
+  .dock-glyph {
+    position: relative;
+    z-index: 3;
+    font-size: 1.32rem;
+    color: rgba(255, 255, 255, 0.88);
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35));
+    transition: color 0.2s ease, filter 0.2s ease, transform 0.2s ease;
   }
 
-  .contact-card:hover .contact-icon {
-    color: rgba(255, 255, 255, 0.92);
-    transform: scale(1.1);
+  .dock-terminal-glyph {
+    width: 1.5rem;
+    height: 1.5rem;
+    flex-shrink: 0;
   }
 
-  .contact-card span {
-    font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.9);
-    letter-spacing: 0.02em;
+  /* Interactive Hover State: Elevate, Internal Tint Inside & Bright White Glyph */
+  .dock-item:hover .dock-icon-tile {
+    background: var(--tile-tint, rgba(255, 255, 255, 0.09));
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.12),
+      0 8px 18px -6px rgba(0, 0, 0, 0.35);
+    filter: brightness(1.06);
   }
 
-  .contact-page .contact .section-header {
-    text-align: center;
-    margin-bottom: 2rem;
-    padding: 0;
+  .dock-item:hover .dock-glyph {
+    color: #ffffff;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.45));
   }
+
+  .dock-item:active {
+    transform: scale(0.94) translateY(1px) !important;
+  }
+
+  /* Discrete Apple Indicator Dot (Appears smoothly on hover) */
+  .dock-dot {
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%) scale(0.5);
+    width: 3.5px;
+    height: 3.5px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 0 4px rgba(255, 255, 255, 0.9);
+    opacity: 0;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    pointer-events: none;
+  }
+
+  .dock-item:hover .dock-dot {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+
+  /* Subtle Internal Tint Accents on Hover (Zero External Leakage) */
+  .dock-item[data-contact="email"] {
+    --tile-tint: rgba(56, 140, 246, 0.22);
+    --tile-base: rgba(25, 45, 75, 0.65);
+  }
+
+  .dock-item[data-contact="github"] {
+    --tile-tint: rgba(255, 255, 255, 0.15);
+    --tile-base: rgba(45, 50, 60, 0.65);
+  }
+
+  .dock-item[data-contact="telegram"] {
+    --tile-tint: rgba(46, 168, 233, 0.22);
+    --tile-base: rgba(25, 55, 75, 0.65);
+  }
+
+  .dock-item[data-contact="youtube"] {
+    --tile-tint: rgba(255, 56, 56, 0.22);
+    --tile-base: rgba(75, 25, 25, 0.65);
+  }
+
+  .dock-item[data-contact="instagram"] {
+    --tile-tint: rgba(225, 48, 108, 0.22);
+    --tile-base: rgba(70, 25, 55, 0.65);
+  }
+
+  .dock-item[data-contact="twitter"] {
+    --tile-tint: rgba(255, 255, 255, 0.15);
+    --tile-base: rgba(40, 45, 55, 0.65);
+  }
+
+  .dock-item[data-contact="reddit"] {
+    --tile-tint: rgba(255, 87, 34, 0.22);
+    --tile-base: rgba(75, 40, 25, 0.65);
+  }
+
+  .dock-item[data-contact="myanimelist"] {
+    --tile-tint: rgba(68, 110, 201, 0.22);
+    --tile-base: rgba(30, 48, 80, 0.65);
+  }
+
+  .dock-item[data-contact="linkedin"] {
+    --tile-tint: rgba(13, 121, 226, 0.22);
+    --tile-base: rgba(20, 50, 80, 0.65);
+  }
+
+  .dock-item[data-contact="mastodon"] {
+    --tile-tint: rgba(116, 117, 255, 0.22);
+    --tile-base: rgba(45, 45, 80, 0.65);
+  }
+
+  /* Reset button styles for dock item button */
+  button.dock-item {
+    background: none;
+    border: none;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    padding: 2px 0;
+    margin: 0;
+    outline: none;
+  }
+
+  /* macOS Dock Divider */
+  .dock-divider {
+    width: 1px;
+    height: 32px;
+    margin: 0 4px;
+    background: linear-gradient(180deg,
+      rgba(255, 255, 255, 0.05) 0%,
+      rgba(255, 255, 255, 0.28) 50%,
+      rgba(255, 255, 255, 0.05) 100%
+    );
+    box-shadow: 1px 0 0 rgba(0, 0, 0, 0.25);
+    align-self: center;
+    flex-shrink: 0;
+  }
+
+  /* Active indicator dot for running app (Terminal) */
+  .dock-dot.active {
+    opacity: 1 !important;
+    transform: translateX(-50%) scale(1) !important;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 0 4px rgba(255, 255, 255, 0.9), 0 0 8px rgba(90, 247, 142, 0.4);
+  }
+
+  /* Terminal App Tile Hover Glow */
+  .dock-item[data-contact="terminal"] {
+    --tile-tint: rgba(90, 247, 142, 0.18);
+    --tile-base: rgba(20, 36, 28, 0.65);
+  }
+
+  /* macOS Landing bounce when window minimizes into dock */
+  @keyframes dockLanding {
+    0% { transform: scale(1); }
+    35% { transform: scale(1.18) translateY(-6px); }
+    70% { transform: scale(0.95) translateY(1px); }
+    100% { transform: scale(1) translateY(0); }
+  }
+
+  .dock-item.dock-landing {
+    animation: dockLanding 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+
 
   :global(body.light-mode) .terminal-window {
     background:
@@ -899,6 +1194,13 @@ I'm always open to collaborate on cool projects.`;
       rgba(255, 255, 255, 0.9) 80%,
       transparent 100%
     );
+  }
+
+  :global(body.light-mode) .terminal-window.is-dragging {
+    box-shadow:
+      0 22px 48px -16px rgba(35, 45, 58, 0.2),
+      0 8px 18px -8px rgba(35, 45, 58, 0.12),
+      inset 0 1px 1px rgba(255, 255, 255, 0.85);
   }
 
   :global(body.light-mode) .terminal-header {
@@ -928,27 +1230,27 @@ I'm always open to collaborate on cool projects.`;
     background: transparent;
   }
 
-  :global(body.light-mode) .terminal-prompt {
+  :global(body.light-mode) .terminal-window :global(.terminal-prompt) {
     color: #0f4d1f;
   }
 
-  :global(body.light-mode) .terminal-command {
+  :global(body.light-mode) .terminal-window :global(.terminal-command) {
     color: #1d1d1f;
   }
 
-  :global(body.light-mode) .terminal-output {
+  :global(body.light-mode) .terminal-window :global(.terminal-output) {
     color: rgba(0, 0, 0, 0.6);
   }
 
-  :global(body.light-mode) .terminal-comment {
+  :global(body.light-mode) .terminal-window :global(.terminal-comment) {
     color: rgba(0, 0, 0, 0.35);
   }
 
-  :global(body.light-mode) .terminal-link {
+  :global(body.light-mode) .terminal-window :global(.terminal-link) {
     color: #0f4d1f;
   }
 
-  :global(body.light-mode) .terminal-link:hover {
+  :global(body.light-mode) .terminal-window :global(.terminal-link:hover) {
     color: #1DB954;
   }
 
@@ -956,51 +1258,101 @@ I'm always open to collaborate on cool projects.`;
     background: #0f4d1f;
   }
 
-  :global(body.light-mode) .contact-card {
-    background: rgba(0, 0, 0, 0.03);
-    border-color: rgba(0, 0, 0, 0.08);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  :global(body.light-mode) .contact-page .contact {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
   }
 
-  :global(body.light-mode) .contact-card::before {
-    background: linear-gradient(90deg,
-      transparent,
-      rgba(0, 0, 0, 0.06),
-      transparent);
+  :global(body.light-mode) .macos-dock {
+    background: rgba(246, 248, 251, 0.25);
+    border: 1px solid rgba(50, 60, 75, 0.1);
+    box-shadow:
+      0 24px 50px -10px rgba(0, 0, 0, 0.14),
+      0 10px 22px -4px rgba(0, 0, 0, 0.08),
+      0 2px 6px 0 rgba(0, 0, 0, 0.04);
   }
 
-  :global(body.light-mode) .contact-card:hover {
-    background: rgba(0, 0, 0, 0.06);
-    border-color: rgba(0, 0, 0, 0.12);
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+  :global(body.light-mode) .dock-icon-tile,
+  :global(body.light-mode) .dock-item:hover .dock-icon-tile {
+    background: rgba(255, 255, 255, 0.18);
+    border: none;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.35),
+      0 2px 4px rgba(20, 30, 50, 0.08);
   }
 
-  :global(body.light-mode) .contact-icon {
-    color: rgba(0, 0, 0, 0.7);
+  .dock-item[data-contact="email"] { --app-ink: #416c95; }
+  .dock-item[data-contact="github"] { --app-ink: #30343b; }
+  .dock-item[data-contact="terminal"] { --app-ink: #252a32; }
+  .dock-item[data-contact="telegram"] { --app-ink: #38728a; }
+  .dock-item[data-contact="youtube"] { --app-ink: #9b4548; }
+  .dock-item[data-contact="instagram"] { --app-ink: #855875; }
+  .dock-item[data-contact="twitter"] { --app-ink: #24272d; }
+  .dock-item[data-contact="reddit"] { --app-ink: #966044; }
+  .dock-item[data-contact="myanimelist"] { --app-ink: #48638a; }
+  .dock-item[data-contact="linkedin"] { --app-ink: #3f6a86; }
+  .dock-item[data-contact="mastodon"] { --app-ink: #69618d; }
+
+  :global(body.light-mode) .dock-item:hover .dock-icon-tile { filter: brightness(1.025); }
+
+  :global(body.light-mode) .dock-glyph {
+    color: #49515b;
+    filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.75));
   }
 
-  :global(body.light-mode) .contact-card:hover .contact-icon {
-    color: rgba(0, 0, 0, 0.85);
+  :global(body.light-mode) .dock-item:hover .dock-glyph {
+    color: var(--app-ink, #303944);
+    filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.75));
   }
 
-  :global(body.light-mode) .contact-card span {
+  :global(body.light-mode) .dock-dot {
+    background: rgba(0, 0, 0, 0.75);
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
+  }
+
+  :global(body.light-mode) .dock-dot.active {
+    background: rgba(0, 0, 0, 0.85);
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+  }
+
+  :global(body.light-mode) .dock-divider {
+    background: linear-gradient(180deg,
+      rgba(0, 0, 0, 0.05) 0%,
+      rgba(0, 0, 0, 0.22) 50%,
+      rgba(0, 0, 0, 0.05) 100%
+    );
+    box-shadow: 1px 0 0 rgba(255, 255, 255, 0.6);
+  }
+
+  :global(body.light-mode) .dock-item[data-contact="terminal"] {
+    --tile-tint: rgba(0, 160, 70, 0.12);
+    --tile-base: rgba(230, 245, 235, 0.7);
+  }
+
+  :global(body.light-mode) .dock-tooltip {
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(246, 246, 249, 0.94) 100%);
+    border: 0.5px solid rgba(0, 0, 0, 0.12);
     color: #1d1d1f;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
   }
 
-  @media (max-width: 1024px) {
-    .contact-page .contact .contact-grid {
-      grid-template-columns: repeat(4, 1fr);
-    }
+  :global(body.light-mode) .dock-tooltip::after {
+    background: rgba(246, 246, 249, 0.95);
+    border-right: 0.5px solid rgba(0, 0, 0, 0.12);
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.12);
   }
 
   @media (max-width: 768px) {
     .contact-page {
-      padding-top: 80px;
+      padding-top: 72px;
+      padding-bottom: 10px;
     }
 
     .terminal-hero {
       padding: 0 1rem;
-      margin-bottom: 2rem;
+      margin: auto auto;
     }
 
     .terminal-body {
@@ -1009,35 +1361,82 @@ I'm always open to collaborate on cool projects.`;
     }
 
     .contact-page .contact {
-      margin-left: 1rem;
-      margin-right: 1rem;
+      padding: 0 0.5rem 0;
+      margin-top: auto;
+      margin-bottom: 0;
     }
 
-    .contact-page .contact .contact-grid {
-      grid-template-columns: repeat(3, 1fr);
-      padding: 0 0 1.5rem;
-      gap: 0.55rem;
+    .macos-dock {
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 18px;
     }
 
-    .contact-card {
-      height: auto;
-      min-height: 0;
-      padding: 0.58rem 0.4rem;
-      border-radius: 12px;
-      gap: 0.32rem;
+    .dock-divider {
+      height: 28px;
+      margin: 0 2px;
     }
 
-    .contact-icon {
-      font-size: 1.15rem;
+    .dock-icon-tile {
+      width: 38px;
+      height: 38px;
+      border-radius: 9.5px;
     }
 
-    .contact-card span {
-      font-size: 0.62rem;
-      line-height: 1.2;
+    .dock-glyph {
+      font-size: 1.18rem;
+    }
+  }
+
+  @media (max-width: 580px) {
+    .dock-container {
+      justify-content: flex-start;
+      padding: 0 4px 2px;
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    .dock-container::-webkit-scrollbar {
+      display: none;
+    }
+
+    .macos-dock {
+      gap: 5px;
+      padding: 5px 8px;
+      border-radius: 16px;
+      margin: 0 auto;
+    }
+
+    .dock-divider {
+      height: 24px;
+      margin: 0 1px;
+    }
+
+    .dock-icon-tile {
+      width: 34px;
+      height: 34px;
+      border-radius: 8.5px;
+    }
+
+    .dock-glyph {
+      font-size: 1.05rem;
+    }
+
+    .dock-dot {
+      width: 3px;
+      height: 3px;
+      bottom: 1px;
     }
   }
 
   @media (max-width: 480px) {
+    .contact-page {
+      padding-top: 68px;
+      padding-bottom: 8px;
+    }
+
     .terminal-window {
       border-radius: 14px;
     }
@@ -1073,37 +1472,17 @@ I'm always open to collaborate on cool projects.`;
       line-height: 1.6;
     }
 
-    .contact-page .contact .contact-grid {
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.45rem;
-    }
-
-    .contact-card {
-      height: auto;
-      min-height: 0;
-      padding: 0.48rem 0.32rem;
-      border-radius: 11px;
-      gap: 0.26rem;
-    }
-
-    .contact-icon {
-      font-size: 1.05rem;
-    }
-
-    .contact-card span {
-      font-size: 0.58rem;
-      line-height: 1.15;
+    .contact-page .contact {
+      padding: 0 0.25rem 0;
+      margin-top: auto;
+      margin-bottom: 0;
     }
   }
 
-  @media (max-width: 360px) {
-    .contact-page .contact .contact-grid {
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.4rem;
-    }
-
-    .contact-card {
-      padding: 0.45rem 0.28rem;
+  @media (prefers-reduced-motion: reduce) {
+    .terminal-window, .dock-item, .dock-icon-tile, .dock-tooltip {
+      transition: none !important;
+      animation: none !important;
     }
   }
 </style>
