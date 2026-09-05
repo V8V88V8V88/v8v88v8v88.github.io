@@ -2,6 +2,7 @@ const GITHUB_USERNAME = 'V8V88V8V88';
 
 export interface Project {
   name: string;
+  repoName: string;
   description: string;
   url: string;
   language: string;
@@ -34,6 +35,71 @@ const hiddenRepos = new Set([
 const additionalRepos = [
   'thefossclub/thefossclub.github.io',
 ];
+
+export const projectNameOverrides: Record<string, string> = {
+  'thefossclub.github.io': 'The FOSS Club',
+  'thefossclub': 'The FOSS Club',
+  'thefossclub-app': 'The FOSS Club App',
+  'indx': 'INDX',
+  'INDX': 'INDX',
+  'piracyindex': 'Piracy Index',
+  'vaibring': 'Vaibring',
+  'neolekh': 'Neolekh',
+  'v8v88v8v88.github.io': 'V8V88V8V88 Portfolio',
+  'Telegram-GTK4-Libadwaita-Theme': 'Telegram GTK4 Libadwaita Theme',
+  'GNOME-bluetooth-battery-monitor': 'GNOME Bluetooth Battery Monitor',
+  'Rust-RISCV-Compiler': 'Rust RISC-V Compiler',
+  'mini-vm': 'Mini VM',
+  'cnn-image-classification': 'CNN Image Classification',
+  'helium-copr': 'Helium COPR',
+  'gtk-emoji-picker': 'GTK Emoji Picker',
+  'gtk-markdown-viewer': 'GTK Markdown Viewer',
+  'Jina-IDS': 'Jina IDS',
+  'H4CK3R_CTF': 'H4CK3R CTF',
+  'PDFpaglu': 'PDFPaglu',
+  'dirSim': 'DirSim',
+  'vfetch': 'VFetch',
+  'nanoHTTP': 'NanoHTTP',
+  'AI-Child-Protection': 'AI Child Protection',
+  'AI-Document-Analyzer': 'AI Document Analyzer',
+  'FOSS-Hack-Delhi': 'FOSS Hack Delhi',
+  'canva-linux': 'Canva Linux',
+  'linux-keylogger': 'Linux Keylogger',
+  'face-recognition': 'Face Recognition',
+  'rusty-snake': 'Rusty Snake',
+  'iced-calculator': 'Iced Calculator',
+  'simple-round-robin-scheduler': 'Simple Round Robin Scheduler',
+  'chemical-equipment-visualizer': 'Chemical Equipment Visualizer',
+  'musical-playground': 'Musical Playground',
+  'todo-list': 'Todo List',
+  'Sauce_Run': 'Sauce Run',
+  'dotfiles': 'Dotfiles',
+  'yama': 'Yama',
+  'walls': 'Walls',
+  'mousam': 'Mousam',
+  'zapzap': 'ZapZap',
+  'redesigned-dtc-website': 'Redesigned DTC Website',
+  'remove.sh': 'Remove.sh',
+  'teaching-git-in-community-call': 'Teaching Git in Community Call',
+  'community-call': 'Community Call',
+  'SkibidiSpeak': 'SkibidiSpeak',
+};
+
+export function formatProjectName(repoName: string): string {
+  if (projectNameOverrides[repoName]) {
+    return projectNameOverrides[repoName];
+  }
+  let clean = repoName.replace(/\.github\.io$/i, '');
+  clean = clean.replace(/[-_]+/g, ' ');
+  return clean
+    .split(' ')
+    .filter(Boolean)
+    .map(word => {
+      if (word === word.toUpperCase() && word.length > 1) return word;
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    })
+    .join(' ');
+}
 
 const categoryOverrides: Record<string, string> = {
   'thefossclub.github.io': 'Web Applications',
@@ -129,7 +195,7 @@ function getProjectImage(name: string, htmlUrl: string): string {
 
 function getProjectDescription(repo: GitHubRepo): string {
   const description = descriptionOverrides[repo.name] || repo.description;
-  return description?.trim() || `${repo.name} — an open-source project by ${GITHUB_USERNAME}.`;
+  return description?.trim() || `${formatProjectName(repo.name)} — an open-source project by ${GITHUB_USERNAME}.`;
 }
 
 const fallbackRepos: GitHubRepo[] = [
@@ -398,7 +464,8 @@ export async function getProjects(): Promise<Project[]> {
 
   return eligibleRepos
     .map(repo => ({
-      name: repo.name,
+      name: formatProjectName(repo.name),
+      repoName: repo.name,
       description: getProjectDescription(repo),
       url: repo.html_url,
       language: repo.language || 'Unknown',

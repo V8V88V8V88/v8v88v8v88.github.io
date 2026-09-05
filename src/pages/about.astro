@@ -181,7 +181,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         ctx.fillStyle = lightMode ? 'rgba(240, 240, 240, 0.1)' : 'rgba(0, 0, 0, 0.05)';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.fillStyle = lightMode ? '#0f4d1f' : '#1DB954';
-        ctx.font = fontSize + 'px JetBrains Mono, monospace';
+        ctx.font = fontSize + 'px "SF Mono", ui-monospace, Menlo, Monaco, Consolas, monospace';
         for (var i = 0; i < drops.length; i++) {
           var char = chars[Math.floor(Math.random() * chars.length)];
           ctx.fillText(char, i * fontSize, drops[i] * fontSize);
@@ -239,15 +239,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 .bento-item { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 18px; padding: 1.25rem 1.2rem; transition: all 0.3s ease; position: relative; overflow: hidden; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 4px 24px rgba(0, 0, 0, 0.2); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
 .bento-item::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 70%; height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent); }
 .bento-item:hover { background: rgba(255, 255, 255, 0.05); border-color: rgba(255, 255, 255, 0.15); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 8px 32px rgba(0, 0, 0, 0.25); transform: translateY(-4px); }
-.section-label { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: rgba(255, 255, 255, 0.35); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.65rem; }
+.section-label { font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace; font-size: 0.65rem; color: rgba(255, 255, 255, 0.35); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.65rem; }
 .bento-hero { grid-column: span 8; display: flex; flex-direction: column; justify-content: center; min-height: 220px; position: relative; overflow: hidden; }
-.hero-greeting { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: #1DB954; margin-bottom: 0.55rem; }
+.hero-greeting { font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace; font-size: 0.8rem; color: #1DB954; margin-bottom: 0.55rem; }
 .hero-title { font-family: 'EB Garamond', Georgia, serif; font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: 400; color: #fff; line-height: 1.15; margin-bottom: 0.65rem; }
 .hero-title .name { font-style: italic; color: rgba(255, 255, 255, 0.5); transition: color 0.3s ease; }
 .bento-hero:hover .hero-title .name { color: #1DB954 !important; }
 .hero-subtitle { font-family: 'EB Garamond', Georgia, serif; font-size: 1.15rem; color: rgba(255, 255, 255, 0.5); max-width: 400px; }
 .bento-item.bento-ascii { min-width: 0; }
-.bento-ascii { grid-column: span 4; display: flex; align-items: center; justify-content: center; min-height: 220px; font-family: 'JetBrains Mono', monospace; font-size: clamp(0.45rem, 0.65vw + 0.35rem, 0.6rem); line-height: 1.15; color: #1DB954; white-space: pre; text-align: center; }
+.bento-ascii { grid-column: span 4; display: flex; align-items: center; justify-content: center; min-height: 220px; font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace; font-size: clamp(0.45rem, 0.65vw + 0.35rem, 0.6rem); line-height: 1.15; color: #1DB954; white-space: pre; text-align: center; }
 .bento-ascii pre { margin: 0; width: fit-content; max-width: 100%; min-width: 0; margin-inline: auto; box-sizing: border-box; }
 .bento-philosophy { grid-column: span 6; display: flex; flex-direction: column; justify-content: center; text-align: center; padding: 1.35rem; gap: 0.75rem; }
 .bento-philosophy > .section-label { margin: 0; padding: 0; }
@@ -261,15 +261,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 .hero-expanded p { font-family: 'EB Garamond', Georgia, serif; font-size: 1.1rem; color: rgba(255, 255, 255, 0.6); line-height: 1.65; margin-bottom: 0.85rem; }
 .hero-expanded p:last-child { margin-bottom: 0; }
 .bento-hero.expanded .hero-expanded { display: block; animation: fadeIn 0.3s ease; }
-.click-hint { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: rgba(255, 255, 255, 0.25); position: absolute; bottom: 1rem; right: 1.5rem; transition: opacity 0.3s ease; }
+.click-hint { font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace; font-size: 0.65rem; color: rgba(255, 255, 255, 0.25); position: absolute; bottom: 1rem; right: 1.5rem; transition: opacity 0.3s ease; }
 .bento-hero.expanded .click-hint { display: none; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 .bento-stats { grid-column: span 3; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
 .stat-number { font-family: 'EB Garamond', Georgia, serif; font-size: 2.65rem; font-weight: 500; color: #fff; line-height: 1; }
-.stat-label { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: rgba(255, 255, 255, 0.4); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.35rem; }
+.stat-label { font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace; font-size: 0.7rem; color: rgba(255, 255, 255, 0.4); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.35rem; }
 .bento-skills { grid-column: span 6; }
 .skills-grid { display: flex; flex-wrap: wrap; gap: 0.48rem; }
-.skill-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: rgba(255, 255, 255, 0.6); padding: 0.38rem 0.85rem; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 100px; transition: all 0.2s ease; }
+.skill-tag { font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace; font-size: 0.75rem; color: rgba(255, 255, 255, 0.6); padding: 0.38rem 0.85rem; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 100px; transition: all 0.2s ease; }
 .skill-tag:hover { color: #1DB954; border-color: rgba(29, 185, 84, 0.3); background: rgba(29, 185, 84, 0.1); transform: translateY(-2px); }
 .skill-tag.highlight { color: #1DB954; border-color: rgba(29, 185, 84, 0.3); background: rgba(29, 185, 84, 0.1); }
 .bento-currently { grid-column: span 6; }
@@ -278,20 +278,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 .currently-item-work .currently-value { display: block; }
 .currently-list { display: flex; flex-direction: column; gap: 0.65rem; }
 .currently-item { display: flex; gap: 1rem; align-items: baseline; }
-.currently-key { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: rgba(255, 255, 255, 0.35); text-transform: uppercase; letter-spacing: 0.05em; min-width: 80px; }
+.currently-key { font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace; font-size: 0.7rem; color: rgba(255, 255, 255, 0.35); text-transform: uppercase; letter-spacing: 0.05em; min-width: 80px; }
 .currently-value { font-family: 'EB Garamond', Georgia, serif; font-size: 1.05rem; color: rgba(255, 255, 255, 0.75); }
 .currently-link { color: #1DB954; text-decoration: none; border-bottom: 1px solid rgba(29, 185, 84, 0.3); transition: all 0.2s ease; }
 .currently-link:hover { color: #22d35e; border-bottom-color: #22d35e; }
 .bento-location { grid-column: span 3; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
 .location-icon { font-size: 2rem; margin-bottom: 0.45rem; }
 .location-text { font-family: 'EB Garamond', Georgia, serif; font-size: 1.1rem; color: rgba(255, 255, 255, 0.7); }
-.location-sub { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: rgba(255, 255, 255, 0.35); margin-top: 0.25rem; }
+.location-sub { font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace; font-size: 0.7rem; color: rgba(255, 255, 255, 0.35); margin-top: 0.25rem; }
 .bento-matrix { grid-column: span 3; padding: 0; overflow: hidden; background: radial-gradient(ellipse at 50% 50%, rgba(29, 185, 84, 0.15) 0%, transparent 70%), #000; }
 .bento-matrix canvas { width: 100%; height: 100%; display: block; }
 .bento-cta { grid-column: span 6; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
 .cta-text { font-family: 'EB Garamond', Georgia, serif; font-size: 1.15rem; color: rgba(255, 255, 255, 0.6); margin-bottom: 1rem; }
 .cta-buttons { display: flex; gap: 0.65rem; }
-.cta-btn { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; padding: 0.62rem 1.25rem; border-radius: 100px; text-decoration: none; transition: all 0.3s ease; }
+.cta-btn { font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace; font-size: 0.8rem; padding: 0.62rem 1.25rem; border-radius: 100px; text-decoration: none; transition: all 0.3s ease; }
 .cta-btn.primary { background: linear-gradient(135deg, #0f4d1f 0%, #1DB954 100%); color: #fff; }
 .cta-btn.primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(29, 185, 84, 0.3); }
 .cta-btn.secondary { background: rgba(255, 255, 255, 0.05); color: #fff; border: 1px solid rgba(255, 255, 255, 0.1); }

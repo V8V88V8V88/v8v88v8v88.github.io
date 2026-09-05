@@ -1165,7 +1165,7 @@ body.light-mode .about a:not(.resume-button):hover {
 }
 
 .hero h1 {
-    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
     font-size: clamp(1.5rem, 4vw, 2.5rem);
     font-weight: 500;
     letter-spacing: -0.01em;
@@ -1313,7 +1313,7 @@ body.light-mode .project-thumb {
 
 .project-stack-tag {
     flex-shrink: 0;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
     font-size: 0.62rem;
     color: rgba(255, 255, 255, 0.55);
     border: 1px solid rgba(255, 255, 255, 0.12);
@@ -1505,7 +1505,7 @@ body.light-mode .posts p {
 .posts small {
     color: rgba(255, 255, 255, 0.35);
     font-size: 0.72rem;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
     font-weight: 400;
     letter-spacing: 0.02em;
     margin-top: 0.5rem;
@@ -2409,7 +2409,7 @@ main.blog-post pre {
 }
 
 main.blog-post pre code {
-    font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
     font-size: 0.85em;
     line-height: 1.5;
     color: rgba(255, 255, 255, 0.85);
@@ -2420,7 +2420,7 @@ main.blog-post pre code {
 }
 
 main.blog-post code {
-    font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
     font-size: 0.85em;
     background: rgba(255, 255, 255, 0.08);
     padding: 0.15em 0.4em;
@@ -2440,7 +2440,7 @@ main.blog-post .copy-btn {
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 8px;
     color: rgba(255, 255, 255, 0.5);
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
     font-size: 0.7rem;
     padding: 0.35rem 0.65rem;
     cursor: pointer;
@@ -2616,7 +2616,7 @@ body.light-mode main>section.intro {
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 999px;
     color: rgba(255, 255, 255, 0.85);
-    font-family: "JetBrains Mono", monospace;
+    font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas, monospace;
     font-size: 0.8rem;
     letter-spacing: 0.04em;
     cursor: pointer;
@@ -2741,7 +2741,7 @@ body.light-mode .guestbook-modal-header {
 }
 
 .guestbook-modal-header span {
-    font-family: "JetBrains Mono", monospace;
+    font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas, monospace;
     font-size: 0.85rem;
     letter-spacing: 0.06em;
     color: rgba(255, 255, 255, 0.6);

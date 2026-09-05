@@ -9,8 +9,14 @@ const allProjects = await getProjects();
 const homepageOrder = ['XE', 'indx', 'GNOME-bluetooth-battery-monitor', 'MarkView', 'MarkVue'];
 const featuredProjects = [...allProjects]
   .sort((a, b) => {
-    const aIndex = homepageOrder.findIndex(name => name.toLowerCase() === a.name.toLowerCase());
-    const bIndex = homepageOrder.findIndex(name => name.toLowerCase() === b.name.toLowerCase());
+    const aIndex = homepageOrder.findIndex(name =>
+      name.toLowerCase() === a.name.toLowerCase() ||
+      (a.repoName && name.toLowerCase() === a.repoName.toLowerCase())
+    );
+    const bIndex = homepageOrder.findIndex(name =>
+      name.toLowerCase() === b.name.toLowerCase() ||
+      (b.repoName && name.toLowerCase() === b.repoName.toLowerCase())
+    );
 
     if (aIndex !== -1 || bIndex !== -1) {
       if (aIndex === -1) return 1;
@@ -348,7 +354,7 @@ const featuredProjects = [...allProjects]
     margin-top: 0;
   }
   .hero h1 {
-    font-family: 'JetBrains Mono', 'SF Mono', monospace;
+    font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
     font-size: clamp(1.5rem, 4vw, 2.4rem);
     font-weight: 600;
     letter-spacing: -0.02em;
@@ -436,7 +442,7 @@ const featuredProjects = [...allProjects]
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    font-family: 'SF Mono', 'JetBrains Mono', monospace;
+    font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
     font-size: 0.72rem;
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.18);
@@ -670,7 +676,7 @@ const featuredProjects = [...allProjects]
   }
   .section-header h2 { margin-bottom: 0; }
   .view-all {
-    font-family: 'SF Mono', 'JetBrains Mono', monospace;
+    font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
     font-size: 0.7rem;
     color: rgba(255, 255, 255, 0.45) !important;
     text-decoration: none !important;
@@ -715,7 +721,7 @@ const featuredProjects = [...allProjects]
 
   .now-status {
     text-align: center;
-    font-family: 'SF Mono', 'JetBrains Mono', monospace;
+    font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
     font-size: 0.8rem;
     color: rgba(255, 255, 255, 0.3);
     margin-bottom: 2.5rem;
@@ -732,7 +738,7 @@ const featuredProjects = [...allProjects]
     flex-wrap: wrap;
     gap: 0.5rem;
     margin: 2.5rem 0;
-    font-family: 'SF Mono', 'JetBrains Mono', monospace;
+    font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
     font-size: 0.75rem;
     color: rgba(255, 255, 255, 0.35);
     letter-spacing: 0.01em;
@@ -881,7 +887,7 @@ const featuredProjects = [...allProjects]
   }
 
   .contact-card span {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
     font-size: 0.85rem;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.9);
