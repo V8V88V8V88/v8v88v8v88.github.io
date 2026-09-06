@@ -1,0 +1,15 @@
+# V8V88V8V88
+
+> Personal portfolio and digital garden of Vaibhav (known as V8). A Computer Science student and software developer from India building open-source software, Linux tooling, and developer utilities.
+
+## Main Pages
+- [Home](https://v8v88v8v88.com/): Introduction, featured projects, latest writing, and personal setup.
+- [About](https://v8v88v8v88.com/about/): About Vaibhav, skills, philosophy, dotfiles, and background.
+- [Projects](https://v8v88v8v88.com/projects/): Full catalog of open-source projects, themes, system utilities, and CLI tools.
+- [Blogs](https://v8v88v8v88.com/blogs/): Technical blog articles covering Linux, minimalism, and system configuration.
+- [Contact](https://v8v88v8v88.com/contact/): Contact methods, social links, Telegram, and PGP key.
+
+## Articles
+- [Fixing Broken Location on Linux](https://v8v88v8v88.com/blogs/linux-location-geoclue/): Step by step solution to fix Geoclue + BeaconDB location services on Linux.
+- [Minimalism](https://v8v88v8v88.com/blogs/minimalism/): How simplicity shaped life and software design philosophy.
+- [Username](https://v8v88v8v88.com/blogs/username/): Story and meaning behind the moniker "V8".

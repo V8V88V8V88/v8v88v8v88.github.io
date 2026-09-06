@@ -52,9 +52,13 @@ const {
   <link rel="canonical" href={canonical} />
   {showRss && <link rel="alternate" type="application/atom+xml" title="V8V88V8V88 Blog" href="https://v8v88v8v88.com/feed.xml" />}
   <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preconnect" href="https://fonts.cdnfonts.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet" />
-  <link href="https://fonts.cdnfonts.com/css/sf-mono" rel="stylesheet" />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet" />
+  </noscript>
   <link rel="icon" href="/images/favicon.ico" sizes="any" />
   <meta property="og:type" content={ogType} />
   <meta property="og:url" content={canonical} />
@@ -312,19 +316,26 @@ const {
       var guestbookOverlay = document.createElement('div');
       guestbookOverlay.className = 'guestbook-modal-overlay';
       guestbookOverlay.setAttribute('aria-hidden', 'true');
-      guestbookOverlay.innerHTML = '<div class="guestbook-modal" role="dialog" aria-label="Guestbook"><div class="guestbook-modal-header"><span>✦ GUESTBOOK</span><button class="guestbook-modal-close" aria-label="Close guestbook">×</button></div><iframe src="https://v8v88v8v88.atabook.org/" title="Guestbook" loading="lazy"></iframe></div>';
+      guestbookOverlay.setAttribute('inert', '');
+      guestbookOverlay.innerHTML = '<div class="guestbook-modal" role="dialog" aria-modal="true" aria-label="Guestbook"><div class="guestbook-modal-header"><span>✦ GUESTBOOK</span><button class="guestbook-modal-close" aria-label="Close guestbook">×</button></div><iframe data-src="https://v8v88v8v88.atabook.org/" title="Guestbook" loading="lazy"></iframe></div>';
 
       document.body.appendChild(guestbookBtn);
       document.body.appendChild(guestbookOverlay);
 
       function openGuestbook() {
+        var iframe = guestbookOverlay.querySelector('iframe');
+        if (iframe && !iframe.src) {
+          iframe.src = iframe.getAttribute('data-src') || 'https://v8v88v8v88.atabook.org/';
+        }
         guestbookOverlay.classList.add('open');
         guestbookOverlay.setAttribute('aria-hidden', 'false');
+        guestbookOverlay.removeAttribute('inert');
         document.body.style.overflow = 'hidden';
       }
       function closeGuestbook() {
         guestbookOverlay.classList.remove('open');
         guestbookOverlay.setAttribute('aria-hidden', 'true');
+        guestbookOverlay.setAttribute('inert', '');
         document.body.style.overflow = '';
       }
 

@@ -1,3 +1,32 @@
+@font-face {
+    font-family: 'SF Mono';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: local('SF Mono'), url('https://fonts.cdnfonts.com/s/22256/SFMonoRegular.woff') format('woff');
+}
+@font-face {
+    font-family: 'SF Mono';
+    font-style: italic;
+    font-weight: 400;
+    font-display: swap;
+    src: local('SF Mono'), url('https://fonts.cdnfonts.com/s/22256/SFMonoRegularItalic.woff') format('woff');
+}
+@font-face {
+    font-family: 'SF Mono';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: local('SF Mono'), url('https://fonts.cdnfonts.com/s/22256/SFMonoMedium.woff') format('woff');
+}
+@font-face {
+    font-family: 'SF Mono';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: local('SF Mono'), url('https://fonts.cdnfonts.com/s/22256/SFMonoSemibold.woff') format('woff');
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -460,7 +489,7 @@ body.light-mode .footer-logo {
 }
 
 body.light-mode .footer-tagline {
-    color: rgba(0, 0, 0, 0.5);
+    color: rgba(0, 0, 0, 0.68);
 }
 
 body.light-mode .footer-nav-links a {
@@ -487,15 +516,21 @@ body.light-mode .footer-main {
 }
 
 body.light-mode .footer-meta {
-    color: rgba(0, 0, 0, 0.4);
+    color: rgba(0, 0, 0, 0.68);
 }
 
 body.light-mode .footer-meta a {
-    color: rgba(0, 0, 0, 0.6);
+    color: #111;
 }
 
 body.light-mode .footer-meta a:hover {
     color: #000;
+}
+
+.footer-meta .made-with a {
+    text-decoration: underline;
+    text-underline-offset: 2.5px;
+    text-decoration-thickness: 1px;
 }
 
 body.light-mode .footer-webring {
@@ -717,6 +752,15 @@ body.light-mode .footer-tagline {
     color: rgba(255, 255, 255, 0.6);
     text-decoration: none;
     transition: color 0.2s ease;
+}
+
+.webring-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    min-height: 28px;
+    padding: 0.2rem;
 }
 
 .webring-link:hover,
@@ -1536,7 +1580,7 @@ body.light-mode .posts p {
 }
 
 .posts small {
-    color: rgba(255, 255, 255, 0.35);
+    color: rgba(255, 255, 255, 0.65);
     font-size: 0.72rem;
     font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
     font-weight: 400;
@@ -1545,7 +1589,7 @@ body.light-mode .posts p {
 }
 
 body.light-mode .posts small {
-    color: rgba(0, 0, 0, 0.4);
+    color: rgba(0, 0, 0, 0.65);
 }
 
 
@@ -2890,12 +2934,14 @@ body.light-mode .guestbook-btn:hover {
     align-items: center;
     justify-content: center;
     opacity: 0;
+    visibility: hidden;
     pointer-events: none;
-    transition: opacity 0.25s ease;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
 }
 
 .guestbook-modal-overlay.open {
     opacity: 1;
+    visibility: visible;
     pointer-events: all;
 }
 
