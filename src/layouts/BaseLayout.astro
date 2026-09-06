@@ -167,6 +167,7 @@ const {
 
     var body = document.body;
     var navbarSwitch = document.getElementById('mode-switch');
+    var liquidBtn = document.getElementById('liquid-mode-toggle');
 
     function setTheme(theme) {
       var root = document.documentElement;
@@ -187,8 +188,13 @@ const {
     }
 
     function updateSwitchesVisualState(theme) {
-      if (navbarSwitch) {
-        navbarSwitch.checked = (theme === 'dark');
+      var isDark = (theme === 'dark');
+      if (navbarSwitch && navbarSwitch.checked !== isDark) {
+        navbarSwitch.checked = isDark;
+        navbarSwitch.dispatchEvent(new Event('change'));
+      }
+      if (liquidBtn) {
+        liquidBtn.setAttribute('aria-checked', String(isDark));
       }
     }
 
@@ -229,6 +235,18 @@ const {
     if (navbarSwitch) {
       navbarSwitch.addEventListener('change', function () {
         var newTheme = this.checked ? 'dark' : 'light';
+        var currentTheme = document.documentElement.classList.contains('light-mode') ? 'light' : 'dark';
+        if (newTheme !== currentTheme) {
+          setTheme(newTheme);
+          playThemeClick(newTheme);
+        }
+      });
+    }
+
+    if (liquidBtn) {
+      liquidBtn.addEventListener('click', function () {
+        var currentTheme = document.documentElement.classList.contains('light-mode') ? 'light' : 'dark';
+        var newTheme = currentTheme === 'dark' ? 'light' : 'dark';
         setTheme(newTheme);
         playThemeClick(newTheme);
       });
@@ -273,10 +291,17 @@ const {
       });
       document.body.appendChild(scrollToTopBtn);
 
+      var scrollTicking = false;
       function updateScrollButtonVisibility() {
-        scrollToTopBtn.classList.toggle('visible', window.pageYOffset > 300);
+        if (!scrollTicking) {
+          window.requestAnimationFrame(function () {
+            scrollToTopBtn.classList.toggle('visible', (window.pageYOffset || document.documentElement.scrollTop) > 300);
+            scrollTicking = false;
+          });
+          scrollTicking = true;
+        }
       }
-      window.addEventListener('scroll', updateScrollButtonVisibility);
+      window.addEventListener('scroll', updateScrollButtonVisibility, { passive: true });
       updateScrollButtonVisibility();
 
       var guestbookBtn = document.createElement('button');
@@ -326,7 +351,7 @@ const {
       var dpr = window.devicePixelRatio || 1;
       var w, h, particles = [];
       var mouseX = -9999, mouseY = -9999;
-      var PARTICLE_COUNT = Math.min(Math.floor((window.innerWidth + window.innerHeight) / 3.5), 600);
+      var PARTICLE_COUNT = Math.min(Math.floor((window.innerWidth + window.innerHeight) / 16), 150);
       var PUSH_RADIUS = 90;
       var PUSH_STRENGTH = 1.8;
 
@@ -349,6 +374,23 @@ const {
       }
 
       var frame = 0;
+      var isScrolling = false;
+      var scrollTimer;
+
+      function onScroll() {
+        isScrolling = true;
+        clearTimeout(scrollTimer);
+        scrollTimer = setTimeout(function() {
+          isScrolling = false;
+        }, 120);
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      if ('onscrollend' in window) {
+        window.addEventListener('scrollend', function() {
+          isScrolling = false;
+        }, { passive: true });
+      }
 
       function resize() {
         w = window.innerWidth;
@@ -364,9 +406,19 @@ const {
       }
 
       function step() {
+        if (isLight()) {
+          requestAnimationFrame(step);
+          return;
+        }
+
+        // Skip canvas redraw during scroll so 100% frame budget goes to scrolling
+        if (isScrolling) {
+          requestAnimationFrame(step);
+          return;
+        }
+
         ctx.clearRect(0, 0, w, h);
-        var light = isLight();
-        var col = light ? '15,77,31' : '255,255,255';
+        ctx.fillStyle = '#ffffff';
         frame++;
 
         for (var i = 0; i < particles.length; i++) {
@@ -395,14 +447,14 @@ const {
           // Shimmer
           var shimmer = 0.5 + 0.5 * Math.sin(p.phase + frame * p.speed);
           var alpha = p.baseAlpha * (0.3 + 0.7 * shimmer);
-          if (light) alpha = Math.min(1.0, alpha * 1.8); // Boost contrast for light mode
 
-          // Draw
+          // Draw - Zero GC: sets globalAlpha without creating strings
+          ctx.globalAlpha = alpha;
           ctx.beginPath();
           ctx.arc(p.x, p.y, p.r, 0, 6.283);
-          ctx.fillStyle = 'rgba(' + col + ',' + alpha + ')';
           ctx.fill();
         }
+        ctx.globalAlpha = 1.0;
 
         requestAnimationFrame(step);
       }

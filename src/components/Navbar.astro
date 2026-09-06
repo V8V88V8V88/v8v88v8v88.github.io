@@ -17,8 +17,17 @@ function isCurrent(path: string) {
     <div class="logo"><a href="/">V8V88V8V88</a></div>
     <div class="nav-right">
       <div class="mode-toggle">
-        <input type="checkbox" id="mode-switch" class="mode-switch" aria-label="Toggle dark mode" />
-        <label for="mode-switch" class="mode-switch-label"></label>
+        <input type="checkbox" id="mode-switch" class="sr-only" aria-label="Toggle dark mode" tabindex="-1" aria-hidden="true" />
+        <button
+          type="button"
+          class="liquid-toggle"
+          id="liquid-mode-toggle"
+          role="switch"
+          aria-checked="true"
+          aria-label="Toggle theme"
+        >
+          <span class="glass-knob"></span>
+        </button>
         <script is:inline>
           (function () {
             try {
@@ -31,6 +40,10 @@ function isCurrent(path: string) {
               }
               var sw = document.getElementById("mode-switch");
               if (sw) sw.checked = !light;
+              var liquidBtn = document.getElementById("liquid-mode-toggle");
+              if (liquidBtn) {
+                liquidBtn.setAttribute("aria-checked", String(!light));
+              }
             } catch (_) {}
           })();
         </script>

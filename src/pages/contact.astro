@@ -40,7 +40,7 @@ import { neofetchMarkup } from '../data/terminal';
             <button type="button" class="terminal-dot yellow" id="btn-minimize" title="Minimize" aria-label="Minimize terminal"></button>
             <button type="button" class="terminal-dot green" id="btn-maximize" title="Maximize" aria-label="Maximize terminal"></button>
           </div>
-          <span class="terminal-title">v8v88v8v88@fedora ~ /contact</span>
+          <span class="terminal-title">v8v88v8v88@ecOSystem ~ /contact</span>
           <div class="terminal-header-spacer" aria-hidden="true"></div>
         </div>
         <div class="terminal-body" id="terminal-body">
@@ -501,29 +501,62 @@ I'm always open to collaborate on cool projects.`;
     touch-action: none;
   }
 
-  .terminal-resize-n, .terminal-resize-s { left: 18px; right: 18px; height: 8px; cursor: ns-resize; }
+  .terminal-resize-n, .terminal-resize-s { left: 22px; right: 22px; height: 10px; cursor: ns-resize; }
   .terminal-resize-n { top: 0; }
   .terminal-resize-s { bottom: 0; }
-  .terminal-resize-e, .terminal-resize-w { top: 18px; bottom: 18px; width: 8px; cursor: ew-resize; }
+  .terminal-resize-e, .terminal-resize-w { top: 22px; bottom: 22px; width: 10px; cursor: ew-resize; }
   .terminal-resize-e { right: 0; }
   .terminal-resize-w { left: 0; }
-  .terminal-resize-ne, .terminal-resize-se, .terminal-resize-sw, .terminal-resize-nw { width: 18px; height: 18px; }
+  .terminal-resize-ne, .terminal-resize-se, .terminal-resize-sw, .terminal-resize-nw { width: 22px; height: 22px; }
   .terminal-resize-ne { top: 0; right: 0; cursor: nesw-resize; }
   .terminal-resize-se { bottom: 0; right: 0; cursor: nwse-resize; }
   .terminal-resize-sw { bottom: 0; left: 0; cursor: nesw-resize; }
   .terminal-resize-nw { top: 0; left: 0; cursor: nwse-resize; }
 
+  .terminal-resize-se::after {
+    content: '';
+    position: absolute;
+    right: 4px;
+    bottom: 4px;
+    width: 9px;
+    height: 9px;
+    background: linear-gradient(135deg,
+      transparent 0%, transparent 35%,
+      rgba(255, 255, 255, 0.32) 35%, rgba(255, 255, 255, 0.32) 48%,
+      transparent 48%, transparent 62%,
+      rgba(255, 255, 255, 0.32) 62%, rgba(255, 255, 255, 0.32) 75%,
+      transparent 75%
+    );
+    opacity: 0.55;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .terminal-window:hover .terminal-resize-se::after {
+    opacity: 0.9;
+  }
+
+  :global(body.light-mode) .terminal-resize-se::after {
+    background: linear-gradient(135deg,
+      transparent 0%, transparent 35%,
+      rgba(0, 0, 0, 0.28) 35%, rgba(0, 0, 0, 0.28) 48%,
+      transparent 48%, transparent 62%,
+      rgba(0, 0, 0, 0.28) 62%, rgba(0, 0, 0, 0.28) 75%,
+      transparent 75%
+    );
+  }
+
   .terminal-resize-keyboard {
     position: absolute;
-    right: 5px;
+    right: 4px;
     bottom: 4px;
     padding: 0;
     width: 14px;
-    height: 16px;
+    height: 14px;
     border: 0;
     background: transparent;
-    color: #888;
-    font-size: 17px;
+    color: transparent;
+    font-size: 14px;
     line-height: 1;
     pointer-events: none;
   }
@@ -904,23 +937,41 @@ I'm always open to collaborate on cool projects.`;
     max-width: 100%;
   }
 
-  /* macOS Sequoia Liquid Glass Dock Tray */
+  /* macOS Sequoia Realistic Liquid Glass Dock Tray */
   .macos-dock {
+    --c-glass: #bbbbbc;
+    --c-light: #ffffff;
+    --c-dark: #000000;
+    --glass-reflex-dark: 2;
+    --glass-reflex-light: 0.35;
+    --saturation: 160%;
+
     position: relative;
     display: inline-flex;
     align-items: center;
     gap: 12px;
     padding: 10px 16px;
-    border-radius: 26px;
-    background: rgba(26, 29, 34, 0.22);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(20px) saturate(160%);
-    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border-radius: 24px;
+    background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
+    backdrop-filter: blur(20px) saturate(var(--saturation));
+    -webkit-backdrop-filter: blur(20px) saturate(var(--saturation));
     box-shadow:
-      0 16px 48px -12px rgba(0, 0, 0, 0.65),
-      0 3px 8px rgba(0, 0, 0, 0.14);
+      inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
+      inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent),
+      inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent),
+      inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent),
+      inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent),
+      inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent),
+      inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent),
+      inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),
+      0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),
+      0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent),
+      0 20px 48px -12px rgba(0, 0, 0, 0.65);
     user-select: none;
     touch-action: manipulation;
+    transition:
+      background-color 400ms cubic-bezier(1, 0.0, 0.4, 1),
+      box-shadow 400ms cubic-bezier(1, 0.0, 0.4, 1);
   }
 
   /* Floating Apple-style Tooltip */
@@ -994,22 +1045,26 @@ I'm always open to collaborate on cool projects.`;
     padding: 2px 0;
   }
 
-  /* Translucent Liquid Glass Squircle Tiles (macOS Sequoia Tinted/Glass Spec) */
+  /* Realistic Translucent Liquid Glass Squircle Tiles */
   .dock-icon-tile {
     width: 44px;
     height: 44px;
-    border-radius: 11px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
     overflow: hidden;
-    background: rgba(255, 255, 255, 0.055);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background-color: color-mix(in srgb, var(--c-glass) 18%, transparent);
     box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.08),
-      0 4px 10px -4px rgba(0, 0, 0, 0.3);
-    transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+      inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
+      inset 2px 1px 0px -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent),
+      inset -1.5px -1px 0px -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent),
+      inset -2px -6px 1px -5px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent),
+      inset -1px 2px 3px -1px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent),
+      inset 0px -4px 1px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),
+      0px 3px 6px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
+    transition: background-color 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease, transform 0.2s ease;
   }
 
   /* Frosted Silver/White Iconography */
@@ -1028,14 +1083,18 @@ I'm always open to collaborate on cool projects.`;
     flex-shrink: 0;
   }
 
-  /* Interactive Hover State: Elevate, Internal Tint Inside & Bright White Glyph */
+  /* Interactive Hover State: Elevate, Internal Tint Inside & Bright Specular Reflections */
   .dock-item:hover .dock-icon-tile {
-    background: var(--tile-tint, rgba(255, 255, 255, 0.09));
-    border-color: rgba(255, 255, 255, 0.12);
+    background-color: var(--tile-tint, color-mix(in srgb, var(--c-glass) 34%, transparent));
     box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.12),
-      0 8px 18px -6px rgba(0, 0, 0, 0.35);
-    filter: brightness(1.06);
+      inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 25%), transparent),
+      inset 2.5px 1.5px 0px -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 100%), transparent),
+      inset -2px -1.5px 0px -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent),
+      inset -2px -6px 1px -5px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 70%), transparent),
+      inset -1px 2px 3px -1px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 25%), transparent),
+      inset 0px -4px 1px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 15%), transparent),
+      0px 6px 14px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 14%), transparent);
+    filter: brightness(1.08);
   }
 
   .dock-item:hover .dock-glyph {
@@ -1177,7 +1236,7 @@ I'm always open to collaborate on cool projects.`;
   :global(body.light-mode) .terminal-window {
     background:
       radial-gradient(140% 90% at 50% 0%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.6) 50%, transparent 80%),
-      linear-gradient(180deg, rgba(255, 255, 255, 0.85) 0%, rgba(240, 240, 244, 0.92) 100%);
+      linear-gradient(180deg, rgba(255, 255, 255, 0.90) 0%, rgba(249, 248, 247, 0.94) 100%);
     border: 1px solid rgba(0, 0, 0, 0.11);
     box-shadow:
       0 0 0 1px rgba(0, 0, 0, 0.04),
@@ -1198,15 +1257,15 @@ I'm always open to collaborate on cool projects.`;
 
   :global(body.light-mode) .terminal-window.is-dragging {
     box-shadow:
-      0 22px 48px -16px rgba(35, 45, 58, 0.2),
-      0 8px 18px -8px rgba(35, 45, 58, 0.12),
+      0 22px 48px -16px rgba(0, 0, 0, 0.18),
+      0 8px 18px -8px rgba(0, 0, 0, 0.1),
       inset 0 1px 1px rgba(255, 255, 255, 0.85);
   }
 
   :global(body.light-mode) .terminal-header {
     background: linear-gradient(180deg,
-      rgba(255, 255, 255, 0.9) 0%,
-      rgba(242, 242, 245, 0.75) 100%);
+      rgba(255, 255, 255, 0.92) 0%,
+      rgba(249, 248, 247, 0.85) 100%);
     border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   }
 
@@ -1265,21 +1324,49 @@ I'm always open to collaborate on cool projects.`;
   }
 
   :global(body.light-mode) .macos-dock {
-    background: rgba(246, 248, 251, 0.25);
-    border: 1px solid rgba(50, 60, 75, 0.1);
+    --c-glass: #bbbbbc;
+    --c-light: #ffffff;
+    --c-dark: #000000;
+    --glass-reflex-dark: 1;
+    --glass-reflex-light: 1;
+    --saturation: 150%;
+    background-color: color-mix(in srgb, var(--c-glass) 16%, transparent);
     box-shadow:
-      0 24px 50px -10px rgba(0, 0, 0, 0.14),
-      0 10px 22px -4px rgba(0, 0, 0, 0.08),
-      0 2px 6px 0 rgba(0, 0, 0, 0.04);
+      inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 35%), transparent),
+      inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 95%), transparent),
+      inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent),
+      inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent),
+      inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),
+      inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 16%), transparent),
+      inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 16%), transparent),
+      inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent),
+      0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),
+      0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent),
+      0 20px 48px -10px rgba(0, 0, 0, 0.12);
   }
 
-  :global(body.light-mode) .dock-icon-tile,
-  :global(body.light-mode) .dock-item:hover .dock-icon-tile {
-    background: rgba(255, 255, 255, 0.18);
-    border: none;
+  :global(body.light-mode) .dock-icon-tile {
+    background-color: color-mix(in srgb, var(--c-glass) 22%, transparent);
     box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.35),
-      0 2px 4px rgba(20, 30, 50, 0.08);
+      inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 35%), transparent),
+      inset 2px 1px 0px -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 95%), transparent),
+      inset -1.5px -1px 0px -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent),
+      inset -2px -6px 1px -5px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent),
+      inset -1px 2px 3px -1px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 14%), transparent),
+      inset 0px -4px 1px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent),
+      0px 2px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
+  }
+
+  :global(body.light-mode) .dock-item:hover .dock-icon-tile {
+    background-color: var(--tile-tint, color-mix(in srgb, var(--c-glass) 36%, transparent));
+    box-shadow:
+      inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 50%), transparent),
+      inset 2px 1px 0px -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 100%), transparent),
+      inset -1.5px -1px 0px -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent),
+      inset -2px -6px 1px -5px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 70%), transparent),
+      inset -1px 2px 3px -1px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 18%), transparent),
+      inset 0px -4px 1px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),
+      0px 4px 10px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent);
   }
 
   .dock-item[data-contact="email"] { --app-ink: #416c95; }

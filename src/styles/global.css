@@ -5,20 +5,25 @@
 }
 
 html {
-    scroll-behavior: smooth;
     overflow-x: clip;
 }
 
 html.light-mode {
     color-scheme: light;
+    background-color: #f9f8f7;
 }
 
 html.dark-mode {
     color-scheme: dark;
+    background-color: #000;
 }
 
 html.light-mode body {
-    background-color: #f5f5f7;
+    background-color: #f9f8f7;
+    background-image: radial-gradient(circle, rgba(0, 0, 0, 0.11) 1px, transparent 1.2px);
+    background-size: 32px 32px;
+    background-position: center top;
+    background-attachment: fixed;
     color: #000;
 }
 
@@ -50,7 +55,11 @@ body {
 }
 
 body.light-mode {
-    background-color: #fff;
+    background-color: #f9f8f7;
+    background-image: radial-gradient(circle, rgba(0, 0, 0, 0.11) 1px, transparent 1.2px);
+    background-size: 32px 32px;
+    background-position: center top;
+    background-attachment: fixed;
     color: #000;
 }
 
@@ -164,7 +173,7 @@ body.light-mode header {
             rgba(255, 255, 255, 0.25) 30%,
             rgba(255, 255, 255, 0.15) 60%,
             rgba(255, 255, 255, 0.1) 100%),
-        rgba(245, 245, 247, 0.2);
+        rgba(249, 248, 247, 0.25);
 
     border: 1.5px solid rgba(0, 0, 0, 0.20);
 
@@ -186,7 +195,7 @@ html.light-mode header {
             rgba(255, 255, 255, 0.25) 30%,
             rgba(255, 255, 255, 0.15) 60%,
             rgba(255, 255, 255, 0.1) 100%),
-        rgba(245, 245, 247, 0.2);
+        rgba(249, 248, 247, 0.25);
 
     border: 1.5px solid rgba(0, 0, 0, 0.20);
 
@@ -238,7 +247,7 @@ body.light-mode.scrolling header {
             rgba(255, 255, 255, 0.3) 30%,
             rgba(255, 255, 255, 0.2) 60%,
             rgba(255, 255, 255, 0.15) 100%),
-        rgba(245, 245, 247, 0.25);
+        rgba(249, 248, 247, 0.25);
     box-shadow:
         0 0 0 0.5px rgba(255, 255, 255, 0.45),
         0 8px 32px rgba(0, 0, 0, 0.08),
@@ -255,7 +264,7 @@ html.light-mode.scrolling header {
             rgba(255, 255, 255, 0.3) 30%,
             rgba(255, 255, 255, 0.2) 60%,
             rgba(255, 255, 255, 0.15) 100%),
-        rgba(245, 245, 247, 0.25);
+        rgba(249, 248, 247, 0.25);
     box-shadow:
         0 0 0 0.5px rgba(255, 255, 255, 0.45),
         0 8px 32px rgba(0, 0, 0, 0.08),
@@ -418,12 +427,11 @@ body.light-mode section {
 }
 
 body.light-mode .footer-glass {
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.03) 0%, rgba(0, 0, 0, 0.06) 100%);
-
+    background: #f1f0ef;
     border: 1px solid rgba(0, 0, 0, 0.08);
     box-shadow:
-        0 8px 32px rgba(0, 0, 0, 0.05),
-        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+        0 2px 8px rgba(0, 0, 0, 0.04),
+        0 8px 24px rgba(0, 0, 0, 0.04);
 }
 
 @media (min-width: 1024px) {
@@ -1242,27 +1250,49 @@ body.light-mode .projects {
 }
 
 .project-item {
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(255, 255, 255, 0.035);
     border-radius: 16px;
     overflow: hidden;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.12),
+      inset 0 -1px 0 0 rgba(255, 255, 255, 0.04),
+      0 4px 18px -2px rgba(0, 0, 0, 0.4);
+    transition: 
+      background 0.3s ease,
+      border-color 0.3s ease,
+      box-shadow 0.35s ease,
+      transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 body.light-mode .project-item {
-    background: rgba(0, 0, 0, 0.03);
-    border-color: rgba(0, 0, 0, 0.06);
+    background: rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.8),
+      inset 0 -1px 0 0 rgba(0, 0, 0, 0.03),
+      0 4px 16px -2px rgba(0, 0, 0, 0.04);
 }
 
 .project-item:hover {
-    transform: translateY(-4px);
-    border-color: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.055);
+    border-color: rgba(255, 255, 255, 0.16);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.22),
+      inset 0 -1px 0 0 rgba(255, 255, 255, 0.08),
+      0 12px 32px -4px rgba(0, 0, 0, 0.5);
 }
 
 body.light-mode .project-item:hover {
-    border-color: rgba(0, 0, 0, 0.1);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.14);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.95),
+      inset 0 -1px 0 0 rgba(0, 0, 0, 0.05),
+      0 12px 28px -4px rgba(0, 0, 0, 0.08);
 }
 
 .project-item a {
@@ -1602,17 +1632,223 @@ body.light-mode .intro-text p {
     color: rgba(0, 0, 0, 0.5);
 }
 
-/* Mode Toggle - Liquid Glass Style */
+/* Mode Toggle Container */
 .mode-toggle {
     display: flex;
     align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 22px;
+    position: relative;
+    user-select: none;
+    -webkit-user-select: none;
+    flex-shrink: 0;
 }
 
-html.theme-preload .mode-switch,
-html.theme-preload .mode-switch::before {
+/* Preload state prevents flash of animation on first load */
+html.theme-preload .liquid-toggle,
+html.theme-preload .liquid-toggle *,
+html.theme-preload .mode-switch {
     transition: none !important;
+    animation: none !important;
 }
 
+/* Authentic Liquid Glass Theme Switcher (Specular Bevels & Refractive Physics) */
+.liquid-toggle {
+    --c-glass: #bbbbbc;
+    --c-light: #ffffff;
+    --c-dark: #000000;
+    --glass-reflex-dark: 2;
+    --glass-reflex-light: 0.45;
+    --saturation: 160%;
+
+    position: relative;
+    width: 45px;
+    height: 22px;
+    border-radius: 99em;
+    overflow: hidden;
+    background-color: color-mix(in srgb, var(--c-glass) 14%, transparent);
+    backdrop-filter: blur(14px) saturate(var(--saturation));
+    -webkit-backdrop-filter: blur(14px) saturate(var(--saturation));
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    cursor: pointer;
+    outline: none;
+    box-shadow: 
+      inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 14%), transparent),
+      inset 1.2px 2px 0px -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), 
+      inset -1.2px -1px 0px -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 75%), transparent), 
+      inset -2px -4px 1px -3px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 55%), transparent), 
+      inset -0.3px -1px 3px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), 
+      inset -1px 1.5px 0px -1px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
+      0px 1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), 
+      0px 4px 10px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent);
+    transition: 
+      background-color 300ms cubic-bezier(1, 0.0, 0.4, 1),
+      box-shadow 300ms cubic-bezier(1, 0.0, 0.4, 1);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.liquid-toggle:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.6);
+    outline-offset: 3px;
+}
+
+body.light-mode .liquid-toggle:focus-visible,
+html.light-mode .liquid-toggle:focus-visible {
+    outline: 2px solid rgba(0, 0, 0, 0.4);
+    outline-offset: 3px;
+}
+
+/* Light mode track: Crisp frosted glass with silver reflections, zero blue, zero dirty yellow */
+body.light-mode .liquid-toggle,
+html.light-mode .liquid-toggle {
+    --c-glass: #8a8a90;
+    --c-light: #ffffff;
+    --c-dark: #000000;
+    --glass-reflex-dark: 1;
+    --glass-reflex-light: 1;
+    --saturation: 140%;
+    background-color: color-mix(in srgb, var(--c-glass) 18%, transparent);
+    box-shadow: 
+      inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 35%), transparent),
+      inset 1.2px 2px 0px -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 95%), transparent), 
+      inset -1.2px -1px 0px -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 75%), transparent), 
+      inset -2px -4px 1px -3px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 50%), transparent), 
+      inset -0.3px -1px 3px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent), 
+      inset -1px 1.5px 0px -1px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 14%), transparent), 
+      0px 1px 3px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent), 
+      0px 4px 10px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 6%), transparent);
+}
+
+/* The Authentic macOS Elongated ("Lamba Sa") Liquid Glass Pill Knob */
+.liquid-toggle .glass-knob {
+    width: 23px;
+    height: 18px;
+    border-radius: 99em;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    z-index: 2;
+    pointer-events: none;
+    background-color: color-mix(in srgb, #ffffff 48%, transparent);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 
+      inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 30%), transparent),
+      inset 1.5px 1px 0px -0.5px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 100%), transparent), 
+      inset -1.2px -1px 0px -0.5px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), 
+      inset -1.5px -3px 1px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), 
+      inset -0.5px 1px 2px -0.5px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 18%), transparent), 
+      inset 0px -2px 1px -1px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
+      0px 2px 6px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 18%), transparent);
+    transition: 
+      transform 0.28s cubic-bezier(0.25, 1, 0.5, 1),
+      width 0.18s cubic-bezier(0.25, 1, 0.5, 1),
+      height 0.18s cubic-bezier(0.25, 1, 0.5, 1),
+      top 0.18s cubic-bezier(0.25, 1, 0.5, 1),
+      background-color 300ms ease,
+      box-shadow 300ms ease;
+}
+
+/* Light mode knob: Silky translucent white frosted elongated glass capsule */
+body.light-mode .liquid-toggle .glass-knob,
+html.light-mode .liquid-toggle .glass-knob {
+    background-color: color-mix(in srgb, #ffffff 88%, transparent);
+    box-shadow: 
+      inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent),
+      inset 1.5px 1px 0px -0.5px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 100%), transparent), 
+      inset -1.2px -1px 0px -0.5px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 85%), transparent), 
+      inset -1.5px -3px 1px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 65%), transparent), 
+      inset -0.5px 1px 2px -0.5px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), 
+      inset 0px -2px 1px -1px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent), 
+      0px 2px 6px 0px rgba(0, 0, 0, 0.14);
+}
+
+/* Dark Mode: aria-checked="true" -> Knob on the Right */
+.liquid-toggle[aria-checked="true"] .glass-knob {
+    transform: translateX(18px);
+}
+
+/* Light Mode: aria-checked="false" -> Knob on the Left */
+.liquid-toggle[aria-checked="false"] .glass-knob {
+    transform: translateX(0);
+}
+
+/* EXPAND & STRETCH HORIZONTALLY AND VERTICALLY ON ACTIVE (PRESS & HOLD) */
+.liquid-toggle[aria-checked="false"]:active .glass-knob {
+    width: 30px;
+    height: 20px;
+    top: 1px;
+    transform: translateX(0);
+    transition: 
+      transform 0.28s cubic-bezier(0.25, 1, 0.5, 1),
+      width 0.14s cubic-bezier(0.1, 1, 0.2, 1),
+      height 0.14s cubic-bezier(0.1, 1, 0.2, 1),
+      top 0.14s cubic-bezier(0.1, 1, 0.2, 1);
+    background-color: color-mix(in srgb, #ffffff 65%, transparent);
+    box-shadow: 
+      inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 50%), transparent),
+      inset 2px 1.5px 0px -0.5px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 100%), transparent), 
+      inset -1.5px -1.5px 0px -0.5px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), 
+      inset -1.5px -4px 1px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 70%), transparent), 
+      inset -0.5px 1px 2px -0.5px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 22%), transparent), 
+      inset 0px -2px 1px -1px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), 
+      0px 5px 14px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 28%), transparent);
+}
+
+.liquid-toggle[aria-checked="true"]:active .glass-knob {
+    width: 30px;
+    height: 20px;
+    top: 1px;
+    transform: translateX(11px);
+    transition: 
+      transform 0.28s cubic-bezier(0.25, 1, 0.5, 1),
+      width 0.14s cubic-bezier(0.1, 1, 0.2, 1),
+      height 0.14s cubic-bezier(0.1, 1, 0.2, 1),
+      top 0.14s cubic-bezier(0.1, 1, 0.2, 1);
+    background-color: color-mix(in srgb, #ffffff 65%, transparent);
+    box-shadow: 
+      inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 50%), transparent),
+      inset 2px 1.5px 0px -0.5px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 100%), transparent), 
+      inset -1.5px -1.5px 0px -0.5px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), 
+      inset -1.5px -4px 1px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 70%), transparent), 
+      inset -0.5px 1px 2px -0.5px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 22%), transparent), 
+      inset 0px -2px 1px -1px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), 
+      0px 5px 14px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 28%), transparent);
+}
+
+body.light-mode .liquid-toggle[aria-checked="false"]:active .glass-knob,
+html.light-mode .liquid-toggle[aria-checked="false"]:active .glass-knob,
+body.light-mode .liquid-toggle[aria-checked="true"]:active .glass-knob,
+html.light-mode .liquid-toggle[aria-checked="true"]:active .glass-knob {
+    background-color: color-mix(in srgb, #ffffff 94%, transparent);
+    box-shadow: 
+      inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 75%), transparent),
+      inset 2px 1.5px 0px -0.5px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 100%), transparent), 
+      inset -1.5px -1.5px 0px -0.5px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), 
+      inset -1.5px -4px 1px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 75%), transparent), 
+      inset -0.5px 1px 2px -0.5px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 14%), transparent), 
+      inset 0px -2px 1px -1px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
+      0px 4px 12px 0px rgba(0, 0, 0, 0.2);
+}
+
+/* Utility sr-only */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* Backward compatibility for mode-switch */
 .mode-switch {
     appearance: none;
     width: 2.35rem;
@@ -1623,68 +1859,9 @@ html.theme-preload .mode-switch::before {
     position: relative;
     cursor: pointer;
     outline: none;
-    transition:
-        background-color 0.3s ease,
-        border-color 0.3s ease,
-        box-shadow 0.3s ease;
 }
-
-.mode-switch:focus-visible {
-    outline: 2px solid #1DB954;
-    outline-offset: 2px;
-}
-
-body.light-mode .mode-switch:focus-visible,
-html.light-mode .mode-switch:focus-visible {
-    outline-color: #0f4d1f;
-}
-
-.mode-switch:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.3);
-}
-
-body.light-mode .mode-switch,
-html.light-mode .mode-switch {
-    background: rgba(0, 0, 0, 0.1);
-    border-color: rgba(0, 0, 0, 0.15);
-}
-
-body.light-mode .mode-switch:hover,
-html.light-mode .mode-switch:hover {
-    background: rgba(0, 0, 0, 0.15);
-    border-color: rgba(0, 0, 0, 0.2);
-}
-
-.mode-switch::before {
-    content: "";
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    width: 0.9rem;
-    height: 0.9rem;
-    background: linear-gradient(180deg, #fff 0%, #e0e0e0 100%);
-    border-radius: 50%;
-    box-shadow:
-        0 1px 3px rgba(0, 0, 0, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.8);
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.mode-switch:checked::before {
-    transform: translateX(1.05rem);
-}
-
 .mode-switch-label {
-    margin-left: 0.5rem;
-    font-size: 0.9rem;
-    color: #aaa;
     display: none;
-}
-
-body.light-mode .mode-switch-label,
-html.light-mode .mode-switch-label {
-    color: #555;
 }
 
 /* Menu Toggle for Mobile */
@@ -1978,7 +2155,7 @@ body.light-mode .contact-item:hover {
     }
 
     body.light-mode header {
-        background: rgba(247, 247, 247, 0.9);
+        background: rgba(249, 248, 247, 0.92);
         border: 1px solid rgba(0, 0, 0, 0.08);
         box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
         backdrop-filter: blur(22px) saturate(140%);
@@ -1986,7 +2163,7 @@ body.light-mode .contact-item:hover {
     }
 
     html.light-mode header {
-        background: rgba(247, 247, 247, 0.9);
+        background: rgba(249, 248, 247, 0.92);
         border: 1px solid rgba(0, 0, 0, 0.08);
         box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
         backdrop-filter: blur(22px) saturate(140%);
@@ -2066,7 +2243,7 @@ body.light-mode .contact-item:hover {
     }
 
     body.light-mode .nav-menu {
-        background: rgba(247, 247, 247, 0.97);
+        background: rgba(249, 248, 247, 0.97);
         border-color: rgba(0, 0, 0, 0.08);
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
         backdrop-filter: blur(22px) saturate(140%);
@@ -2074,7 +2251,7 @@ body.light-mode .contact-item:hover {
     }
 
     html.light-mode .nav-menu {
-        background: rgba(247, 247, 247, 0.97);
+        background: rgba(249, 248, 247, 0.97);
         border-color: rgba(0, 0, 0, 0.08);
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
         backdrop-filter: blur(22px) saturate(140%);
@@ -2899,6 +3076,13 @@ body.light-mode .scroll-to-top:hover {
     height: 100%;
     z-index: 0;
     pointer-events: none;
+    transform: translateZ(0);
+    will-change: transform;
+}
+
+body.light-mode #bg-canvas,
+html.light-mode #bg-canvas {
+    display: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
