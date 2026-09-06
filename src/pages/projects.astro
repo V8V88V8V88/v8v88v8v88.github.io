@@ -85,34 +85,29 @@ function getHostedLabel(url: string): string {
     </div>
 
     <div class="project-list">
-      {grouped.map(group => (
-        <Fragment>
-          <span class="section-label">{group.category}</span>
-          {group.projects.map(project => (
-            <div
-              class={`project-item${project.featured ? ' featured' : ''}`}
-              data-lang={project.langFilter}>
-              <a class="project-main-link" href={project.url} target="_blank" rel="noopener noreferrer">
-                <div class="project-info">
-                  <div class="project-name">{project.name}</div>
-                  <div class="project-desc">{project.description}</div>
-                </div>
-                <span class="project-lang">{project.language}</span>
-              </a>
-              {project.homepage && (
-                <div class="project-hover-info">
-                  <a class="project-hosted" href={project.homepage} target="_blank" rel="noopener noreferrer" title={project.homepage} aria-label={`Open ${getHostedLabel(project.homepage)}`}>{getHostedLabel(project.homepage)}</a>
-                </div>
-              )}
-              {project.image && (
-                <div class={`project-preview${project.hasCustomImage ? ' has-custom-image' : ' is-fallback-image'}`} aria-hidden="true">
-                  <img src={project.image} alt="" loading="lazy" decoding="async" />
-                </div>
-              )}
+      {grouped.map(group => group.projects.map(project => (
+        <div
+          class={`project-item${project.featured ? ' featured' : ''}`}
+          data-lang={project.langFilter}>
+          <a class="project-main-link" href={project.url} target="_blank" rel="noopener noreferrer">
+            <div class="project-info">
+              <div class="project-name">{project.name}</div>
+              <div class="project-desc">{project.description}</div>
             </div>
-          ))}
-        </Fragment>
-      ))}
+            <span class="project-lang">{project.language}</span>
+          </a>
+          {project.homepage && (
+            <div class="project-hover-info">
+              <a class="project-hosted" href={project.homepage} target="_blank" rel="noopener noreferrer" title={project.homepage} aria-label={`Open ${getHostedLabel(project.homepage)}`}>{getHostedLabel(project.homepage)}</a>
+            </div>
+          )}
+          {project.image && (
+            <div class={`project-preview${project.hasCustomImage ? ' has-custom-image' : ' is-fallback-image'}`} aria-hidden="true">
+              <img src={project.image} alt="" loading="lazy" decoding="async" />
+            </div>
+          )}
+        </div>
+      )))}
     </div>
   </main>
 
@@ -225,55 +220,29 @@ function getHostedLabel(url: string): string {
           pill.classList.add('active');
 
           const projectItems = document.querySelectorAll('.project-item');
-          const sectionLabels = document.querySelectorAll('.section-label');
-          let hasOthers = false;
-
           projectItems.forEach(item => {
             const itemLang = item.dataset.lang || 'Others';
             if (selectedLang === 'all' || itemLang === selectedLang) {
               item.style.display = '';
-              if (itemLang === 'Others') hasOthers = true;
             } else {
               item.style.display = 'none';
             }
           });
+        });
+      });
 
-          sectionLabels.forEach(label => {
-            const nextItems = [];
-            let sibling = label.nextElementSibling;
-            while (sibling && !sibling.classList.contains('section-label')) {
-              if (sibling.classList.contains('project-item')) {
-                nextItems.push(sibling);
-              }
-              sibling = sibling.nextElementSibling;
-            }
-
-            const hasVisible = nextItems.some(item => item.style.display !== 'none');
-            label.style.display = hasVisible ? '' : 'none';
-          });
-
-          if (selectedLang === 'all' || selectedLang === 'Others') {
-            let othersSection = document.querySelector('.section-label[data-section="others"]');
-            const othersProjects = Array.from(projectItems).filter(item =>
-              item.dataset.lang === 'Others' && item.style.display !== 'none'
-            );
-
-            if (!othersSection && othersProjects.length > 0) {
-              othersSection = document.createElement('span');
-              othersSection.className = 'section-label';
-              othersSection.setAttribute('data-section', 'others');
-              othersSection.textContent = 'Others';
-
-              if (othersProjects[0]) {
-                othersProjects[0].parentNode.insertBefore(othersSection, othersProjects[0]);
-              }
-            } else if (othersSection && othersProjects.length === 0) {
-              othersSection.remove();
-            }
-          } else {
-            const othersSection = document.querySelector('.section-label[data-section="others"]');
-            if (othersSection) othersSection.remove();
+      // Release focus on mouseleave and click so cards never stay stuck expanded
+      document.querySelectorAll('.project-item').forEach(item => {
+        item.addEventListener('mouseleave', () => {
+          if (document.activeElement && item.contains(document.activeElement)) {
+            document.activeElement.blur();
           }
+        });
+      });
+
+      document.querySelectorAll('.project-main-link, .project-hosted').forEach(link => {
+        link.addEventListener('click', function() {
+          this.blur();
         });
       });
     });
@@ -448,10 +417,6 @@ function getHostedLabel(url: string): string {
   display: none;
 }
 
-.project-list.show-featured-only .section-label {
-  display: none;
-}
-
 .project-list {
   display: flex;
   flex-direction: column;
@@ -503,7 +468,7 @@ function getHostedLabel(url: string): string {
 }
 
 .project-item:hover,
-.project-item:focus-within {
+.project-item:has(:focus-visible) {
   background: rgba(255, 255, 255, 0.055);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -517,7 +482,7 @@ function getHostedLabel(url: string): string {
 }
 
 .project-item:has(.project-hosted):hover,
-.project-item:has(.project-hosted):focus-within {
+.project-item:has(.project-hosted):has(:focus-visible) {
   padding-bottom: 1.55rem;
 }
 
@@ -526,7 +491,7 @@ function getHostedLabel(url: string): string {
 }
 
 .project-item:has(.project-preview):hover .project-main-link,
-.project-item:has(.project-preview):focus-within .project-main-link {
+.project-item:has(.project-preview):has(:focus-visible) .project-main-link {
   padding-left: 10.2rem;
 }
 
@@ -551,7 +516,7 @@ function getHostedLabel(url: string): string {
 }
 
 .project-item:hover .project-preview,
-.project-item:focus-within .project-preview {
+.project-item:has(:focus-visible) .project-preview {
   left: -1.2rem;
   top: 50%;
   width: 10.6rem;
@@ -578,7 +543,7 @@ function getHostedLabel(url: string): string {
 }
 
 .project-item:hover .project-preview img,
-.project-item:focus-within .project-preview img {
+.project-item:has(:focus-visible) .project-preview img {
   border-radius: 14px;
   border-color: rgba(255, 255, 255, 0.16);
   filter: saturate(1.08) contrast(1.03);
@@ -602,12 +567,8 @@ function getHostedLabel(url: string): string {
   transition: color 0.2s ease;
 }
 
-.project-item:hover .project-name {
-  color: #1ed760;
-  text-shadow: 0 0 16px rgba(30, 215, 96, 0.25);
-}
-
-.project-item:focus-within .project-name {
+.project-item:hover .project-name,
+.project-item:has(:focus-visible) .project-name {
   color: #1ed760;
   text-shadow: 0 0 16px rgba(30, 215, 96, 0.25);
 }
@@ -631,7 +592,7 @@ function getHostedLabel(url: string): string {
 }
 
 .project-item:hover .project-hover-info,
-.project-item:focus-within .project-hover-info {
+.project-item:has(:focus-visible) .project-hover-info {
   max-height: 3rem;
   opacity: 1;
   transform: translateY(0);
@@ -680,7 +641,7 @@ function getHostedLabel(url: string): string {
 }
 
 .project-item:hover .project-desc,
-.project-item:focus-within .project-desc {
+.project-item:has(:focus-visible) .project-desc {
   display: -webkit-box;
   max-height: 2.9em;
   white-space: normal;
@@ -719,23 +680,10 @@ function getHostedLabel(url: string): string {
 }
 
 .project-item.featured:has(.project-hosted):hover,
-.project-item.featured:has(.project-hosted):focus-within,
+.project-item.featured:has(.project-hosted):has(:focus-visible),
 .project-list.show-featured-only .project-item.featured:has(.project-hosted):hover,
-.project-list.show-featured-only .project-item.featured:has(.project-hosted):focus-within {
+.project-list.show-featured-only .project-item.featured:has(.project-hosted):has(:focus-visible) {
   padding-bottom: 1.55rem;
-}
-
-.section-label {
-  display: block;
-  font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
-  font-size: 0.7rem;
-  font-weight: 500;
-  color: #1DB954;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  margin: 2.2rem 0 1.35rem;
-  padding: 1.25rem 0 0.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -760,12 +708,6 @@ function getHostedLabel(url: string): string {
 
 :global(body.light-mode) .project-hosted {
   color: #0f4d1f;
-}
-
-.section-label:first-child {
-  border-top: none;
-  padding-top: 0;
-  margin-top: 0;
 }
 
 :global(body.light-mode) .hero-ascii {
@@ -842,7 +784,7 @@ function getHostedLabel(url: string): string {
 }
 
 :global(body.light-mode) .project-item:hover,
-:global(body.light-mode) .project-item:focus-within {
+:global(body.light-mode) .project-item:has(:focus-visible) {
   background: rgba(0, 0, 0, 0.04);
   border-color: rgba(0, 0, 0, 0.14);
   box-shadow:
@@ -867,11 +809,6 @@ function getHostedLabel(url: string): string {
   color: rgba(0, 0, 0, 0.7);
   background: rgba(0, 0, 0, 0.05);
   border-color: rgba(0, 0, 0, 0.1);
-}
-
-:global(body.light-mode) .section-label {
-  color: #0f4d1f;
-  border-top-color: rgba(0, 0, 0, 0.08);
 }
 
 @media (max-width: 768px) {
@@ -1009,12 +946,12 @@ function getHostedLabel(url: string): string {
 
   .project-item:has(.project-preview) .project-main-link,
   .project-item:hover .project-main-link,
-  .project-item:focus-within .project-main-link {
+  .project-item:has(:focus-visible) .project-main-link {
     padding-left: 3.55rem;
   }
 
   .project-item:hover .project-preview,
-  .project-item:focus-within .project-preview {
+  .project-item:has(:focus-visible) .project-preview {
     left: 0.8rem;
     top: 50%;
     width: 2.75rem;
@@ -1035,7 +972,7 @@ function getHostedLabel(url: string): string {
   }
 
   .project-item:hover .project-hover-info,
-  .project-item:focus-within .project-hover-info {
+  .project-item:has(:focus-visible) .project-hover-info {
     right: 0.8rem;
     bottom: 0.4rem;
   }
@@ -1122,12 +1059,6 @@ function getHostedLabel(url: string): string {
     padding: 0.28rem 0.65rem;
   }
 
-  .section-label {
-    font-size: 0.62rem;
-    margin: 1.25rem 0 0.65rem;
-    padding: 0.75rem 0 0.25rem;
-  }
-
   .project-list {
     gap: 0.45rem;
     width: 100%;
@@ -1166,12 +1097,12 @@ function getHostedLabel(url: string): string {
 
   .project-item:has(.project-preview) .project-main-link,
   .project-item:hover .project-main-link,
-  .project-item:focus-within .project-main-link {
+  .project-item:has(:focus-visible) .project-main-link {
     padding-left: 2.95rem;
   }
 
   .project-item:hover .project-preview,
-  .project-item:focus-within .project-preview {
+  .project-item:has(:focus-visible) .project-preview {
     left: 0.6rem;
     top: 50%;
     width: 2.35rem;
@@ -1180,7 +1111,7 @@ function getHostedLabel(url: string): string {
   }
 
   .project-item:hover,
-  .project-item:focus-within {
+  .project-item:has(:focus-visible) {
     transform: none;
   }
 
@@ -1196,7 +1127,7 @@ function getHostedLabel(url: string): string {
   }
 
   .project-item:hover .project-hover-info,
-  .project-item:focus-within .project-hover-info {
+  .project-item:has(:focus-visible) .project-hover-info {
     right: 0.6rem;
     bottom: 0.32rem;
   }
@@ -1206,11 +1137,11 @@ function getHostedLabel(url: string): string {
   }
 
   .project-item:has(.project-hosted):hover,
-  .project-item:has(.project-hosted):focus-within,
+  .project-item:has(.project-hosted):has(:focus-visible),
   .project-item.featured:has(.project-hosted):hover,
-  .project-item.featured:has(.project-hosted):focus-within,
+  .project-item.featured:has(.project-hosted):has(:focus-visible),
   .project-list.show-featured-only .project-item.featured:has(.project-hosted):hover,
-  .project-list.show-featured-only .project-item.featured:has(.project-hosted):focus-within {
+  .project-list.show-featured-only .project-item.featured:has(.project-hosted):has(:focus-visible) {
     padding-bottom: 1.3rem;
   }
 }

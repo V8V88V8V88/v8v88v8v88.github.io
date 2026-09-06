@@ -379,6 +379,9 @@ const {
 
       function onScroll() {
         isScrolling = true;
+        if (document.activeElement && document.activeElement.closest && document.activeElement.closest('.project-item')) {
+          document.activeElement.blur();
+        }
         clearTimeout(scrollTimer);
         scrollTimer = setTimeout(function() {
           isScrolling = false;
