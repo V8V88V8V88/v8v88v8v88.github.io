@@ -94,9 +94,18 @@ const {
     const menuToggle = document.querySelector(".menu-toggle");
     const navMenu = document.querySelector(".nav-menu");
     const mobileMql = window.matchMedia('(max-width: 767px)');
+    const navHeader = menuToggle?.closest('header');
 
-    function setMenuState(open) {
+    function positionMobileMenu() {
+      if (!navHeader || !navMenu || !mobileMql.matches) return;
+      const { bottom, height } = navHeader.getBoundingClientRect();
+      navMenu.style.setProperty('--nav-menu-top', `${bottom + 14}px`);
+      navMenu.style.setProperty('--nav-menu-lift', `${-height / 2 - 14}px`);
+    }
+
+    function setMenuState(open, restoreFocus = true) {
       if (!menuToggle || !navMenu) return;
+      if (open) positionMobileMenu();
       navMenu.classList.toggle("active", open);
       menuToggle.classList.toggle("active", open);
       menuToggle.setAttribute("aria-expanded", String(open));
@@ -111,19 +120,22 @@ const {
       if (open) {
         const firstLink = navMenu.querySelector('a, button, [tabindex="0"]');
         (firstLink || menuToggle).focus({ preventScroll: true });
-      } else {
+      } else if (restoreFocus) {
         menuToggle.focus({ preventScroll: true });
       }
     }
 
     function applyInertForLayout() {
       if (!navMenu || !menuToggle) return;
+      positionMobileMenu();
       if (mobileMql.matches) {
         const open = navMenu.classList.contains('active');
         navMenu.setAttribute('aria-hidden', String(!open));
         if (!open) navMenu.setAttribute('inert', '');
         menuToggle.setAttribute('aria-expanded', String(open));
       } else {
+        navMenu.classList.remove('active');
+        menuToggle.classList.remove('active');
         navMenu.removeAttribute('inert');
         navMenu.setAttribute('aria-hidden', 'false');
         menuToggle.setAttribute('aria-expanded', 'false');
@@ -133,6 +145,7 @@ const {
     if (menuToggle && navMenu) {
       menuToggle.setAttribute("aria-expanded", "false");
       applyInertForLayout();
+      if (navHeader) new ResizeObserver(positionMobileMenu).observe(navHeader);
 
       menuToggle.addEventListener("click", function() {
         var open = !navMenu.classList.contains("active");
@@ -148,8 +161,12 @@ const {
       document.addEventListener("click", function(e) {
         if (!navMenu.classList.contains("active")) return;
         if (!navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
-          setMenuState(false);
+          setMenuState(false, false);
         }
+      });
+
+      navMenu.addEventListener('click', function(e) {
+        if (mobileMql.matches && e.target.closest('a')) setMenuState(false, false);
       });
 
       document.addEventListener("keydown", function(e) {

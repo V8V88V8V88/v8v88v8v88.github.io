@@ -1972,6 +1972,8 @@ html.light-mode .liquid-toggle[aria-checked="true"]:active .glass-knob {
     display: block;
     width: 17px;
     height: 2px;
+    flex-shrink: 0;
+    transform-origin: center;
     background: rgba(255, 255, 255, 0.9);
     border-radius: 2px;
     transition: transform 0.3s ease, background 0.3s ease, opacity 0.3s ease;
@@ -2236,28 +2238,7 @@ body.light-mode .contact-item:hover {
         transform: none;
         width: calc(100% - 32px);
         max-width: 580px;
-        background: rgba(15, 15, 15, 0.95);
-        backdrop-filter: blur(22px) saturate(140%);
-        -webkit-backdrop-filter: blur(22px) saturate(140%);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-        border: 1px solid rgba(255, 255, 255, 0.12);
         box-sizing: border-box;
-    }
-
-    body.light-mode header {
-        background: rgba(249, 248, 247, 0.92);
-        border: 1px solid rgba(0, 0, 0, 0.08);
-        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
-        backdrop-filter: blur(22px) saturate(140%);
-        -webkit-backdrop-filter: blur(22px) saturate(140%);
-    }
-
-    html.light-mode header {
-        background: rgba(249, 248, 247, 0.92);
-        border: 1px solid rgba(0, 0, 0, 0.08);
-        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
-        backdrop-filter: blur(22px) saturate(140%);
-        -webkit-backdrop-filter: blur(22px) saturate(140%);
     }
 
     nav {
@@ -2278,104 +2259,125 @@ body.light-mode .contact-item:hover {
         flex-shrink: 0;
     }
 
+    /* Keep the pill's blur on a sibling surface. A filtered header becomes a
+       backdrop root and prevents the dropdown from blurring the page below. */
+    header,
+    body.scrolling header,
+    body.light-mode header,
+    html.light-mode header,
+    body.light-mode.scrolling header,
+    html.light-mode.scrolling header {
+        background: transparent;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        border: 1px solid transparent;
+        box-shadow: none;
+    }
+
+    header::before {
+        background: rgba(20, 20, 22, 0.72);
+        backdrop-filter: blur(28px) saturate(160%);
+        -webkit-backdrop-filter: blur(28px) saturate(160%);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.22),
+            inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    body.light-mode header::before,
+    html.light-mode header::before {
+        background: rgba(249, 248, 247, 0.72);
+        border-color: rgba(0, 0, 0, 0.1);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+
     .nav-menu {
         position: fixed;
-        top: 52px;
+        top: var(--nav-menu-top, 64px);
         left: 0;
         right: 0;
         margin: 0 auto;
-        transform: none;
-        width: calc(100% - 40px);
-        max-width: 300px;
+        width: calc(100% - 64px);
+        max-width: 240px;
+        max-height: calc(100dvh - var(--nav-menu-top, 64px) - 16px);
         box-sizing: border-box;
-        display: none;
+        display: flex;
         flex-direction: column;
-        align-items: center;
-        gap: 0.4rem;
-        padding: 1rem 1.2rem;
-        background: rgba(15, 15, 15, 0.95);
-        backdrop-filter: blur(22px) saturate(140%);
-        -webkit-backdrop-filter: blur(22px) saturate(140%);
-        border-radius: 22px;
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+        align-items: stretch;
+        gap: 0;
+        padding: 0.3rem;
+        background: rgba(20, 20, 22, 0.72);
+        backdrop-filter: blur(28px) saturate(160%);
+        -webkit-backdrop-filter: blur(28px) saturate(160%);
+        border-radius: 32px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.22),
+            inset 0 1px 0 rgba(255, 255, 255, 0.08);
         z-index: 99;
-        overflow: hidden;
-        position: fixed;
-        isolation: isolate;
-    }
-
-    .nav-menu::before,
-    .nav-menu::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        border-radius: inherit;
+        overflow: auto;
+        overscroll-behavior: contain;
+        transform-origin: center top;
+        transform: translateY(var(--nav-menu-lift, -34px)) scale(0.96, 0.16);
+        opacity: 0;
+        visibility: hidden;
         pointer-events: none;
+        transition:
+            transform 440ms cubic-bezier(0.22, 1, 0.36, 1),
+            border-radius 440ms cubic-bezier(0.22, 1, 0.36, 1),
+            opacity 180ms ease,
+            visibility 0s linear 440ms;
     }
 
-    .nav-menu::before {
-        background:
-            radial-gradient(ellipse 90% 55% at 50% 0%,
-                rgba(255, 255, 255, 0.2),
-                transparent 70%);
-        opacity: 0.9;
-    }
-
-    .nav-menu::after {
-        background:
-            radial-gradient(ellipse 140% 90% at 50% 120%,
-                rgba(255, 255, 255, 0.08),
-                transparent 70%);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        mix-blend-mode: screen;
-        opacity: 0.6;
-    }
-
-    body.light-mode .nav-menu {
-        background: rgba(249, 248, 247, 0.97);
-        border-color: rgba(0, 0, 0, 0.08);
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(22px) saturate(140%);
-        -webkit-backdrop-filter: blur(22px) saturate(140%);
-    }
-
+    body.light-mode .nav-menu,
     html.light-mode .nav-menu {
-        background: rgba(249, 248, 247, 0.97);
-        border-color: rgba(0, 0, 0, 0.08);
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(22px) saturate(140%);
-        -webkit-backdrop-filter: blur(22px) saturate(140%);
-    }
-
-    body.light-mode .nav-menu::before,
-    body.light-mode .nav-menu::after {
-        display: none;
-        background: none;
-        border: none;
-    }
-
-    html.light-mode .nav-menu::before,
-    html.light-mode .nav-menu::after {
-        display: none;
-        background: none;
-        border: none;
+        background: rgba(249, 248, 247, 0.72);
+        border-color: rgba(0, 0, 0, 0.1);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.9);
     }
 
     .nav-menu.active {
-        display: flex;
-        animation: menuSlideDown 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        transform: translateY(0) scale(1);
+        border-radius: 20px;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transition-duration: 520ms, 520ms, 160ms, 0s;
+        transition-delay: 0s;
     }
 
-    @keyframes menuSlideDown {
-        from {
-            opacity: 0;
-            transform: translateX(-50%) translateY(-8px);
+    .nav-menu li {
+        position: relative;
+        z-index: 1;
+        opacity: 0;
+        transform: translateY(-6px);
+        transition: opacity 100ms ease, transform 160ms ease;
+    }
+
+    .nav-menu.active li {
+        opacity: 1;
+        transform: translateY(0);
+        transition-duration: 220ms, 360ms;
+        transition-delay: 100ms;
+    }
+
+    .nav-menu.active li:nth-child(2) { transition-delay: 125ms; }
+    .nav-menu.active li:nth-child(3) { transition-delay: 150ms; }
+    .nav-menu.active li:nth-child(4) { transition-delay: 175ms; }
+    .nav-menu.active li:nth-child(5) { transition-delay: 200ms; }
+
+    @media (prefers-reduced-motion: reduce) {
+        .nav-menu,
+        .nav-menu.active,
+        .nav-menu li,
+        .nav-menu.active li:nth-child(n),
+        .menu-toggle span {
+            transition: none;
         }
 
-        to {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
+        .nav-menu,
+        .nav-menu li {
+            transform: none;
         }
     }
 
@@ -2388,7 +2390,7 @@ body.light-mode .contact-item:hover {
     }
 
     .menu-toggle.active span:first-child {
-        transform: rotate(45deg) translate(4px, 4px);
+        transform: translateY(5px) rotate(45deg);
     }
 
     .menu-toggle.active span:nth-child(2) {
@@ -2396,7 +2398,7 @@ body.light-mode .contact-item:hover {
     }
 
     .menu-toggle.active span:nth-child(3) {
-        transform: rotate(-45deg) translate(4px, -4px);
+        transform: translateY(-5px) rotate(-45deg);
     }
 
     nav a {
@@ -2407,7 +2409,11 @@ body.light-mode .contact-item:hover {
     }
 
     .nav-menu a {
-        border-radius: 10px;
+        display: block;
+        min-height: 30px;
+        padding: 0.2rem 0.75rem;
+        font-size: 0.9rem;
+        border-radius: 12px;
     }
 
     .nav-menu a:hover {
@@ -2420,6 +2426,27 @@ body.light-mode .contact-item:hover {
 
     html.light-mode .nav-menu a:hover {
         background: rgba(0, 0, 0, 0.06);
+    }
+
+    .nav-menu a[aria-current="page"],
+    body.light-mode .nav-menu a[aria-current="page"],
+    html.light-mode .nav-menu a[aria-current="page"] {
+        background: transparent;
+        font-weight: 600;
+    }
+
+    .nav-menu a[aria-current="page"]::after {
+        content: "";
+        position: absolute;
+        bottom: 3px;
+        left: 50%;
+        width: 14px;
+        height: 2px;
+        border-radius: 999px;
+        background: currentColor;
+        opacity: 0.65;
+        transform: translateX(-50%);
+        pointer-events: none;
     }
 }
 

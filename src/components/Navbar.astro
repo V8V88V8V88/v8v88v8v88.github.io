@@ -48,13 +48,13 @@ function isCurrent(path: string) {
           })();
         </script>
       </div>
-      <button class="menu-toggle" aria-label="Toggle menu">
+      <button type="button" class="menu-toggle" aria-label="Toggle menu" aria-controls="primary-navigation" aria-expanded="false">
         <span></span>
         <span></span>
         <span></span>
       </button>
     </div>
-    <ul class="nav-menu">
+    <ul class="nav-menu" id="primary-navigation">
       <li><a href="/" aria-current={isCurrent('/') ? 'page' : undefined}>Home</a></li>
       <li><a href="/blogs/" aria-current={isCurrent('/blogs/') ? 'page' : undefined}>Blogs</a></li>
       <li><a href="/projects/" aria-current={isCurrent('/projects/') ? 'page' : undefined}>Projects</a></li>
