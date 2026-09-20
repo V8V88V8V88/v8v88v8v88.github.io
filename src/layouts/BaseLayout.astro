@@ -78,6 +78,8 @@ const {
   <Navbar />
   <slot />
   {showFooter && <Footer showRss={showRss} />}
+  <div class="top-edge-blur" aria-hidden="true"></div>
+  <div class="bottom-edge-blur" aria-hidden="true"></div>
   <!-- Psst... Did you know octopuses have three hearts? Just thought you should know. -->
   {showFontAwesome && <script src="https://kit.fontawesome.com/133988a847.js" crossorigin="anonymous" defer is:inline></script>}
   <script is:inline>

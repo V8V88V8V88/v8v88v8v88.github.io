@@ -92,6 +92,52 @@ body.light-mode {
     color: #000;
 }
 
+/* Soft glass fades pinned to the viewport edges, below the navbar. */
+.top-edge-blur,
+.bottom-edge-blur {
+    --edge-blur: 16px;
+    --fade-direction: to bottom;
+    --fade-midpoint: 0.5;
+    position: fixed;
+    inset: auto 0 0;
+    height: 5vh;
+    height: 5dvh;
+    z-index: 90;
+    pointer-events: none;
+    -webkit-backdrop-filter: blur(var(--edge-blur));
+    backdrop-filter: blur(var(--edge-blur));
+    -webkit-mask-image: linear-gradient(var(--fade-direction), transparent, rgba(0, 0, 0, var(--fade-midpoint)) 50%, #000);
+    mask-image: linear-gradient(var(--fade-direction), transparent, rgba(0, 0, 0, var(--fade-midpoint)) 50%, #000);
+}
+
+.top-edge-blur {
+    --edge-blur: 10px;
+    --fade-direction: to top;
+    inset: 0 0 auto;
+    height: 3vh;
+    height: 3dvh;
+}
+
+/* A fuller fade makes the effect more visible in Firefox. */
+@supports (-moz-appearance: none) {
+    .top-edge-blur,
+    .bottom-edge-blur {
+        --fade-midpoint: 0.7;
+        --edge-blur: 20px;
+    }
+
+    .top-edge-blur {
+        --edge-blur: 14px;
+    }
+}
+
+@media print {
+    .top-edge-blur,
+    .bottom-edge-blur {
+        display: none;
+    }
+}
+
 a:focus-visible,
 button:focus-visible {
     outline: 2px solid #1DB954;
