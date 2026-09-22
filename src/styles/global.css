@@ -1783,7 +1783,7 @@ body.light-mode .intro-text p {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 45px;
+    width: 44px;
     height: 22px;
     position: relative;
     user-select: none;
@@ -1809,8 +1809,8 @@ html.theme-preload .mode-switch {
     --saturation: 160%;
 
     position: relative;
-    width: 45px;
-    height: 22px;
+    width: 44px;
+    height: 19px;
     border-radius: 99em;
     overflow: hidden;
     background-color: color-mix(in srgb, var(--c-glass) 14%, transparent);
@@ -1872,7 +1872,7 @@ html.light-mode .liquid-toggle {
 /* The Authentic macOS Elongated ("Lamba Sa") Liquid Glass Pill Knob */
 .liquid-toggle .glass-knob {
     width: 23px;
-    height: 18px;
+    height: 15px;
     border-radius: 99em;
     position: absolute;
     top: 2px;
@@ -1915,7 +1915,7 @@ html.light-mode .liquid-toggle .glass-knob {
 
 /* Dark Mode: aria-checked="true" -> Knob on the Right */
 .liquid-toggle[aria-checked="true"] .glass-knob {
-    transform: translateX(18px);
+    transform: translateX(17px);
 }
 
 /* Light Mode: aria-checked="false" -> Knob on the Left */
@@ -1926,7 +1926,7 @@ html.light-mode .liquid-toggle .glass-knob {
 /* EXPAND & STRETCH HORIZONTALLY AND VERTICALLY ON ACTIVE (PRESS & HOLD) */
 .liquid-toggle[aria-checked="false"]:active .glass-knob {
     width: 30px;
-    height: 20px;
+    height: 17px;
     top: 1px;
     transform: translateX(0);
     transition: 
@@ -1947,9 +1947,9 @@ html.light-mode .liquid-toggle .glass-knob {
 
 .liquid-toggle[aria-checked="true"]:active .glass-knob {
     width: 30px;
-    height: 20px;
+    height: 17px;
     top: 1px;
-    transform: translateX(11px);
+    transform: translateX(10px);
     transition: 
       transform 0.28s cubic-bezier(0.25, 1, 0.5, 1),
       width 0.14s cubic-bezier(0.1, 1, 0.2, 1),
@@ -2550,11 +2550,26 @@ body.light-mode .contact-item:hover {
 
     .desktop-v8 {
         display: block;
+        margin-left: 0.14rem;
+    }
+
+    .desktop-v8 a,
+    .desktop-v8 a[aria-current="page"] {
+        font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
+        font-style: italic;
+        font-weight: 600;
+        letter-spacing: 0.075em;
     }
 
     .nav-menu {
         display: flex;
+        gap: var(--desktop-nav-space);
         order: 2;
+        align-items: center;
+    }
+
+    .nav-menu li {
+        min-width: 0;
     }
 
     .nav-right {
@@ -2562,12 +2577,31 @@ body.light-mode .contact-item:hover {
     }
 
     header {
-        padding: 0.44rem 1.75rem;
+        --desktop-nav-space: 1.75rem;
+        padding: 0.28rem var(--desktop-nav-space);
+        transform: translateX(-50%) scale(1.02);
+        transform-origin: top center;
     }
 
     nav a {
-        padding: 0.38rem 1rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: auto;
+        padding: 0.38rem 0;
         font-size: 0.92rem;
+        line-height: 1.25;
+        text-align: center;
+    }
+
+    nav {
+        gap: var(--desktop-nav-space);
+    }
+
+    .nav-menu a:hover,
+    body.light-mode .nav-menu a:hover,
+    html.light-mode .nav-menu a:hover {
+        background-color: transparent;
     }
 }
 

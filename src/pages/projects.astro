@@ -1,10 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getProjects, groupByCategory } from '../data/projects';
+import { getProjects } from '../data/projects';
 import { getLanguageMeta } from '../data/languageIcons';
 
 const projects = await getProjects();
-const grouped = groupByCategory(projects);
 const languages = new Set(projects.map(p => p.language));
 
 function getHostedLabel(url: string): string {
@@ -81,12 +80,12 @@ function getHostedLabel(url: string): string {
 
       <div class="filter-controls">
         <button class="filter-btn active" data-filter="all">All Projects</button>
-        <button class="filter-btn" data-filter="featured">Featured Only ★</button>
+        <button class="filter-btn" data-filter="featured">Featured Only <span class="rounded-star" aria-hidden="true"></span></button>
       </div>
     </div>
 
     <div class="project-list">
-      {grouped.map(group => group.projects.map(project => {
+      {projects.map(project => {
         const langMeta = getLanguageMeta(project.language);
         return (
           <div
@@ -115,7 +114,7 @@ function getHostedLabel(url: string): string {
             </div>
           </div>
         );
-      }))}
+      })}
     </div>
   </main>
 
@@ -416,6 +415,9 @@ function getHostedLabel(url: string): string {
 }
 
 .filter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
   font-size: 0.7rem;
   line-height: 1.3;
@@ -462,7 +464,7 @@ function getHostedLabel(url: string): string {
   text-decoration: none;
   position: relative;
   overflow: visible;
-  z-index: 0;
+  z-index: auto;
   background: rgba(255, 255, 255, 0.035);
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow:
@@ -493,13 +495,13 @@ function getHostedLabel(url: string): string {
 
 .project-item:hover,
 .project-item:has(:focus-visible) {
+  z-index: 30;
   background: rgba(255, 255, 255, 0.055);
   border-color: rgba(255, 255, 255, 0.16);
   box-shadow:
     inset 0 1px 0 0 rgba(255, 255, 255, 0.22),
     inset 0 -1px 0 0 rgba(255, 255, 255, 0.08),
     0 12px 32px -4px rgba(0, 0, 0, 0.5);
-  z-index: 5;
 }
 
 .project-item:has(.project-hosted):hover,
@@ -532,6 +534,61 @@ function getHostedLabel(url: string): string {
               margin-top 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/* Generated language icons use one opaque, glass-styled surface. */
+.project-preview.has-lang-card {
+  overflow: hidden;
+  isolation: isolate;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  background: #101010;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 4px 14px rgba(0, 0, 0, 0.35);
+  transform: rotate(0deg);
+  transition:
+    width 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    height 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    left 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    margin-top 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    border-radius 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    background 0.35s ease,
+    box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.project-preview.has-lang-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.project-preview.has-lang-card::after {
+  z-index: 1;
+  inset: -18%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.16), transparent 48%);
+  filter: blur(16px);
+  opacity: 0.32;
+}
+
+.project-item:hover .project-preview.has-lang-card,
+.project-item:has(:focus-visible) .project-preview.has-lang-card {
+  border-radius: 14px;
+  border-color: rgba(255, 255, 255, 0.2);
+  background: #121212;
+  transform: rotate(-4deg);
+  box-shadow:
+    0 24px 48px -12px rgba(0, 0, 0, 0.75),
+    0 12px 24px -6px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24);
+}
+
+.project-item:hover .project-preview.has-lang-card::after,
+.project-item:has(:focus-visible) .project-preview.has-lang-card::after {
+  opacity: 0.48;
+}
+
 .project-item:hover .project-preview,
 .project-item:has(:focus-visible) .project-preview {
   left: -1.25rem;
@@ -551,6 +608,8 @@ function getHostedLabel(url: string): string {
   outline: none;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  position: relative;
+  z-index: 1;
   transform: rotate(0deg);
   transition: filter 0.35s ease,
               box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1),
@@ -574,20 +633,17 @@ function getHostedLabel(url: string): string {
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  background: rgba(18, 20, 26, 0.5);
-  backdrop-filter: blur(24px) saturate(140%);
-  -webkit-backdrop-filter: blur(24px) saturate(140%);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 10px;
+  background: #101010;
+  border: 0;
+  border-radius: inherit;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
+  z-index: 2;
   overflow: hidden;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.2),
-    0 4px 14px rgba(0, 0, 0, 0.35);
-  transform: rotate(0deg);
+  box-shadow: none;
+  transform: none;
   transform-origin: center center;
   backface-visibility: hidden;
   transition:
@@ -600,19 +656,16 @@ function getHostedLabel(url: string): string {
 
 .project-item:hover .lang-card,
 .project-item:has(:focus-visible) .lang-card {
-  border-radius: 14px;
-  border-color: rgba(255, 255, 255, 0.25);
-  background: rgba(16, 18, 24, 0.6);
-  backdrop-filter: blur(24px) saturate(140%);
-  -webkit-backdrop-filter: blur(24px) saturate(140%);
-  transform: rotate(-4deg);
-  box-shadow:
-    0 24px 48px -12px rgba(0, 0, 0, 0.75),
-    0 12px 24px -6px rgba(0, 0, 0, 0.45),
-    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  background: #121212;
+  border: 0;
+  transform: none;
+  box-shadow: none;
 }
 
 .lang-icon {
+  position: absolute;
+  left: 50%;
+  top: 50%;
   width: 58%;
   height: 58%;
   display: flex;
@@ -623,6 +676,8 @@ function getHostedLabel(url: string): string {
   transition: filter 0.3s ease, opacity 0.3s ease;
   flex-shrink: 0;
   z-index: 2;
+  color: #f5f5f7;
+  transform: translate(-50%, -50%);
 }
 
 .lang-icon :global(svg) {
@@ -753,10 +808,25 @@ function getHostedLabel(url: string): string {
 }
 
 .project-item.featured .project-name::after {
-  content: '★';
-  margin-left: 0.5rem;
-  font-size: 0.8rem;
-  color: #e5a93c;
+  content: '';
+  display: inline-block;
+  width: 0.72rem;
+  height: 0.72rem;
+  margin-left: 0.48rem;
+  vertical-align: -0.02rem;
+  background: #fff;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='m12 2.7 2.82 5.71 6.3.92-4.56 4.44 1.08 6.28L12 17.08l-5.64 2.97 1.08-6.28-4.56-4.44 6.3-.92L12 2.7Z' fill='black' stroke='black' stroke-width='1.35' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='m12 2.7 2.82 5.71 6.3.92-4.56 4.44 1.08 6.28L12 17.08l-5.64 2.97 1.08-6.28-4.56-4.44 6.3-.92L12 2.7Z' fill='black' stroke='black' stroke-width='1.35' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+.rounded-star {
+  display: inline-block;
+  width: 0.72rem;
+  height: 0.72rem;
+  flex: 0 0 auto;
+  background: #fff;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='m12 2.7 2.82 5.71 6.3.92-4.56 4.44 1.08 6.28L12 17.08l-5.64 2.97 1.08-6.28-4.56-4.44 6.3-.92L12 2.7Z' fill='black' stroke='black' stroke-width='1.35' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='m12 2.7 2.82 5.71 6.3.92-4.56 4.44 1.08 6.28L12 17.08l-5.64 2.97 1.08-6.28-4.56-4.44 6.3-.92L12 2.7Z' fill='black' stroke='black' stroke-width='1.35' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
 }
 
 .project-list.show-featured-only .project-item.featured {
@@ -785,30 +855,40 @@ function getHostedLabel(url: string): string {
   }
 }
 
-:global(body.light-mode) .lang-card {
-  background: rgba(245, 245, 247, 0.7);
-  backdrop-filter: blur(24px) saturate(140%);
-  -webkit-backdrop-filter: blur(24px) saturate(140%);
+:global(body.light-mode) .project-preview.has-lang-card {
+  background: #f1f1f3;
   border-color: rgba(0, 0, 0, 0.1);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.9),
     0 4px 14px rgba(0, 0, 0, 0.06);
 }
 
-:global(body.light-mode) .project-item:hover .lang-card,
-:global(body.light-mode) .project-item:has(:focus-visible) .lang-card {
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(24px) saturate(140%);
-  -webkit-backdrop-filter: blur(24px) saturate(140%);
+:global(body.light-mode) .project-item:hover .project-preview.has-lang-card,
+:global(body.light-mode) .project-item:has(:focus-visible) .project-preview.has-lang-card {
+  background: #eeeef0;
   border-color: rgba(0, 0, 0, 0.16);
   box-shadow:
     0 24px 48px -10px rgba(0, 0, 0, 0.15),
     0 12px 24px -6px rgba(0, 0, 0, 0.1);
 }
 
+:global(body.light-mode) .lang-card,
+:global(body.light-mode) .project-item:hover .lang-card,
+:global(body.light-mode) .project-item:has(:focus-visible) .lang-card {
+  background: #f1f1f3;
+  border: 0;
+  box-shadow: none;
+}
+
+:global(body.light-mode) .project-item:hover .lang-card,
+:global(body.light-mode) .project-item:has(:focus-visible) .lang-card {
+  background: #eeeef0;
+}
+
 :global(body.light-mode) .lang-icon {
   filter: grayscale(1) contrast(1.1);
   opacity: 0.78;
+  color: #111114;
 }
 
 :global(body.light-mode) .project-item:hover .lang-icon,
@@ -869,7 +949,11 @@ function getHostedLabel(url: string): string {
 }
 
 :global(body.light-mode) .project-item.featured .project-name::after {
-  color: #d48b12;
+  background: #fff;
+}
+
+:global(body.light-mode) .rounded-star {
+  background: #fff;
 }
 
 :global(body.light-mode) .projects-divider {

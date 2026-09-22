@@ -13,6 +13,7 @@ export interface Project {
   category: string;
   featured: boolean;
   langFilter: string;
+  updatedAt: string | null;
 }
 
 const featuredPinnedRepos = new Set([
@@ -27,8 +28,7 @@ const featuredBlockedRepos = new Set([
 const MAX_FEATURED_PROJECTS = 12;
 
 const hiddenRepos = new Set([
-  'Website',
-  'V8V88V8V88',
+  'v8v88v8v88',
   '.github',
 ]);
 
@@ -126,6 +126,11 @@ const categoryOverrides: Record<string, string> = {
   'DeskImage': 'CLI & System Tools',
 };
 
+export const languageOverrides: Record<string, string> = {
+  'interweb': 'JavaScript',
+  'vaibring': 'JavaScript',
+};
+
 const descriptionOverrides: Record<string, string> = {
   'thefossclub.github.io': 'Official website for The FOSS Club, bringing together people who learn, build, and share open-source software.',
   'indx': 'An interactive map for indexing places, projects, and anything worth discovering through a focused TypeScript interface.',
@@ -198,9 +203,79 @@ function getProjectDescription(repo: GitHubRepo): string {
   return description?.trim() || `${formatProjectName(repo.name)} — an open-source project by ${GITHUB_USERNAME}.`;
 }
 
+// Snapshot of GitHub's updated_at values, refreshed 2026-09-22. This keeps
+// the same newest-first order when the API is unavailable during a build.
+const fallbackUpdatedAt: Record<string, string> = {
+  'ai-child-protection': '2026-04-01T00:42:13Z',
+  'budgetwiser': '2024-10-17T17:40:09Z',
+  'canva-linux': '2026-01-11T16:41:29Z',
+  'chemical-equipment-visualizer': '2026-02-05T12:33:53Z',
+  'cnn-image-classification': '2024-11-06T15:35:10Z',
+  'deskimage': '2025-05-05T04:32:11Z',
+  'dotfiles': '2026-03-08T13:36:22Z',
+  'face-recognition': '2026-08-08T14:20:18Z',
+  'fedorable': '2026-09-19T17:07:29Z',
+  'foss-hack-delhi': '2026-02-03T07:01:35Z',
+  'gnome-bluetooth-battery-monitor': '2026-08-02T23:42:43Z',
+  'gtk-emoji-picker': '2026-09-18T05:50:09Z',
+  'gtk-markdown-viewer': '2024-11-25T17:37:56Z',
+  'h1re': '2026-05-02T05:13:19Z',
+  'h3ist': '2024-11-26T18:04:39Z',
+  'helium-copr': '2026-09-18T20:36:18Z',
+  'iced-calculator': '2026-02-20T05:24:54Z',
+  'indx': '2026-07-11T07:17:17Z',
+  'interweb': '2026-09-13T05:41:15Z',
+  'jina-ids': '2026-02-20T16:34:08Z',
+  'linux': '2026-07-08T03:58:51Z',
+  'linux-keylogger': '2024-12-28T17:48:46Z',
+  'logichain': '2026-08-16T06:17:21Z',
+  'markview': '2026-05-24T17:11:13Z',
+  'mini-vm': '2026-02-01T01:18:17Z',
+  'musical-playground': '2026-03-18T04:24:55Z',
+  'mousam': '2025-12-14T13:29:11Z',
+  'nanohttp': '2025-04-06T09:59:57Z',
+  'neolekh': '2026-02-20T05:00:06Z',
+  'passvyn': '2026-08-28T06:00:23Z',
+  'pdfpaglu': '2026-02-14T14:56:35Z',
+  'piracyindex': '2026-04-24T17:20:12Z',
+  'rqg': '2026-02-20T04:51:18Z',
+  'redesigned-dtc-website': '2026-02-20T04:58:27Z',
+  'remove.sh': '2026-02-20T04:59:13Z',
+  'rust-riscv-compiler': '2026-02-20T04:42:45Z',
+  'rusty-snake': '2026-02-20T04:57:54Z',
+  'sauce_run': '2026-02-20T07:06:50Z',
+  'simple-round-robin-scheduler': '2026-02-20T04:56:09Z',
+  'synthio': '2026-05-20T02:43:27Z',
+  't2s': '2026-02-20T06:03:20Z',
+  'telegram-gtk4-libadwaita-theme': '2025-09-04T09:32:46Z',
+  // Organization repo: use Vaibhav's latest authored commit, not the repo's
+  // overall activity, so other contributors do not change its position.
+  'thefossclub.github.io': '2026-08-22T17:05:42Z',
+  'thefossclub': '2026-02-20T05:14:49Z',
+  'teaching-git-in-community-call': '2026-02-20T04:50:26Z',
+  'v8v88v8v88.github.io': '2026-09-22T07:52:00Z',
+  'vajra': '2026-02-03T07:00:58Z',
+  'vfetch': '2026-02-14T07:33:16Z',
+  'xe': '2026-08-16T04:32:13Z',
+  'yama': '2026-06-03T05:02:19Z',
+  'website': '2026-05-02T04:50:01Z',
+  'walls': '2026-02-20T05:00:59Z',
+  'zapzap': '2026-02-20T05:19:21Z',
+  'community-call': '2026-02-20T04:49:46Z',
+  'h4ck3r_ctf': '2024-10-22T17:47:27Z',
+};
+
 const fallbackRepos: GitHubRepo[] = [
+  { name: 'v8v88v8v88.github.io', description: 'My personal portfolio website hosted on GitHub Pages.', html_url: 'https://github.com/V8V88V8V88/v8v88v8v88.github.io', homepage: 'https://v8v88v8v88.com/', language: 'Astro', stargazers_count: 6, fork: false, archived: false },
   { name: 'indx', description: 'Indexing everything that can be on maps', html_url: 'https://github.com/v8v88v8v88/indx', language: 'TypeScript', stargazers_count: 0, fork: false, archived: false },
-  { name: 'thefossclub.github.io', description: 'Official website for The FOSS Club', html_url: 'https://github.com/thefossclub/thefossclub.github.io', language: 'HTML', stargazers_count: 0, fork: false, archived: false },
+  { name: 'thefossclub.github.io', description: 'Official website for The FOSS Club', html_url: 'https://github.com/thefossclub/thefossclub.github.io', homepage: 'https://thefossclub.org', language: 'TypeScript', stargazers_count: 13, fork: false, archived: false },
+  { name: 'helium-copr', description: 'GitHub Action for Helium COPR packages', html_url: 'https://github.com/V8V88V8V88/helium-copr', homepage: 'https://copr.fedorainfracloud.org/coprs/v8v88v8v88/helium/', language: null, stargazers_count: 0, fork: false, archived: false },
+  { name: 'interweb', description: 'Curated webring for the best of the web', html_url: 'https://github.com/V8V88V8V88/interweb', homepage: 'https://v8v88v8v88.com/interweb/', language: 'JavaScript', stargazers_count: 6, fork: false, archived: false },
+  { name: 'Passvyn', description: 'A secure Python password manager using SHA-256', html_url: 'https://github.com/V8V88V8V88/Passvyn', language: 'Python', stargazers_count: 4, fork: false, archived: false },
+  { name: 'LogiChain', description: 'A supply-chain management system made in Java', html_url: 'https://github.com/V8V88V8V88/LogiChain', language: 'Java', stargazers_count: 4, fork: false, archived: false },
+  { name: 'XE', description: 'A transpiled programming language', html_url: 'https://github.com/V8V88V8V88/XE', homepage: 'https://xe-lang.vercel.app', language: 'Rust', stargazers_count: 11, fork: false, archived: false },
+  { name: 'linux', description: 'Linux kernel fork', html_url: 'https://github.com/V8V88V8V88/linux', language: 'C', stargazers_count: 2, fork: true, archived: false },
+  { name: 'website', description: 'Code for an earlier version of my personal website', html_url: 'https://github.com/V8V88V8V88/website', language: 'HTML', stargazers_count: 2, fork: false, archived: true },
   { name: 'piracyindex', description: 'The greatest piracy index of all time', html_url: 'https://github.com/V8V88V8V88/piracyindex', language: 'TypeScript', stargazers_count: 0, fork: false, archived: false },
   { name: 'Synthio', description: 'A minimalist music visualizer built with Svelte', html_url: 'https://github.com/V8V88V8V88/Synthio', language: 'Svelte', stargazers_count: 0, fork: false, archived: false },
   { name: 'Telegram-GTK4-Libadwaita-Theme', description: 'A GTK4 - Libadwaita Inspired Theme for Telegram Desktop', html_url: 'https://github.com/V8V88V8V88/Telegram-GTK4-Libadwaita-Theme', language: null, stargazers_count: 0, fork: false, archived: false },
@@ -215,28 +290,41 @@ const fallbackRepos: GitHubRepo[] = [
   { name: 'vfetch', description: 'A minimal system information fetcher', html_url: 'https://github.com/V8V88V8V88/vfetch', language: 'Shell', stargazers_count: 0, fork: false, archived: false },
   { name: 'Fedorable', description: 'Simple script for maintaining Fedora Linux', html_url: 'https://github.com/V8V88V8V88/Fedorable', language: 'Python', stargazers_count: 0, fork: false, archived: false },
   { name: 'nanoHTTP', description: 'Nano lightweight HTTP server in C', html_url: 'https://github.com/V8V88V8V88/nanoHTTP', language: 'C', stargazers_count: 0, fork: false, archived: false },
-  { name: 'MarkVue', description: 'GTK-based Markdown viewer with real-time preview', html_url: 'https://github.com/V8V88V8V88/MarkVue', language: 'Rust', stargazers_count: 0, fork: false, archived: false },
+  { name: 'MarkView', description: 'GTK-based Markdown viewer with real-time preview', html_url: 'https://github.com/V8V88V8V88/MarkView', language: 'Rust', stargazers_count: 7, fork: false, archived: false },
   { name: 'DeskImage', description: 'CLI tool that generates .Desktop entries for AppImages', html_url: 'https://github.com/V8V88V8V88/DeskImage', language: 'Rust', stargazers_count: 0, fork: false, archived: false },
   { name: 'dotfiles', description: 'All the dotfiles of my linux system', html_url: 'https://github.com/V8V88V8V88/dotfiles', language: null, stargazers_count: 0, fork: false, archived: false },
   { name: 'musical-playground', description: 'Try music instruments online using svelte, vue, and tone.js', html_url: 'https://github.com/V8V88V8V88/musical-playground', language: 'Svelte', stargazers_count: 0, fork: false, archived: false },
   { name: 'FOSS-Hack-Delhi', description: 'Website to promote FOSS Hack in Delhi area', html_url: 'https://github.com/V8V88V8V88/FOSS-Hack-Delhi', language: 'TypeScript', stargazers_count: 0, fork: false, archived: false },
-  { name: 'AI-Document-Analyzer', description: 'AI Powered Document Analyzer', html_url: 'https://github.com/V8V88V8V88/AI-Document-Analyzer', language: 'Python', stargazers_count: 0, fork: false, archived: false },
+  { name: 'Jina-IDS', description: 'An intrusion-detection system made in Python', html_url: 'https://github.com/V8V88V8V88/Jina-IDS', language: 'Python', stargazers_count: 0, fork: false, archived: false },
+  { name: 'neolekh', description: 'A minimal Hugo portfolio theme with dark mode and GoatCounter analytics', html_url: 'https://github.com/V8V88V8V88/neolekh', homepage: 'https://v8v88v8v88.com', language: 'HTML', stargazers_count: 1, fork: false, archived: false },
+  { name: 'RQG', description: 'Random quote generator demo for FCC', html_url: 'https://github.com/V8V88V8V88/RQG', homepage: 'https://randomqoutev8.netlify.app/', language: 'TypeScript', stargazers_count: 0, fork: false, archived: false },
+  { name: 'PDFpaglu', description: 'AI Powered Document Analyzer', html_url: 'https://github.com/V8V88V8V88/PDFpaglu', homepage: 'https://pdfpaglu.streamlit.app/', language: 'Python', stargazers_count: 1, fork: false, archived: false },
+  { name: 'chemical-equipment-visualizer', description: 'Hybrid web and desktop tool for visualizing chemical equipment data', html_url: 'https://github.com/V8V88V8V88/chemical-equipment-visualizer', homepage: 'https://chemical-equipment-visualizer-steel.vercel.app/', language: 'Python', stargazers_count: 0, fork: false, archived: false },
   { name: 'AI-Child-Protection', description: 'AI-driven parental control with face detection', html_url: 'https://github.com/V8V88V8V88/AI-Child-Protection', language: 'Python', stargazers_count: 0, fork: false, archived: false },
   { name: 'cnn-image-classification', description: 'CNN to classify images in CIFAR-10 dataset', html_url: 'https://github.com/V8V88V8V88/cnn-image-classification', language: 'Jupyter Notebook', stargazers_count: 0, fork: false, archived: false },
   { name: 'T2S', description: 'Text to speech using AI', html_url: 'https://github.com/V8V88V8V88/T2S', language: 'CSS', stargazers_count: 0, fork: false, archived: false },
+  { name: 'zapzap', description: 'WhatsApp desktop application written in PyQt6', html_url: 'https://github.com/V8V88V8V88/zapzap', homepage: 'https://rtosta.com/zapzap-web/', language: 'Python', stargazers_count: 0, fork: true, archived: true },
+  { name: 'thefossclub', description: 'An earlier Svelte website for The FOSS Club', html_url: 'https://github.com/V8V88V8V88/thefossclub', homepage: 'https://thefossclub.vercel.app', language: 'Svelte', stargazers_count: 0, fork: false, archived: true },
+  { name: 'walls', description: 'A collection of wallpapers found around the internet', html_url: 'https://github.com/V8V88V8V88/walls', language: null, stargazers_count: 3, fork: false, archived: true },
+  { name: 'remove.sh', description: 'Shell script for removing installed or unwanted packages', html_url: 'https://github.com/V8V88V8V88/remove.sh', language: 'Shell', stargazers_count: 0, fork: false, archived: true },
+  { name: 'redesigned-dtc-website', description: 'College website reimagined for a web technology project', html_url: 'https://github.com/V8V88V8V88/redesigned-dtc-website', homepage: 'https://dtc-neon.vercel.app/', language: 'CSS', stargazers_count: 0, fork: false, archived: true },
+  { name: 'teaching-git-in-community-call', description: 'A website used for teaching Git in a community call', html_url: 'https://github.com/V8V88V8V88/teaching-git-in-community-call', language: 'HTML', stargazers_count: 0, fork: false, archived: true },
+  { name: 'community-call', description: 'Community call website', html_url: 'https://github.com/V8V88V8V88/community-call', language: 'HTML', stargazers_count: 0, fork: false, archived: true },
+  { name: 'mousam', description: 'Weather at a glance', html_url: 'https://github.com/V8V88V8V88/mousam', homepage: 'https://amit9838.github.io/mousam/', language: 'Python', stargazers_count: 0, fork: true, archived: false },
+  { name: 'H4CK3R_CTF', description: 'CTF website frontend', html_url: 'https://github.com/V8V88V8V88/H4CK3R_CTF', homepage: 'https://h4ck3r-ctf.vercel.app', language: 'TypeScript', stargazers_count: 1, fork: true, archived: false },
   { name: 'rusty-snake', description: 'A simple snake game built with Rust and Piston', html_url: 'https://github.com/V8V88V8V88/rusty-snake', language: 'Rust', stargazers_count: 0, fork: false, archived: false },
   { name: 'iced-calculator', description: 'Simple calculator made using iced kit', html_url: 'https://github.com/V8V88V8V88/iced-calculator', language: 'Rust', stargazers_count: 0, fork: false, archived: false },
-  { name: 'todo-list', description: 'Simple CLI todo list in C', html_url: 'https://github.com/V8V88V8V88/todo-list', language: 'C', stargazers_count: 0, fork: false, archived: false },
-  { name: 'dirSim', description: 'Lightweight directory and file system simulator', html_url: 'https://github.com/V8V88V8V88/dirSim', language: 'Python', stargazers_count: 0, fork: false, archived: false },
   { name: 'simple-round-robin-scheduler', description: 'Round robin scheduler made during OS lectures', html_url: 'https://github.com/V8V88V8V88/simple-round-robin-scheduler', language: 'C', stargazers_count: 0, fork: false, archived: false },
   { name: 'canva-linux', description: 'Canva for Linux', html_url: 'https://github.com/V8V88V8V88/canva-linux', language: 'Python', stargazers_count: 0, fork: false, archived: false },
   { name: 'linux-keylogger', description: 'Basically what you read', html_url: 'https://github.com/V8V88V8V88/linux-keylogger', language: 'C++', stargazers_count: 0, fork: false, archived: false },
   { name: 'GNOME-bluetooth-battery-monitor', description: 'Displays battery level in the GNOME shell', html_url: 'https://github.com/V8V88V8V88/GNOME-bluetooth-battery-monitor', language: 'JavaScript', stargazers_count: 0, fork: false, archived: false },
   { name: 'gtk-emoji-picker', description: 'GTK4-based emoji picker with global shortcut', html_url: 'https://github.com/V8V88V8V88/gtk-emoji-picker', language: 'Python', stargazers_count: 0, fork: false, archived: false },
-  { name: 'SkibidiSpeak', description: 'Ohio language translator for understanding gen alpha', html_url: 'https://github.com/V8V88V8V88/SkibidiSpeak', language: 'TypeScript', stargazers_count: 0, fork: false, archived: false },
   { name: 'Sauce_Run', description: 'Endless runner game made in Redot engine', html_url: 'https://github.com/V8V88V8V88/Sauce_Run', language: 'GDScript', stargazers_count: 0, fork: false, archived: false },
-  { name: 'golang', description: 'Go experiments', html_url: 'https://github.com/V8V88V8V88/golang', language: 'Go', stargazers_count: 0, fork: false, archived: false },
-];
+  { name: 'gtk-markdown-viewer', description: 'A lightweight native GTK Markdown viewer', html_url: 'https://github.com/V8V88V8V88/gtk-markdown-viewer', language: 'Rust', stargazers_count: 0, fork: false, archived: false },
+].map(repo => ({
+  ...repo,
+  updated_at: fallbackUpdatedAt[repo.name.toLowerCase()] || null,
+}));
 
 const langFilterMap: Record<string, string> = {
   'TypeScript': 'TypeScript',
@@ -263,6 +351,7 @@ function getDefaultCategory(language: string | null): string {
   switch (language) {
     case 'Rust': return 'Rust Projects';
     case 'TypeScript':
+    case 'JavaScript':
     case 'Svelte':
     case 'HTML':
     case 'CSS':
@@ -309,6 +398,7 @@ interface GitHubRepo {
   fork: boolean;
   archived: boolean;
   pushed_at?: string | null;
+  updated_at?: string | null;
 }
 
 const REPOS_CACHE_TTL_MS = 10 * 60 * 1000;
@@ -413,7 +503,24 @@ async function fetchGitHubRepos(): Promise<GitHubRepo[]> {
       const url = `https://api.github.com/repos/${fullName}`;
       const response = await fetch(url, { headers });
       if (response.ok) {
-        repos.push(await response.json());
+        const repo: GitHubRepo = await response.json();
+        const commitsUrl = `https://api.github.com/repos/${fullName}/commits?author=${GITHUB_USERNAME}&per_page=1`;
+
+        try {
+          const commitsResponse = await fetch(commitsUrl, { headers });
+          if (commitsResponse.ok) {
+            const commits: Array<{ commit?: { author?: { date?: string | null } } }> = await commitsResponse.json();
+            repo.updated_at = commits[0]?.commit?.author?.date
+              || fallbackUpdatedAt[repo.name.toLowerCase()]
+              || repo.updated_at;
+          } else {
+            repo.updated_at = fallbackUpdatedAt[repo.name.toLowerCase()] || repo.updated_at;
+          }
+        } catch {
+          repo.updated_at = fallbackUpdatedAt[repo.name.toLowerCase()] || repo.updated_at;
+        }
+
+        repos.push(repo);
       } else if (response.status === 403) {
         githubRateLimitedUntil = parseRateLimitResetMs(response);
         logGitHubWarningOnce('GitHub API rate limit reached while loading additional repos. Using available data.');
@@ -439,8 +546,19 @@ async function fetchGitHubRepos(): Promise<GitHubRepo[]> {
 
 export async function getProjects(): Promise<Project[]> {
   const repos = await fetchGitHubRepos();
-  const eligibleRepos = repos
-    .filter(repo => !repo.fork && !repo.archived && !hiddenRepos.has(repo.name));
+  const uniqueRepos = new Map<string, GitHubRepo>();
+  for (const repo of repos) {
+    const repoKey = repo.name.toLowerCase();
+    if (hiddenRepos.has(repoKey)) continue;
+
+    const existing = uniqueRepos.get(repoKey);
+    // Prefer the canonical non-fork repository when an added organization repo
+    // has the same name as one of the user's forks.
+    if (!existing || (existing.fork && !repo.fork)) {
+      uniqueRepos.set(repoKey, repo);
+    }
+  }
+  const eligibleRepos = [...uniqueRepos.values()];
 
   const rankedFeatureCandidates = eligibleRepos
     .filter(repo => !featuredBlockedRepos.has(repo.name))
@@ -462,23 +580,30 @@ export async function getProjects(): Promise<Project[]> {
   }
 
   return eligibleRepos
-    .map(repo => ({
-      name: formatProjectName(repo.name),
-      repoName: repo.name,
-      description: getProjectDescription(repo),
-      url: repo.html_url,
-      language: repo.language || 'Unknown',
-      image: getProjectImage(repo.name, repo.html_url),
-      hasCustomImage: Boolean(projectImageMap[repo.name.toLowerCase()]),
-      homepage: repo.homepage?.trim() || null,
-      stars: repo.stargazers_count,
-      category: categoryOverrides[repo.name] || getDefaultCategory(repo.language),
-      featured: featuredNames.has(repo.name),
-      langFilter: getLangFilter(repo.language),
-    }))
+    .map(repo => {
+      const language = languageOverrides[repo.name] || languageOverrides[repo.name.toLowerCase()] || repo.language || 'Unknown';
+      return {
+        name: formatProjectName(repo.name),
+        repoName: repo.name,
+        description: getProjectDescription(repo),
+        url: repo.html_url,
+        language,
+        image: getProjectImage(repo.name, repo.html_url),
+        hasCustomImage: Boolean(projectImageMap[repo.name.toLowerCase()]),
+        homepage: repo.homepage?.trim() || null,
+        stars: repo.stargazers_count,
+        category: categoryOverrides[repo.name] || getDefaultCategory(language),
+        featured: featuredNames.has(repo.name),
+        langFilter: getLangFilter(language),
+        updatedAt: repo.updated_at || repo.pushed_at || null,
+      };
+    })
     .sort((a, b) => {
-      if (a.featured !== b.featured) return a.featured ? -1 : 1;
-      return b.stars - a.stars;
+      const aUpdated = a.updatedAt ? new Date(a.updatedAt).getTime() : 0;
+      const bUpdated = b.updatedAt ? new Date(b.updatedAt).getTime() : 0;
+      if (aUpdated !== bUpdated) return bUpdated - aUpdated;
+      if (!aUpdated && !bUpdated) return 0;
+      return a.repoName.localeCompare(b.repoName);
     });
 }
 
