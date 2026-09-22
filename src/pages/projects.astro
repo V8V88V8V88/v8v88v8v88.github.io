@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getProjects, groupByCategory } from '../data/projects';
+import { getLanguageMeta } from '../data/languageIcons';
 
 const projects = await getProjects();
 const grouped = groupByCategory(projects);
@@ -30,10 +31,10 @@ function getHostedLabel(url: string): string {
  ╚═╝     ╚═╝  ╚═╝ ╚═════╝  ╚════╝ ╚══════╝ ╚═════╝   ╚═╝   ╚══════╝
       </pre>
       <p class="hero-tagline">
-        That I've built, contributed, and <em>shipped</em>.
+        That I've built, contributed, and <a class="shipped-link" href="https://github.com/v8v88v8v88?tab=repositories" target="_blank" rel="noopener noreferrer"><em>shipped</em></a>.
       </p>
 
-      <div class="contrib-chart" id="contrib-chart">
+      <a class="contrib-chart" id="contrib-chart" href="https://github.com/v8v88v8v88" target="_blank" rel="noopener noreferrer" title="View GitHub profile (V8V88V8V88)">
         <div class="contrib-header">
           <span class="contrib-count" id="contrib-count"></span>
         </div>
@@ -47,7 +48,7 @@ function getHostedLabel(url: string): string {
           <div class="contrib-cell level-4"></div>
           <span class="contrib-legend-label">More</span>
         </div>
-      </div>
+      </a>
 
       <div class="hero-stats">
         <div class="hero-stat">
@@ -85,29 +86,36 @@ function getHostedLabel(url: string): string {
     </div>
 
     <div class="project-list">
-      {grouped.map(group => group.projects.map(project => (
-        <div
-          class={`project-item${project.featured ? ' featured' : ''}`}
-          data-lang={project.langFilter}>
-          <a class="project-main-link" href={project.url} target="_blank" rel="noopener noreferrer">
-            <div class="project-info">
-              <div class="project-name">{project.name}</div>
-              <div class="project-desc">{project.description}</div>
+      {grouped.map(group => group.projects.map(project => {
+        const langMeta = getLanguageMeta(project.language);
+        return (
+          <div
+            class={`project-item${project.featured ? ' featured' : ''}`}
+            data-lang={project.langFilter}>
+            <a class="project-main-link" href={project.url} target="_blank" rel="noopener noreferrer">
+              <div class="project-info">
+                <div class="project-name">{project.name}</div>
+                <div class="project-desc">{project.description}</div>
+              </div>
+              <span class="project-lang">{project.language}</span>
+            </a>
+            {project.homepage && (
+              <div class="project-hover-info">
+                <a class="project-hosted" href={project.homepage} target="_blank" rel="noopener noreferrer" title={project.homepage} aria-label={`Open ${getHostedLabel(project.homepage)}`}>{getHostedLabel(project.homepage)}</a>
+              </div>
+            )}
+            <div class={`project-preview${project.image ? ' has-custom-image' : ' has-lang-card'}`} aria-hidden="true">
+              {project.image ? (
+                <img src={project.image} alt="" loading="lazy" decoding="async" />
+              ) : (
+                <div class="lang-card" style={`--lang-color: ${langMeta.color};`}>
+                  <div class="lang-icon" set:html={langMeta.svg}></div>
+                </div>
+              )}
             </div>
-            <span class="project-lang">{project.language}</span>
-          </a>
-          {project.homepage && (
-            <div class="project-hover-info">
-              <a class="project-hosted" href={project.homepage} target="_blank" rel="noopener noreferrer" title={project.homepage} aria-label={`Open ${getHostedLabel(project.homepage)}`}>{getHostedLabel(project.homepage)}</a>
-            </div>
-          )}
-          {project.image && (
-            <div class={`project-preview${project.hasCustomImage ? ' has-custom-image' : ' is-fallback-image'}`} aria-hidden="true">
-              <img src={project.image} alt="" loading="lazy" decoding="async" />
-            </div>
-          )}
-        </div>
-      )))}
+          </div>
+        );
+      }))}
     </div>
   </main>
 
@@ -302,6 +310,25 @@ function getHostedLabel(url: string): string {
   color: #1DB954;
 }
 
+.shipped-link {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.shipped-link em {
+  font-style: italic;
+  color: #1DB954;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.shipped-link:hover em {
+  color: #22d35e;
+  text-shadow: 0 0 16px rgba(29, 185, 84, 0.4);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
 .hero-stats {
   display: flex;
   gap: 3rem;
@@ -437,8 +464,6 @@ function getHostedLabel(url: string): string {
   overflow: visible;
   z-index: 0;
   background: rgba(255, 255, 255, 0.035);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow:
     inset 0 1px 0 0 rgba(255, 255, 255, 0.12),
@@ -447,8 +472,7 @@ function getHostedLabel(url: string): string {
   transition:
     background 0.3s ease,
     border-color 0.3s ease,
-    box-shadow 0.35s ease,
-    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    box-shadow 0.35s ease;
 }
 
 .project-main-link {
@@ -470,14 +494,11 @@ function getHostedLabel(url: string): string {
 .project-item:hover,
 .project-item:has(:focus-visible) {
   background: rgba(255, 255, 255, 0.055);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   border-color: rgba(255, 255, 255, 0.16);
   box-shadow:
     inset 0 1px 0 0 rgba(255, 255, 255, 0.22),
     inset 0 -1px 0 0 rgba(255, 255, 255, 0.08),
     0 12px 32px -4px rgba(0, 0, 0, 0.5);
-  transform: translateY(-2px) scale(1.008);
   z-index: 5;
 }
 
@@ -492,39 +513,33 @@ function getHostedLabel(url: string): string {
 
 .project-item:has(.project-preview):hover .project-main-link,
 .project-item:has(.project-preview):has(:focus-visible) .project-main-link {
-  padding-left: 10.2rem;
+  padding-left: 10.8rem;
 }
 
 .project-preview {
   position: absolute;
   left: 1rem;
   top: 50%;
+  margin-top: -1.725rem;
   width: 3.45rem;
   height: 3.45rem;
   overflow: visible;
-  opacity: 0.92;
-  transform: translateY(-50%) rotate(0deg);
-  transform-origin: center center;
+  pointer-events: none;
+  z-index: 2;
   transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1),
               height 0.45s cubic-bezier(0.22, 1, 0.36, 1),
               left 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-              top 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-              transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-              opacity 0.25s ease;
-  pointer-events: none;
-  z-index: 2;
+              margin-top 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .project-item:hover .project-preview,
 .project-item:has(:focus-visible) .project-preview {
-  left: -1.2rem;
+  left: -1.25rem;
   top: 50%;
-  width: 10.6rem;
-  height: 10.6rem;
-  transform: translateY(-52%) rotate(-4deg);
-  opacity: 1;
+  margin-top: -5.6rem;
+  width: 11.2rem;
+  height: 11.2rem;
   z-index: 10;
-  will-change: transform;
 }
 
 .project-preview img {
@@ -536,10 +551,12 @@ function getHostedLabel(url: string): string {
   outline: none;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  transform: rotate(0deg);
   transition: filter 0.35s ease,
               box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1),
               border-radius 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-              border-color 0.35s ease;
+              border-color 0.35s ease,
+              transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .project-item:hover .project-preview img,
@@ -547,9 +564,77 @@ function getHostedLabel(url: string): string {
   border-radius: 14px;
   border-color: rgba(255, 255, 255, 0.16);
   filter: saturate(1.08) contrast(1.03);
+  transform: rotate(-4deg);
   box-shadow:
     0 28px 56px -12px rgba(0, 0, 0, 0.85),
     0 14px 28px -6px rgba(0, 0, 0, 0.6);
+}
+
+.lang-card {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  background: rgba(18, 20, 26, 0.5);
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 4px 14px rgba(0, 0, 0, 0.35);
+  transform: rotate(0deg);
+  transform-origin: center center;
+  backface-visibility: hidden;
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    border-radius 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.35s ease,
+    background 0.35s ease;
+}
+
+.project-item:hover .lang-card,
+.project-item:has(:focus-visible) .lang-card {
+  border-radius: 14px;
+  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(16, 18, 24, 0.6);
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  transform: rotate(-4deg);
+  box-shadow:
+    0 24px 48px -12px rgba(0, 0, 0, 0.75),
+    0 12px 24px -6px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.lang-icon {
+  width: 58%;
+  height: 58%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: grayscale(1) brightness(1.25);
+  opacity: 0.88;
+  transition: filter 0.3s ease, opacity 0.3s ease;
+  flex-shrink: 0;
+  z-index: 2;
+}
+
+.lang-icon :global(svg) {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.project-item:hover .lang-icon,
+.project-item:has(:focus-visible) .lang-icon {
+  filter: none;
+  opacity: 1;
 }
 
 .project-info {
@@ -690,12 +775,46 @@ function getHostedLabel(url: string): string {
   .project-item,
   .project-preview,
   .project-preview img,
+  .lang-card,
+  .lang-icon,
   .project-hover-info,
   .project-main-link,
   .project-name,
   .project-desc {
     transition-duration: 0.01ms;
   }
+}
+
+:global(body.light-mode) .lang-card {
+  background: rgba(245, 245, 247, 0.7);
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 4px 14px rgba(0, 0, 0, 0.06);
+}
+
+:global(body.light-mode) .project-item:hover .lang-card,
+:global(body.light-mode) .project-item:has(:focus-visible) .lang-card {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  border-color: rgba(0, 0, 0, 0.16);
+  box-shadow:
+    0 24px 48px -10px rgba(0, 0, 0, 0.15),
+    0 12px 24px -6px rgba(0, 0, 0, 0.1);
+}
+
+:global(body.light-mode) .lang-icon {
+  filter: grayscale(1) contrast(1.1);
+  opacity: 0.78;
+}
+
+:global(body.light-mode) .project-item:hover .lang-icon,
+:global(body.light-mode) .project-item:has(:focus-visible) .lang-icon {
+  filter: none;
+  opacity: 1;
 }
 
 :global(body.light-mode) .project-main-link {
@@ -935,13 +1054,19 @@ function getHostedLabel(url: string): string {
   .project-preview {
     left: 0.8rem;
     top: 50%;
+    margin-top: -1.375rem;
     width: 2.75rem;
     height: 2.75rem;
-    transform: translateY(-50%) rotate(0deg);
   }
 
-  .project-preview img {
+  .project-preview img,
+  .lang-card {
     border-radius: 8px;
+  }
+
+  .lang-icon {
+    width: 1.45rem;
+    height: 1.45rem;
   }
 
   .project-item:has(.project-preview) .project-main-link,
@@ -954,9 +1079,9 @@ function getHostedLabel(url: string): string {
   .project-item:has(:focus-visible) .project-preview {
     left: 0.8rem;
     top: 50%;
+    margin-top: -1.375rem;
     width: 2.75rem;
     height: 2.75rem;
-    transform: translateY(-50%) scale(1.04);
   }
 
   .project-lang {
@@ -1086,9 +1211,9 @@ function getHostedLabel(url: string): string {
   .project-preview {
     left: 0.6rem;
     top: 50%;
+    margin-top: -1.175rem;
     width: 2.35rem;
     height: 2.35rem;
-    transform: translateY(-50%) rotate(0deg);
   }
 
   .project-preview img {
@@ -1105,9 +1230,9 @@ function getHostedLabel(url: string): string {
   .project-item:has(:focus-visible) .project-preview {
     left: 0.6rem;
     top: 50%;
+    margin-top: -1.175rem;
     width: 2.35rem;
     height: 2.35rem;
-    transform: translateY(-50%) scale(1.04);
   }
 
   .project-item:hover,
@@ -1147,6 +1272,10 @@ function getHostedLabel(url: string): string {
 }
 
 .contrib-chart {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
   margin: 1rem 0 1rem;
   width: 100%;
   max-width: 780px;
@@ -1155,6 +1284,12 @@ function getHostedLabel(url: string): string {
   -webkit-overflow-scrolling: touch;
   content-visibility: auto;
   contain-intrinsic-size: 0 160px;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.contrib-chart:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
 }
 
 .contrib-header {

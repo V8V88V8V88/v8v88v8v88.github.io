@@ -34,7 +34,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <main class="about-page">
     <div class="bento-grid">
       <div class="bento-item bento-hero clickable" id="hero-card" title="Click to read more">
-        <span class="hero-greeting">// about me</span>
         <h1 class="hero-title">Hi, I'm <span class="name">Vaibhav</span></h1>
         <p class="hero-subtitle" id="hero-subtitle">Building, breaking, but always learning.</p>
         <div class="hero-expanded" id="hero-expanded">
@@ -50,17 +49,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <span class="click-hint" id="click-hint">click to read more</span>
       </div>
 
-      <div class="bento-item bento-ascii">
+      <a href="/username/" class="bento-item bento-ascii clickable" title="Why V8? Story behind the username">
 <pre>██╗   ██╗ █████╗ 
 ██║   ██║██╔══██╗
 ██║   ██║╚█████╔╝
 ╚██╗ ██╔╝██╔══██╗
  ╚████╔╝ ╚█████╔╝
   ╚═══╝   ╚════╝ </pre>
-      </div>
+      </a>
 
-      <div class="bento-item bento-philosophy clickable" id="philosophy-card" title="Click to cycle">
-        <p class="section-label">Philosophy</p>
+      <a href="/minimalism/" class="bento-item bento-philosophy clickable" id="philosophy-card" title="Read about my philosophy on minimalism">
         <div class="philosophy-carousel">
           <p class="philosophy-text active">I believe in <span class="accent">KISS</span> and the <span class="accent">Unix way</span>. Do one thing well.</p>
           <p class="philosophy-text">I appreciate the <span class="accent">Buddhist way</span>. Simplicity, mindfulness, and letting go.</p>
@@ -68,63 +66,61 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <p class="philosophy-text">Question everything. <span class="accent">Doubt</span> is the origin of wisdom.</p>
           <p class="philosophy-text">Life is <span class="accent">impermanent</span>. Build things that outlast you.</p>
         </div>
-      </div>
+      </a>
 
-      <div class="bento-item bento-stats clickable" id="years-coding" title="Click me">
-        <p class="section-label">Years Coding</p>
+      <a href="https://github.com/v8v88v8v88" target="_blank" rel="noopener noreferrer" class="bento-item bento-stats clickable" id="years-coding" title="View GitHub profile">
         <span class="stat-number">8+</span>
-        <span class="stat-label" id="years-label">& counting</span>
-      </div>
+        <span class="stat-label" id="years-label">years coding</span>
+      </a>
 
-      <div class="bento-item bento-stats">
-        <p class="section-label">Glass of Thanda Pani</p>
-        <span class="stat-number">∞</span>
-        <span class="stat-label">daily required</span>
-      </div>
+      <a href="https://www.reddit.com/r/HydroHomies/" target="_blank" rel="noopener noreferrer" class="bento-item bento-stats clickable" title="Stay hydrated! r/HydroHomies">
+        <span class="stat-number stat-infinity">∞</span>
+        <span class="stat-label">thanda pani</span>
+      </a>
 
       <div class="bento-item bento-skills">
-        <p class="section-label">Tech Stack</p>
         <div class="skills-grid" id="skills-grid">
-          <span class="skill-tag highlight">Rust</span>
-          <span class="skill-tag highlight">C/C++</span>
-          <span class="skill-tag">Python</span>
-          <span class="skill-tag">JavaScript</span>
-          <span class="skill-tag">TypeScript</span>
-          <span class="skill-tag">Bash</span>
-          <span class="skill-tag highlight">Linux</span>
-          <span class="skill-tag">GTK</span>
-          <span class="skill-tag">React</span>
-          <span class="skill-tag">Docker</span>
-          <span class="skill-tag">Git</span>
-          <span class="skill-tag">Neovim</span>
+          <a href="/projects/" class="skill-tag highlight">Rust</a>
+          <a href="/projects/" class="skill-tag highlight">C/C++</a>
+          <a href="/projects/" class="skill-tag">Python</a>
+          <a href="/projects/" class="skill-tag">JavaScript</a>
+          <a href="/projects/" class="skill-tag">TypeScript</a>
+          <a href="/projects/" class="skill-tag">Bash</a>
+          <a href="/projects/" class="skill-tag highlight">Linux</a>
+          <a href="/projects/" class="skill-tag">GTK</a>
+          <a href="/projects/" class="skill-tag">React</a>
+          <a href="/projects/" class="skill-tag">Docker</a>
+          <a href="/projects/" class="skill-tag">Git</a>
+          <a href="/projects/" class="skill-tag">Neovim</a>
         </div>
       </div>
 
       <div class="bento-item bento-currently">
-        <div class="currently-heading">
-          <span class="section-label">Currently</span>
-          <span class="currently-key">Working</span>
-        </div>
         <div class="currently-list">
-          <div class="currently-item currently-item-work">
-            <span class="currently-value"><a href="https://github.com/v8v88v8v88?tab=repositories" target="_blank" rel="noopener noreferrer" class="currently-link">Open source projects</a></span>
+          <div class="currently-item">
+            <span class="currently-key">Working At</span>
+            <span class="currently-value"><a href="https://automologylabs.com/" target="_blank" rel="noopener noreferrer" class="currently-link">Automology Labs</a></span>
+          </div>
+          <div class="currently-item">
+            <span class="currently-key">Building</span>
+            <span class="currently-value"><a href="https://github.com/v8v88v8v88/XE" target="_blank" rel="noopener noreferrer" class="currently-link">XE Programming Language</a></span>
           </div>
           <div class="currently-item">
             <span class="currently-key">Learning</span>
-            <span class="currently-value">Rust, ASM & Systems Programming</span>
+            <span class="currently-value"><a href="https://llvm.org/" target="_blank" rel="noopener noreferrer" class="currently-link">LLVM & Compiler Architecture</a></span>
           </div>
           <div class="currently-item">
             <span class="currently-key">Using</span>
-            <span class="currently-value">Fedora + GNOME + Neovim</span>
+            <span class="currently-value"><a href="https://github.com/v8v88v8v88/dotfiles" target="_blank" rel="noopener noreferrer" class="currently-link">Fedora + niri</a></span>
           </div>
         </div>
       </div>
 
-      <div class="bento-item bento-location">
+      <a href="https://maps.apple.com/?q=India" target="_blank" rel="noopener noreferrer" class="bento-item bento-location clickable" title="Search India on Apple Maps">
         <span class="location-icon">📍</span>
         <span class="location-text">India</span>
         <span class="location-sub">UTC +5:30</span>
-      </div>
+      </a>
 
       <div class="bento-item bento-cta">
         <p class="cta-text">Let's build something cool?</p>
@@ -134,9 +130,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
       </div>
 
-      <div class="bento-item bento-matrix">
+      <a href="https://en.wikipedia.org/wiki/Matrix_digital_rain" target="_blank" rel="noopener noreferrer" class="bento-item bento-matrix clickable" title="Matrix digital rain on Wikipedia">
         <canvas id="matrix-canvas"></canvas>
-      </div>
+      </a>
     </div>
   </main>
 
@@ -151,13 +147,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       philosophyTexts[currentPhilosophy].classList.add('active');
     }
     autoScrollInterval = setInterval(rotatePhilosophy, 4000);
-    if (philosophyCard) {
-      philosophyCard.addEventListener('click', function() {
-        clearInterval(autoScrollInterval);
-        rotatePhilosophy();
-        autoScrollInterval = setInterval(rotatePhilosophy, 4000);
-      });
-    }
 
     var heroCard = document.getElementById('hero-card');
     if (heroCard) {
@@ -201,12 +190,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       }
     }
 
-    var skillTags = document.querySelectorAll('.skill-tag');
-    skillTags.forEach(function(tag) {
-      tag.style.cursor = 'pointer';
-      tag.addEventListener('click', function() { tag.classList.toggle('highlight'); });
-    });
-
     var yearsCoding = document.getElementById('years-coding');
     var yearsLabel = document.getElementById('years-label');
     if (yearsCoding && yearsLabel) {
@@ -230,70 +213,69 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 .about-page {
   min-height: 100vh;
   width: 100%;
-  max-width: min(1120px, calc(100% - 2rem));
+  max-width: min(1050px, calc(100% - 2rem));
   margin: 0 auto;
-  padding: 104px clamp(1rem, 3.5vw, 2.5rem) 3rem;
+  padding: 104px clamp(1rem, 3.2vw, 2.4rem) 3rem;
 }
-.bento-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 1rem; }
-.bento-item { min-width: 0; overflow-wrap: anywhere; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 18px; padding: 1.25rem 1.2rem; transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease; position: relative; overflow: hidden; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 4px 24px rgba(0, 0, 0, 0.2); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+.bento-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 0.95rem; }
+.bento-item { min-width: 0; overflow-wrap: anywhere; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 17px; padding: 1.22rem 1.12rem; transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease; position: relative; overflow: hidden; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 4px 24px rgba(0, 0, 0, 0.2); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); text-decoration: none; color: inherit; }
 .bento-item::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 70%; height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent); }
 .bento-item:hover { background: rgba(255, 255, 255, 0.05); border-color: rgba(255, 255, 255, 0.15); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 8px 32px rgba(0, 0, 0, 0.25); transform: translateY(-4px); }
 .section-label { font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace; font-size: 0.65rem; color: rgba(255, 255, 255, 0.35); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.65rem; }
-.bento-hero { grid-column: span 8; display: flex; flex-direction: column; justify-content: center; min-height: 220px; position: relative; overflow: hidden; }
-.hero-greeting { font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace; font-size: 0.8rem; color: #1DB954; margin-bottom: 0.55rem; }
-.hero-title { font-family: 'EB Garamond', Georgia, serif; font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: 400; color: #fff; line-height: 1.15; margin-bottom: 0.65rem; }
+.bento-hero { grid-column: span 8; display: flex; flex-direction: column; justify-content: center; min-height: 232px; position: relative; overflow: hidden; }
+.hero-greeting { font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace; font-size: 0.8rem; color: #1DB954; margin-bottom: 0.52rem; }
+.hero-title { font-family: 'EB Garamond', Georgia, serif; font-size: clamp(2.35rem, 4.8vw, 3.3rem); font-weight: 400; color: #fff; line-height: 1.15; margin-bottom: 0.42rem; }
 .hero-title .name { font-style: italic; color: rgba(255, 255, 255, 0.5); transition: color 0.3s ease; }
 .bento-hero:hover .hero-title .name { color: #1DB954 !important; }
-.hero-subtitle { font-family: 'EB Garamond', Georgia, serif; font-size: 1.15rem; color: rgba(255, 255, 255, 0.5); max-width: 400px; }
+.hero-subtitle { font-family: 'EB Garamond', Georgia, serif; font-size: 1.15rem; color: rgba(255, 255, 255, 0.55); max-width: 430px; }
 .bento-item.bento-ascii { min-width: 0; container-type: inline-size; }
-.bento-ascii { grid-column: span 4; display: flex; align-items: center; justify-content: center; min-height: 220px; font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace; font-size: clamp(0.45rem, 0.65vw + 0.35rem, 0.6rem); line-height: 1.15; color: #1DB954; white-space: pre; text-align: center; }
+.bento-ascii { grid-column: span 4; display: flex; align-items: center; justify-content: center; min-height: 232px; font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace; font-size: clamp(0.44rem, 0.62vw + 0.33rem, 0.59rem); line-height: 1.15; color: #1DB954; white-space: pre; text-align: center; }
 .bento-ascii pre { font-size: min(1em, 8cqw); margin: 0; width: fit-content; max-width: 100%; min-width: 0; margin-inline: auto; box-sizing: border-box; }
-.bento-philosophy { grid-column: span 6; display: flex; flex-direction: column; justify-content: center; text-align: center; padding: 1.35rem; gap: 0.75rem; }
+.bento-philosophy { grid-column: span 6; display: flex; flex-direction: column; justify-content: center; text-align: center; padding: 1.25rem 1.12rem; gap: 0.7rem; min-height: 226px; }
 .bento-philosophy > .section-label { margin: 0; padding: 0; }
 /* All quotes share a grid cell, so the longest quote reserves enough space
    at every width without colliding with the heading or changing card height. */
 .philosophy-carousel { display: grid; align-items: center; min-width: 0; }
 .philosophy-carousel > .philosophy-text { grid-area: 1 / 1; min-width: 0; margin: 0; }
-.philosophy-text { font-family: 'EB Garamond', Georgia, serif; font-size: 1.4rem; font-style: italic; color: rgba(255, 255, 255, 0.6); line-height: 1.5; visibility: hidden; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
+.philosophy-text { font-family: 'EB Garamond', Georgia, serif; font-size: 1.45rem; font-style: italic; color: rgba(255, 255, 255, 0.75); line-height: 1.45; visibility: hidden; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; max-width: 490px; margin: 0 auto; }
 .philosophy-text.active { visibility: visible; opacity: 1; pointer-events: auto; }
 .philosophy-text .accent { color: #1DB954; font-style: normal; font-weight: 500; }
-.bento-item.clickable { cursor: pointer; }
-.bento-item.clickable:hover { border-color: rgba(255, 255, 255, 0.15); }
+.bento-item.clickable, a.bento-item { cursor: pointer; }
+.bento-item.clickable:hover, a.bento-item:hover { border-color: rgba(255, 255, 255, 0.15); }
 .hero-expanded { display: none; margin-top: 1.1rem; padding-top: 1.1rem; border-top: 1px solid rgba(255, 255, 255, 0.1); }
-.hero-expanded p { font-family: 'EB Garamond', Georgia, serif; font-size: 1.1rem; color: rgba(255, 255, 255, 0.6); line-height: 1.65; margin-bottom: 0.85rem; }
+.hero-expanded p { font-family: 'EB Garamond', Georgia, serif; font-size: 1.08rem; color: rgba(255, 255, 255, 0.6); line-height: 1.65; margin-bottom: 0.85rem; }
 .hero-expanded p:last-child { margin-bottom: 0; }
+.bento-hero.expanded { justify-content: flex-start; }
 .bento-hero.expanded .hero-expanded { display: block; animation: fadeIn 0.3s ease; }
-.click-hint { font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace; font-size: 0.65rem; color: rgba(255, 255, 255, 0.25); align-self: flex-end; margin-top: 0.85rem; text-align: right; transition: opacity 0.3s ease; }
+.click-hint { font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace; font-size: 0.64rem; color: rgba(255, 255, 255, 0.25); position: absolute; bottom: 1.05rem; right: 1.15rem; text-align: right; transition: opacity 0.3s ease; }
 .bento-hero.expanded .click-hint { display: none; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-.bento-stats { grid-column: span 3; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-.stat-number { font-family: 'EB Garamond', Georgia, serif; font-size: 2.65rem; font-weight: 500; color: #fff; line-height: 1; }
-.stat-label { max-width: 100%; font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace; font-size: 0.7rem; color: rgba(255, 255, 255, 0.4); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.35rem; }
-.bento-skills { grid-column: span 6; }
-.skills-grid { display: flex; flex-wrap: wrap; gap: 0.48rem; }
-.skill-tag { max-width: 100%; font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace; font-size: 0.75rem; color: rgba(255, 255, 255, 0.6); padding: 0.38rem 0.85rem; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 100px; transition: all 0.2s ease; }
+.bento-stats { grid-column: span 3; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; min-height: 226px; }
+.stat-number { font-family: 'EB Garamond', Georgia, serif; font-size: 2.85rem; font-weight: 500; color: #fff; line-height: 1; }
+.stat-number.stat-infinity { font-size: 3.2rem; line-height: 0.85; }
+.stat-label { max-width: 100%; font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace; font-size: 0.7rem; color: rgba(255, 255, 255, 0.45); text-transform: uppercase; letter-spacing: 0.12em; margin-top: 0.48rem; }
+.bento-skills { grid-column: span 6; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 226px; }
+.skills-grid { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.52rem; width: 100%; }
+.skill-tag { max-width: 100%; font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace; font-size: 0.76rem; color: rgba(255, 255, 255, 0.65); padding: 0.4rem 0.85rem; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 100px; transition: all 0.2s ease; text-decoration: none; display: inline-block; }
 .skill-tag:hover { color: #1DB954; border-color: rgba(29, 185, 84, 0.3); background: rgba(29, 185, 84, 0.1); transform: translateY(-2px); }
 .skill-tag.highlight { color: #1DB954; border-color: rgba(29, 185, 84, 0.3); background: rgba(29, 185, 84, 0.1); }
-.bento-currently { grid-column: span 6; }
-.currently-heading { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem; margin-bottom: 0.65rem; }
-.currently-heading .section-label { margin-bottom: 0; }
-.currently-item-work .currently-value { display: block; }
-.currently-list { display: flex; flex-direction: column; gap: 0.65rem; }
-.currently-item { display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; align-items: baseline; }
-.currently-key { font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace; font-size: 0.7rem; color: rgba(255, 255, 255, 0.35); text-transform: uppercase; letter-spacing: 0.05em; min-width: 80px; }
-.currently-value { min-width: 0; max-width: 100%; font-family: 'EB Garamond', Georgia, serif; font-size: 1.05rem; color: rgba(255, 255, 255, 0.75); }
+.bento-currently { grid-column: span 6; display: flex; flex-direction: column; justify-content: center; min-height: 226px; }
+.currently-list { display: flex; flex-direction: column; gap: 0.72rem; }
+.currently-item { display: flex; flex-wrap: wrap; gap: 0.22rem 1rem; align-items: baseline; }
+.currently-key { font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace; font-size: 0.7rem; color: rgba(255, 255, 255, 0.4); text-transform: uppercase; letter-spacing: 0.08em; min-width: 92px; }
+.currently-value { min-width: 0; max-width: 100%; font-family: 'EB Garamond', Georgia, serif; font-size: 1.12rem; color: rgba(255, 255, 255, 0.8); }
 .currently-link { color: #1DB954; text-decoration: none; border-bottom: 1px solid rgba(29, 185, 84, 0.3); transition: all 0.2s ease; }
 .currently-link:hover { color: #22d35e; border-bottom-color: #22d35e; }
-.bento-location { grid-column: span 3; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-.location-icon { font-size: 2rem; margin-bottom: 0.45rem; }
-.location-text { font-family: 'EB Garamond', Georgia, serif; font-size: 1.1rem; color: rgba(255, 255, 255, 0.7); }
-.location-sub { font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace; font-size: 0.7rem; color: rgba(255, 255, 255, 0.35); margin-top: 0.25rem; }
-.bento-matrix { grid-column: span 3; padding: 0; overflow: hidden; background: radial-gradient(ellipse at 50% 50%, rgba(29, 185, 84, 0.15) 0%, transparent 70%), #000; }
+.bento-location { grid-column: span 3; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; min-height: 226px; }
+.location-icon { font-size: 1.9rem; margin-bottom: 0.42rem; }
+.location-text { font-family: 'EB Garamond', Georgia, serif; font-size: 1.08rem; color: rgba(255, 255, 255, 0.7); }
+.location-sub { font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace; font-size: 0.68rem; color: rgba(255, 255, 255, 0.35); margin-top: 0.24rem; }
+.bento-matrix { grid-column: span 3; padding: 0; overflow: hidden; background: radial-gradient(ellipse at 50% 50%, rgba(29, 185, 84, 0.15) 0%, transparent 70%), #000; min-height: 226px; }
 .bento-matrix canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-.bento-cta { grid-column: span 6; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-.cta-text { font-family: 'EB Garamond', Georgia, serif; font-size: 1.15rem; color: rgba(255, 255, 255, 0.6); margin-bottom: 1rem; }
-.cta-buttons { display: flex; flex-wrap: wrap; justify-content: center; max-width: 100%; gap: 0.65rem; }
-.cta-btn { font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace; font-size: 0.8rem; padding: 0.62rem 1.25rem; border-radius: 100px; text-decoration: none; transition: all 0.3s ease; }
+.bento-cta { grid-column: span 6; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; min-height: 226px; }
+.cta-text { font-family: 'EB Garamond', Georgia, serif; font-size: 1.22rem; color: rgba(255, 255, 255, 0.75); margin-bottom: 1rem; }
+.cta-buttons { display: flex; flex-wrap: wrap; justify-content: center; max-width: 100%; gap: 0.62rem; }
+.cta-btn { font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace; font-size: 0.78rem; padding: 0.58rem 1.2rem; border-radius: 100px; text-decoration: none; transition: all 0.3s ease; }
 .cta-btn.primary { background: linear-gradient(135deg, #0f4d1f 0%, #1DB954 100%); color: #fff; }
 .cta-btn.primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(29, 185, 84, 0.3); }
 .cta-btn.secondary { background: rgba(255, 255, 255, 0.05); color: #fff; border: 1px solid rgba(255, 255, 255, 0.1); }
@@ -310,76 +292,80 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 :global(body.light-mode) .bento-hero:hover .hero-title .name { color: #0f4d1f !important; }
 :global(body.light-mode) .hero-subtitle { color: rgba(0, 0, 0, 0.5); }
 :global(body.light-mode) .bento-ascii { color: #0f4d1f; }
-:global(body.light-mode) .philosophy-text { color: rgba(0, 0, 0, 0.5); }
+:global(body.light-mode) .philosophy-text { color: rgba(0, 0, 0, 0.7); }
 :global(body.light-mode) .philosophy-text .accent { color: #0f4d1f; }
 :global(body.light-mode) .hero-expanded { border-top-color: rgba(0, 0, 0, 0.1); }
 :global(body.light-mode) .hero-expanded p { color: rgba(0, 0, 0, 0.6); }
 :global(body.light-mode) .click-hint { color: rgba(0, 0, 0, 0.25); }
-:global(body.light-mode) .bento-item.clickable:hover { border-color: rgba(0, 0, 0, 0.12); }
+:global(body.light-mode) .bento-item.clickable:hover,
+:global(body.light-mode) a.bento-item:hover { border-color: rgba(0, 0, 0, 0.12); }
 :global(body.light-mode) .stat-number { color: #1d1d1f; }
-:global(body.light-mode) .stat-label { color: rgba(0, 0, 0, 0.4); }
+:global(body.light-mode) .stat-label { color: rgba(0, 0, 0, 0.5); }
 :global(body.light-mode) .skill-tag { color: rgba(0, 0, 0, 0.6); background: rgba(0, 0, 0, 0.02); border-color: rgba(0, 0, 0, 0.08); }
 :global(body.light-mode) .skill-tag:hover { color: #0f4d1f; border-color: rgba(15, 77, 31, 0.3); background: rgba(15, 77, 31, 0.08); }
 :global(body.light-mode) .skill-tag.highlight { color: #0f4d1f; border-color: rgba(15, 77, 31, 0.3); background: rgba(15, 77, 31, 0.08); }
 :global(body.light-mode) .currently-key { color: rgba(0, 0, 0, 0.35); }
-:global(body.light-mode) .currently-value { color: rgba(0, 0, 0, 0.7); }
+:global(body.light-mode) .currently-value { color: rgba(0, 0, 0, 0.85); }
 :global(body.light-mode) .currently-link { color: #0f4d1f; border-bottom-color: rgba(15, 77, 31, 0.3); }
 :global(body.light-mode) .currently-link:hover { color: #1DB954; border-bottom-color: #1DB954; }
 :global(body.light-mode) .location-text { color: rgba(0, 0, 0, 0.7); }
 :global(body.light-mode) .location-sub { color: rgba(0, 0, 0, 0.35); }
 :global(body.light-mode) .bento-cta { background: #f1f0ef; }
 :global(body.light-mode) .bento-matrix { background: radial-gradient(ellipse at 50% 50%, rgba(15, 77, 31, 0.08) 0%, transparent 70%), #f1f0ef; }
-:global(body.light-mode) .cta-text { color: rgba(0, 0, 0, 0.5); }
+:global(body.light-mode) .cta-text { color: rgba(0, 0, 0, 0.75); }
 :global(body.light-mode) .cta-btn.secondary { background: rgba(0, 0, 0, 0.03); color: #1d1d1f; border-color: rgba(0, 0, 0, 0.1); }
 
 @media (min-width: 1025px) {
   .bento-grid {
-    row-gap: 1.01rem;
-    column-gap: 1rem;
+    row-gap: 0.95rem;
+    column-gap: 0.95rem;
     align-items: stretch;
   }
   .bento-item {
-    padding: 1.29rem 1.16rem;
+    padding: 1.22rem 1.12rem;
   }
   .section-label {
-    margin-bottom: 0.66rem;
+    margin-bottom: 0.62rem;
   }
   .bento-hero {
-    min-height: 242px;
+    min-height: 232px;
   }
   .bento-ascii {
-    min-height: 242px;
+    min-height: 232px;
   }
   .bento-philosophy {
-    min-height: 192px;
-    padding: 1.29rem 1.21rem;
-    gap: 0.72rem;
+    min-height: 226px;
+    padding: 1.22rem 1.12rem;
+    gap: 0.68rem;
   }
   .bento-stats {
-    min-height: 166px;
+    min-height: 226px;
   }
   .bento-skills {
-    min-height: 222px;
+    min-height: 226px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
   }
   .skills-grid {
-    gap: 0.46rem;
+    gap: 0.52rem;
+    justify-content: center;
   }
   .bento-currently {
-    min-height: 222px;
+    min-height: 226px;
+    justify-content: center;
   }
   .currently-list {
-    gap: 0.66rem;
+    gap: 0.72rem;
   }
   .bento-location {
-    min-height: 180px;
+    min-height: 226px;
   }
   .bento-cta {
-    min-height: 196px;
+    min-height: 226px;
   }
   .bento-matrix {
-    min-height: 222px;
+    min-height: 226px;
   }
 }
 
@@ -436,7 +422,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .hero-greeting { font-size: 0.72rem; margin-bottom: 0.45rem; }
   .hero-title { font-size: clamp(1.85rem, 5.5vw, 2.35rem); margin-bottom: 0.55rem; }
   .hero-subtitle { font-size: 1rem; }
-  .click-hint { font-size: 0.58rem; }
+  .click-hint { position: static; margin-top: 0.65rem; font-size: 0.58rem; }
   .hero-expanded { margin-top: 1rem; padding-top: 1rem; }
   .hero-expanded p { font-size: 0.98rem; margin-bottom: 0.75rem; }
   .bento-item.bento-ascii {
@@ -452,23 +438,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     width: max-content;
     max-width: 100%;
   }
-  .currently-heading { gap: 0.42rem; margin-bottom: 0.55rem; }
-  .philosophy-text { font-size: 1.02rem; line-height: 1.4; }
-  .section-label { margin-bottom: 0.45rem; font-size: 0.6rem; letter-spacing: 0.12em; }
-  .bento-stats .stat-number { font-size: 1.85rem; }
-  .stat-label { font-size: 0.55rem; margin-top: 0.28rem; }
-  .bento-grid > .bento-item:nth-child(4) .section-label,
-  .bento-grid > .bento-item:nth-child(5) .section-label {
-    font-size: 0.52rem;
-    letter-spacing: 0.08em;
-    line-height: 1.25;
-  }
-  .skills-grid { gap: 0.42rem; }
-  .skill-tag { font-size: 0.68rem; padding: 0.32rem 0.72rem; }
-  .currently-list { gap: 0.65rem; }
+  .philosophy-text { font-size: 1.12rem; line-height: 1.45; }
+  .bento-stats .stat-number { font-size: 2.2rem; }
+  .bento-stats .stat-number.stat-infinity { font-size: 2.5rem; }
+  .stat-label { font-size: 0.62rem; margin-top: 0.35rem; }
+  .skills-grid { justify-content: center; gap: 0.45rem; }
+  .skill-tag { font-size: 0.72rem; padding: 0.35rem 0.78rem; }
+  .currently-list { gap: 0.75rem; }
   .currently-item { flex-direction: column; gap: 0.2rem; }
   .currently-key { font-size: 0.62rem; min-width: 0; }
-  .currently-value { font-size: 0.92rem; }
+  .currently-value { font-size: 1rem; }
   .location-icon { font-size: 1.45rem; margin-bottom: 0.35rem; }
   .location-text { font-size: 1rem; }
   .location-sub { font-size: 0.62rem; }
@@ -496,18 +475,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     font-size: clamp(0.09rem, 2.6vmin, 0.3rem);
     line-height: 1.06;
   }
-  .philosophy-text { font-size: 0.95rem; }
-  .section-label { margin-bottom: 0.5rem; }
-  .bento-stats .stat-number { font-size: 1.75rem; }
-  .stat-label { font-size: 0.52rem; }
-  .bento-grid > .bento-item:nth-child(4) .section-label,
-  .bento-grid > .bento-item:nth-child(5) .section-label {
-    font-size: 0.48rem;
-  }
-  .skill-tag { font-size: 0.62rem; padding: 0.28rem 0.6rem; }
-  .skills-grid { gap: 0.35rem; }
-  .currently-list { gap: 0.55rem; }
-  .currently-value { font-size: 0.88rem; }
+  .philosophy-text { font-size: 1.05rem; }
+  .bento-stats .stat-number { font-size: 2rem; }
+  .bento-stats .stat-number.stat-infinity { font-size: 2.3rem; }
+  .stat-label { font-size: 0.58rem; }
+  .skill-tag { font-size: 0.66rem; padding: 0.3rem 0.68rem; }
+  .skills-grid { justify-content: center; gap: 0.38rem; }
+  .currently-list { gap: 0.65rem; }
+  .currently-value { font-size: 0.94rem; }
   .location-icon { font-size: 1.3rem; }
   .bento-cta .cta-text { font-size: 0.98rem; margin-bottom: 0.75rem; }
   .cta-btn { font-size: 0.7rem; padding: 0.52rem 1.05rem; }

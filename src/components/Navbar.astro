@@ -14,7 +14,16 @@ function isCurrent(path: string) {
 ---
 <header>
   <nav>
-    <div class="logo"><a href="/">V8V88V8V88</a></div>
+    <div class="logo">
+      <a href="/" aria-current={isCurrent('/') ? 'page' : undefined} class="brand-link">V8</a>
+    </div>
+    <ul class="nav-menu" id="primary-navigation">
+      <li class="desktop-v8"><a href="/" aria-current={isCurrent('/') ? 'page' : undefined}>V8</a></li>
+      <li><a href="/blogs/" aria-current={isCurrent('/blogs/') ? 'page' : undefined}>Blogs</a></li>
+      <li><a href="/projects/" aria-current={isCurrent('/projects/') ? 'page' : undefined}>Projects</a></li>
+      <li><a href="/contact/" aria-current={isCurrent('/contact/') ? 'page' : undefined}>Contact</a></li>
+      <li><a href="/about/" aria-current={isCurrent('/about/') ? 'page' : undefined}>About</a></li>
+    </ul>
     <div class="nav-right">
       <div class="mode-toggle">
         <input type="checkbox" id="mode-switch" class="sr-only" aria-label="Toggle dark mode" tabindex="-1" aria-hidden="true" />
@@ -54,12 +63,5 @@ function isCurrent(path: string) {
         <span></span>
       </button>
     </div>
-    <ul class="nav-menu" id="primary-navigation">
-      <li><a href="/" aria-current={isCurrent('/') ? 'page' : undefined}>Home</a></li>
-      <li><a href="/blogs/" aria-current={isCurrent('/blogs/') ? 'page' : undefined}>Blogs</a></li>
-      <li><a href="/projects/" aria-current={isCurrent('/projects/') ? 'page' : undefined}>Projects</a></li>
-      <li><a href="/contact/" aria-current={isCurrent('/contact/') ? 'page' : undefined}>Contact</a></li>
-      <li><a href="/about/" aria-current={isCurrent('/about/') ? 'page' : undefined}>About</a></li>
-    </ul>
   </nav>
 </header>

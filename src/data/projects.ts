@@ -6,7 +6,7 @@ export interface Project {
   description: string;
   url: string;
   language: string;
-  image: string;
+  image: string | null;
   hasCustomImage?: boolean;
   homepage: string | null;
   stars: number;
@@ -187,12 +187,10 @@ const projectImageMap: Record<string, string> = {
   'vfetch': '/images/vfetch.webp',
 };
 
-function getProjectImage(name: string, htmlUrl: string): string {
+function getProjectImage(name: string, _htmlUrl: string): string | null {
   const curatedImage = projectImageMap[name.toLowerCase()];
   if (curatedImage) return curatedImage;
-
-  const repoPath = htmlUrl.replace('https://github.com/', '').replace(/\/$/, '');
-  return `https://opengraph.githubassets.com/1/${repoPath}`;
+  return null;
 }
 
 function getProjectDescription(repo: GitHubRepo): string {

@@ -372,7 +372,7 @@ nav ul {
 }
 
 nav a {
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 0.7);
     text-decoration: none;
     padding: 0.4rem 1rem;
     border-radius: 999px;
@@ -387,29 +387,30 @@ nav a {
 }
 
 body.light-mode nav a {
-    color: rgba(0, 0, 0, 0.85);
+    color: rgba(0, 0, 0, 0.6);
 }
 
 html.light-mode nav a {
-    color: rgba(0, 0, 0, 0.85);
+    color: rgba(0, 0, 0, 0.6);
 }
 
 nav a:hover {
     color: #fff;
-    background-color: rgba(255, 255, 255, 0.12);
+    background-color: rgba(255, 255, 255, 0.08);
     transform: translateY(-1px);
 }
 
 body.light-mode nav a:hover {
     color: #000;
-    background-color: rgba(0, 0, 0, 0.08);
+    background-color: rgba(0, 0, 0, 0.05);
 }
 
 html.light-mode nav a:hover {
     color: #000;
-    background-color: rgba(0, 0, 0, 0.08);
+    background-color: rgba(0, 0, 0, 0.05);
 }
 
+/* --- Pill selected highlight (commented out for comparison) ---
 nav a[aria-current="page"] {
     background-color: rgba(255, 255, 255, 0.15);
     color: #fff;
@@ -424,26 +425,81 @@ html.light-mode nav a[aria-current="page"] {
     background-color: rgba(0, 0, 0, 0.1);
     color: #000;
 }
+-------------------------------------------------------------- */
+
+/* Pure bold selected text */
+nav a[aria-current="page"] {
+    background-color: transparent;
+    color: #fff;
+    font-weight: 700;
+}
+
+body.light-mode nav a[aria-current="page"],
+html.light-mode nav a[aria-current="page"] {
+    background-color: transparent;
+    color: #000;
+    font-weight: 700;
+}
 
 .logo a {
     font-weight: 600;
-    font-size: 1rem;
-    letter-spacing: -0.02em;
+    font-size: 0.95rem;
+    letter-spacing: -0.01em;
     color: #fff;
-    transition: opacity 0.25s ease;
+    padding: 0.38rem 0.85rem;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    transition:
+        color 0.25s ease,
+        background-color 0.25s ease,
+        transform 0.2s ease,
+        opacity 0.25s ease;
 }
 
-body.light-mode .logo a {
-    color: #000;
-}
-
+body.light-mode .logo a,
 html.light-mode .logo a {
     color: #000;
 }
 
 .logo a:hover {
-    opacity: 0.8;
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.12);
+    transform: translateY(-1px);
+}
+
+body.light-mode .logo a:hover,
+html.light-mode .logo a:hover {
+    color: #000;
+    background-color: rgba(0, 0, 0, 0.08);
+}
+
+/* --- Pill selected highlight for logo (commented out for comparison) ---
+.logo a[aria-current="page"] {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #fff;
+}
+
+body.light-mode .logo a[aria-current="page"],
+html.light-mode .logo a[aria-current="page"] {
+    background-color: rgba(0, 0, 0, 0.1);
+    color: #000;
+}
+------------------------------------------------------------------------ */
+
+/* Pure bold selected logo */
+.logo a[aria-current="page"] {
     background-color: transparent;
+    color: #fff;
+    font-weight: 750;
+}
+
+body.light-mode .logo a[aria-current="page"],
+html.light-mode .logo a[aria-current="page"] {
+    background-color: transparent;
+    color: #000;
+    font-weight: 750;
 }
 
 main {
@@ -2228,7 +2284,7 @@ body.light-mode .contact-item:hover {
 
 @media (max-width: 767px) {
     header {
-        padding: 0.42rem 1.35rem;
+        padding: 0.42rem 1.15rem;
         border-radius: 999px;
         position: fixed;
         top: 10px;
@@ -2245,11 +2301,44 @@ body.light-mode .contact-item:hover {
         flex-wrap: nowrap;
         gap: 0;
         width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .desktop-v8 {
+        display: none;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
     }
 
     .logo a {
         font-size: 0.92rem;
+        font-weight: 500;
+        letter-spacing: -0.01em;
+        padding: 0.25rem 0.5rem;
         margin-right: 0;
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: none;
+    }
+
+    body.light-mode .logo a,
+    html.light-mode .logo a {
+        color: rgba(0, 0, 0, 0.6);
+    }
+
+    .logo a[aria-current="page"] {
+        color: #fff;
+        font-weight: 700;
+    }
+
+    body.light-mode .logo a[aria-current="page"],
+    html.light-mode .logo a[aria-current="page"] {
+        color: #000;
+        font-weight: 700;
     }
 
     .nav-right {
@@ -2455,6 +2544,14 @@ body.light-mode .contact-item:hover {
         display: none;
     }
 
+    .logo {
+        display: none;
+    }
+
+    .desktop-v8 {
+        display: block;
+    }
+
     .nav-menu {
         display: flex;
         order: 2;
@@ -2480,7 +2577,7 @@ body.light-mode .contact-item:hover {
 
 @media (max-width: 480px) {
     header {
-        padding: 0.38rem 1.1rem;
+        padding: 0.38rem 1rem;
         left: 0;
         right: 0;
         width: calc(100% - 24px);
@@ -2491,7 +2588,8 @@ body.light-mode .contact-item:hover {
     }
 
     .logo a {
-        font-size: 0.92rem;
+        font-size: 0.95rem;
+        font-weight: 600;
     }
 
     main {
