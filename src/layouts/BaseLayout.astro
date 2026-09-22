@@ -93,7 +93,10 @@ const {
 
     const menuToggle = document.querySelector(".menu-toggle");
     const navMenu = document.querySelector(".nav-menu");
-    const mobileMql = window.matchMedia('(max-width: 767px)');
+    // The full desktop-style pill fits regular phone widths. Keep the
+    // hamburger implementation as a fallback only for exceptionally narrow
+    // viewports, so it remains easy to restore if we want it later.
+    const mobileMql = window.matchMedia('(max-width: 319px)');
     const navHeader = menuToggle?.closest('header');
 
     function positionMobileMenu() {

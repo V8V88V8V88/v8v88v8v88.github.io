@@ -31,6 +31,19 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Custom brand text selection */
+::selection {
+    background-color: rgba(29, 185, 84, 0.35);
+    color: #ffffff;
+}
+
+html.light-mode ::selection,
+body.light-mode ::selection {
+    background-color: rgba(29, 185, 84, 0.25);
+    color: #0f4d1f;
 }
 
 html {
@@ -2282,7 +2295,7 @@ body.light-mode .contact-item:hover {
     }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 319px) {
     header {
         padding: 0.42rem 1.15rem;
         border-radius: 999px;
@@ -3340,4 +3353,111 @@ html.light-mode #bg-canvas {
     #bg-canvas {
         display: none;
     }
+}
+
+/* Compact desktop navbar experiment for regular phone widths.
+   The legacy hamburger/dropdown rules stay intact above for easy rollback
+   and continue to apply below 320px. */
+@media (min-width: 320px) and (max-width: 767px) {
+    header {
+        width: min(calc(100% - 16px), 430px);
+        max-width: none;
+        padding: 0.3rem 0.9rem;
+    }
+
+    nav {
+        justify-content: center;
+        gap: clamp(0.58rem, 2.6vw, 0.8rem);
+    }
+
+    .logo,
+    .menu-toggle {
+        display: none;
+    }
+
+    .desktop-v8 {
+        display: block;
+        margin-left: 0.08rem;
+    }
+
+    .desktop-v8 a,
+    .desktop-v8 a[aria-current="page"] {
+        font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
+        font-style: italic;
+        font-weight: 600;
+        letter-spacing: 0.075em;
+    }
+
+    .nav-menu,
+    .nav-menu.active {
+        position: static;
+        inset: auto;
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: clamp(0.7rem, 3.2vw, 1.15rem);
+        width: auto;
+        max-width: none;
+        max-height: none;
+        margin: 0;
+        padding: 0;
+        overflow: visible;
+        background: transparent;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: none;
+        transition: none;
+    }
+
+    body.light-mode .nav-menu,
+    html.light-mode .nav-menu {
+        background: transparent;
+        border: 0;
+        box-shadow: none;
+    }
+
+    .nav-menu li,
+    .nav-menu.active li,
+    .nav-menu.active li:nth-child(n) {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+
+    .nav-menu a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: auto;
+        min-height: 0;
+        padding: 0.35rem 0;
+        font-size: clamp(0.72rem, 3.75vw, 0.92rem);
+        line-height: 1.2;
+        white-space: nowrap;
+        text-align: center;
+    }
+
+    .nav-menu a:hover,
+    body.light-mode .nav-menu a:hover,
+    html.light-mode .nav-menu a:hover {
+        background: transparent;
+    }
+
+    .nav-menu a[aria-current="page"]::after {
+        content: none;
+    }
+
+    .nav-right {
+        flex: 0 0 auto;
+        gap: 0;
+    }
+
 }
