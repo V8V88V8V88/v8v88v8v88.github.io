@@ -238,7 +238,6 @@ function getHostedLabel(url: string): string {
         });
       });
 
-      // Release focus on mouseleave and click so cards never stay stuck expanded
       document.querySelectorAll('.project-item').forEach(item => {
         item.addEventListener('mouseleave', () => {
           if (document.activeElement && item.contains(document.activeElement)) {
@@ -247,12 +246,6 @@ function getHostedLabel(url: string): string {
         });
       });
 
-      // content-visibility: auto forces paint containment on the item, which
-      // would clip the pop-out preview mid-animation the instant a hover/focus
-      // ends. Keep containment lifted (.cv-active) for the interaction plus
-      // the longest hover transition (450ms) so the retract animation is
-      // never cut off, then hand the row back to content-visibility for the
-      // off-screen perf win.
       document.querySelectorAll('.project-item').forEach(item => {
         let revertTimer = null;
         const activate = () => {

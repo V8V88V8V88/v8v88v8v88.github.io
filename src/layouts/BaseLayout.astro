@@ -93,9 +93,6 @@ const {
 
     const menuToggle = document.querySelector(".menu-toggle");
     const navMenu = document.querySelector(".nav-menu");
-    // The full desktop-style pill fits regular phone widths. Keep the
-    // hamburger implementation as a fallback only for exceptionally narrow
-    // viewports, so it remains easy to restore if we want it later.
     const mobileMql = window.matchMedia('(max-width: 319px)');
     const navHeader = menuToggle?.closest('header');
 
@@ -247,11 +244,9 @@ const {
         }
 
         if (isLight) {
-          // USB plug-in feel: quick, brighter upward two-note chirp.
           playHit(t, 660, 740, 0.1, 0.085);
           playHit(t + 0.09, 830, 930, 0.1, 0.08);
         } else {
-          // USB unplug feel: lower, softer downward two-note chirp.
           playHit(t, 620, 540, 0.11, 0.085);
           playHit(t + 0.11, 460, 390, 0.12, 0.075);
         }
@@ -384,7 +379,7 @@ const {
       var dpr = window.devicePixelRatio || 1;
       var w, h, particles = [];
       var mouseX = -9999, mouseY = -9999;
-      var PARTICLE_COUNT = Math.min(Math.floor((window.innerWidth + window.innerHeight) / 16), 150);
+      var PARTICLE_COUNT = Math.min(Math.floor((window.innerWidth + window.innerHeight) / 3.5), 150);
       var PUSH_RADIUS = 90;
       var PUSH_STRENGTH = 1.8;
 
@@ -447,7 +442,6 @@ const {
           return;
         }
 
-        // Skip canvas redraw during scroll so 100% frame budget goes to scrolling
         if (isScrolling) {
           requestAnimationFrame(step);
           return;
@@ -460,11 +454,9 @@ const {
         for (var i = 0; i < particles.length; i++) {
           var p = particles[i];
 
-          // Drift
           p.x += p.vx;
           p.y += p.vy;
 
-          // Mouse push
           var dx = p.x - mouseX;
           var dy = p.y - mouseY;
           var dist = Math.sqrt(dx * dx + dy * dy);
@@ -474,17 +466,14 @@ const {
             p.y += (dy / dist) * force;
           }
 
-          // Wrap edges
           if (p.x < -10) p.x = w + 10;
           if (p.x > w + 10) p.x = -10;
           if (p.y < -10) p.y = h + 10;
           if (p.y > h + 10) p.y = -10;
 
-          // Shimmer
           var shimmer = 0.5 + 0.5 * Math.sin(p.phase + frame * p.speed);
           var alpha = p.baseAlpha * (0.3 + 0.7 * shimmer);
 
-          // Draw - Zero GC: sets globalAlpha without creating strings
           ctx.globalAlpha = alpha;
           ctx.beginPath();
           ctx.arc(p.x, p.y, p.r, 0, 6.283);

@@ -134,7 +134,6 @@ import { neofetchMarkup } from '../data/terminal';
     shortcuts.set('terminal', { label: 'Terminal', url: '/contact/' });
 
     function openShortcut(contact) {
-      // Keep this synchronous with Enter so browsers recognize the user gesture.
       if (contact.url.startsWith('mailto:')) window.location.href = contact.url;
       else window.open(contact.url, '_blank', 'noopener,noreferrer');
       return `Opening <a href="${escapeHtml(contact.url)}" target="_blank" rel="noopener noreferrer" class="terminal-link">${escapeHtml(contact.label)}</a>…`;
@@ -287,7 +286,6 @@ I'm always open to collaborate on cool projects.`;
       if (!event.target.closest('a') && !window.getSelection()?.toString()) terminalInput.focus();
     });
 
-    // macOS Liquid Glass Dock Magnification & Tooltips
     const dock = document.getElementById('macos-dock');
     const tooltip = document.getElementById('dock-tooltip');
 
@@ -298,7 +296,7 @@ I'm always open to collaborate on cool projects.`;
 
       if (isPointerFine) {
         const maxScale = 1.25;
-        const effectDistance = 95; // pixels range of magnification
+        const effectDistance = 95;
 
         let dockAnimId = null;
 
@@ -314,7 +312,6 @@ I'm always open to collaborate on cool projects.`;
               const dist = Math.abs(mouseX - itemCenterX);
 
               if (dist < effectDistance) {
-                // Smooth cosine curve for authentic macOS dock magnification
                 const progress = (dist / effectDistance) * (Math.PI / 2);
                 const scale = 1 + (maxScale - 1) * Math.cos(progress);
                 const translateY = (scale - 1) * -16;
@@ -336,7 +333,6 @@ I'm always open to collaborate on cool projects.`;
           }
         });
 
-        // Dynamic Apple Tooltip
         dockItems.forEach((item) => {
           item.addEventListener('mouseenter', () => {
             if (tooltip) {

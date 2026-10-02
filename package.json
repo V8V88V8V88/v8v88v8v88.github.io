@@ -7,10 +7,10 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "@astrojs/compiler-rs": "^0.4.1",
+    "@astrojs/compiler-rs": "^0.5.1",
     "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.4",
-    "astro": "^7.3.3",
-    "simple-icons": "^16.32.0"
+    "astro": "^7.3.5",
+    "simple-icons": "^16.33.0"
   }
 }
