@@ -4,7 +4,7 @@ import { getAllPosts, formatDate } from '../data/posts';
 import { contacts, getSameAsUrls } from '../data/contacts';
 import { getProjects } from '../data/projects';
 
-const featuredContactIds = ['email', 'github', 'linkedin', 'telegram'];
+const featuredContactIds = ['email', 'github', 'linkedin', 'telegram', 'twitter'];
 const featuredContacts = featuredContactIds
   .map(id => contacts.find(c => c.id === id))
   .filter(Boolean);
@@ -75,8 +75,8 @@ const featuredProjects = [...allProjects]
       </div>
     </section>
 
-    <section class="intro">
-      <div class="intro-content">
+    <section class="about">
+      <div class="intro">
         <div class="avatar-flip" id="avatar-flip">
           <div class="avatar-inner">
             <img src="/images/image.webp" alt="Vaibhav" class="avatar-front" fetchpriority="high" width="120" height="120" />
@@ -87,20 +87,13 @@ const featuredProjects = [...allProjects]
           <h2>
             Hey, I'm <span class="vaibhav-hover" role="button" tabindex="0" aria-pressed="false" data-default="Vaibhav" data-alt="V8">Vaibhav</span>
           </h2>
+          <p class="now-status">~ dev × ceh × linux × foss × design × low&#8209;level</p>
         </div>
       </div>
-    </section>
-
-    <p class="now-status">~ developer. ceh certified. into linux, foss, design and low-level systems</p>
-
-    <section class="about">
-      <div class="section-header">
-        <h2>About</h2>
-        <a href="/about/#story" class="view-all">more about me →</a>
-      </div>
       <p>
-        I've always questioned everything. With computers, that meant wanting to know how they actually work, not just how to use them, and that's basically shaped everything since, it's what pulled me toward <a href="https://en.wikipedia.org/wiki/Linux" target="_blank" rel="noopener noreferrer">Linux</a>, <a href="https://en.wikipedia.org/wiki/Free_and_open-source_software" target="_blank" rel="noopener noreferrer">FOSS</a>, and <a href="https://en.wikipedia.org/wiki/Systems_programming" target="_blank" rel="noopener noreferrer">systems programming</a>, and more recently <a href="https://www.rust-lang.org/" target="_blank" rel="noopener noreferrer">Rust</a>. I like things <a href="https://principles-wiki.net/principles:keep_it_simple_stupid" target="_blank" rel="noopener noreferrer">simple</a>, the <a href="https://en.wikipedia.org/wiki/Unix_philosophy" target="_blank" rel="noopener noreferrer">Unix</a> way, one tool doing one thing well, and most of what I know, CEH included, I picked up by messing with systems until something broke. When I'm not at the keyboard I'm probably reading something, philosophy, history, whatever's got my <a href="https://en.wikipedia.org/wiki/Attention_deficit_hyperactivity_disorder" target="_blank" rel="noopener noreferrer">attention</a> that week. <a href="/contact/">Reach out</a> if you've got something to say, I'll get back to you, just maybe not instantly :)
+        I've always questioned everything. With computers, that meant understanding how they work, not just using them. That's basically shaped everything since, it's what pulled me toward <a href="https://en.wikipedia.org/wiki/Linux" target="_blank" rel="noopener noreferrer">Linux</a>, <a href="https://en.wikipedia.org/wiki/Free_and_open-source_software" target="_blank" rel="noopener noreferrer">FOSS</a>, and <a href="https://en.wikipedia.org/wiki/Systems_programming" target="_blank" rel="noopener noreferrer">systems programming</a>, and more recently <a href="https://www.rust-lang.org/" target="_blank" rel="noopener noreferrer">Rust</a>. I like things <a href="https://principles-wiki.net/principles:keep_it_simple_stupid" target="_blank" rel="noopener noreferrer">simple</a>, the <a href="https://en.wikipedia.org/wiki/Unix_philosophy" target="_blank" rel="noopener noreferrer">Unix</a> way, one tool doing one thing well. Most of what I know, CEH included, I picked up by messing with systems until something broke. When I'm not at the keyboard I'm probably reading something, philosophy, history, whatever's got my <a href="https://en.wikipedia.org/wiki/Attention_deficit_hyperactivity_disorder" target="_blank" rel="noopener noreferrer">attention</a> that week. <a href="/contact/">Reach out</a> if you've got something to say, I'll get back to you, just maybe not instantly :)
       </p>
+      <a href="/about/#story" class="view-all about-cta">more about me →</a>
     </section>
 
     <section class="projects">
@@ -682,15 +675,35 @@ const featuredProjects = [...allProjects]
   @media (max-width: 480px) { .intro .avatar-flip { width: 80px; height: 80px; } }
 
   .now-status {
-    text-align: center;
     font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
     font-size: 0.8rem;
     color: rgba(255, 255, 255, 0.3);
-    margin-bottom: 2.5rem;
     letter-spacing: 0.02em;
   }
   :global(body.light-mode) .now-status {
     color: rgba(0, 0, 0, 0.3);
+  }
+
+  .about .intro {
+    margin-bottom: 1.15rem;
+    justify-content: center;
+  }
+  .intro-text .now-status {
+    text-align: left;
+    margin-bottom: 0;
+    margin-top: 0.4rem;
+    font-family: inherit;
+    font-size: 0.92rem;
+    letter-spacing: normal;
+    color: rgba(255, 255, 255, 0.45);
+  }
+  :global(body.light-mode) .intro-text .now-status {
+    color: rgba(0, 0, 0, 0.45);
+  }
+  .about-cta {
+    display: block;
+    text-align: right;
+    margin-top: 1.25rem;
   }
 
   .latest-tag {
@@ -795,10 +808,12 @@ const featuredProjects = [...allProjects]
 
     .now-status {
       font-size: 0.68rem;
-      max-width: 280px;
-      margin-left: auto;
-      margin-right: auto;
       line-height: 1.6;
+    }
+
+    .intro-text .now-status {
+      text-align: center;
+      margin-top: 0.3rem;
     }
 
     .contact-pill {
@@ -827,7 +842,6 @@ const featuredProjects = [...allProjects]
 
     .now-status {
       font-size: 0.62rem;
-      max-width: 240px;
     }
 
     .contact-pill {
