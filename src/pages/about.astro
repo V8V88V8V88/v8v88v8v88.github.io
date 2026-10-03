@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 <BaseLayout
   title="About | V8V88V8V88"
-  description="Learn more about Vaibhav Pratap Singh (V8V88V8V88), a Computer Science student interested in Rust, Linux, C++, Web Design, and Cybersecurity."
+  description="Learn more about Vaibhav Pratap Singh (V8V88V8V88), a developer interested in Rust, Linux, C++, Web Design, and Cybersecurity."
   canonical="https://v8v88v8v88.com/about/"
 >
   <Fragment slot="head">
@@ -14,8 +14,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       "mainEntityOfPage": { "@type": "WebPage", "@id": "https://v8v88v8v88.com/about/" },
       "name": "Vaibhav Pratap Singh",
       "alternateName": "V8V88V8V88",
-      "jobTitle": "Computer Science Student",
-      "description": "A third-year Computer Science student who loves open source and coding.",
+      "jobTitle": "Developer",
+      "description": "A developer who loves open source and coding.",
       "image": "https://v8v88v8v88.com/images/image.webp",
       "sameAs": [
         "https://github.com/v8v88v8v88",
@@ -38,7 +38,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <p class="hero-subtitle" id="hero-subtitle">Building, breaking, but always learning.</p>
         <div class="hero-expanded" id="hero-expanded">
           <p>Hi, I'm Vaibhav Pratap Singh, also known as V8 on the internet.</p>
-          <p>I'm a computer science student with a minor in AI & ML, but most of my learning has happened outside classrooms. Curiosity, self-learning, and building things from scratch have shaped how I approach computers. Over the years, Linux and open source have become a big part of how I work and think.</p>
+          <p>I studied computer science with a minor in AI & ML, but most of my learning happened outside classrooms. Curiosity, self-learning, and building things from scratch have shaped how I approach computers. Over the years, Linux and open source have become a big part of how I work and think.</p>
           <p>I'm deeply interested in Linux, FOSS, and systems-level software. Understanding how things work internally matters more than surface-level results. This naturally pulled me toward low-level programming, where performance, simplicity, and correctness are important. Lately, I've been spending more time with Rust, exploring it as a safer and more modern systems language.</p>
           <p>My approach to software is heavily influenced by <a href="https://principles-wiki.net/principles:keep_it_simple_stupid" target="_blank" rel="noopener noreferrer">KISS</a> and the <a href="https://www.wikiwand.com/en/Unix_philosophy" target="_blank" rel="noopener noreferrer">Unix philosophy</a>. I prefer simple tools, clear ideas, and minimal abstractions. While I do have experience with full-stack development, it's something I treat as a practical skill, useful when needed and often necessary for earning, but not what excites me the most.</p>
           <p>Alongside programming, I've worked with graphic design and video editing, mostly through community work and personal projects. These skills developed naturally while handling different kinds of computer-related tasks and helped me appreciate the balance between design and engineering.</p>
@@ -151,6 +151,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     var heroCard = document.getElementById('hero-card');
     if (heroCard) {
       heroCard.addEventListener('click', function() { heroCard.classList.toggle('expanded'); });
+      if (window.location.hash === '#story') heroCard.classList.add('expanded');
     }
 
     var canvas = document.getElementById('matrix-canvas');
@@ -221,9 +222,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 .bento-item { min-width: 0; overflow-wrap: anywhere; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 17px; padding: 1.22rem 1.12rem; transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease; position: relative; overflow: hidden; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 4px 24px rgba(0, 0, 0, 0.2); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); text-decoration: none; color: inherit; }
 .bento-item::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 70%; height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent); }
 .bento-item:hover { background: rgba(255, 255, 255, 0.05); border-color: rgba(255, 255, 255, 0.15); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 8px 32px rgba(0, 0, 0, 0.25); transform: translateY(-4px); }
-.section-label { font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace; font-size: 0.65rem; color: rgba(255, 255, 255, 0.35); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.65rem; }
 .bento-hero { grid-column: span 8; display: flex; flex-direction: column; justify-content: center; min-height: 232px; position: relative; overflow: hidden; }
-.hero-greeting { font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace; font-size: 0.8rem; color: #1DB954; margin-bottom: 0.52rem; }
 .hero-title { font-family: 'EB Garamond', Georgia, serif; font-size: clamp(2.35rem, 4.8vw, 3.3rem); font-weight: 400; color: #fff; line-height: 1.15; margin-bottom: 0.42rem; }
 .hero-title .name { font-style: italic; color: rgba(255, 255, 255, 0.5); transition: color 0.3s ease; }
 .bento-hero:hover .hero-title .name { color: #1DB954 !important; }
@@ -232,7 +231,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 .bento-ascii { grid-column: span 4; display: flex; align-items: center; justify-content: center; min-height: 232px; font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace; font-size: clamp(0.44rem, 0.62vw + 0.33rem, 0.59rem); line-height: 1.15; color: #1DB954; white-space: pre; text-align: center; }
 .bento-ascii pre { font-size: min(1em, 8cqw); margin: 0; width: fit-content; max-width: 100%; min-width: 0; margin-inline: auto; box-sizing: border-box; }
 .bento-philosophy { grid-column: span 6; display: flex; flex-direction: column; justify-content: center; text-align: center; padding: 1.25rem 1.12rem; gap: 0.7rem; min-height: 226px; }
-.bento-philosophy > .section-label { margin: 0; padding: 0; }
 /* All quotes share a grid cell, so the longest quote reserves enough space
    at every width without colliding with the heading or changing card height. */
 .philosophy-carousel { display: grid; align-items: center; min-width: 0; }
@@ -284,9 +282,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 :global(body.light-mode) .bento-item { background: #f1f0ef; border-color: rgba(0, 0, 0, 0.08); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04); }
 :global(body.light-mode) .bento-item::before { background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.06), transparent); }
 :global(body.light-mode) .bento-item:hover { background: #fff; border-color: rgba(0, 0, 0, 0.12); box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08); }
-:global(body.light-mode) .section-label { color: rgba(0, 0, 0, 0.35); }
 :global(body.light-mode) .bento-hero { background: #f1f0ef; }
-:global(body.light-mode) .hero-greeting { color: #0f4d1f; }
 :global(body.light-mode) .hero-title { color: #1d1d1f; }
 :global(body.light-mode) .hero-title .name { color: rgba(0, 0, 0, 0.4); transition: color 0.3s ease; }
 :global(body.light-mode) .bento-hero:hover .hero-title .name { color: #0f4d1f !important; }
@@ -323,9 +319,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
   .bento-item {
     padding: 1.22rem 1.12rem;
-  }
-  .section-label {
-    margin-bottom: 0.62rem;
   }
   .bento-hero {
     min-height: 232px;
@@ -430,7 +423,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     padding-top: 0.95rem;
     padding-bottom: 0.95rem;
   }
-  .hero-greeting { font-size: 0.72rem; margin-bottom: 0.45rem; }
   .hero-title { font-size: clamp(1.85rem, 5.5vw, 2.35rem); margin-bottom: 0.55rem; }
   .hero-subtitle { font-size: 1rem; }
   .click-hint { position: static; margin-top: 0.65rem; font-size: 0.58rem; }
@@ -474,7 +466,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .bento-item { padding: 0.75rem 0.72rem; border-radius: 13px; }
   .bento-item.bento-philosophy { padding: 0.82rem 0.75rem; gap: 0.62rem; }
   .bento-hero { padding-top: 0.82rem; padding-bottom: 0.82rem; }
-  .hero-greeting { font-size: 0.68rem; margin-bottom: 0.35rem; }
   .hero-title { font-size: 1.7rem; margin-bottom: 0.45rem; }
   .hero-subtitle { font-size: 0.92rem; }
   .click-hint { font-size: 0.55rem; }

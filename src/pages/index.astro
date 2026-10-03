@@ -1,8 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getAllPosts, formatDate } from '../data/posts';
-import { contactPageContacts, getSameAsUrls } from '../data/contacts';
+import { contacts, getSameAsUrls } from '../data/contacts';
 import { getProjects } from '../data/projects';
+
+const featuredContactIds = ['email', 'github', 'linkedin', 'telegram'];
+const featuredContacts = featuredContactIds
+  .map(id => contacts.find(c => c.id === id))
+  .filter(Boolean);
 
 const posts = getAllPosts();
 const allProjects = await getProjects();
@@ -86,35 +91,17 @@ const featuredProjects = [...allProjects]
       </div>
     </section>
 
-    <p class="now-status">~ cs student. ceh certified. into linux, foss, design and low-level systems</p>
+    <p class="now-status">~ developer. ceh certified. into linux, foss, design and low-level systems</p>
 
     <section class="about">
-      <h2>About Me</h2>
+      <div class="section-header">
+        <h2>About</h2>
+        <a href="/about/#story" class="view-all">more about me →</a>
+      </div>
       <p>
-        Hey, I'm <span>Vaibhav</span>. Most people online know me as <span>V8</span>.
-
-        I'm a CS student from India, and computers have been a genuine obsession for as long as I can remember. Not just using them, but understanding what's actually going on underneath. That curiosity is what pulled me toward <a href="https://en.wikipedia.org/wiki/Linux" target="_blank" rel="noopener noreferrer">Linux</a>, <a href="https://en.wikipedia.org/wiki/Free_and_open-source_software" target="_blank" rel="noopener noreferrer">FOSS</a>, <a href="https://en.wikipedia.org/wiki/Systems_programming" target="_blank" rel="noopener noreferrer">Systems programming</a>, and lately, <a href="https://www.rust-lang.org/" target="_blank" rel="noopener noreferrer">Rust</a>.
+        I've always questioned everything. With computers, that meant wanting to know how they actually work, not just how to use them, and that's basically shaped everything since, it's what pulled me toward <a href="https://en.wikipedia.org/wiki/Linux" target="_blank" rel="noopener noreferrer">Linux</a>, <a href="https://en.wikipedia.org/wiki/Free_and_open-source_software" target="_blank" rel="noopener noreferrer">FOSS</a>, and <a href="https://en.wikipedia.org/wiki/Systems_programming" target="_blank" rel="noopener noreferrer">systems programming</a>, and more recently <a href="https://www.rust-lang.org/" target="_blank" rel="noopener noreferrer">Rust</a>. I like things <a href="https://principles-wiki.net/principles:keep_it_simple_stupid" target="_blank" rel="noopener noreferrer">simple</a>, the <a href="https://en.wikipedia.org/wiki/Unix_philosophy" target="_blank" rel="noopener noreferrer">Unix</a> way, one tool doing one thing well, and most of what I know, CEH included, I picked up by messing with systems until something broke. When I'm not at the keyboard I'm probably reading something, philosophy, history, whatever's got my <a href="https://en.wikipedia.org/wiki/Attention_deficit_hyperactivity_disorder" target="_blank" rel="noopener noreferrer">attention</a> that week. <a href="/contact/">Reach out</a> if you've got something to say, I'll get back to you, just maybe not instantly :)
       </p>
-      <p>
-        Most of how I build and learn comes down to keeping things simple and purposeful. <a href="https://principles-wiki.net/principles:keep_it_simple_stupid" target="_blank" rel="noopener noreferrer">KISS</a> and the <a href="https://en.wikipedia.org/wiki/Unix_philosophy" target="_blank" rel="noopener noreferrer">Unix philosophy</a> just make sense to me. <a href="https://en.wikipedia.org/wiki/Solution_stack" target="_blank" rel="noopener noreferrer">Full-stack dev</a> came along out of necessity and freelance work. Graphic design and video editing just kind of happened. as they do when you spend enough time across different corners of the computer <i>ki duniya</i>.
-      </p>
-      <p>
-        Outside of code, I read a lot (or try to). philosophy, history, geography, science. Wherever curiosity takes me.
-      </p>
-      <p>
-        If you want to get in touch, feel free to reach out through any of my <a href="/contact/">social handles</a>. I'll get back to you, just maybe not instantly.
-      </p>
-      <a href="https://drive.google.com/file/d/1iQFjSzPWcSA3sAt4WS-uKIUd7ReCz_hz/view?usp=sharing" class="resume-button" target="_blank" rel="noopener noreferrer">Resume</a>
     </section>
-
-    <div class="stats-row">
-      <span>~ 8+ years in the game</span>
-      <span class="stats-dot">·</span>
-      <span>{allProjects.length}+ projects</span>
-      <span class="stats-dot">·</span>
-      <a href="https://github.com/v8v88v8v88" target="_blank" rel="noopener noreferrer" class="github-link">visit my github </a>
-      <span>~</span>
-    </div>
 
     <section class="projects">
       <div class="section-header">
@@ -150,7 +137,7 @@ const featuredProjects = [...allProjects]
         {posts.map((post, i) => (
           <li>
             <a href={`/${post.slug}/`}>
-              <h3>{post.title}{i === 0 && <span class="latest-tag">latest</span>}</h3>
+              <h3>{post.title}{i === 0 && <span class="latest-tag" role="img" aria-label="Latest post" title="Latest post"></span>}</h3>
               <p>{post.description}</p>
               <small><time>{formatDate(post.date)}</time></small>
             </a>
@@ -164,10 +151,10 @@ const featuredProjects = [...allProjects]
         <h2>Contact</h2>
         <a href="/contact/" class="view-all">view all →</a>
       </div>
-      <div class="contact-grid">
-        {contactPageContacts.map((c) => (
-          <a href={c.url} target={c.url.startsWith('mailto:') ? undefined : '_blank'} rel={c.rel ? `${c.rel} noopener noreferrer` : 'noopener noreferrer'} class="contact-card">
-            <i class={`${c.icon} contact-icon`}></i>
+      <div class="contact-preview">
+        {featuredContacts.map((c) => (
+          <a href={c.url} target={c.url.startsWith('mailto:') ? undefined : '_blank'} rel={c.rel ? `${c.rel} noopener noreferrer` : 'noopener noreferrer'} class="contact-pill">
+            <i class={c.icon}></i>
             <span>{c.label}</span>
           </a>
         ))}
@@ -217,35 +204,6 @@ const featuredProjects = [...allProjects]
       });
     }
 
-    var projectsContainer = document.querySelector(".projects ul");
-    if (projectsContainer) {
-      var leftArrow = document.createElement("div");
-      var rightArrow = document.createElement("div");
-      leftArrow.classList.add("arrow", "left");
-      rightArrow.classList.add("arrow", "right");
-      leftArrow.innerHTML = '<i class="fas fa-chevron-left"></i>';
-      rightArrow.innerHTML = '<i class="fas fa-chevron-right"></i>';
-      document.querySelector(".projects").prepend(leftArrow);
-      document.querySelector(".projects").append(rightArrow);
-      leftArrow.addEventListener("click", function() { projectsContainer.scrollLeft -= projectsContainer.offsetWidth; });
-      rightArrow.addEventListener("click", function() { projectsContainer.scrollLeft += projectsContainer.offsetWidth; });
-
-      function updateArrows() {
-        var maxScrollLeft = projectsContainer.scrollWidth - projectsContainer.clientWidth;
-        var canScroll = maxScrollLeft > 2;
-        if (!canScroll) {
-          leftArrow.classList.add("hidden");
-          rightArrow.classList.add("hidden");
-          return;
-        }
-        leftArrow.classList.toggle("hidden", projectsContainer.scrollLeft <= 2);
-        rightArrow.classList.toggle("hidden", projectsContainer.scrollLeft >= maxScrollLeft - 2);
-      }
-
-      projectsContainer.addEventListener("scroll", updateArrows, { passive: true });
-      window.addEventListener("resize", updateArrows);
-      updateArrows();
-    }
     var cliCmd = document.querySelector(".cli-cmd");
     var heroH1 = document.querySelector(".hero h1");
     var heroTapCount = 0;
@@ -735,204 +693,85 @@ const featuredProjects = [...allProjects]
     color: rgba(0, 0, 0, 0.3);
   }
 
-  .stats-row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin: 2.5rem 0;
-    font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
-    font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.65);
-    letter-spacing: 0.01em;
-  }
-  .stats-dot {
-    color: rgba(255, 255, 255, 0.35);
-  }
-  .github-link {
-    color: #4ade80;
-    text-decoration: underline;
-    text-decoration-style: wavy;
-    text-decoration-color: rgba(74, 222, 128, 0.5);
-    text-underline-offset: 3px;
-    text-decoration-thickness: 1px;
-    transition: text-decoration-color 0.2s ease, color 0.2s ease;
-  }
-  .github-link:hover {
-    color: #86efac;
-    text-decoration-color: rgba(74, 222, 128, 0.8);
-  }
-  :global(body.light-mode) .github-link {
-    color: #16a34a;
-    text-decoration-color: rgba(22, 163, 74, 0.4);
-  }
-  :global(body.light-mode) .github-link:hover {
-    color: #0f4d1f;
-    text-decoration-color: rgba(22, 163, 74, 0.7);
-  }
-  :global(body.light-mode) .stats-row {
-    color: rgba(0, 0, 0, 0.65);
-  }
-  :global(body.light-mode) .stats-dot {
-    color: rgba(0, 0, 0, 0.35);
-  }
-
-  :global(main) .about + .stats-row + .projects,
-  :global(main) .projects + .posts {
-    position: relative;
-  }
-  :global(main) .about + .stats-row + .projects::before,
-  :global(main) .projects + .posts::before {
-    content: '';
-    display: block;
-    width: 60%;
-    max-width: 400px;
-    height: 1px;
-    margin: 0 auto 0.5rem;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
-  }
-  :global(body.light-mode) :global(main) .about + .stats-row + .projects::before,
-  :global(body.light-mode) :global(main) .projects + .posts::before {
-    background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.06), transparent);
-  }
-
   .latest-tag {
     display: inline-block;
-    font-size: 0.6rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    background: rgba(29, 185, 84, 0.15);
-    color: #1DB954;
-    padding: 0.15rem 0.5rem;
-    border-radius: 999px;
-    border: 1px solid rgba(29, 185, 84, 0.25);
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #1DB954;
+    box-shadow: 0 0 6px rgba(29, 185, 84, 0.6);
     vertical-align: middle;
     margin-left: 0.5rem;
     position: relative;
     top: -1px;
   }
   :global(body.light-mode) .latest-tag {
-    background: rgba(29, 185, 84, 0.1);
-    color: #0f4d1f;
-    border-color: rgba(29, 185, 84, 0.2);
+    background: #0f4d1f;
+    box-shadow: 0 0 6px rgba(15, 77, 31, 0.4);
   }
 
-  .contact .contact-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 1.25rem;
-    max-width: 100%;
-    padding: 0;
-  }
-
-  .contact-card {
-    position: relative;
-    background: linear-gradient(135deg,
-      rgba(255, 255, 255, 0.04) 0%,
-      rgba(255, 255, 255, 0.02) 50%,
-      rgba(255, 255, 255, 0.03) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 16px;
-    height: 118px;
-    padding: 1.25rem 0.9rem;
-    text-align: center;
-    text-decoration: none;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.05),
-      0 4px 24px rgba(0, 0, 0, 0.25);
+  .contact-preview {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-wrap: wrap;
     justify-content: center;
     gap: 0.75rem;
-    cursor: pointer;
   }
 
-  .contact-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 70%;
-    height: 1px;
-    background: linear-gradient(90deg,
-      transparent,
-      rgba(255, 255, 255, 0.2),
-      transparent);
+  .contact-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 999px;
+    padding: 0.65rem 1.15rem;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.85);
+    transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
   }
 
-  .contact-card:hover {
-    transform: translateY(-6px);
-    background: linear-gradient(135deg,
-      rgba(255, 255, 255, 0.08) 0%,
-      rgba(255, 255, 255, 0.04) 50%,
-      rgba(255, 255, 255, 0.06) 100%);
-    border-color: rgba(255, 255, 255, 0.15);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.1),
-      0 20px 40px rgba(0, 0, 0, 0.4);
+  .contact-pill i {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.6);
+    transition: color 0.25s ease;
   }
 
-  .contact-icon {
-    font-size: 2rem;
-    color: rgba(255, 255, 255, 0.8);
-    transition: all 0.3s ease;
-  }
-
-  .contact-card:hover .contact-icon {
-    color: rgba(255, 255, 255, 0.92);
-    transform: scale(1.1);
-  }
-
-  .contact-card span {
+  .contact-pill span {
     font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+
+  .contact-pill:hover {
+    background: rgba(255, 255, 255, 0.09);
+    border-color: rgba(255, 255, 255, 0.22);
+    color: #fff;
+    transform: translateY(-2px);
+  }
+
+  .contact-pill:hover i {
     color: rgba(255, 255, 255, 0.9);
-    letter-spacing: 0.02em;
   }
 
-  :global(body.light-mode) .contact-card {
+  :global(body.light-mode) .contact-pill {
     background: rgba(0, 0, 0, 0.03);
-    border-color: rgba(0, 0, 0, 0.08);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: rgba(0, 0, 0, 0.75);
   }
 
-  :global(body.light-mode) .contact-card::before {
-    background: linear-gradient(90deg,
-      transparent,
-      rgba(0, 0, 0, 0.06),
-      transparent);
+  :global(body.light-mode) .contact-pill i {
+    color: rgba(0, 0, 0, 0.5);
   }
 
-  :global(body.light-mode) .contact-card:hover {
-    background: rgba(0, 0, 0, 0.06);
-    border-color: rgba(0, 0, 0, 0.12);
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+  :global(body.light-mode) .contact-pill:hover {
+    background: rgba(0, 0, 0, 0.07);
+    border-color: rgba(0, 0, 0, 0.25);
+    color: #000;
   }
 
-  :global(body.light-mode) .contact-icon {
-    color: rgba(0, 0, 0, 0.7);
-  }
-
-  :global(body.light-mode) .contact-card:hover .contact-icon {
-    color: rgba(0, 0, 0, 0.85);
-  }
-
-  :global(body.light-mode) .contact-card span {
-    color: #1d1d1f;
-  }
-
-  @media (max-width: 1024px) {
-    .contact .contact-grid {
-      grid-template-columns: repeat(4, 1fr);
-    }
+  :global(body.light-mode) .contact-pill:hover i {
+    color: #000;
   }
 
   @media (max-width: 768px) {
@@ -962,26 +801,8 @@ const featuredProjects = [...allProjects]
       line-height: 1.6;
     }
 
-    .contact .contact-grid {
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.55rem;
-    }
-
-    .contact-card {
-      height: auto;
-      min-height: 0;
-      padding: 0.6rem 0.45rem;
-      border-radius: 12px;
-      gap: 0.35rem;
-    }
-
-    .contact-icon {
-      font-size: 1.2rem;
-    }
-
-    .contact-card span {
-      font-size: 0.65rem;
-      line-height: 1.2;
+    .contact-pill {
+      padding: 0.55rem 0.95rem;
     }
   }
 
@@ -1009,37 +830,12 @@ const featuredProjects = [...allProjects]
       max-width: 240px;
     }
 
-    .contact .contact-grid {
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.45rem;
+    .contact-pill {
+      padding: 0.5rem 0.85rem;
     }
 
-    .contact-card {
-      height: auto;
-      min-height: 0;
-      padding: 0.5rem 0.35rem;
-      border-radius: 11px;
-      gap: 0.28rem;
-    }
-
-    .contact-icon {
-      font-size: 1.1rem;
-    }
-
-    .contact-card span {
-      font-size: 0.6rem;
-      line-height: 1.15;
-    }
-  }
-
-  @media (max-width: 360px) {
-    .contact .contact-grid {
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.4rem;
-    }
-
-    .contact-card {
-      padding: 0.45rem 0.28rem;
+    .contact-pill span {
+      font-size: 0.75rem;
     }
   }
 

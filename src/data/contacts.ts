@@ -15,7 +15,7 @@ export const contacts: Contact[] = [
   { id: 'telegram', icon: 'fab fa-telegram', label: 'Telegram', url: 'https://t.me/V8V88V8V88', buttonText: 'Message Me', showOnIndex: true, showOnContact: true },
   { id: 'youtube', icon: 'fab fa-youtube', label: 'YouTube', url: 'https://www.youtube.com/c/MagicalV8', buttonText: 'Subscribe', showOnIndex: true, showOnContact: true },
   { id: 'instagram', icon: 'fab fa-instagram', label: 'Instagram', url: 'https://www.instagram.com/v8v88v8v88', showOnIndex: true, showOnContact: true },
-  { id: 'twitter', icon: 'fab fa-twitter', label: 'Twitter', url: 'https://x.com/v8v88v8v88', buttonText: 'Follow', showOnIndex: true, showOnContact: true },
+  { id: 'twitter', icon: 'fab fa-x-twitter', label: 'X', url: 'https://x.com/v8v88v8v88', buttonText: 'Follow', showOnIndex: true, showOnContact: true },
   { id: 'reddit', icon: 'fab fa-reddit', label: 'Reddit', url: 'https://www.reddit.com/user/v8v88v8v88', buttonText: 'Connect', showOnIndex: true, showOnContact: true },
   { id: 'myanimelist', icon: 'fas fa-film', label: 'MyAnimeList', url: 'https://myanimelist.net/profile/V8V88V8V88', showOnIndex: true, showOnContact: true },
   { id: 'linkedin', icon: 'fab fa-linkedin', label: 'LinkedIn', url: 'https://www.linkedin.com/in/v8v88v8v88/', buttonText: 'Connect', showOnIndex: true, showOnContact: true },

@@ -10,7 +10,7 @@ import { neofetchMarkup } from '../data/terminal';
 ---
 <BaseLayout
   title="Contact | V8V88V8V88"
-  description="Contact Vaibhav (V8V88V8V88) via Email, GitHub, Telegram, LinkedIn, YouTube, Mastodon, Twitter, or Reddit."
+  description="Contact Vaibhav (V8V88V8V88) via Email, GitHub, Telegram, LinkedIn, YouTube, Mastodon, X, or Reddit."
   canonical="https://v8v88v8v88.com/contact/"
   showFooter={false}
 >
@@ -805,11 +805,6 @@ I'm always open to collaborate on cool projects.`;
     .terminal-window :global(.neofetch-logo) { padding-top: 0; }
   }
 
-  .terminal-window :global(.terminal-comment) {
-    color: rgba(255, 255, 255, 0.35);
-    font-style: italic;
-  }
-
   .terminal-window :global(.terminal-link) {
     color: #1DB954;
     text-decoration: none;
@@ -819,22 +814,6 @@ I'm always open to collaborate on cool projects.`;
   .terminal-window :global(.terminal-link:hover) {
     color: #22d35e;
     text-decoration: underline;
-  }
-
-  .terminal-cursor {
-    display: inline-block;
-    width: 8px;
-    height: 18px;
-    background: #1DB954;
-    margin-left: 4px;
-    animation: blink 1s step-end infinite;
-    vertical-align: text-bottom;
-  }
-
-  @keyframes blink {
-    50% {
-      opacity: 0;
-    }
   }
 
   .terminal-input-line {
@@ -1186,21 +1165,6 @@ I'm always open to collaborate on cool projects.`;
     outline: none;
   }
 
-  /* macOS Dock Divider */
-  .dock-divider {
-    width: 1px;
-    height: 32px;
-    margin: 0 4px;
-    background: linear-gradient(180deg,
-      rgba(255, 255, 255, 0.05) 0%,
-      rgba(255, 255, 255, 0.28) 50%,
-      rgba(255, 255, 255, 0.05) 100%
-    );
-    box-shadow: 1px 0 0 rgba(0, 0, 0, 0.25);
-    align-self: center;
-    flex-shrink: 0;
-  }
-
   /* Active indicator dot for running app (Terminal) */
   .dock-dot.active {
     opacity: 1 !important;
@@ -1214,20 +1178,6 @@ I'm always open to collaborate on cool projects.`;
     --tile-tint: rgba(90, 247, 142, 0.18);
     --tile-base: rgba(20, 36, 28, 0.65);
   }
-
-  /* macOS Landing bounce when window minimizes into dock */
-  @keyframes dockLanding {
-    0% { transform: scale(1); }
-    35% { transform: scale(1.18) translateY(-6px); }
-    70% { transform: scale(0.95) translateY(1px); }
-    100% { transform: scale(1) translateY(0); }
-  }
-
-  .dock-item.dock-landing {
-    animation: dockLanding 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-
-
 
   :global(body.light-mode) .terminal-window {
     background:
@@ -1297,20 +1247,12 @@ I'm always open to collaborate on cool projects.`;
     color: rgba(0, 0, 0, 0.6);
   }
 
-  :global(body.light-mode) .terminal-window :global(.terminal-comment) {
-    color: rgba(0, 0, 0, 0.35);
-  }
-
   :global(body.light-mode) .terminal-window :global(.terminal-link) {
     color: #0f4d1f;
   }
 
   :global(body.light-mode) .terminal-window :global(.terminal-link:hover) {
     color: #1DB954;
-  }
-
-  :global(body.light-mode) .terminal-cursor {
-    background: #0f4d1f;
   }
 
   :global(body.light-mode) .contact-page .contact {
@@ -1399,15 +1341,6 @@ I'm always open to collaborate on cool projects.`;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
   }
 
-  :global(body.light-mode) .dock-divider {
-    background: linear-gradient(180deg,
-      rgba(0, 0, 0, 0.05) 0%,
-      rgba(0, 0, 0, 0.22) 50%,
-      rgba(0, 0, 0, 0.05) 100%
-    );
-    box-shadow: 1px 0 0 rgba(255, 255, 255, 0.6);
-  }
-
   :global(body.light-mode) .dock-item[data-contact="terminal"] {
     --tile-tint: rgba(0, 160, 70, 0.12);
     --tile-base: rgba(230, 245, 235, 0.7);
@@ -1455,11 +1388,6 @@ I'm always open to collaborate on cool projects.`;
       border-radius: 18px;
     }
 
-    .dock-divider {
-      height: 28px;
-      margin: 0 2px;
-    }
-
     .dock-icon-tile {
       width: 38px;
       height: 38px;
@@ -1490,11 +1418,6 @@ I'm always open to collaborate on cool projects.`;
       padding: 5px 8px;
       border-radius: 16px;
       margin: 0 auto;
-    }
-
-    .dock-divider {
-      height: 24px;
-      margin: 0 1px;
     }
 
     .dock-icon-tile {
