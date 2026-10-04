@@ -1,16 +1,17 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { contactPageContacts, getSameAsUrls, getTerminalContactJson } from '../data/contacts';
+const dockContacts = contactPageContacts.filter((contact) => contact.id !== 'youtube');
 const dockItems = [
-  ...contactPageContacts.slice(0, 2),
+  ...dockContacts.slice(0, 2),
   { id: 'terminal', label: 'Terminal', url: '', icon: '', rel: '' },
-  ...contactPageContacts.slice(2),
+  ...dockContacts.slice(2),
 ];
 import { neofetchMarkup } from '../data/terminal';
 ---
 <BaseLayout
   title="Contact | V8V88V8V88"
-  description="Contact Vaibhav (V8V88V8V88) via Email, GitHub, Telegram, LinkedIn, YouTube, Mastodon, X, or Reddit."
+  description="Contact Vaibhav (V8V88V8V88) via Email, GitHub, Telegram, LinkedIn, YouTube, Instagram, or X."
   canonical="https://v8v88v8v88.com/contact/"
   showFooter={false}
 >
@@ -51,7 +52,6 @@ import { neofetchMarkup } from '../data/terminal';
             </div>
             <div class="terminal-line terminal-output" set:html={neofetchMarkup} />
             <div class="terminal-line terminal-output terminal-welcome">
-              Welcome to my corner of the internet.<br />
               Type <span class="terminal-accent">help</span> to explore, or <span class="terminal-accent">tg</span>, <span class="terminal-accent">gh</span>, <span class="terminal-accent">ig</span> to say hello.
             </div>
           </div>
@@ -70,7 +70,7 @@ import { neofetchMarkup } from '../data/terminal';
 
     <section class="contact">
       <div class="dock-container">
-        <nav class="macos-dock" id="macos-dock" aria-label="Quick contact dock">
+        <nav class="macos-dock" id="macos-dock" style={`--dock-item-count: ${dockItems.length}`} aria-label="Quick contact dock">
           <div class="dock-tooltip" id="dock-tooltip" aria-hidden="true"></div>
           {dockItems.map((c) => c.id === 'terminal' ? (
             <button
@@ -122,8 +122,7 @@ import { neofetchMarkup } from '../data/terminal';
 
     const aliases = {
       email: ['mail'], github: ['gh'], telegram: ['tg'], youtube: ['yt'],
-      instagram: ['ig', 'insta'], twitter: ['x'], reddit: ['rd'],
-      myanimelist: ['mal'], linkedin: ['li'], mastodon: ['masto'],
+      instagram: ['ig', 'insta'], twitter: ['x'], linkedin: ['li'],
     };
     const shortcuts = new Map();
     for (const contact of terminalContacts) {
@@ -142,11 +141,13 @@ import { neofetchMarkup } from '../data/terminal';
     const commands = {
       whoami: () => 'Vaibhav Pratap Singh (V8V88V8V88)',
       help: () => {
+        const commandNames = ['whoami', 'cat', 'ls', 'echo', 'help', 'clear', 'neofetch']
+          .map((name) => `<span class="terminal-accent">${name}</span>`).join(', ');
         const profiles = terminalContacts.map((contact) => {
           const names = [contact.id, ...(aliases[contact.id] || [])].join(' / ');
           return `<a href="${escapeHtml(contact.url)}" target="_blank" rel="noopener noreferrer" class="terminal-link">${escapeHtml(contact.label)}</a> — ${escapeHtml(names)}`;
         }).join('\n');
-        return `commands: whoami, cat, ls, echo, help, clear, neofetch\n\nType a platform name or alias, then Enter to open it in a new tab.\nGreen platform names are clickable, including in command output.\nCtrl+click (⌘+click on Mac) opens the link in a new tab.\nEmail opens your mail app. Tab completes a command.\n\n${profiles}\n\nterminal: open a fresh terminal in a new tab`;
+        return `commands: ${commandNames}\n\n${profiles}\n\n<span class="terminal-accent">terminal</span>: open a fresh terminal in a new tab`;
       },
       ls: () => 'contact.json  README.md  socials/',
       cat: (args) => {
@@ -776,6 +777,7 @@ I'm always open to collaborate on cool projects.`;
   .terminal-window :global(.neofetch-user),
   .terminal-window :global(.neofetch-label),
   .terminal-window :global(.terminal-accent) { color: #1db954; }
+  .terminal-window :global(.neofetch-label) { white-space: nowrap; }
   .terminal-window :global(.neofetch-user) { font-weight: 600; }
   .terminal-window :global(.neofetch-user span) { color: #ddd; font-weight: 400; }
   .terminal-window :global(.neofetch-rule) { color: #777; overflow: hidden; white-space: nowrap; }
@@ -797,7 +799,7 @@ I'm always open to collaborate on cool projects.`;
   @container (max-width: 480px) {
     .terminal-window :global(.neofetch) { grid-template-columns: max-content minmax(0, 1fr); gap: 12px; }
     .terminal-window :global(.neofetch-logo) { font-size: 9px; padding-top: 12px; }
-    .terminal-window :global(.neofetch-row) { grid-template-columns: 44px minmax(0, 1fr); gap: 4px; }
+    .terminal-window :global(.neofetch-row) { grid-template-columns: 6ch minmax(0, 1fr); gap: 4px; }
   }
 
   @container (max-width: 360px) {
@@ -912,8 +914,12 @@ I'm always open to collaborate on cool projects.`;
     max-width: 100%;
   }
 
-  /* macOS Sequoia Realistic Liquid Glass Dock Tray */
+  /* Keep the tray's corners proportional to its tiles and inset. */
   .macos-dock {
+    --dock-icon-size: 44px;
+    --dock-icon-radius: 12px;
+    --dock-inset: 8px;
+    --dock-gap: 10px;
     --c-glass: #bbbbbc;
     --c-light: #ffffff;
     --c-dark: #000000;
@@ -924,9 +930,9 @@ I'm always open to collaborate on cool projects.`;
     position: relative;
     display: inline-flex;
     align-items: center;
-    gap: 12px;
-    padding: 10px 16px;
-    border-radius: 24px;
+    gap: var(--dock-gap);
+    padding: var(--dock-inset);
+    border-radius: calc(var(--dock-icon-radius) + var(--dock-inset));
     background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
     backdrop-filter: blur(20px) saturate(var(--saturation));
     -webkit-backdrop-filter: blur(20px) saturate(var(--saturation));
@@ -1006,6 +1012,7 @@ I'm always open to collaborate on cool projects.`;
   }
 
   .dock-item {
+    flex: 0 0 auto;
     position: relative;
     z-index: 1;
     display: flex;
@@ -1020,56 +1027,46 @@ I'm always open to collaborate on cool projects.`;
     padding: 2px 0;
   }
 
-  /* Realistic Translucent Liquid Glass Squircle Tiles */
+  /* Solid app tiles; only the surrounding dock tray uses glass. */
   .dock-icon-tile {
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
+    width: var(--dock-icon-size);
+    height: var(--dock-icon-size);
+    border-radius: var(--dock-icon-radius);
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
     overflow: hidden;
-    background-color: color-mix(in srgb, var(--c-glass) 18%, transparent);
+    background-color: #303030;
+    background-image: linear-gradient(160deg, #3c3c3c, #292929);
     box-shadow:
-      inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
-      inset 2px 1px 0px -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent),
-      inset -1.5px -1px 0px -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent),
-      inset -2px -6px 1px -5px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent),
-      inset -1px 2px 3px -1px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent),
-      inset 0px -4px 1px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),
-      0px 3px 6px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
-    transition: background-color 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease, transform 0.2s ease;
+      inset 0 0 0 1px rgba(255, 255, 255, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.16),
+      0 2px 4px rgba(0, 0, 0, 0.22);
+    transition: box-shadow 0.2s ease, filter 0.2s ease;
   }
 
-  /* Frosted Silver/White Iconography */
   .dock-glyph {
     position: relative;
     z-index: 3;
     font-size: 1.32rem;
-    color: rgba(255, 255, 255, 0.88);
-    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35));
-    transition: color 0.2s ease, filter 0.2s ease, transform 0.2s ease;
+    color: #f5f5f5;
+    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.25));
+    transition: color 0.2s ease, filter 0.2s ease;
   }
 
   .dock-terminal-glyph {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 1.15em;
+    height: 1.15em;
     flex-shrink: 0;
   }
 
-  /* Interactive Hover State: Elevate, Internal Tint Inside & Bright Specular Reflections */
   .dock-item:hover .dock-icon-tile {
-    background-color: var(--tile-tint, color-mix(in srgb, var(--c-glass) 34%, transparent));
     box-shadow:
-      inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 25%), transparent),
-      inset 2.5px 1.5px 0px -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 100%), transparent),
-      inset -2px -1.5px 0px -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent),
-      inset -2px -6px 1px -5px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 70%), transparent),
-      inset -1px 2px 3px -1px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 25%), transparent),
-      inset 0px -4px 1px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 15%), transparent),
-      0px 6px 14px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 14%), transparent);
-    filter: brightness(1.08);
+      inset 0 0 0 1px rgba(255, 255, 255, 0.16),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2),
+      0 4px 8px rgba(0, 0, 0, 0.26);
+    filter: brightness(1.12);
   }
 
   .dock-item:hover .dock-glyph {
@@ -1102,57 +1099,6 @@ I'm always open to collaborate on cool projects.`;
     transform: translateX(-50%) scale(1);
   }
 
-  /* Subtle Internal Tint Accents on Hover (Zero External Leakage) */
-  .dock-item[data-contact="email"] {
-    --tile-tint: rgba(56, 140, 246, 0.22);
-    --tile-base: rgba(25, 45, 75, 0.65);
-  }
-
-  .dock-item[data-contact="github"] {
-    --tile-tint: rgba(255, 255, 255, 0.15);
-    --tile-base: rgba(45, 50, 60, 0.65);
-  }
-
-  .dock-item[data-contact="telegram"] {
-    --tile-tint: rgba(46, 168, 233, 0.22);
-    --tile-base: rgba(25, 55, 75, 0.65);
-  }
-
-  .dock-item[data-contact="youtube"] {
-    --tile-tint: rgba(255, 56, 56, 0.22);
-    --tile-base: rgba(75, 25, 25, 0.65);
-  }
-
-  .dock-item[data-contact="instagram"] {
-    --tile-tint: rgba(225, 48, 108, 0.22);
-    --tile-base: rgba(70, 25, 55, 0.65);
-  }
-
-  .dock-item[data-contact="twitter"] {
-    --tile-tint: rgba(255, 255, 255, 0.15);
-    --tile-base: rgba(40, 45, 55, 0.65);
-  }
-
-  .dock-item[data-contact="reddit"] {
-    --tile-tint: rgba(255, 87, 34, 0.22);
-    --tile-base: rgba(75, 40, 25, 0.65);
-  }
-
-  .dock-item[data-contact="myanimelist"] {
-    --tile-tint: rgba(68, 110, 201, 0.22);
-    --tile-base: rgba(30, 48, 80, 0.65);
-  }
-
-  .dock-item[data-contact="linkedin"] {
-    --tile-tint: rgba(13, 121, 226, 0.22);
-    --tile-base: rgba(20, 50, 80, 0.65);
-  }
-
-  .dock-item[data-contact="mastodon"] {
-    --tile-tint: rgba(116, 117, 255, 0.22);
-    --tile-base: rgba(45, 45, 80, 0.65);
-  }
-
   /* Reset button styles for dock item button */
   button.dock-item {
     background: none;
@@ -1171,12 +1117,6 @@ I'm always open to collaborate on cool projects.`;
     transform: translateX(-50%) scale(1) !important;
     background: rgba(255, 255, 255, 0.95);
     box-shadow: 0 0 4px rgba(255, 255, 255, 0.9), 0 0 8px rgba(90, 247, 142, 0.4);
-  }
-
-  /* Terminal App Tile Hover Glow */
-  .dock-item[data-contact="terminal"] {
-    --tile-tint: rgba(90, 247, 142, 0.18);
-    --tile-base: rgba(20, 36, 28, 0.65);
   }
 
   :global(body.light-mode) .terminal-window {
@@ -1284,40 +1224,28 @@ I'm always open to collaborate on cool projects.`;
   }
 
   :global(body.light-mode) .dock-icon-tile {
-    background-color: color-mix(in srgb, var(--c-glass) 22%, transparent);
+    background-color: #f0f0f0;
+    background-image: linear-gradient(160deg, #ffffff, #e5e5e5);
     box-shadow:
-      inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 35%), transparent),
-      inset 2px 1px 0px -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 95%), transparent),
-      inset -1.5px -1px 0px -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent),
-      inset -2px -6px 1px -5px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent),
-      inset -1px 2px 3px -1px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 14%), transparent),
-      inset 0px -4px 1px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent),
-      0px 2px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
+      inset 0 0 0 1px rgba(0, 0, 0, 0.09),
+      inset 0 1px 0 #ffffff,
+      0 2px 4px rgba(0, 0, 0, 0.12);
   }
 
   :global(body.light-mode) .dock-item:hover .dock-icon-tile {
-    background-color: var(--tile-tint, color-mix(in srgb, var(--c-glass) 36%, transparent));
     box-shadow:
-      inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 50%), transparent),
-      inset 2px 1px 0px -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 100%), transparent),
-      inset -1.5px -1px 0px -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent),
-      inset -2px -6px 1px -5px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 70%), transparent),
-      inset -1px 2px 3px -1px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 18%), transparent),
-      inset 0px -4px 1px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),
-      0px 4px 10px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent);
+      inset 0 0 0 1px rgba(0, 0, 0, 0.13),
+      inset 0 1px 0 #ffffff,
+      0 4px 8px rgba(0, 0, 0, 0.16);
   }
 
   .dock-item[data-contact="email"] { --app-ink: #416c95; }
   .dock-item[data-contact="github"] { --app-ink: #30343b; }
   .dock-item[data-contact="terminal"] { --app-ink: #252a32; }
   .dock-item[data-contact="telegram"] { --app-ink: #38728a; }
-  .dock-item[data-contact="youtube"] { --app-ink: #9b4548; }
   .dock-item[data-contact="instagram"] { --app-ink: #855875; }
   .dock-item[data-contact="twitter"] { --app-ink: #24272d; }
-  .dock-item[data-contact="reddit"] { --app-ink: #966044; }
-  .dock-item[data-contact="myanimelist"] { --app-ink: #48638a; }
   .dock-item[data-contact="linkedin"] { --app-ink: #3f6a86; }
-  .dock-item[data-contact="mastodon"] { --app-ink: #69618d; }
 
   :global(body.light-mode) .dock-item:hover .dock-icon-tile { filter: brightness(1.025); }
 
@@ -1341,11 +1269,6 @@ I'm always open to collaborate on cool projects.`;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
   }
 
-  :global(body.light-mode) .dock-item[data-contact="terminal"] {
-    --tile-tint: rgba(0, 160, 70, 0.12);
-    --tile-base: rgba(230, 245, 235, 0.7);
-  }
-
   :global(body.light-mode) .dock-tooltip {
     background:
       linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(246, 246, 249, 0.94) 100%);
@@ -1358,6 +1281,22 @@ I'm always open to collaborate on cool projects.`;
     background: rgba(246, 246, 249, 0.95);
     border-right: 0.5px solid rgba(0, 0, 0, 0.12);
     border-bottom: 0.5px solid rgba(0, 0, 0, 0.12);
+  }
+
+  .contact-page.keyboard-open .contact {
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .contact-page.keyboard-open .terminal-body { padding: 0.75rem; }
+
+  :global(body.terminal-keyboard-open .guestbook-btn) {
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  @media (pointer: coarse) {
+    .terminal-input { font-size: 16px; }
   }
 
   @media (max-width: 768px) {
@@ -1383,15 +1322,16 @@ I'm always open to collaborate on cool projects.`;
     }
 
     .macos-dock {
-      gap: 6px;
-      padding: 6px 10px;
-      border-radius: 18px;
+      --dock-icon-size: 38px;
+      --dock-icon-radius: 10px;
+      --dock-inset: 7px;
+      --dock-gap: 8px;
     }
 
-    .dock-icon-tile {
-      width: 38px;
-      height: 38px;
-      border-radius: 9.5px;
+    .terminal-input { font-size: 16px; }
+
+    :global(body:has(.contact-page) .guestbook-btn) {
+      bottom: max(84px, calc(env(safe-area-inset-bottom) + 68px));
     }
 
     .dock-glyph {
@@ -1414,16 +1354,12 @@ I'm always open to collaborate on cool projects.`;
     }
 
     .macos-dock {
-      gap: 5px;
-      padding: 5px 8px;
-      border-radius: 16px;
+      /* Fit the actual item count after subtracting gutters, padding and gaps. */
+      --dock-icon-size: clamp(28px, calc((100vw - 16px - 2 * var(--dock-inset) - (var(--dock-item-count) - 1) * var(--dock-gap)) / var(--dock-item-count)), 34px);
+      --dock-icon-radius: calc(var(--dock-icon-size) / 4);
+      --dock-inset: 6px;
+      --dock-gap: 5px;
       margin: 0 auto;
-    }
-
-    .dock-icon-tile {
-      width: 34px;
-      height: 34px;
-      border-radius: 8.5px;
     }
 
     .dock-glyph {
@@ -1474,7 +1410,7 @@ I'm always open to collaborate on cool projects.`;
     }
 
     .terminal-body {
-      font-size: 0.7rem;
+      font-size: 0.8rem;
       line-height: 1.6;
     }
 

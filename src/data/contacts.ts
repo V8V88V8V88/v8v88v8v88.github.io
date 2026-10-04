@@ -16,10 +16,7 @@ export const contacts: Contact[] = [
   { id: 'youtube', icon: 'fab fa-youtube', label: 'YouTube', url: 'https://www.youtube.com/c/MagicalV8', buttonText: 'Subscribe', showOnIndex: true, showOnContact: true },
   { id: 'instagram', icon: 'fab fa-instagram', label: 'Instagram', url: 'https://www.instagram.com/v8v88v8v88', showOnIndex: true, showOnContact: true },
   { id: 'twitter', icon: 'fab fa-x-twitter', label: 'X', url: 'https://x.com/v8v88v8v88', buttonText: 'Follow', showOnIndex: true, showOnContact: true },
-  { id: 'reddit', icon: 'fab fa-reddit', label: 'Reddit', url: 'https://www.reddit.com/user/v8v88v8v88', buttonText: 'Connect', showOnIndex: true, showOnContact: true },
-  { id: 'myanimelist', icon: 'fas fa-film', label: 'MyAnimeList', url: 'https://myanimelist.net/profile/V8V88V8V88', showOnIndex: true, showOnContact: true },
   { id: 'linkedin', icon: 'fab fa-linkedin', label: 'LinkedIn', url: 'https://www.linkedin.com/in/v8v88v8v88/', buttonText: 'Connect', showOnIndex: true, showOnContact: true },
-  { id: 'mastodon', icon: 'fab fa-mastodon', label: 'Mastodon', url: 'https://fosstodon.org/@v8v88v8v88', rel: 'me', buttonText: 'Follow', showOnIndex: true, showOnContact: true },
   { id: 'website', icon: 'fas fa-globe', label: 'Website', url: 'https://v8v88v8v88.com', showOnIndex: true, showOnContact: false },
 ];
 

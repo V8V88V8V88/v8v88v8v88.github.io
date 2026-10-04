@@ -3,6 +3,10 @@ const header = document.getElementById('terminal-header');
 const dockButton = document.getElementById('dock-item-terminal');
 const maximizeButton = document.getElementById('btn-maximize');
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+const visualViewport = window.visualViewport;
+const input = document.getElementById('terminal-input');
+const history = document.getElementById('terminal-history');
+const contactPage = document.querySelector('.contact-page');
 
 if (terminal && header && dockButton) {
   const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
@@ -10,8 +14,9 @@ if (terminal && header && dockButton) {
   // Available viewport space (leaving room for navbar top and dock bottom)
   const availableTop = 64;
   const availableBottom = Math.max(220, window.innerHeight - 90);
-  const initialWidth = Math.min(860, Math.max(320, window.innerWidth - 32));
-  const initialHeight = Math.min(440, Math.max(260, availableBottom - availableTop));
+  const isCompact = () => window.innerWidth <= 768 || window.matchMedia('(pointer: coarse)').matches;
+  const initialWidth = Math.min(860, Math.max(Math.min(320, window.innerWidth - 16), window.innerWidth - 32));
+  const initialHeight = Math.min(isCompact() ? 380 : 440, Math.max(180, availableBottom - availableTop));
 
   let frame = {
     x: Math.round((window.innerWidth - initialWidth) / 2),
@@ -24,6 +29,23 @@ if (terminal && header && dockButton) {
   let minimized = false;
   let gesture = null;
   let animation = null;
+  let keyboardOpen = false;
+  let restingViewportHeight = window.innerHeight;
+  let layoutWidth = window.innerWidth;
+  let viewportUpdate = null;
+
+  function visibleBounds() {
+    // Follow the keyboard's visible area, while leaving pinch zoom to the browser.
+    const view = isCompact() && visualViewport && visualViewport.scale <= 1.05
+      ? { x: visualViewport.offsetLeft, y: visualViewport.offsetTop, width: visualViewport.width, height: visualViewport.height }
+      : { x: 0, y: 0, width: window.innerWidth, height: window.innerHeight };
+    return {
+      x: view.x + 8,
+      y: view.y + 64,
+      width: Math.max(0, view.width - 16),
+      height: Math.max(0, view.height - 64 - (keyboardOpen ? 12 : 90)),
+    };
+  }
 
   function keepInBounds() {
     const minVisibleX = 80;
@@ -38,9 +60,20 @@ if (terminal && header && dockButton) {
   }
 
   function render() {
-    const rect = maximized
+    let rect = maximized
       ? { x: 12, y: 64, width: window.innerWidth - 24, height: Math.max(200, window.innerHeight - 156) }
       : frame;
+    if (isCompact()) {
+      const bounds = visibleBounds();
+      const width = maximized ? bounds.width : Math.min(frame.width, bounds.width);
+      const height = maximized ? bounds.height : Math.min(frame.height, bounds.height);
+      rect = {
+        x: maximized ? bounds.x : clamp(frame.x, bounds.x, bounds.x + bounds.width - width),
+        y: maximized ? bounds.y : clamp(frame.y, bounds.y, bounds.y + bounds.height - height),
+        width,
+        height,
+      };
+    }
     Object.assign(terminal.style, {
       position: 'fixed',
       left: `${rect.x}px`,
@@ -53,10 +86,32 @@ if (terminal && header && dockButton) {
     maximizeButton.title = maximized ? 'Restore' : 'Maximize';
   }
 
+  function updateViewport() {
+    viewportUpdate = null;
+    if (layoutWidth !== window.innerWidth) {
+      layoutWidth = window.innerWidth;
+      restingViewportHeight = window.innerHeight;
+    }
+    const focused = document.activeElement === input;
+    if (!focused) restingViewportHeight = Math.max(restingViewportHeight, window.innerHeight);
+    keyboardOpen = isCompact() && focused && visualViewport && visualViewport.scale <= 1.05
+      && restingViewportHeight - visualViewport.height > 120;
+    contactPage?.classList.toggle('keyboard-open', Boolean(keyboardOpen));
+    document.body.classList.toggle('terminal-keyboard-open', Boolean(keyboardOpen));
+    const atBottom = history && history.scrollHeight - history.scrollTop - history.clientHeight < 24;
+    // Fit only the displayed frame; closing the keyboard restores the user's size.
+    render();
+    if (atBottom) history.scrollTop = history.scrollHeight;
+  }
+
+  function scheduleViewportUpdate() {
+    if (viewportUpdate === null) viewportUpdate = requestAnimationFrame(updateViewport);
+  }
+
   function toggleMaximize() {
     if (minimized || animation || gesture) return;
     maximized = !maximized;
-    if (!maximized) {
+    if (!maximized && !isCompact()) {
       keepInBounds();
     }
     render();
@@ -72,7 +127,7 @@ if (terminal && header && dockButton) {
     terminal.classList.remove('is-minimized');
     terminal.inert = next;
     terminal.setAttribute('aria-hidden', String(next));
-    if (!next) {
+    if (!next && !isCompact()) {
       keepInBounds();
     }
     render();
@@ -163,19 +218,26 @@ if (terminal && header && dockButton) {
 
     event.preventDefault();
     const direction = handle?.dataset.resize;
+    let displayedFrame = frame;
+    if (isCompact()) {
+      const rect = terminal.getBoundingClientRect();
+      displayedFrame = { x: rect.x, y: rect.y, width: rect.width, height: rect.height };
+    }
     gesture = {
       id: event.pointerId,
       direction,
+      started: Boolean(direction),
       x: event.clientX,
       y: event.clientY,
-      frame: { ...frame },
+      frame: { ...displayedFrame },
     };
-    terminal.setPointerCapture(event.pointerId);
-    terminal.classList.add(direction ? 'is-resizing' : 'is-dragging');
-    if (direction && cursorMap[direction]) {
+    // Capture resize handles immediately, but leave title-bar clicks on the
+    // header so a double-click reaches its maximize/restore listener.
+    if (direction) {
+      frame = { ...displayedFrame };
+      terminal.setPointerCapture(event.pointerId);
+      terminal.classList.add('is-resizing');
       document.body.style.cursor = cursorMap[direction];
-    } else {
-      document.body.style.cursor = 'grabbing';
     }
   });
 
@@ -183,6 +245,15 @@ if (terminal && header && dockButton) {
     if (!gesture || event.pointerId !== gesture.id) return;
     const dx = event.clientX - gesture.x;
     const dy = event.clientY - gesture.y;
+
+    if (!gesture.started) {
+      if (Math.hypot(dx, dy) < 4) return;
+      gesture.started = true;
+      frame = { ...gesture.frame };
+      terminal.setPointerCapture(event.pointerId);
+      terminal.classList.add('is-dragging');
+      document.body.style.cursor = 'grabbing';
+    }
 
     if (gesture.direction) {
       resize(gesture.direction, dx, dy, gesture.frame);
@@ -210,9 +281,9 @@ if (terminal && header && dockButton) {
     }
   }
 
-  ['pointerup', 'pointercancel', 'lostpointercapture'].forEach((name) =>
-    terminal.addEventListener(name, endGesture)
-  );
+  window.addEventListener('pointerup', endGesture);
+  window.addEventListener('pointercancel', endGesture);
+  terminal.addEventListener('lostpointercapture', endGesture);
 
   header.addEventListener('dblclick', (event) => {
     if (!event.target.closest('.terminal-controls')) toggleMaximize();
@@ -264,10 +335,14 @@ if (terminal && header && dockButton) {
 
   window.addEventListener('resize', () => {
     endGesture();
-    keepInBounds();
-    render();
+    if (!isCompact()) keepInBounds();
+    scheduleViewportUpdate();
   });
+  visualViewport?.addEventListener('resize', scheduleViewportUpdate);
+  visualViewport?.addEventListener('scroll', scheduleViewportUpdate);
+  input?.addEventListener('focus', scheduleViewportUpdate);
+  input?.addEventListener('blur', scheduleViewportUpdate);
 
-  keepInBounds();
-  render();
+  if (!isCompact()) keepInBounds();
+  updateViewport();
 }

@@ -1509,7 +1509,7 @@ body.light-mode .posts {
     color: #fff;
     text-decoration: none;
     background: rgba(255, 255, 255, 0.025);
-    padding: 1.25rem 1.4rem;
+    padding: 1rem 1.4rem;
     border-radius: 14px;
     border: 1px solid rgba(255, 255, 255, 0.07);
     transition: all 0.2s ease;
@@ -2008,7 +2008,7 @@ body.light-mode .contact h2 {
     }
 
     .posts a {
-        padding: 0.75rem 0.9rem;
+        padding: 0.6rem 0.9rem;
         padding-right: 2.2rem;
     }
 
@@ -2431,7 +2431,7 @@ body.light-mode .contact h2 {
     }
 
     .posts a {
-        padding: 0.68rem 0.78rem;
+        padding: 0.55rem 0.78rem;
         padding-right: 2rem;
         border-radius: 12px;
     }
