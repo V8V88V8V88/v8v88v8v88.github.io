@@ -10,7 +10,10 @@
     "@astrojs/compiler-rs": "^0.5.1",
     "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.4",
-    "astro": "^7.3.5",
-    "simple-icons": "^16.33.0"
+    "astro": "^7.3.8",
+    "simple-icons": "^16.35.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2"
   }
 }

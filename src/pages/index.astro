@@ -36,7 +36,7 @@ const featuredProjects = [...allProjects]
   .slice(0, 6);
 ---
 <BaseLayout
-  title="Vaibhav Pratap Singh | V8"
+  title="Vaibhav | V8"
   description="Developer, Linux enthusiast, and open source contributor. Building things with Rust, C++, TypeScript & more."
   canonical="https://v8v88v8v88.com/"
   twitterSite="@v8v88v8v88"
@@ -82,18 +82,20 @@ const featuredProjects = [...allProjects]
         <div class="avatar-flip" id="avatar-flip">
           <div class="avatar-inner">
             <img src="/images/avatar.webp" alt="Vaibhav" class="avatar-front" fetchpriority="high" width="120" height="120" />
-            <img src="/images/V8.webp" alt="V8" class="avatar-back" fetchpriority="low" width="120" height="120" />
+            <span class="avatar-shine avatar-shine-front" aria-hidden="true"></span>
+            <img src="/images/V8.webp" alt="V8" class="avatar-back" loading="eager" fetchpriority="high" decoding="sync" width="120" height="120" />
+            <span class="avatar-shine avatar-shine-back" aria-hidden="true"></span>
           </div>
         </div>
         <div class="intro-text">
           <h2>
-            Hey, I'm <span class="vaibhav-hover" role="button" tabindex="0" aria-pressed="false" data-default="Vaibhav" data-alt="V8">Vaibhav</span>
+            Hey, I'm <span class="vaibhav-hover" role="button" tabindex="0" aria-label="Vaibhav" aria-pressed="false"><span class="name-default">Vaibhav</span><span class="name-alt" aria-hidden="true">V8</span></span>
           </h2>
           <p class="now-status">dev × linux × foss × low&#8209;level × design</p>
         </div>
       </div>
       <p>
-        I'm curious by nature. I like asking questions and figuring things out, and that's what drew me to computers. Over time, I got into <a href="https://en.wikipedia.org/wiki/Linux" target="_blank" rel="noopener noreferrer">Linux</a>, <a href="https://en.wikipedia.org/wiki/Free_and_open-source_software" target="_blank" rel="noopener noreferrer">FOSS</a>, and <a href="https://en.wikipedia.org/wiki/Systems_programming" target="_blank" rel="noopener noreferrer">systems programming</a>. Lately, I've been exploring <a href="https://www.rust-lang.org/" target="_blank" rel="noopener noreferrer">Rust</a>. I work at <a href="https://automologylabs.com/" target="_blank" rel="noopener noreferrer">Automology Labs</a> and I'm building <a href="https://github.com/v8v88v8v88/XE" target="_blank" rel="noopener noreferrer">XE</a>, a programming language and compiler project. I like keeping things <a href="https://principles-wiki.net/principles:keep_it_simple_stupid" target="_blank" rel="noopener noreferrer">simple</a>, the <a href="https://en.wikipedia.org/wiki/Unix_philosophy" target="_blank" rel="noopener noreferrer">Unix</a> way. Most of what I know comes from experimenting with systems and fixing things when they break. I'm also into cybersecurity and am a CEH. Outside of tech, I read about philosophy, history, or whatever catches my <a href="https://en.wikipedia.org/wiki/Attention_deficit_hyperactivity_disorder" target="_blank" rel="noopener noreferrer">attention</a>. If you'd like to chat about any of this, <a href="/contact/">feel free to reach out</a>. I'll get back to you when I can :)
+        I'm curious by nature. I like asking questions and figuring things out, and that's what drew me to computers. Over time, I got into <a href="https://en.wikipedia.org/wiki/Linux" target="_blank" rel="noopener noreferrer">Linux</a>, <a href="https://en.wikipedia.org/wiki/Free_and_open-source_software" target="_blank" rel="noopener noreferrer">FOSS</a>, and <a href="https://en.wikipedia.org/wiki/Systems_programming" target="_blank" rel="noopener noreferrer">systems programming</a>. Lately, I've been exploring <a href="https://www.rust-lang.org/" target="_blank" rel="noopener noreferrer">Rust</a>. I work at <a href="https://automologylabs.com/" target="_blank" rel="noopener noreferrer">Automology Labs</a> and in my free time I am building <a href="https://github.com/v8v88v8v88/XE" target="_blank" rel="noopener noreferrer">XE</a>. I like keeping things <a href="https://principles-wiki.net/principles:keep_it_simple_stupid" target="_blank" rel="noopener noreferrer">simple</a>, the <a href="https://en.wikipedia.org/wiki/Unix_philosophy" target="_blank" rel="noopener noreferrer">Unix</a> way. Most of what I know comes from experimenting with systems and fixing things when they break. I'm also into cybersecurity and hold a <i>CEH</i> certification. Outside of tech, I read about philosophy, history, or whatever catches my <a href="https://en.wikipedia.org/wiki/Attention_deficit_hyperactivity_disorder" target="_blank" rel="noopener noreferrer">attention</a>. If you'd like to chat about any of this, <a href="/contact/">feel free to reach out</a>. I'll get back to you when I can :)
       </p>
       <a href="/about/#story" class="view-all about-cta">more about me →</a>
     </section>
@@ -161,13 +163,29 @@ const featuredProjects = [...allProjects]
     var vaibhavHover = document.querySelector(".vaibhav-hover");
     var avatarFlip = document.getElementById("avatar-flip");
     var vaibhavLocked = false;
+    var avatarShineTimeout;
+
+    function playAvatarShine() {
+      if (!avatarFlip || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      window.clearTimeout(avatarShineTimeout);
+      avatarFlip.classList.remove("is-shining");
+      void avatarFlip.offsetWidth;
+      avatarFlip.classList.add("is-shining");
+      avatarShineTimeout = window.setTimeout(function() {
+        avatarFlip.classList.remove("is-shining");
+      }, 860);
+    }
 
     function setVaibhavState(active) {
       if (!vaibhavHover) return;
       vaibhavHover.classList.toggle("is-alt", active);
       vaibhavHover.setAttribute("aria-pressed", String(active));
-      vaibhavHover.textContent = active ? (vaibhavHover.getAttribute("data-alt") || "V8") : (vaibhavHover.getAttribute("data-default") || "Vaibhav");
-      if (avatarFlip) avatarFlip.classList.toggle("flipped", active);
+      vaibhavHover.setAttribute("aria-label", active ? "V8" : "Vaibhav");
+      if (avatarFlip) {
+        var changed = avatarFlip.classList.contains("flipped") !== active;
+        avatarFlip.classList.toggle("flipped", active);
+        if (changed) playAvatarShine();
+      }
     }
 
     function toggleVaibhavState() {
@@ -616,9 +634,9 @@ const featuredProjects = [...allProjects]
   :global(body.light-mode) .view-all { color: rgba(0, 0, 0, 0.65) !important; }
   :global(body.light-mode) .view-all:hover { color: #0f4d1f !important; }
   .intro .avatar-flip {
+    position: relative;
     width: 120px;
     height: 120px;
-    perspective: 800px;
     cursor: pointer;
     flex-shrink: 0;
   }
@@ -627,9 +645,11 @@ const featuredProjects = [...allProjects]
     width: 100%;
     height: 100%;
     transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    transform-style: preserve-3d;
+    will-change: transform;
   }
-  .intro .avatar-flip.flipped .avatar-inner { transform: rotateY(180deg); }
+  .intro .avatar-flip.flipped .avatar-inner {
+    transform: scaleX(-1);
+  }
   .intro .avatar-flip img {
     position: absolute;
     top: 0;
@@ -637,13 +657,52 @@ const featuredProjects = [...allProjects]
     width: 100% !important;
     height: 100% !important;
     border-radius: 50%;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
     object-fit: cover;
     border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: none;
   }
-  .intro .avatar-back { transform: rotateY(180deg); }
-  .intro .avatar-front { filter: grayscale(1) contrast(1.05); }
+  .intro .avatar-flip .avatar-back {
+    transform: scaleX(-1);
+    opacity: 0;
+    transition: opacity 90ms linear;
+  }
+  .intro .avatar-front {
+    filter: grayscale(1) contrast(1.05);
+    transition: opacity 90ms linear;
+  }
+  .intro .avatar-flip.flipped .avatar-front { opacity: 0; }
+  .intro .avatar-flip.flipped .avatar-back { opacity: 1; }
+  .intro .avatar-shine {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    border-radius: 50%;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .intro .avatar-shine::before {
+    content: '';
+    position: absolute;
+    top: -15%;
+    bottom: -15%;
+    left: -55%;
+    width: 48%;
+    opacity: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0.68), rgba(255, 255, 255, 0.32), transparent);
+    transform: translate3d(0, 0, 0) skewX(-18deg);
+    will-change: transform, opacity;
+  }
+  .intro .avatar-shine-back {
+    transform: scaleX(-1);
+  }
+  .intro .avatar-flip.is-shining .avatar-shine::before {
+    animation: avatarCoinShine 700ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  @keyframes avatarCoinShine {
+    0% { opacity: 0; transform: translate3d(0, 0, 0) skewX(-18deg); }
+    20% { opacity: 0.82; }
+    100% { opacity: 0; transform: translate3d(360%, 0, 0) skewX(-18deg); }
+  }
   @media (max-width: 768px) { .intro .avatar-flip { width: 100px; height: 100px; } }
   @media (max-width: 480px) { .intro .avatar-flip { width: 80px; height: 80px; } }
 
@@ -806,6 +865,7 @@ const featuredProjects = [...allProjects]
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .intro .avatar-flip.is-shining .avatar-shine::before { animation: none; }
     .hero h1,
     .hero h1.tap-pulse,
     .hero h1.shimmer-off.tap-pulse {

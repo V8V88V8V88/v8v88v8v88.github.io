@@ -1638,16 +1638,40 @@ body.light-mode .intro img {
 }
 
 .vaibhav-hover {
-    display: inline-block;
+    display: inline-grid;
+    grid-template: 1fr / 1fr;
     cursor: pointer;
     vertical-align: baseline;
     white-space: nowrap;
-    transition: opacity 0.2s ease, filter 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
 }
 
-.vaibhav-hover.is-alt {
+.vaibhav-hover > span {
+    grid-area: 1 / 1;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.24s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.vaibhav-hover .name-default {
+    opacity: 1;
+    transform: translateY(0);
     font-family: "EB Garamond", Georgia, serif;
     font-style: italic;
+}
+.vaibhav-hover .name-alt {
+    opacity: 0;
+    transform: translateY(2px);
+    font-family: "EB Garamond", Georgia, serif;
+    font-style: italic;
+}
+
+.vaibhav-hover.is-alt .name-default {
+    opacity: 0;
+    transform: translateY(-2px);
+}
+.vaibhav-hover.is-alt .name-alt {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 body.light-mode .intro-text p {
