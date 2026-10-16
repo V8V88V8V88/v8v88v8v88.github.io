@@ -51,12 +51,12 @@ function getHostedLabel(url: string): string {
 
       <div class="hero-stats">
         <div class="hero-stat">
-          <span class="hero-stat-value">55+</span>
+          <span class="hero-stat-value">{projects.length}+</span>
           <span class="hero-stat-label">Projects</span>
         </div>
         <div class="hero-stat">
           <span class="hero-stat-value">8+</span>
-          <span class="hero-stat-label">Years Experience</span>
+          <span class="hero-stat-label">Years Building</span>
         </div>
         <div class="hero-stat">
           <span class="hero-stat-value">∞</span>
@@ -573,7 +573,7 @@ function getHostedLabel(url: string): string {
   overflow: hidden;
   isolation: isolate;
   border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 32px;
+  border-radius: 16px;
   background: #101010;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.18),
@@ -603,7 +603,7 @@ function getHostedLabel(url: string): string {
 
 .project-item:hover .project-preview.has-lang-card,
 .project-item:has(:focus-visible) .project-preview.has-lang-card {
-  border-radius: 36px;
+  border-radius: 20px;
   border-color: rgba(255, 255, 255, 0.2);
   background: #121212;
   transform: translateX(0) scale(1) rotate(-4deg);
@@ -1178,7 +1178,7 @@ function getHostedLabel(url: string): string {
   }
 
   .lang-card {
-    border-radius: 24px;
+    border-radius: 12px;
   }
 
   .lang-icon {
@@ -1343,7 +1343,7 @@ function getHostedLabel(url: string): string {
   }
 
   .lang-card {
-    border-radius: 20px;
+    border-radius: 11px;
   }
 
   .project-item:has(.project-preview) .project-main-link,
