@@ -48,13 +48,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <span class="click-hint" id="click-hint">click to read more</span>
       </div>
 
-      <a href="/username/" class="bento-item bento-ascii clickable" title="Why V8? Story behind the username">
+      <a href="/username/" class="bento-item bento-ascii clickable" id="ascii-card" title="Why V8? Story behind the username">
 <pre>██╗   ██╗ █████╗ 
 ██║   ██║██╔══██╗
 ██║   ██║╚█████╔╝
 ╚██╗ ██╔╝██╔══██╗
  ╚████╔╝ ╚█████╔╝
   ╚═══╝   ╚════╝ </pre>
+      </a>
+
+      <a href="https://github.com/v8v88v8v88" target="_blank" rel="noopener noreferrer" class="bento-item bento-stats clickable" id="years-coding" title="View GitHub profile">
+        <span class="stat-number">8+</span>
+        <span class="stat-label" id="years-label">years coding</span>
       </a>
 
       <a href="/minimalism/" class="bento-item bento-philosophy clickable" id="philosophy-card" title="Read about my philosophy on minimalism">
@@ -67,15 +72,26 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
       </a>
 
-      <a href="https://github.com/v8v88v8v88" target="_blank" rel="noopener noreferrer" class="bento-item bento-stats clickable" id="years-coding" title="View GitHub profile">
-        <span class="stat-number">8+</span>
-        <span class="stat-label" id="years-label">years coding</span>
-      </a>
-
-      <a href="https://www.reddit.com/r/HydroHomies/" target="_blank" rel="noopener noreferrer" class="bento-item bento-stats clickable" title="Stay hydrated! r/HydroHomies">
-        <span class="stat-number stat-infinity">∞</span>
-        <span class="stat-label">thanda pani</span>
-      </a>
+      <div class="bento-item bento-player">
+        <img class="player-art" id="player-art" src="https://is1-ssl.mzstatic.com/image/thumb/Music128/v4/39/25/2d/39252d65-2d50-b991-0962-f7a98a761271/00602517483507.rgb.jpg/400x400bb.jpg" alt="" width="72" height="72" />
+        <div class="player-meta">
+          <span class="track-title" id="player-title">Stronger</span>
+          <span class="track-artist" id="player-artist">Kanye West</span>
+        </div>
+        <div class="player-controls">
+          <button class="player-btn" id="player-prev" aria-label="Previous track" title="Previous">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+          </button>
+          <button class="player-btn player-btn-play" id="player-toggle" aria-label="Play" title="Play">
+            <svg class="icon-play" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="icon-pause" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
+          </button>
+          <button class="player-btn" id="player-next" aria-label="Next track" title="Next">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M16 6h2v12h-2zM6 6v12l8.5-6z"/></svg>
+          </button>
+        </div>
+        <audio id="player-audio" preload="none"></audio>
+      </div>
 
       <div class="bento-item bento-skills">
         <div class="skills-grid" id="skills-grid">
@@ -147,10 +163,156 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     }
     autoScrollInterval = setInterval(rotatePhilosophy, 4000);
 
+    var playerTracks = [
+      { title: 'Stronger', artist: 'Kanye West', art: 'https://is1-ssl.mzstatic.com/image/thumb/Music128/v4/39/25/2d/39252d65-2d50-b991-0962-f7a98a761271/00602517483507.rgb.jpg/400x400bb.jpg', src: 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/9e/cc/69/9ecc6918-a8dc-354f-909f-ccc20a0a7a33/mzaf_7863921970418240507.plus.aac.p.m4a' },
+      { title: 'Jaago', artist: 'Lifafa', art: 'https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/a5/67/52/a5675288-d271-5947-0560-0ac19addb5f6/5060545638835.jpg/400x400bb.jpg', src: 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/68/53/83/685383da-e736-cd1a-1705-c6c3ee63a78c/mzaf_7201641971952177771.plus.aac.p.m4a' },
+      { title: 'Runaway', artist: 'Kanye West', art: 'https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/d1/74/da/d174dacf-5782-dfe2-19f7-ce037dcd0237/00602527584935.rgb.jpg/400x400bb.jpg', src: 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/bc/dc/95/bcdc957a-6823-082c-0a9b-2be3ef754972/mzaf_11124816692667140659.plus.aac.p.m4a' }
+    ];
+    var playerAudio = document.getElementById('player-audio');
+    var playerToggle = document.getElementById('player-toggle');
+    var playerPrev = document.getElementById('player-prev');
+    var playerNext = document.getElementById('player-next');
+    var playerArt = document.getElementById('player-art');
+    var playerTitle = document.getElementById('player-title');
+    var playerArtist = document.getElementById('player-artist');
+    if (playerAudio && playerToggle) {
+      var currentTrack = 0;
+      var applyTrack = function(index, autoplay) {
+        currentTrack = (index + playerTracks.length) % playerTracks.length;
+        var track = playerTracks[currentTrack];
+        playerTitle.textContent = track.title;
+        playerArtist.textContent = track.artist;
+        playerArt.src = track.art;
+        playerAudio.src = track.src;
+        if (autoplay) playerAudio.play();
+      };
+      playerPrev.addEventListener('click', function() { applyTrack(currentTrack - 1, !playerAudio.paused); });
+      playerNext.addEventListener('click', function() { applyTrack(currentTrack + 1, !playerAudio.paused); });
+      playerToggle.addEventListener('click', function() {
+        if (!playerAudio.src) { applyTrack(currentTrack, true); return; }
+        if (playerAudio.paused) playerAudio.play();
+        else playerAudio.pause();
+      });
+      playerAudio.addEventListener('play', function() { playerToggle.classList.add('playing'); });
+      playerAudio.addEventListener('pause', function() { playerToggle.classList.remove('playing'); });
+      playerAudio.addEventListener('ended', function() { applyTrack(currentTrack + 1, true); });
+    }
+
     var heroCard = document.getElementById('hero-card');
+    var asciiCard = document.getElementById('ascii-card');
     if (heroCard) {
-      heroCard.addEventListener('click', function() { heroCard.classList.toggle('expanded'); });
-      if (window.location.hash === '#story') heroCard.classList.add('expanded');
+      var activeCleanup = null;
+
+      var pinGhost = function(source, rect, z) {
+        var ghost = source.cloneNode(true);
+        ghost.removeAttribute('id');
+        ghost.style.position = 'fixed';
+        ghost.style.margin = '0';
+        ghost.style.top = rect.top + 'px';
+        ghost.style.left = rect.left + 'px';
+        ghost.style.width = rect.width + 'px';
+        ghost.style.height = rect.height + 'px';
+        ghost.style.zIndex = z;
+        ghost.style.pointerEvents = 'none';
+        ghost.style.transition = 'none';
+        document.body.appendChild(ghost);
+        return ghost;
+      };
+
+      var setExpanded = function(expanding) {
+        var sharesRow = asciiCard && window.innerWidth >= 1025;
+
+        if (!sharesRow) {
+          heroCard.classList.toggle('expanded', expanding);
+          if (asciiCard) asciiCard.style.display = '';
+          return;
+        }
+
+        if (activeCleanup) activeCleanup();
+
+        var heroStart = heroCard.getBoundingClientRect();
+        var asciiStart = asciiCard.getBoundingClientRect();
+        var asciiWasVisible = getComputedStyle(asciiCard).display !== 'none';
+
+        // Expanding: ascii is about to leave flow, so freeze its current look in a
+        // disposable ghost (its content never changes, keeps the real element's
+        // inline state trivial and race-proof) and fade the ghost out in place.
+        var asciiGhost = (expanding && asciiWasVisible) ? pinGhost(asciiCard, asciiStart, '2') : null;
+
+        // Apply the real end-state instantly so content (bio text) is already correct.
+        heroCard.classList.toggle('expanded', expanding);
+        asciiCard.style.display = expanding ? 'none' : '';
+
+        var heroEnd = heroCard.getBoundingClientRect();
+
+        // Collapsing: ascii is already back in its stable natural spot (it doesn't
+        // move), so fade the real element in directly, in sync with hero's shrink.
+        if (!expanding) {
+          asciiCard.style.transition = 'none';
+          asciiCard.style.opacity = '0';
+          asciiCard.style.transform = 'scale(0.94)';
+          void asciiCard.offsetHeight;
+        }
+
+        // Hero card: animate its own real box (pin to start size, release to end size)
+        // so the already-laid-out content progressively reveals through the growing
+        // box instead of popping in after a content-less ghost finishes resizing.
+        heroCard.style.transition = 'none';
+        heroCard.style.width = heroStart.width + 'px';
+        heroCard.style.height = heroStart.height + 'px';
+        heroCard.style.overflow = 'hidden';
+        void heroCard.offsetHeight;
+
+        var finished = false;
+        var finish = function() {
+          if (finished) return;
+          finished = true;
+          heroCard.style.transition = '';
+          heroCard.style.width = '';
+          heroCard.style.height = '';
+          heroCard.style.overflow = '';
+          heroCard.removeEventListener('transitionend', onHeroEnd);
+          if (asciiGhost) asciiGhost.remove();
+          asciiCard.style.transition = '';
+          asciiCard.style.opacity = '';
+          asciiCard.style.transform = '';
+          if (activeCleanup === finish) activeCleanup = null;
+        };
+        activeCleanup = finish;
+
+        var onHeroEnd = function(e) {
+          if (e.target !== heroCard) return;
+          finish();
+        };
+
+        requestAnimationFrame(function() {
+          requestAnimationFrame(function() {
+            heroCard.style.transition = 'width 0.5s cubic-bezier(0.22, 1, 0.36, 1), height 0.5s cubic-bezier(0.22, 1, 0.36, 1)';
+            heroCard.style.width = heroEnd.width + 'px';
+            heroCard.style.height = heroEnd.height + 'px';
+            if (asciiGhost) {
+              asciiGhost.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+              asciiGhost.style.opacity = '0';
+              asciiGhost.style.transform = 'scale(0.94)';
+            }
+            if (!expanding) {
+              asciiCard.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+              asciiCard.style.opacity = '1';
+              asciiCard.style.transform = 'scale(1)';
+            }
+            heroCard.addEventListener('transitionend', onHeroEnd);
+            setTimeout(finish, 650);
+          });
+        });
+      };
+
+      heroCard.addEventListener('click', function() {
+        setExpanded(!heroCard.classList.contains('expanded'));
+      });
+      if (window.location.hash === '#story') {
+        heroCard.classList.add('expanded');
+        if (asciiCard && window.innerWidth >= 1025) asciiCard.style.display = 'none';
+      }
     }
 
     var canvas = document.getElementById('matrix-canvas');
@@ -240,17 +402,31 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 .bento-item.clickable, a.bento-item { cursor: pointer; }
 .bento-item.clickable:hover, a.bento-item:hover { border-color: rgba(255, 255, 255, 0.15); }
 .hero-expanded { display: none; margin-top: 1.1rem; padding-top: 1.1rem; border-top: 1px solid rgba(255, 255, 255, 0.1); }
-.hero-expanded p { font-family: 'EB Garamond', Georgia, serif; font-size: 1.08rem; color: rgba(255, 255, 255, 0.6); line-height: 1.65; margin-bottom: 0.85rem; }
+.hero-expanded p { font-family: 'EB Garamond', Georgia, serif; font-size: 1.13rem; color: rgba(255, 255, 255, 0.74); line-height: 1.65; margin-bottom: 0.85rem; }
 .hero-expanded p:last-child { margin-bottom: 0; }
-.bento-hero.expanded { justify-content: flex-start; }
+.bento-hero.expanded { justify-content: flex-start; grid-column: span 12; }
 .bento-hero.expanded .hero-expanded { display: block; animation: fadeIn 0.3s ease; }
 .click-hint { font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace; font-size: 0.64rem; color: rgba(255, 255, 255, 0.25); position: absolute; bottom: 1.05rem; right: 1.15rem; text-align: right; transition: opacity 0.3s ease; }
 .bento-hero.expanded .click-hint { display: none; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 .bento-stats { grid-column: span 3; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; min-height: 226px; }
 .stat-number { font-family: 'EB Garamond', Georgia, serif; font-size: 2.85rem; font-weight: 500; color: #fff; line-height: 1; }
-.stat-number.stat-infinity { font-size: 3.2rem; line-height: 0.85; }
 .stat-label { max-width: 100%; font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace; font-size: 0.7rem; color: rgba(255, 255, 255, 0.45); text-transform: uppercase; letter-spacing: 0.12em; margin-top: 0.48rem; }
+.bento-player { grid-column: span 3; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; gap: 0.6rem; min-height: 226px; }
+.player-art { width: 72px; height: 72px; border-radius: 12px; object-fit: cover; flex-shrink: 0; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.04); }
+.player-meta { display: flex; flex-direction: column; align-items: center; min-width: 0; max-width: 100%; }
+.track-title { font-family: 'EB Garamond', Georgia, serif; font-size: 1.08rem; color: #fff; line-height: 1.25; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
+.track-artist { font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace; font-size: 0.66rem; color: rgba(255, 255, 255, 0.45); text-transform: uppercase; letter-spacing: 0.08em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; margin-top: 0.15rem; }
+.player-controls { display: flex; align-items: center; justify-content: center; gap: 0.6rem; }
+.player-btn { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border: none; border-radius: 50%; padding: 0; background: transparent; color: rgba(255, 255, 255, 0.55); cursor: pointer; transition: color 0.2s ease, background-color 0.2s ease, transform 0.15s ease; }
+.player-btn:hover { color: #fff; background: rgba(255, 255, 255, 0.08); }
+.player-btn:active { transform: scale(0.9); }
+.player-btn-play { width: 30px; height: 30px; background: #1DB954; color: #06240f; }
+.player-btn-play:hover { background: #22d35e; color: #06240f; }
+.player-btn-play .icon-play { margin-left: 2px; }
+.player-btn-play .icon-pause { display: none; }
+.player-btn-play.playing .icon-play { display: none; }
+.player-btn-play.playing .icon-pause { display: block; }
 .bento-skills { grid-column: span 6; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 226px; }
 .skills-grid { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.52rem; width: 100%; }
 .skill-tag { max-width: 100%; font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace; font-size: 0.76rem; color: rgba(255, 255, 255, 0.65); padding: 0.4rem 0.85rem; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 100px; transition: all 0.2s ease; text-decoration: none; display: inline-block; }
@@ -290,12 +466,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 :global(body.light-mode) .philosophy-text { color: rgba(0, 0, 0, 0.7); }
 :global(body.light-mode) .philosophy-text .accent { color: #0f4d1f; }
 :global(body.light-mode) .hero-expanded { border-top-color: rgba(0, 0, 0, 0.1); }
-:global(body.light-mode) .hero-expanded p { color: rgba(0, 0, 0, 0.6); }
+:global(body.light-mode) .hero-expanded p { color: rgba(0, 0, 0, 0.72); }
 :global(body.light-mode) .click-hint { color: rgba(0, 0, 0, 0.25); }
 :global(body.light-mode) .bento-item.clickable:hover,
 :global(body.light-mode) a.bento-item:hover { border-color: rgba(0, 0, 0, 0.12); }
 :global(body.light-mode) .stat-number { color: #1d1d1f; }
 :global(body.light-mode) .stat-label { color: rgba(0, 0, 0, 0.5); }
+:global(body.light-mode) .player-art { border-color: rgba(0, 0, 0, 0.08); background: rgba(0, 0, 0, 0.03); }
+:global(body.light-mode) .track-title { color: #1d1d1f; }
+:global(body.light-mode) .track-artist { color: rgba(0, 0, 0, 0.5); }
+:global(body.light-mode) .player-btn { color: rgba(0, 0, 0, 0.5); }
+:global(body.light-mode) .player-btn:hover { color: #1d1d1f; background: rgba(0, 0, 0, 0.06); }
+:global(body.light-mode) .player-btn-play { background: #0f4d1f; color: #fff; }
+:global(body.light-mode) .player-btn-play:hover { background: #136627; color: #fff; }
 :global(body.light-mode) .skill-tag { color: rgba(0, 0, 0, 0.6); background: rgba(0, 0, 0, 0.02); border-color: rgba(0, 0, 0, 0.08); }
 :global(body.light-mode) .skill-tag:hover { color: #0f4d1f; border-color: rgba(15, 77, 31, 0.3); background: rgba(15, 77, 31, 0.08); }
 :global(body.light-mode) .skill-tag.highlight { color: #0f4d1f; border-color: rgba(15, 77, 31, 0.3); background: rgba(15, 77, 31, 0.08); }
@@ -333,6 +516,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .bento-stats {
     min-height: 226px;
   }
+  .bento-player {
+    min-height: 226px;
+  }
   .bento-skills {
     min-height: 226px;
     display: flex;
@@ -366,6 +552,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .bento-ascii { grid-column: span 12; min-height: 150px; }
   .bento-philosophy { grid-column: span 6; }
   .bento-stats { grid-column: span 6; }
+  .bento-player { grid-column: span 6; }
   .bento-skills { grid-column: span 12; }
   .bento-currently { grid-column: span 12; }
   .bento-location { grid-column: span 4; }
@@ -387,20 +574,30 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     align-self: stretch;
   }
   .bento-grid > .bento-item:nth-child(3) {
+    grid-column: 1 / 7;
+    grid-row: 3;
+    min-height: clamp(104px, 16vw, 128px);
+  }
+  .bento-grid > .bento-item:nth-child(4) {
     grid-column: 1 / 8;
     grid-row: 2;
     align-self: stretch;
     min-height: clamp(128px, 22vw, 160px);
   }
-  .bento-grid > .bento-item:nth-child(4) {
-    grid-column: 1 / 7;
-    grid-row: 3;
-    min-height: clamp(104px, 16vw, 128px);
-  }
   .bento-grid > .bento-item:nth-child(5) {
     grid-column: 7 / 13;
     grid-row: 3;
     min-height: clamp(104px, 16vw, 128px);
+  }
+  .bento-player {
+    gap: 0.5rem;
+  }
+  .player-art {
+    width: 56px;
+    height: 56px;
+  }
+  .player-controls {
+    gap: 0.45rem;
   }
   .bento-skills { grid-column: 1 / -1; grid-row: 4; }
   .bento-currently { grid-column: 1 / -1; grid-row: 5; }
@@ -426,7 +623,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .hero-subtitle { font-size: 1rem; }
   .click-hint { position: static; margin-top: 0.65rem; font-size: 0.58rem; }
   .hero-expanded { margin-top: 1rem; padding-top: 1rem; }
-  .hero-expanded p { font-size: 0.98rem; margin-bottom: 0.75rem; }
+  .hero-expanded p { font-size: 1.02rem; margin-bottom: 0.75rem; }
   .bento-item.bento-ascii {
     min-width: 0;
     padding: 0.45rem 0.32rem;
@@ -441,9 +638,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     max-width: 100%;
   }
   .philosophy-text { font-size: 1.12rem; line-height: 1.45; }
-  .bento-stats .stat-number { font-size: 2.2rem; }
-  .bento-stats .stat-number.stat-infinity { font-size: 2.5rem; }
+  .stat-number { font-size: 2.2rem; }
   .stat-label { font-size: 0.62rem; margin-top: 0.35rem; }
+  .track-title { font-size: 0.96rem; }
+  .track-artist { font-size: 0.6rem; }
   .skills-grid { justify-content: center; gap: 0.45rem; }
   .skill-tag { font-size: 0.72rem; padding: 0.35rem 0.78rem; }
   .currently-list { gap: 0.75rem; }
@@ -468,7 +666,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .hero-title { font-size: 1.7rem; margin-bottom: 0.45rem; }
   .hero-subtitle { font-size: 0.92rem; }
   .click-hint { font-size: 0.55rem; }
-  .hero-expanded p { font-size: 0.92rem; line-height: 1.6; }
+  .hero-expanded p { font-size: 0.96rem; line-height: 1.6; }
   .bento-item.bento-ascii {
     padding: 0.4rem 0.28rem;
   }
@@ -477,9 +675,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     line-height: 1.06;
   }
   .philosophy-text { font-size: 1.05rem; }
-  .bento-stats .stat-number { font-size: 2rem; }
-  .bento-stats .stat-number.stat-infinity { font-size: 2.3rem; }
+  .stat-number { font-size: 2rem; }
   .stat-label { font-size: 0.58rem; }
+  .player-art { width: 46px; height: 46px; }
+  .track-title { font-size: 0.9rem; }
   .skill-tag { font-size: 0.66rem; padding: 0.3rem 0.68rem; }
   .skills-grid { justify-content: center; gap: 0.38rem; }
   .currently-list { gap: 0.65rem; }
