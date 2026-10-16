@@ -368,6 +368,14 @@ I'm always open to collaborate on cool projects.`;
 </BaseLayout>
 
 <style>
+  /* This page's own dock/terminal already have their own blur/glass look —
+     the shared top/bottom viewport edge-fade (from BaseLayout) isn't needed
+     here, so it's switched off just for this page. */
+  :global(.top-edge-blur),
+  :global(.bottom-edge-blur) {
+    display: none;
+  }
+
   .contact-page {
     min-height: 100dvh;
     display: flex;
