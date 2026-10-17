@@ -81,9 +81,9 @@ const featuredProjects = [...allProjects]
       <div class="intro">
         <div class="avatar-flip" id="avatar-flip">
           <div class="avatar-inner">
-            <img src="/images/avatar.webp" alt="Vaibhav" class="avatar-front" fetchpriority="high" width="120" height="120" />
+            <img src="/images/avatar.webp" srcset="/images/avatar.webp 1x, /images/avatar@2x.webp 2x" alt="Vaibhav" class="avatar-front" fetchpriority="high" width="144" height="144" />
             <span class="avatar-shine avatar-shine-front" aria-hidden="true"></span>
-            <img src="/images/V8.webp" alt="V8" class="avatar-back" loading="eager" fetchpriority="high" decoding="sync" width="120" height="120" />
+            <img src="/images/V8.webp" alt="V8" class="avatar-back" loading="eager" fetchpriority="high" decoding="sync" width="144" height="144" />
             <span class="avatar-shine avatar-shine-back" aria-hidden="true"></span>
           </div>
         </div>
@@ -108,17 +108,19 @@ const featuredProjects = [...allProjects]
       <ul>
         {featuredProjects.map(project => (
           <li class="project-item">
-            <a href={project.url} target="_blank" rel="noopener noreferrer">
+            <a href={project.url} target="_blank" rel="noopener noreferrer" class={project.image ? 'has-cover' : undefined} style={project.image ? `--proj-img: url('${project.image}')` : undefined}>
               {project.image ? (
                 <img src={project.image} alt={`${project.name} project cover`} loading="lazy" class="project-thumb" />
               ) : (
                 <div class="project-thumb project-thumb-placeholder" aria-hidden="true"></div>
               )}
-              <div class="project-meta">
-                <h3>{project.name}</h3>
-                <span class="project-stack-tag">{project.language}</span>
+              <div class="project-body">
+                <div class="project-meta">
+                  <h3>{project.name}</h3>
+                  <span class="project-stack-tag">{project.language}</span>
+                </div>
+                <p>{project.description}</p>
               </div>
-              <p>{project.description}</p>
             </a>
           </li>
         ))}
@@ -330,8 +332,8 @@ const featuredProjects = [...allProjects]
     margin-top: 0;
   }
   .hero h1 {
-    font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
-    font-size: clamp(1.625rem, 7.5vw, 2.75rem);
+    font-family: var(--font-mono);
+    font-size: clamp(1.375rem, 6vw, 2.25rem);
     font-weight: 600;
     line-height: 1.2;
     margin: 0;
@@ -420,7 +422,7 @@ const featuredProjects = [...allProjects]
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
+    font-family: var(--font-mono);
     font-size: clamp(0.6875rem, 2.8vw, 0.8125rem);
     line-height: 1.25;
     height: 2rem;
@@ -621,8 +623,8 @@ const featuredProjects = [...allProjects]
   }
   .section-header h2 { margin-bottom: 0; }
   .view-all {
-    font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
-    font-size: 0.7rem;
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
     color: rgba(255, 255, 255, 0.65) !important;
     text-decoration: none !important;
     background: none !important;
@@ -635,8 +637,8 @@ const featuredProjects = [...allProjects]
   :global(body.light-mode) .view-all:hover { color: #0f4d1f !important; }
   .intro .avatar-flip {
     position: relative;
-    width: 120px;
-    height: 120px;
+    width: 144px;
+    height: 144px;
     cursor: pointer;
     flex-shrink: 0;
   }
@@ -658,8 +660,11 @@ const featuredProjects = [...allProjects]
     height: 100% !important;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.92);
     box-shadow: none;
+  }
+  :global(body.light-mode) .intro .avatar-flip img {
+    border-color: rgba(0, 0, 0, 0.88);
   }
   .intro .avatar-flip .avatar-back {
     transform: scaleX(-1);
@@ -707,8 +712,8 @@ const featuredProjects = [...allProjects]
   @media (max-width: 480px) { .intro .avatar-flip { width: 80px; height: 80px; } }
 
   .now-status {
-    font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
-    font-size: 0.8rem;
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
     color: rgba(255, 255, 255, 0.3);
     letter-spacing: 0.02em;
   }
@@ -716,29 +721,35 @@ const featuredProjects = [...allProjects]
     color: rgba(0, 0, 0, 0.3);
   }
 
+  /* Avatar + greeting are one unit: shrink-wrap the pair and center it in the card. */
   .about .intro {
-    margin-bottom: 1.5rem;
-    gap: 1.5rem;
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 auto 1.75rem;
+    gap: 1.75rem;
     justify-content: center;
   }
   .about {
     margin-top: 1.5rem;
-    padding: clamp(1.25rem, 3vw, 2rem);
+    padding: clamp(1.25rem, 3vw, 2.25rem);
   }
+  /* Full card width like the About page; slightly larger type keeps long lines readable. */
   .about > p {
-    margin-bottom: 0;
+    margin: 0;
+    font-size: clamp(1rem, 0.9rem + 0.25vw, 1.125rem);
+    line-height: 1.75;
   }
   .intro-text h2 {
-    font-size: clamp(1.5rem, 5.2vw, 2.2rem);
+    font-size: clamp(1.625rem, 5.6vw, 2.6rem);
     line-height: 1.2;
   }
   .intro-text .now-status {
     text-align: left;
     margin-bottom: 0;
-    margin-top: 0.4rem;
+    margin-top: 0.55rem;
     font-family: inherit;
-    font-size: 0.92rem;
-    letter-spacing: normal;
+    font-size: clamp(0.875rem, 0.8rem + 0.35vw, 1.0625rem);
+    letter-spacing: 0.01em;
     color: rgba(255, 255, 255, 0.45);
   }
   :global(body.light-mode) .intro-text .now-status {
@@ -747,7 +758,7 @@ const featuredProjects = [...allProjects]
   .about-cta {
     display: block;
     text-align: right;
-    margin-top: 1.5rem;
+    margin: 1.25rem 0 0;
   }
 
   .latest-tag {
@@ -788,14 +799,14 @@ const featuredProjects = [...allProjects]
   }
 
   .contact-pill i {
-    font-size: 0.95rem;
+    font-size: var(--fs-sm);
     color: rgba(255, 255, 255, 0.6);
     transition: color 0.25s ease;
   }
 
   .contact-pill span {
-    font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
-    font-size: 0.82rem;
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
     font-weight: 500;
     letter-spacing: 0.01em;
   }
@@ -835,7 +846,7 @@ const featuredProjects = [...allProjects]
     .about .intro { gap: 1rem; }
 
     .now-status {
-      font-size: 0.68rem;
+      font-size: var(--fs-2xs);
       line-height: 1.6;
     }
 
@@ -852,7 +863,7 @@ const featuredProjects = [...allProjects]
   @media (max-width: 480px) {
 
     .now-status {
-      font-size: 0.62rem;
+      font-size: var(--fs-2xs);
     }
 
     .contact-pill {
@@ -860,7 +871,7 @@ const featuredProjects = [...allProjects]
     }
 
     .contact-pill span {
-      font-size: 0.75rem;
+      font-size: var(--fs-xs);
     }
   }
 
