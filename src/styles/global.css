@@ -1,32 +1,3 @@
-@font-face {
-    font-family: 'SF Mono';
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: local('SF Mono'), url('https://fonts.cdnfonts.com/s/22256/SFMonoRegular.woff') format('woff');
-}
-@font-face {
-    font-family: 'SF Mono';
-    font-style: italic;
-    font-weight: 400;
-    font-display: swap;
-    src: local('SF Mono'), url('https://fonts.cdnfonts.com/s/22256/SFMonoRegularItalic.woff') format('woff');
-}
-@font-face {
-    font-family: 'SF Mono';
-    font-style: normal;
-    font-weight: 500;
-    font-display: swap;
-    src: local('SF Mono'), url('https://fonts.cdnfonts.com/s/22256/SFMonoMedium.woff') format('woff');
-}
-@font-face {
-    font-family: 'SF Mono';
-    font-style: normal;
-    font-weight: 600;
-    font-display: swap;
-    src: local('SF Mono'), url('https://fonts.cdnfonts.com/s/22256/SFMonoSemibold.woff') format('woff');
-}
-
 * {
     box-sizing: border-box;
     margin: 0;
@@ -77,18 +48,7 @@ html.dark-mode body {
 body {
     overflow-x: clip;
     width: 100%;
-    font-family:
-        "SF Pro Display",
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        Oxygen,
-        Ubuntu,
-        Cantarell,
-        "Open Sans",
-        "Helvetica Neue",
-        sans-serif;
+    font-family: var(--font-sans);
     background-color: #000;
     color: #fff;
     font-size: 18px;
@@ -382,7 +342,7 @@ nav a {
     text-decoration: none;
     padding: 0.4rem 1rem;
     border-radius: 999px;
-    font-size: 0.92rem;
+    font-size: var(--fs-sm);
     font-weight: 500;
     letter-spacing: -0.01em;
     position: relative;
@@ -449,7 +409,7 @@ html.light-mode nav a[aria-current="page"] {
 
 .logo a {
     font-weight: 600;
-    font-size: 0.95rem;
+    font-size: var(--fs-sm);
     letter-spacing: -0.01em;
     color: #fff;
     padding: 0.38rem 0.85rem;
@@ -508,8 +468,30 @@ html.light-mode .logo a[aria-current="page"] {
     font-weight: 750;
 }
 
+:root {
+    /* Grows with the viewport so side margins shrink on 1080p+; 720p stays at 1100px. */
+    --page-max-width: clamp(1100px, 64vw, 1280px);
+
+    /* Apple devices resolve to SF via the system keywords; everyone else gets Geist. */
+    --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Geist", "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    --font-serif: "Fraunces", Georgia, serif;
+    --font-serif-text: "Newsreader", Georgia, serif;
+    --font-mono: "SF Mono", ui-monospace, "Geist Mono", Menlo, Monaco, Consolas, monospace;
+
+    /* Shared type scale; larger steps are fluid so headings track 720p → 1440p+. */
+    --fs-2xs: 0.72rem;
+    --fs-xs: 0.8rem;
+    --fs-sm: 0.9rem;
+    --fs-base: 1rem;
+    --fs-md: 1.125rem;
+    --fs-lg: clamp(1.2rem, 1.1rem + 0.35vw, 1.4rem);
+    --fs-xl: clamp(1.45rem, 1.25rem + 0.7vw, 1.8rem);
+    --fs-2xl: clamp(1.8rem, 1.45rem + 1.2vw, 2.4rem);
+    --fs-3xl: clamp(2.3rem, 1.7rem + 2vw, 3.3rem);
+}
+
 main {
-    max-width: 1100px;
+    max-width: var(--page-max-width);
     margin: 0 auto;
     padding: 6rem 2rem 2rem;
     position: relative;
@@ -539,7 +521,7 @@ body.light-mode section {
 }
 
 .footer-glass {
-    max-width: 1200px;
+    max-width: max(1200px, var(--page-max-width));
     margin: 0 auto;
     padding: 2.55rem;
     border-radius: 24px;
@@ -675,7 +657,7 @@ body.light-mode .webring-hub:hover {
 }
 
 .footer-logo {
-    font-size: 1.5rem;
+    font-size: var(--fs-xl);
     font-weight: 700;
     color: #fff;
     text-decoration: none;
@@ -694,7 +676,7 @@ body.light-mode .footer-logo {
 }
 
 .footer-tagline {
-    font-size: 0.85rem;
+    font-size: var(--fs-sm);
     color: rgba(255, 255, 255, 0.5);
     margin: 0;
     letter-spacing: 0.02em;
@@ -744,7 +726,7 @@ body.light-mode .footer-tagline {
 }
 
 .footer-nav-links a {
-    font-size: 0.9rem;
+    font-size: var(--fs-sm);
     color: rgba(255, 255, 255, 0.7);
     text-decoration: none;
     transition: color 0.2s ease;
@@ -792,7 +774,7 @@ body.light-mode .footer-tagline {
 }
 
 .footer-social-icons a i {
-    font-size: 1rem;
+    font-size: var(--fs-base);
     width: auto;
 }
 
@@ -820,7 +802,7 @@ body.light-mode .footer-tagline {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    font-size: 0.8rem;
+    font-size: var(--fs-xs);
     color: rgba(255, 255, 255, 0.4);
 }
 
@@ -856,7 +838,7 @@ body.light-mode .footer-tagline {
 
 .webring-link,
 .webring-hub {
-    font-size: 0.8rem;
+    font-size: var(--fs-xs);
     color: rgba(255, 255, 255, 0.6);
     text-decoration: none;
     transition: color 0.2s ease;
@@ -921,11 +903,11 @@ body.light-mode .footer-tagline {
 
     .footer-logo {
         margin-bottom: 0.35rem;
-        font-size: 1.2rem;
+        font-size: var(--fs-lg);
     }
 
     .footer-tagline {
-        font-size: 0.75rem;
+        font-size: var(--fs-xs);
         line-height: 1.4;
     }
 
@@ -991,7 +973,7 @@ body.light-mode .footer-tagline {
     }
 
     .footer-nav-links a {
-        font-size: 0.8rem;
+        font-size: var(--fs-xs);
         line-height: 1.3;
     }
 
@@ -1030,7 +1012,7 @@ body.light-mode .footer-tagline {
 
     .webring-link,
     .webring-hub {
-        font-size: 0.72rem;
+        font-size: var(--fs-xs);
     }
 
     .footer-bottom-bar {
@@ -1050,7 +1032,7 @@ body.light-mode .footer-tagline {
     .footer-meta {
         flex-wrap: wrap;
         justify-content: center;
-        font-size: 0.68rem;
+        font-size: var(--fs-2xs);
         gap: 0.42rem;
         line-height: 1.42;
     }
@@ -1083,11 +1065,11 @@ body.light-mode .footer-tagline {
     }
 
     .footer-logo {
-        font-size: 1.1rem;
+        font-size: var(--fs-md);
     }
 
     .footer-tagline {
-        font-size: 0.68rem;
+        font-size: var(--fs-2xs);
     }
 
     .footer-nav {
@@ -1101,7 +1083,7 @@ body.light-mode .footer-tagline {
     }
 
     .footer-nav-links a {
-        font-size: 0.74rem;
+        font-size: var(--fs-xs);
     }
 
     .footer-social-icons {
@@ -1124,7 +1106,7 @@ body.light-mode .footer-tagline {
     }
 
     .footer-meta {
-        font-size: 0.62rem;
+        font-size: var(--fs-2xs);
         gap: 0.38rem;
     }
 
@@ -1134,7 +1116,7 @@ body.light-mode .footer-tagline {
 
     .webring-link,
     .webring-hub {
-        font-size: 0.68rem;
+        font-size: var(--fs-2xs);
     }
 
     .footer-visitors img {
@@ -1162,15 +1144,15 @@ body.light-mode h3 {
 }
 
 h1 {
-    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-size: var(--fs-3xl);
 }
 
 h2 {
-    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-size: var(--fs-2xl);
 }
 
 h3 {
-    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    font-size: var(--fs-xl);
 }
 
 p {
@@ -1269,7 +1251,7 @@ body.light-mode .about p a:hover {
 }
 
 .hero h1 {
-    font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
+    font-family: var(--font-mono);
     font-size: clamp(1.5rem, 4vw, 2.5rem);
     font-weight: 500;
     letter-spacing: -0.01em;
@@ -1282,7 +1264,7 @@ body.light-mode .hero h1 {
 }
 
 .hero p {
-    font-size: 1.2rem;
+    font-size: var(--fs-lg);
     color: rgba(255, 255, 255, 0.5);
     margin-top: 0.5rem;
 }
@@ -1420,7 +1402,7 @@ body.light-mode .project-thumb {
 }
 
 .project-item h3 {
-    font-size: 1.1rem;
+    font-size: var(--fs-md);
     font-weight: 600;
     margin-bottom: 0.4rem;
     line-height: 1.3;
@@ -1440,8 +1422,8 @@ body.light-mode .project-thumb {
 
 .project-stack-tag {
     flex-shrink: 0;
-    font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
-    font-size: 0.62rem;
+    font-family: var(--font-mono);
+    font-size: var(--fs-2xs);
     color: rgba(255, 255, 255, 0.55);
     border: 1px solid rgba(255, 255, 255, 0.12);
     background: rgba(255, 255, 255, 0.04);
@@ -1456,7 +1438,7 @@ body.light-mode .project-stack-tag {
 }
 
 .project-item p {
-    font-size: 0.875rem;
+    font-size: var(--fs-sm);
     color: rgba(255, 255, 255, 0.6);
     line-height: 1.5;
     margin-bottom: 0;
@@ -1465,6 +1447,40 @@ body.light-mode .project-stack-tag {
 body.light-mode .project-item p {
     color: rgba(0, 0, 0, 0.55);
 }
+
+/* Home cards: sharp cover that dissolves into a blurred copy of itself behind the text (matches Blogs). */
+.projects .project-item { isolation: isolate; position: relative; }
+.projects .project-item a { height: 100%; position: relative; box-sizing: border-box; }
+.projects .project-item a.has-cover::before {
+    content: "";
+    position: absolute;
+    inset: -40px;
+    z-index: -1;
+    background: var(--proj-img) center / cover no-repeat;
+    filter: blur(40px) saturate(130%) brightness(0.32);
+    pointer-events: none;
+}
+.projects .project-item a.has-cover .project-thumb {
+    border: 0;
+    border-radius: 10px 10px 0 0;
+    -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 62%, transparent 100%);
+    margin-bottom: 0.25rem;
+}
+.projects .project-item:has(a.has-cover) {
+    background: #0d0d0d;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+.projects .project-item a.has-cover p { color: rgba(255, 255, 255, 0.72); }
+body.light-mode .projects .project-item a.has-cover::before { filter: blur(48px) saturate(160%) brightness(1.7); opacity: 0.35; }
+/* Cream veil behind the text so dark covers don't turn it muddy grey (same as Blogs). */
+.projects .project-item a.has-cover .project-body { flex: 1; margin: -1.25rem -1rem -1rem; padding: 1.25rem 1rem 1rem; }
+body.light-mode .projects .project-item a.has-cover .project-body {
+    background: linear-gradient(to bottom, rgba(246, 246, 246, 0) 0, rgba(246, 246, 246, 0.82) 2.75rem, rgba(246, 246, 246, 0.92) 100%);
+}
+body.light-mode .projects .project-item:has(a.has-cover) { background: #f6f6f6; }
+body.light-mode .projects .project-item a.has-cover p { color: rgba(0, 0, 0, 0.62); }
 
 /* ========================================= */
 /* ==          Posts/Blogs Section        == */
@@ -1522,7 +1538,7 @@ body.light-mode .posts {
     top: 50%;
     right: 1.75rem;
     transform: translateY(-50%) translateX(-8px);
-    font-size: 1rem;
+    font-size: var(--fs-base);
     color: rgba(255, 255, 255, 0.25);
     transition: all 0.25s ease;
     opacity: 0;
@@ -1559,7 +1575,7 @@ body.light-mode .posts a:hover {
 }
 
 .posts h3 {
-    font-size: 1.05rem;
+    font-size: var(--fs-base);
     margin-bottom: 0.35rem;
     font-weight: 600;
     letter-spacing: -0.01em;
@@ -1568,7 +1584,7 @@ body.light-mode .posts a:hover {
 .posts p {
     margin-bottom: 0;
     color: rgba(255, 255, 255, 0.55);
-    font-size: 0.84rem;
+    font-size: var(--fs-xs);
     line-height: 1.55;
 }
 
@@ -1578,8 +1594,8 @@ body.light-mode .posts p {
 
 .posts small {
     color: rgba(255, 255, 255, 0.65);
-    font-size: 0.72rem;
-    font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
+    font-size: var(--fs-xs);
+    font-family: var(--font-mono);
     font-weight: 400;
     letter-spacing: 0.02em;
     margin-top: 0.5rem;
@@ -1624,13 +1640,13 @@ body.light-mode .intro img {
 }
 
 .intro-text h2 {
-    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-size: var(--fs-2xl);
     margin-bottom: 0;
     font-weight: 600;
 }
 
 .intro-text p {
-    font-size: 1rem;
+    font-size: var(--fs-base);
     color: rgba(255, 255, 255, 0.5);
     margin-bottom: 0;
     font-weight: 400;
@@ -1655,13 +1671,13 @@ body.light-mode .intro img {
 .vaibhav-hover .name-default {
     opacity: 1;
     transform: translateY(0);
-    font-family: "EB Garamond", Georgia, serif;
+    font-family: var(--font-serif);
     font-style: italic;
 }
 .vaibhav-hover .name-alt {
     opacity: 0;
     transform: translateY(2px);
-    font-family: "EB Garamond", Georgia, serif;
+    font-family: var(--font-serif);
     font-style: italic;
 }
 
@@ -2011,7 +2027,7 @@ body.light-mode .contact h2 {
     }
 
     .intro-text p {
-        font-size: 1rem;
+        font-size: var(--fs-base);
     }
 
     .about {
@@ -2041,11 +2057,11 @@ body.light-mode .contact h2 {
     }
 
     .posts h3 {
-        font-size: 1rem;
+        font-size: var(--fs-base);
     }
 
     .posts p {
-        font-size: 0.82rem;
+        font-size: var(--fs-xs);
         display: -webkit-box;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
@@ -2108,7 +2124,7 @@ body.light-mode .contact h2 {
     }
 
     .logo a {
-        font-size: 0.92rem;
+        font-size: var(--fs-sm);
         font-weight: 500;
         letter-spacing: -0.01em;
         padding: 0.25rem 0.5rem;
@@ -2284,7 +2300,7 @@ body.light-mode .contact h2 {
 
     nav a {
         padding: 0.5rem 1rem;
-        font-size: 0.95rem;
+        font-size: var(--fs-sm);
         width: 100%;
         text-align: center;
     }
@@ -2293,7 +2309,7 @@ body.light-mode .contact h2 {
         display: block;
         min-height: 30px;
         padding: 0.2rem 0.75rem;
-        font-size: 0.9rem;
+        font-size: var(--fs-sm);
         border-radius: 12px;
     }
 
@@ -2347,7 +2363,7 @@ body.light-mode .contact h2 {
 
     .desktop-v8 a,
     .desktop-v8 a[aria-current="page"] {
-        font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
+        font-family: var(--font-mono);
         font-style: italic;
         font-weight: 600;
         letter-spacing: 0.075em;
@@ -2381,7 +2397,7 @@ body.light-mode .contact h2 {
         justify-content: center;
         width: auto;
         padding: 0.38rem 0;
-        font-size: 0.92rem;
+        font-size: var(--fs-sm);
         line-height: 1.25;
         text-align: center;
     }
@@ -2414,7 +2430,7 @@ body.light-mode .contact h2 {
     }
 
     .logo a {
-        font-size: 0.95rem;
+        font-size: var(--fs-sm);
         font-weight: 600;
     }
 
@@ -2462,15 +2478,15 @@ body.light-mode .contact h2 {
 
     .posts a::after {
         right: 0.85rem;
-        font-size: 0.85rem;
+        font-size: var(--fs-sm);
     }
 
     .posts h3 {
-        font-size: 0.95rem;
+        font-size: var(--fs-sm);
     }
 
     .posts p {
-        font-size: 0.78rem;
+        font-size: var(--fs-xs);
         display: -webkit-box;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
@@ -2478,7 +2494,7 @@ body.light-mode .contact h2 {
     }
 
     .posts small {
-        font-size: 0.66rem;
+        font-size: var(--fs-2xs);
         margin-top: 0.28rem;
     }
 
@@ -2512,16 +2528,17 @@ main.blog-post {
     --text-muted-post: rgba(255, 255, 255, 0.7);
     --text-accent-post: rgba(255, 255, 255, 0.9);
     --divider-color-post: rgba(255, 255, 255, 0.1);
-    --font-serif-post: "EB Garamond", "Helvetica Neue", "Segoe UI", sans-serif;
-    --heading-font-weight-post: 700;
+    --font-serif-post: var(--font-serif-text);
+    --heading-font-weight-post: 400;
     --spacing-post: 1.5rem;
 
-    max-width: 900px;
+    /* Column and body grow together so lines stay ~75–80 characters at every width. */
+    max-width: clamp(820px, 52vw, 1000px);
     transform-origin: top center;
     margin: 0 auto;
     padding: 7rem var(--spacing-post) 4rem;
     font-family: var(--font-serif-post);
-    font-size: 23px;
+    font-size: clamp(18px, 15.5px + 0.35vw, 21px);
     color: var(--text-color-post);
     letter-spacing: 0.01em;
     line-height: 1.7;
@@ -2533,27 +2550,28 @@ main.blog-post {
 main.blog-post h1,
 main.blog-post h2 {
     font-weight: var(--heading-font-weight-post);
-    line-height: 1.2;
-    letter-spacing: -0.025em;
-    font-family: var(--font-serif-post);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    font-family: var(--font-serif);
 }
 
+/* Headings step up from the body on a 1.25 (major third) scale. */
 main.blog-post h1 {
-    font-size: 48px;
+    font-size: 2.2em;
     margin: 2rem 0 1.5rem;
     color: var(--text-color-post);
 }
 
 main.blog-post h2 {
-    font-size: 28px;
+    font-size: 1.56em;
     margin: 2.5rem 0 1rem;
     color: var(--text-color-post);
 }
 
 main.blog-post h3 {
-    font-family: var(--font-serif-post);
+    font-family: var(--font-serif);
     font-weight: var(--heading-font-weight-post);
-    font-size: 22px;
+    font-size: 1.25em;
     line-height: 1.3;
     letter-spacing: -0.015em;
     margin: 2rem 0 0.75rem;
@@ -2612,7 +2630,7 @@ main.blog-post pre {
 }
 
 main.blog-post pre code {
-    font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
+    font-family: var(--font-mono);
     font-size: 0.85em;
     line-height: 1.5;
     color: rgba(255, 255, 255, 0.85);
@@ -2623,7 +2641,7 @@ main.blog-post pre code {
 }
 
 main.blog-post code {
-    font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
+    font-family: var(--font-mono);
     font-size: 0.85em;
     background: rgba(255, 255, 255, 0.08);
     padding: 0.15em 0.4em;
@@ -2643,8 +2661,8 @@ main.blog-post .copy-btn {
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 8px;
     color: rgba(255, 255, 255, 0.5);
-    font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
-    font-size: 0.7rem;
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
     padding: 0.35rem 0.65rem;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -2691,8 +2709,13 @@ body.light-mode main.blog-post em {
     color: #6e6e73;
 }
 
+/* Site accent (green), a shade deeper so it stays readable on the light page. */
 body.light-mode main.blog-post a {
-    color: #007aff;
+    color: #15964a;
+}
+
+body.light-mode main.blog-post a:hover {
+    color: #0f4d1f;
 }
 
 body.light-mode main.blog-post pre {
@@ -2748,35 +2771,33 @@ body.light-mode main.blog-post section {
 /* Media query adjustments for blog posts */
 @media (max-width: 768px) {
     main.blog-post {
-        font-size: 20px;
         padding: 5.25rem 1.25rem 2.75rem;
         transform: scale(1);
     }
 
     main.blog-post h1 {
-        font-size: 34px;
+        font-size: 1.8em;
         margin: 1rem 0 1rem;
     }
 
     main.blog-post h2 {
-        font-size: 24px;
+        font-size: 1.4em;
         margin: 1.75rem 0 0.75rem;
     }
 
     main.blog-post h3 {
-        font-size: 20px;
+        font-size: 1.18em;
         margin: 1.5rem 0 0.6rem;
     }
 }
 
 @media (max-width: 480px) {
     main.blog-post {
-        font-size: 19px;
         padding: 5.1rem 1rem 2.5rem;
     }
 
     main.blog-post h1 {
-        font-size: 30px;
+        font-size: 1.6em;
     }
 }
 
@@ -2819,8 +2840,8 @@ body.light-mode main>section.intro {
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 999px;
     color: rgba(255, 255, 255, 0.85);
-    font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas, monospace;
-    font-size: 0.8rem;
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
     letter-spacing: 0.04em;
     cursor: pointer;
     backdrop-filter: blur(20px);
@@ -2841,7 +2862,7 @@ body.light-mode main>section.intro {
 }
 
 .guestbook-btn-icon {
-    font-size: 1rem;
+    font-size: var(--fs-base);
     width: 1em;
     height: 1em;
     display: flex;
@@ -2946,8 +2967,8 @@ body.light-mode .guestbook-modal-header {
 }
 
 .guestbook-modal-header span {
-    font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas, monospace;
-    font-size: 0.85rem;
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
     letter-spacing: 0.06em;
     color: rgba(255, 255, 255, 0.6);
 }
@@ -2960,7 +2981,7 @@ body.light-mode .guestbook-modal-header span {
     background: none;
     border: none;
     color: rgba(255, 255, 255, 0.4);
-    font-size: 1.25rem;
+    font-size: var(--fs-lg);
     line-height: 1;
     cursor: pointer;
     padding: 0.2rem 0.4rem;
@@ -2998,7 +3019,7 @@ body.light-mode .guestbook-modal-close:hover {
         width: 45px;
         height: 45px;
         padding: 0.55rem;
-        font-size: 0.9rem;
+        font-size: var(--fs-sm);
     }
 
     .guestbook-btn:hover {
@@ -3028,7 +3049,7 @@ body.light-mode .guestbook-modal-close:hover {
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 50%;
     color: rgba(255, 255, 255, 0.85);
-    font-size: 1.1rem;
+    font-size: var(--fs-md);
     cursor: pointer;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
@@ -3070,7 +3091,7 @@ body.light-mode .scroll-to-top:hover {
         left: 1.5rem;
         width: 45px;
         height: 45px;
-        font-size: 1rem;
+        font-size: var(--fs-base);
     }
 }
 
@@ -3127,7 +3148,7 @@ html.light-mode #bg-canvas {
 
     .desktop-v8 a,
     .desktop-v8 a[aria-current="page"] {
-        font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
+        font-family: var(--font-mono);
         font-style: italic;
         font-weight: 600;
         letter-spacing: 0.075em;
