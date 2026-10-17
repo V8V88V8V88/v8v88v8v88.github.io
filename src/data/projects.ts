@@ -119,7 +119,7 @@ export const languageOverrides: Record<string, string> = {
 
 const descriptionOverrides: Record<string, string> = {
   'thefossclub.github.io': 'Official website for The FOSS Club, bringing together people who learn, build, and share open-source software.',
-  'indx': 'An interactive map for indexing places, projects, and anything worth discovering through a focused TypeScript interface.',
+  'indx': 'An interactive map that indexes places, data, and anything worth discovering, all explorable through a fast and focused interface.',
   'Synthio': 'A minimalist music visualizer built with Svelte, turning live audio into an expressive and responsive visual experience.',
   'piracyindex': 'A curated piracy index that brings useful sources together in one fast, searchable, and easy-to-navigate place.',
   'interweb': 'A carefully curated webring for discovering thoughtful personal websites, independent creators, and interesting corners of the web.',
@@ -178,7 +178,8 @@ function getProjectImage(name: string, _htmlUrl: string): string | null {
 }
 
 function getProjectDescription(repo: GitHubRepo): string {
-  const description = descriptionOverrides[repo.name] || repo.description;
+  const overrideKey = Object.keys(descriptionOverrides).find(k => k.toLowerCase() === repo.name.toLowerCase());
+  const description = (overrideKey && descriptionOverrides[overrideKey]) || repo.description;
   return description?.trim() || `${formatProjectName(repo.name)} — an open-source project by ${GITHUB_USERNAME}.`;
 }
 
