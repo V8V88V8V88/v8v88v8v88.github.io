@@ -40,40 +40,35 @@ const blogSchema = {
     </section>
 
     <section class="posts-grid">
-      {posts.map((post) => (
-        <article class="post-card">
-          <div class="post-image" style={`background-image: url('${post.image}')`}></div>
+      {posts.map((post, i) => (
+        <a class="post-card" href={`/${post.slug}/`} style={`--post-img: url('${post.image}')`}>
+          <div class="post-image" aria-hidden="true"></div>
+          {i === 0 && <span class="post-badge">Latest</span>}
           <div class="post-content">
-            <h2 class="post-title"><a href={`/${post.slug}/`}>{post.title}</a></h2>
-            <p class="post-excerpt">{post.description}</p>
-            {post.tags && (
-              <div class="post-tags">
-                {post.tags.map((tag) => (
-                  <span class="post-tag">{tag}</span>
-                ))}
-              </div>
-            )}
             <div class="post-meta">
-              <span class="post-date">{formatDate(post.date)}</span>
-              {post.readTime && <span class="post-read-time">{post.readTime}</span>}
+              <time datetime={post.date}>{formatDate(post.date)}</time>
+              {post.readTime && <><span class="post-meta-dot" aria-hidden="true">·</span><span>{post.readTime}</span></>}
+            </div>
+            <h2 class="post-title">{post.title}</h2>
+            <p class="post-excerpt">{post.description}</p>
+            <div class="post-footer">
+              {post.tags && (
+                <div class="post-tags">
+                  {post.tags.map((tag) => (
+                    <span class="post-tag">{tag}</span>
+                  ))}
+                </div>
+              )}
+              <span class="post-cta" aria-hidden="true">Read <span class="post-cta-arrow">→</span></span>
             </div>
           </div>
-        </article>
+        </a>
       ))}
     </section>
   </main>
 
   <script is:inline>
     document.addEventListener("DOMContentLoaded", function () {
-      document.querySelectorAll(".post-card").forEach(card => {
-        card.addEventListener("click", function () {
-          const link = this.querySelector("a");
-          if (link) {
-            window.location.href = link.href;
-          }
-        });
-      });
-
       const hero = document.querySelector(".hero");
       if (hero) {
         hero.addEventListener("mousemove", (e) => {
@@ -91,19 +86,18 @@ const blogSchema = {
 <style>
   main {
     padding: 4rem 2rem 2rem;
-    max-width: 1100px;
+    max-width: var(--page-max-width);
     margin: 0 auto;
   }
 
   .hero {
     position: relative;
-    height: 35vh;
-    min-height: 320px;
+    height: clamp(220px, 26vh, 290px);
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    margin: 1rem auto 5.75rem;
+    margin: 1rem auto 3rem;
     border-radius: 24px;
     background: linear-gradient(145deg, #0a0a0a 0%, #1a1a1a 100%);
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -205,17 +199,37 @@ const blogSchema = {
   }
 
   .hero h1 {
-    font-family: "EB Garamond", Georgia, serif;
+    font-family: var(--font-serif);
     font-size: clamp(2.65rem, 6.2vw, 4.2rem);
-    font-weight: 500;
+    font-weight: 400;
     margin-bottom: 0.75rem;
     color: #fff;
     letter-spacing: -0.02em;
   }
 
+  /* "maybe?" sits on a gold-leaf gradient that only shows through on hover. */
   .hero h1 i {
     font-style: italic;
     color: rgba(255, 255, 255, 0.6);
+    padding-right: 0.08em;
+    background: linear-gradient(105deg, #b8862e 0%, #e9c97a 35%, #fff1c9 50%, #e9c97a 65%, #b8862e 100%);
+    background-size: 250% 100%;
+    background-position: 100% 0;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: rgba(255, 255, 255, 0.6);
+    transition: -webkit-text-fill-color 0.6s ease, background-position 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .hero:hover h1 i {
+    -webkit-text-fill-color: transparent;
+    background-position: 0% 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero h1 i {
+      transition: -webkit-text-fill-color 0.3s ease;
+    }
   }
 
   .hero p {
@@ -281,6 +295,12 @@ const blogSchema = {
 
   :global(body.light-mode) .hero h1 i {
     color: rgba(0, 0, 0, 0.5);
+    -webkit-text-fill-color: rgba(0, 0, 0, 0.5);
+    background-image: linear-gradient(105deg, #7a5410 0%, #b98a2c 35%, #d9ad52 50%, #b98a2c 65%, #7a5410 100%);
+  }
+
+  :global(body.light-mode) .hero:hover h1 i {
+    -webkit-text-fill-color: transparent;
   }
 
   :global(body.light-mode) .hero p {
@@ -289,241 +309,240 @@ const blogSchema = {
 
   .posts-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+    gap: clamp(1rem, 1.6vw, 1.5rem);
     margin-top: 0.35rem;
-    padding: 0;
+    padding: 0 clamp(0px, 2vw, 2rem);
     background-color: transparent;
   }
 
+  /* Sharp cover on top that dissolves into a blurred copy of itself behind the text. */
   .post-card {
     position: relative;
-    background:
-      linear-gradient(180deg,
-        rgba(255, 255, 255, 0.06) 0%,
-        rgba(255, 255, 255, 0.02) 50%,
-        rgba(255, 255, 255, 0) 100%),
-      rgba(25, 25, 25, 0.6);
-    border-radius: 20px;
-    overflow: hidden;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: pointer;
-    border: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
     flex-direction: column;
-    backdrop-filter: blur(20px) saturate(150%);
-    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    border-radius: 20px;
+    overflow: hidden;
+    isolation: isolate;
+    text-decoration: none;
+    color: #fff;
+    background: #0d0d0d;
     box-shadow:
-      0 0 0 0.5px rgba(255, 255, 255, 0.05),
-      0 4px 20px rgba(0, 0, 0, 0.2),
-      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      0 12px 32px -10px rgba(0, 0, 0, 0.6);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .post-card::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg,
-        transparent 0%,
-        rgba(255, 255, 255, 0.15) 30%,
-        rgba(255, 255, 255, 0.2) 50%,
-        rgba(255, 255, 255, 0.15) 70%,
-        transparent 100%);
-    z-index: 10;
+    inset: -40px;
+    z-index: -2;
+    background: var(--post-img) center / cover no-repeat;
+    filter: blur(40px) saturate(130%) brightness(0.32);
   }
 
   .post-card:hover {
-    transform: translateY(-6px);
+    transform: translateY(-5px);
     box-shadow:
-      0 0 0 0.5px rgba(255, 255, 255, 0.08),
-      0 20px 40px rgba(0, 0, 0, 0.35),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.18);
-    background:
-      linear-gradient(180deg,
-        rgba(255, 255, 255, 0.08) 0%,
-        rgba(255, 255, 255, 0.03) 50%,
-        rgba(255, 255, 255, 0) 100%),
-      rgba(30, 30, 30, 0.7);
+      0 22px 44px -12px rgba(0, 0, 0, 0.75);
+  }
+
+  .post-card:focus-visible {
+    outline: 2px solid #e9c97a;
+    outline-offset: 3px;
   }
 
   .post-image {
-    height: 180px;
-    background-size: cover;
-    background-position: center;
-    width: 100%;
-    position: relative;
-    transition: transform 0.3s ease;
+    aspect-ratio: 1.618 / 1;
+    background: var(--post-img) center / cover no-repeat;
+    -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 62%, transparent 100%);
+    transform-origin: center top;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .post-card:hover .post-image {
-    transform: scale(1.02);
+    transform: scale(1.04);
   }
 
-  .post-image::after {
-    content: "";
+  .post-badge {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 60px;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.4), transparent);
-    pointer-events: none;
+    top: 0.85rem;
+    left: 0.85rem;
+    padding: 0.22rem 0.6rem;
+    border-radius: 999px;
+    font-size: var(--fs-2xs);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: inset 0 0 0 0.5px rgba(255, 255, 255, 0.25);
   }
 
   .post-content {
-    padding: 1.5rem;
-    flex-grow: 1;
+    flex: 1;
     display: flex;
     flex-direction: column;
+    padding: 0.35rem clamp(1.1rem, 1.5vw, 1.4rem) clamp(1.1rem, 1.5vw, 1.35rem);
+    margin-top: -1.25rem;
   }
 
-  .post-title,
-  .post-title a {
-    font-size: 1.35rem;
+  .post-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: var(--fs-xs);
+    color: rgba(255, 255, 255, 0.55);
+    margin-bottom: 0.45rem;
+  }
+
+  .post-title {
+    font-size: clamp(1.15rem, 1.25vw, 1.35rem);
     font-weight: 600;
-    margin-bottom: 0.6rem;
-    color: #fff !important;
-    text-decoration: none;
-    line-height: 1.35;
-    letter-spacing: -0.01em;
+    margin: 0 0 0.4rem;
+    color: #fff;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
     transition: color 0.2s ease;
   }
 
+  /* Same gold-leaf reveal as the hero's "maybe?". */
+  .post-title {
+    background: linear-gradient(105deg, #b8862e 0%, #e9c97a 35%, #fff1c9 50%, #e9c97a 65%, #b8862e 100%);
+    background-size: 250% 100%;
+    background-position: 100% 0;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: #fff;
+    transition: -webkit-text-fill-color 0.5s ease, background-position 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
   .post-card:hover .post-title,
-  .post-card:hover .post-title a {
-    color: #16a34a !important;
+  .post-card:focus-visible .post-title {
+    -webkit-text-fill-color: transparent;
+    background-position: 0% 0;
   }
 
   .post-excerpt {
-    font-size: 0.95rem;
-    margin-bottom: 1rem;
-    color: rgba(255, 255, 255, 0.6);
-    line-height: 1.55;
-    flex-grow: 1;
+    font-size: var(--fs-sm);
+    margin: 0 0 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+
+  .post-footer {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
   }
 
   .post-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
+    gap: 0.35rem;
+    min-width: 0;
   }
 
   .post-tag {
-    background: rgba(29, 185, 84, 0.15);
-    color: #1DB954;
-    padding: 0.3rem 0.75rem;
+    background: rgba(255, 255, 255, 0.09);
+    color: rgba(255, 255, 255, 0.85);
+    padding: 0.2rem 0.6rem;
     border-radius: 999px;
-    font-size: 0.75rem;
+    font-size: var(--fs-xs);
     font-weight: 500;
-    letter-spacing: 0.02em;
-    border: 1px solid rgba(29, 185, 84, 0.2);
-    transition: all 0.2s ease;
+    box-shadow: inset 0 0 0 0.5px rgba(255, 255, 255, 0.14);
   }
 
-  .post-card:hover .post-tag {
-    background: rgba(29, 185, 84, 0.25);
-    border-color: rgba(29, 185, 84, 0.4);
+  .post-cta {
+    flex-shrink: 0;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.75);
+    white-space: nowrap;
+    transition: color 0.2s ease;
   }
 
-  .post-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.4);
-    margin-top: auto;
-    padding-top: 1rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  .post-cta-arrow {
+    display: inline-block;
+    transition: transform 0.25s ease;
   }
 
-  .post-date,
-  .post-read-time {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
+  .post-card:hover .post-cta {
+    color: #e9c97a;
   }
 
-  .post-date i,
-  .post-read-time i {
-    font-size: 0.75rem;
-    opacity: 0.7;
+  .post-card:hover .post-cta-arrow {
+    transform: translateX(3px);
   }
 
   :global(body.light-mode) .post-card {
-    background:
-      linear-gradient(180deg,
-        rgba(255, 255, 255, 0.9) 0%,
-        rgba(255, 255, 255, 0.6) 50%,
-        rgba(255, 255, 255, 0.4) 100%),
-      rgba(248, 248, 248, 0.8);
-    border-color: rgba(0, 0, 0, 0.08);
     box-shadow:
-      0 4px 20px rgba(0, 0, 0, 0.06),
-      inset 0 1px 0 rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-  }
-
-  :global(body.light-mode) .post-card::before {
-    background: linear-gradient(90deg,
-        transparent 0%,
-        rgba(255, 255, 255, 0.7) 30%,
-        rgba(255, 255, 255, 0.9) 50%,
-        rgba(255, 255, 255, 0.7) 70%,
-        transparent 100%);
+      inset 0 0 0 1px rgba(0, 0, 0, 0.1),
+      0 12px 32px -10px rgba(0, 0, 0, 0.25);
   }
 
   :global(body.light-mode) .post-card:hover {
-    background:
-      linear-gradient(180deg,
-        rgba(255, 255, 255, 1) 0%,
-        rgba(255, 255, 255, 0.8) 50%,
-        rgba(255, 255, 255, 0.6) 100%),
-      rgba(255, 255, 255, 0.9);
-    border-color: rgba(0, 0, 0, 0.18);
     box-shadow:
-      0 20px 40px rgba(0, 0, 0, 0.1),
-      inset 0 1px 0 rgba(255, 255, 255, 1);
+      inset 0 0 0 1px rgba(0, 0, 0, 0.14),
+      0 22px 44px -12px rgba(0, 0, 0, 0.35);
   }
 
-  :global(body.light-mode) .post-image::after {
-    background: linear-gradient(to top, rgba(255, 255, 255, 0.3), transparent);
+  /* Hero-style hairline drawn above the cover so it reads all the way round. */
+  .post-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    pointer-events: none;
+    z-index: 3;
+    transition: border-color 0.35s ease;
   }
+  .post-card:hover::after { border-color: rgba(255, 255, 255, 0.15); }
+  :global(body.light-mode) .post-card::after { border-color: rgba(0, 0, 0, 0.08); }
+  :global(body.light-mode) .post-card:hover::after { border-color: rgba(0, 0, 0, 0.12); }
 
-  :global(body.light-mode) .post-title,
-  :global(body.light-mode) .post-title a {
-    color: #1d1d1f !important;
+  /* Light: cover dissolves into a pale frosted copy of itself, text goes dark. */
+  :global(body.light-mode) .post-card {
+    color: #1d1d1f;
+    background: #f5f4f1;
   }
-
+  :global(body.light-mode) .post-card::before {
+    filter: blur(48px) saturate(160%) brightness(1.7);
+    opacity: 0.35;
+  }
+  /* Cream veil so dark covers don't turn the text area muddy grey; only a tint of the image survives. */
+  :global(body.light-mode) .post-content {
+    background: linear-gradient(to bottom, rgba(245, 244, 241, 0) 0, rgba(245, 244, 241, 0.82) 2.75rem, rgba(245, 244, 241, 0.92) 100%);
+  }
+  :global(body.light-mode) .post-meta { color: rgba(0, 0, 0, 0.5); }
+  :global(body.light-mode) .post-title {
+    color: #1d1d1f;
+    -webkit-text-fill-color: #1d1d1f;
+    background-image: linear-gradient(105deg, #7a5410 0%, #b98a2c 35%, #d9ad52 50%, #b98a2c 65%, #7a5410 100%);
+  }
   :global(body.light-mode) .post-card:hover .post-title,
-  :global(body.light-mode) .post-card:hover .post-title a {
-    color: #0f4d1f !important;
+  :global(body.light-mode) .post-card:focus-visible .post-title {
+    -webkit-text-fill-color: transparent;
   }
-
-  :global(body.light-mode) .post-excerpt {
-    color: rgba(0, 0, 0, 0.6);
-  }
-
+  :global(body.light-mode) .post-excerpt { color: rgba(0, 0, 0, 0.68); }
   :global(body.light-mode) .post-tag {
-    background: rgba(29, 185, 84, 0.1);
-    color: #0f4d1f;
-    border-color: rgba(29, 185, 84, 0.2);
+    background: rgba(255, 255, 255, 0.55);
+    color: rgba(0, 0, 0, 0.75);
+    box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.12);
   }
-
-  :global(body.light-mode) .post-card:hover .post-tag {
-    background: rgba(29, 185, 84, 0.2);
-    border-color: rgba(29, 185, 84, 0.35);
-  }
-
-  :global(body.light-mode) .post-meta {
-    color: rgba(0, 0, 0, 0.4);
-    border-top-color: rgba(0, 0, 0, 0.06);
-  }
+  :global(body.light-mode) .post-cta { color: rgba(0, 0, 0, 0.7); }
+  :global(body.light-mode) .post-card:hover .post-cta { color: #9a6d1c; }
+  :global(body.light-mode) .post-card:focus-visible { outline-color: #b98a2c; }
 
   @media (max-width: 768px) {
     main {
@@ -532,9 +551,9 @@ const blogSchema = {
 
     .hero {
       height: auto;
-      min-height: min(36vh, 256px);
-      padding: 1.95rem 1.35rem;
-      margin: 0.35rem auto 2.85rem;
+      min-height: min(30vh, 220px);
+      padding: 1.75rem 1.35rem;
+      margin: 0.35rem auto 2rem;
       border-radius: 20px;
     }
 
@@ -548,59 +567,26 @@ const blogSchema = {
     }
 
     .hero p {
-      font-size: 1.12rem;
+      font-size: var(--fs-md);
       line-height: 1.55;
     }
 
     .posts-grid {
       grid-template-columns: 1fr;
-      gap: 0.55rem;
+      gap: 0.85rem;
       margin-top: 0.5rem;
     }
 
-    .post-image {
-      height: 96px;
+    .post-card {
+      border-radius: 18px;
     }
 
-    .post-image::after {
-      height: 28px;
+    .post-image {
+      aspect-ratio: 2.4 / 1;
     }
 
     .post-content {
-      padding: 0.65rem 0.85rem;
-    }
-
-    .post-title,
-    .post-title a {
-      font-size: 1.05rem;
-      margin-bottom: 0.35rem;
-      line-height: 1.3;
-    }
-
-    .post-excerpt {
-      font-size: 0.84rem;
-      line-height: 1.38;
-      margin-bottom: 0.4rem;
-      flex-grow: 0;
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 2;
-      overflow: hidden;
-    }
-
-    .post-tags {
-      margin-bottom: 0.4rem;
-      gap: 0.3rem;
-    }
-
-    .post-tag {
-      padding: 0.18rem 0.48rem;
-      font-size: 0.65rem;
-    }
-
-    .post-meta {
-      padding-top: 0.45rem;
-      font-size: 0.7rem;
+      margin-top: -1.75rem;
     }
   }
 
@@ -610,55 +596,50 @@ const blogSchema = {
     }
 
     .hero {
-      min-height: min(38vh, 238px);
-      padding: 1.75rem 1.1rem;
-      margin-bottom: 2.9rem;
+      min-height: min(30vh, 200px);
+      padding: 1.5rem 1.1rem;
+      margin-bottom: 1.75rem;
       border-radius: 16px;
     }
 
     .hero h1 {
-      font-size: 2.08rem;
+      font-size: var(--fs-2xl);
     }
 
     .hero p {
-      font-size: 1.09rem;
+      font-size: var(--fs-base);
     }
 
     .post-card {
-      border-radius: 14px;
+      border-radius: 16px;
     }
 
     .post-image {
-      height: 88px;
-    }
-
-    .post-image::after {
-      height: 24px;
+      aspect-ratio: 2.8 / 1;
     }
 
     .post-content {
-      padding: 0.6rem 0.8rem;
-    }
-
-    .post-title,
-    .post-title a {
-      font-size: 1.02rem;
-    }
-
-    .post-excerpt {
-      font-size: 0.82rem;
-      flex-grow: 0;
-      -webkit-line-clamp: 2;
-    }
-
-    .post-tag {
-      font-size: 0.62rem;
-      padding: 0.16rem 0.45rem;
+      padding: 0.25rem 0.9rem 0.85rem;
     }
 
     .post-meta {
-      font-size: 0.68rem;
-      padding-top: 0.4rem;
+      font-size: var(--fs-2xs);
+      margin-bottom: 0.3rem;
+    }
+
+    .post-title {
+      font-size: var(--fs-base);
+    }
+
+    .post-excerpt {
+      font-size: var(--fs-xs);
+      margin-bottom: 0.6rem;
+      -webkit-line-clamp: 1;
+    }
+
+    .post-tag {
+      font-size: var(--fs-2xs);
+      padding: 0.16rem 0.5rem;
     }
   }
 </style>
