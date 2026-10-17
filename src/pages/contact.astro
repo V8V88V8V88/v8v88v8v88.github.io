@@ -34,7 +34,12 @@ import { neofetchMarkup } from '../data/terminal';
 
   <main class="contact-page">
     <section class="terminal-hero" id="terminal-hero">
-      <div class="terminal-window" id="terminal-window">
+      <div class="terminal-ambient-glow" aria-hidden="true"></div>
+      <div class="terminal-wrapper">
+        <div class="terminal-status-row">
+          <div class="live-clock" id="live-clock" aria-live="off"></div>
+        </div>
+        <div class="terminal-window" id="terminal-window">
         <div class="terminal-header" id="terminal-header" tabindex="0" aria-label="Move terminal with arrow keys; double-click to maximize" title="Drag to move · Double-click to maximize">
           <div class="terminal-controls">
             <button type="button" class="terminal-dot red" id="btn-close" title="Close" aria-label="Close terminal"></button>
@@ -65,6 +70,7 @@ import { neofetchMarkup } from '../data/terminal';
           <div class={`terminal-resize terminal-resize-${direction}`} data-resize={direction} aria-hidden="true"></div>
         ))}
         <button type="button" class="terminal-resize-keyboard" id="terminal-resize-keyboard" aria-label="Resize terminal using arrow keys" title="Drag edges to resize · Focus here and use arrow keys">⌟</button>
+      </div>
       </div>
     </section>
 
@@ -114,6 +120,16 @@ import { neofetchMarkup } from '../data/terminal';
     import '../scripts/terminal-window.js';
   </script>
   <script is:inline define:vars={{ terminalContactJson: getTerminalContactJson(), terminalContacts: contactPageContacts, neofetchMarkup }}>
+    const clock = document.getElementById('live-clock');
+    if (clock) {
+      const pad = (n) => String(n).padStart(2, '0');
+      const tick = () => {
+        const d = new Date();
+        clock.textContent = `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+      };
+      tick(); setInterval(tick, 1000);
+    }
+
     const btnClose = document.getElementById('btn-close');
 
     const terminalInput = document.getElementById('terminal-input');
@@ -400,6 +416,46 @@ I'm always open to collaborate on cool projects.`;
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
+    position: relative;
+  }
+
+  .terminal-ambient-glow {
+    position: absolute;
+    width: 70%;
+    height: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(ellipse at center, rgba(30, 215, 96, 0.055) 0%, transparent 68%);
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(32px);
+  }
+
+  .terminal-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 1;
+  }
+
+  .terminal-status-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    margin-bottom: 8px;
+    padding: 0 4px;
+  }
+
+  .live-clock {
+    font-family: var(--font-mono);
+    font-size: var(--fs-2xs);
+    color: rgba(255, 255, 255, 0.30);
+    letter-spacing: 0.06em;
+    min-width: 6ch;
+    text-align: right;
   }
 
   .terminal-window {
@@ -412,9 +468,9 @@ I'm always open to collaborate on cool projects.`;
     z-index: 40;
     background:
       radial-gradient(140% 100% at 50% 0%, rgba(255, 255, 255, 0.04) 0%, transparent 60%),
-      rgba(8, 8, 8, 0.82);
+      rgba(8, 8, 8, 0.55);
     border: 1px solid rgba(255, 255, 255, 0.09);
-    border-radius: 18px;
+    border-radius: 16px;
     position: relative;
     overflow: hidden;
     backdrop-filter: blur(28px);
@@ -711,8 +767,8 @@ I'm always open to collaborate on cool projects.`;
   .terminal-title {
     flex: 1;
     text-align: center;
-    font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
-    font-size: 0.76rem;
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
     font-weight: 500;
     color: rgba(255, 255, 255, 0.58);
     letter-spacing: 0.01em;
@@ -730,11 +786,27 @@ I'm always open to collaborate on cool projects.`;
     min-height: 0;
     overflow: hidden;
     padding: 1.5rem;
-    font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
-    font-size: 0.95rem;
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
     line-height: 1.8;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    position: relative;
+  }
+
+  .terminal-body::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(0, 0, 0, 0.04) 3px,
+      rgba(0, 0, 0, 0.04) 4px
+    );
+    pointer-events: none;
+    z-index: 5;
   }
 
   .terminal-window :global(.terminal-line) {
@@ -770,7 +842,7 @@ I'm always open to collaborate on cool projects.`;
     border: 0;
     box-shadow: none;
     color: #1db954;
-    font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+    font-family: var(--font-mono);
     font-size: 12px;
     font-weight: 400;
     letter-spacing: 0;
@@ -839,7 +911,7 @@ I'm always open to collaborate on cool projects.`;
     background: transparent;
     border: none;
     outline: none;
-    font-family: 'SF Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
+    font-family: var(--font-mono);
     font-size: inherit;
     color: #fff;
     caret-color: #1DB954;
@@ -924,42 +996,29 @@ I'm always open to collaborate on cool projects.`;
 
   /* Keep the tray's corners proportional to its tiles and inset. */
   .macos-dock {
-    --dock-icon-size: 44px;
-    --dock-icon-radius: 12px;
-    --dock-inset: 8px;
-    --dock-gap: 10px;
-    --c-glass: #bbbbbc;
-    --c-light: #ffffff;
-    --c-dark: #000000;
-    --glass-reflex-dark: 2;
-    --glass-reflex-light: 0.35;
-    --saturation: 160%;
+    --dock-icon-size: 48px;
+    --dock-gap: 2px;
+    --dock-pad-x: 13px;
 
     position: relative;
     display: inline-flex;
     align-items: center;
     gap: var(--dock-gap);
-    padding: var(--dock-inset);
-    border-radius: calc(var(--dock-icon-radius) + var(--dock-inset));
-    background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
-    backdrop-filter: blur(20px) saturate(var(--saturation));
-    -webkit-backdrop-filter: blur(20px) saturate(var(--saturation));
+    padding: 6px var(--dock-pad-x);
+    border-radius: 22px;
+    background: rgba(15, 15, 15, 0.88);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
     box-shadow:
-      inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
-      inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent),
-      inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent),
-      inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent),
-      inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent),
-      inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent),
-      inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent),
-      inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),
-      0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),
-      0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent),
-      0 20px 48px -12px rgba(0, 0, 0, 0.65);
+      inset 0 0 0 0.5px rgba(255, 255, 255, 0.14),
+      inset 0 1px 0 rgba(255, 255, 255, 0.10),
+      0 0 0 0.5px rgba(0, 0, 0, 0.5),
+      0 4px 16px rgba(0, 0, 0, 0.5),
+      0 16px 40px -8px rgba(0, 0, 0, 0.6);
     user-select: none;
     touch-action: manipulation;
     transition:
-      background-color 400ms cubic-bezier(1, 0.0, 0.4, 1),
+      background 400ms cubic-bezier(1, 0.0, 0.4, 1),
       box-shadow 400ms cubic-bezier(1, 0.0, 0.4, 1);
   }
 
@@ -977,8 +1036,8 @@ I'm always open to collaborate on cool projects.`;
     -webkit-backdrop-filter: blur(20px) saturate(180%);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.35);
     color: #ffffff;
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro', system-ui, sans-serif;
-    font-size: 0.72rem;
+    font-family: var(--font-sans);
+    font-size: var(--fs-xs);
     font-weight: 500;
     letter-spacing: -0.01em;
     padding: 3px 9px;
@@ -1035,31 +1094,24 @@ I'm always open to collaborate on cool projects.`;
     padding: 2px 0;
   }
 
-  /* Solid app tiles; only the surrounding dock tray uses glass. */
   .dock-icon-tile {
     width: var(--dock-icon-size);
     height: var(--dock-icon-size);
-    border-radius: var(--dock-icon-radius);
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
-    overflow: hidden;
-    background-color: #303030;
-    background-image: linear-gradient(160deg, #3c3c3c, #292929);
-    box-shadow:
-      inset 0 0 0 1px rgba(255, 255, 255, 0.1),
-      inset 0 1px 0 rgba(255, 255, 255, 0.16),
-      0 2px 4px rgba(0, 0, 0, 0.22);
-    transition: box-shadow 0.2s ease, filter 0.2s ease;
+    background: none;
+    box-shadow: none;
+    transition: filter 0.2s ease;
   }
 
   .dock-glyph {
     position: relative;
     z-index: 3;
-    font-size: 1.32rem;
-    color: #f5f5f5;
-    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.25));
+    font-size: var(--fs-xl);
+    color: rgba(255, 255, 255, 0.88);
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
     transition: color 0.2s ease, filter 0.2s ease;
   }
 
@@ -1070,16 +1122,12 @@ I'm always open to collaborate on cool projects.`;
   }
 
   .dock-item:hover .dock-icon-tile {
-    box-shadow:
-      inset 0 0 0 1px rgba(255, 255, 255, 0.16),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2),
-      0 4px 8px rgba(0, 0, 0, 0.26);
-    filter: brightness(1.12);
+    filter: none;
   }
 
   .dock-item:hover .dock-glyph {
     color: #ffffff;
-    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.45));
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.35)) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.6));
   }
 
   .dock-item:active {
@@ -1231,22 +1279,6 @@ I'm always open to collaborate on cool projects.`;
       0 20px 48px -10px rgba(0, 0, 0, 0.12);
   }
 
-  :global(body.light-mode) .dock-icon-tile {
-    background-color: #f0f0f0;
-    background-image: linear-gradient(160deg, #ffffff, #e5e5e5);
-    box-shadow:
-      inset 0 0 0 1px rgba(0, 0, 0, 0.09),
-      inset 0 1px 0 #ffffff,
-      0 2px 4px rgba(0, 0, 0, 0.12);
-  }
-
-  :global(body.light-mode) .dock-item:hover .dock-icon-tile {
-    box-shadow:
-      inset 0 0 0 1px rgba(0, 0, 0, 0.13),
-      inset 0 1px 0 #ffffff,
-      0 4px 8px rgba(0, 0, 0, 0.16);
-  }
-
   .dock-item[data-contact="email"] { --app-ink: #416c95; }
   .dock-item[data-contact="github"] { --app-ink: #30343b; }
   .dock-item[data-contact="terminal"] { --app-ink: #252a32; }
@@ -1255,16 +1287,14 @@ I'm always open to collaborate on cool projects.`;
   .dock-item[data-contact="twitter"] { --app-ink: #24272d; }
   .dock-item[data-contact="linkedin"] { --app-ink: #3f6a86; }
 
-  :global(body.light-mode) .dock-item:hover .dock-icon-tile { filter: brightness(1.025); }
-
   :global(body.light-mode) .dock-glyph {
-    color: #49515b;
-    filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.75));
+    color: #3a4048;
+    filter: none;
   }
 
   :global(body.light-mode) .dock-item:hover .dock-glyph {
     color: var(--app-ink, #303944);
-    filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.75));
+    filter: none;
   }
 
   :global(body.light-mode) .dock-dot {
@@ -1319,7 +1349,7 @@ I'm always open to collaborate on cool projects.`;
     }
 
     .terminal-body {
-      font-size: 0.8rem;
+      font-size: var(--fs-xs);
       padding: 1rem;
     }
 
@@ -1330,10 +1360,9 @@ I'm always open to collaborate on cool projects.`;
     }
 
     .macos-dock {
-      --dock-icon-size: 38px;
-      --dock-icon-radius: 10px;
-      --dock-inset: 7px;
-      --dock-gap: 8px;
+      --dock-icon-size: 44px;
+      --dock-gap: 2px;
+      --dock-pad-x: 12px;
     }
 
     .terminal-input { font-size: 16px; }
@@ -1343,7 +1372,7 @@ I'm always open to collaborate on cool projects.`;
     }
 
     .dock-glyph {
-      font-size: 1.18rem;
+      font-size: var(--fs-xl);
     }
   }
 
@@ -1363,15 +1392,15 @@ I'm always open to collaborate on cool projects.`;
 
     .macos-dock {
       /* Fit the actual item count after subtracting gutters, padding and gaps. */
-      --dock-icon-size: clamp(28px, calc((100vw - 16px - 2 * var(--dock-inset) - (var(--dock-item-count) - 1) * var(--dock-gap)) / var(--dock-item-count)), 34px);
-      --dock-icon-radius: calc(var(--dock-icon-size) / 4);
-      --dock-inset: 6px;
-      --dock-gap: 5px;
+      /* Fit all items within the viewport after gutters, padding and gaps. */
+      --dock-icon-size: clamp(36px, calc((100vw - 48px) / var(--dock-item-count)), 46px);
+      --dock-gap: 2px;
+      --dock-pad-x: 10px;
       margin: 0 auto;
     }
 
     .dock-glyph {
-      font-size: 1.05rem;
+      font-size: var(--fs-lg);
     }
 
     .dock-dot {
@@ -1414,11 +1443,11 @@ I'm always open to collaborate on cool projects.`;
     }
 
     .terminal-title {
-      font-size: 0.68rem;
+      font-size: var(--fs-2xs);
     }
 
     .terminal-body {
-      font-size: 0.8rem;
+      font-size: var(--fs-xs);
       line-height: 1.6;
     }
 
