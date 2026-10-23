@@ -1,10 +1,20 @@
 ---
+import { existsSync } from 'node:fs';
+import path from 'node:path';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getProjects } from '../data/projects';
 import { getLanguageMeta } from '../data/languageIcons';
 
 const projects = await getProjects();
 const languages = new Set(projects.map(p => p.language));
+
+// Cards show a small square crop of each project image, so use the 560px
+// WebP made by scripts/project-previews.mjs when it exists (far less to
+// download and decode while scrolling), else the original.
+function getPreviewImage(image: string): string {
+  const preview = image.replace(/^\/images\/(.+)\.\w+$/, '/images/previews/$1.webp');
+  return existsSync(path.join(process.cwd(), 'public', preview)) ? preview : image;
+}
 
 function getHostedLabel(url: string): string {
   try {
@@ -57,14 +67,38 @@ function getHostedLabel(url: string): string {
           </div>
           <div class="hero-stat">
             <span class="hero-stat-value">8+</span>
-            <span class="hero-stat-label">Years Building</span>
+            <span class="hero-stat-label">Years<span class="stat-label-extra"> Building</span></span>
           </div>
-          <div class="hero-stat">
+          <div class="hero-stat hero-stat-quests">
             <span class="hero-stat-value">∞</span>
-            <span class="hero-stat-label">Side quests</span>
+            <span class="hero-stat-label"><span class="stat-label-extra">Side </span>quests</span>
           </div>
         </div>
         <div class="filter-controls">
+          <button type="button" class="filter-btn sound-toggle is-idle" id="sound-toggle" data-voice="pup" aria-label="Play sound effects" title="Play sound effects">
+            <svg class="sound-icon sound-icon-pup" viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M3.2 6.1h1.9l3.1-2.6c.5-.4 1.3-.1 1.3.6v7.8c0 .7-.8 1-1.3.6L5.1 9.9H3.2C2.5 9.9 2 9.4 2 8.7V7.3c0-.7.5-1.2 1.2-1.2z" fill="currentColor"/>
+              <path d="M11.3 5.9a3 3 0 0 1 0 4.2M13 4.3a5.3 5.3 0 0 1 0 7.4" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+            </svg>
+            <svg class="sound-icon sound-icon-tik" viewBox="0 0 16 16" aria-hidden="true">
+              <defs>
+                <linearGradient id="sound-tik-body" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#f2f2f2"/>
+                  <stop offset="0.55" stop-color="#b4b4b4"/>
+                  <stop offset="1" stop-color="#5c5c5c"/>
+                </linearGradient>
+                <linearGradient id="sound-tik-gloss" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#fff" stop-opacity="0.9"/>
+                  <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <path d="M2.5 5.8h2.4l3.6-3v10.4l-3.6-3H2.5a1 1 0 0 1-1-1V6.8a1 1 0 0 1 1-1z" fill="url(#sound-tik-body)" stroke="#2e2e2e" stroke-width="0.8" stroke-linejoin="round"/>
+              <path d="M2.6 6.3h2.5l3-2.4v3.6H2.1v-.6a.6.6 0 0 1 .5-.6z" fill="url(#sound-tik-gloss)"/>
+              <path d="M10.6 6a2.8 2.8 0 0 1 0 4M12.6 4.2a5.3 5.3 0 0 1 0 7.6" fill="none" stroke="#2e2e2e" stroke-width="2.3" stroke-linecap="round"/>
+              <path d="M10.6 6a2.8 2.8 0 0 1 0 4M12.6 4.2a5.3 5.3 0 0 1 0 7.6" fill="none" stroke="url(#sound-tik-body)" stroke-width="1.1" stroke-linecap="round"/>
+            </svg>
+            <svg class="sound-icon sound-icon-modem" viewBox="0 0 16 16" aria-hidden="true" fill="currentColor"><rect x="2" y="6" width="1" height="4"/><rect x="3" y="6" width="1" height="4"/><rect x="4" y="5" width="1" height="6"/><rect x="5" y="4" width="1" height="8"/><rect x="6" y="3" width="1" height="10"/><rect x="7" y="2" width="1" height="12"/><rect x="9" y="6" width="1" height="4"/><rect x="11" y="4" width="1" height="1"/><rect x="12" y="5" width="1" height="6"/><rect x="11" y="11" width="1" height="1"/></svg>
+          </button>
           <div class="lang-menu" id="lang-menu">
             <button type="button" class="filter-btn lang-trigger" id="lang-trigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="lang-options">
               <span class="lang-current" id="lang-current">All</span>
@@ -80,7 +114,7 @@ function getHostedLabel(url: string): string {
               <button type="button" class="tech-pill" role="option" data-filter-lang="Shell">Shell</button>
             </div>
           </div>
-          <button type="button" class="filter-btn" id="featured-toggle" aria-pressed="false">Featured<span class="featured-only-word"> Only</span> <span class="rounded-star" aria-hidden="true"></span></button>
+          <button type="button" class="filter-btn" id="featured-toggle" aria-pressed="false" aria-label="Featured only"><span class="featured-word">Featured</span><span class="featured-only-word"> Only</span> <span class="rounded-star" aria-hidden="true"></span></button>
         </div>
       </div>
     </section>
@@ -108,7 +142,7 @@ function getHostedLabel(url: string): string {
             )}
             <div class={`project-preview${project.image ? ' has-custom-image' : ' has-lang-card'}`} aria-hidden="true">
               {project.image ? (
-                <img src={project.image} alt="" loading="lazy" decoding="async" />
+                <img src={getPreviewImage(project.image)} alt="" width="560" height="560" loading="lazy" decoding="async" />
               ) : (
                 <div class="lang-card" style={`--lang-color: ${langMeta.color};`}>
                   <div class="lang-icon" set:html={langMeta.svg}></div>
@@ -266,8 +300,413 @@ function getHostedLabel(url: string): string {
       });
 
       const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+      const compact = window.matchMedia('(max-width: 768px)');
+
+      // Dial sounds, three voices, picked with the sound switch in the filter
+      // row (every visit starts on 'pup'):
+      // - 'pup': a light cartoon "pup" (think Doraemon's footsteps), a short
+      //   sine whose pitch flicks up in 30ms with the low end trimmed, at the
+      //   same pitch every time.
+      // - 'tik': a short, soft picker-wheel detent, a ~12ms band-passed noise
+      //   transient over a 30ms tonal body, at a steady pitch.
+      // - 'modem': an old dial-up modem connecting, one fragment per row.
+      //   Rows step through the V.34/V.90 handshake (DTMF dialling, the ANSam
+      //   answer tone, V.21 CM/JM, INFO "ka-king", the A "ding", L1 probing
+      //   "pshhh", TRN "tshchch") and keep cycling the noisy tail; a pause
+      //   hangs up and the next run dials again. Everything is band-limited
+      //   to a phone line (300-3400Hz).
+      // No reverb, so nothing rings or gurgles. Image pop-outs use the same
+      // voice (up on open, down on close). A hair of random rate variation
+      // keeps repeats from sounding mechanical.
+      // Each voice is rendered into AudioBuffers with an OfflineAudioContext
+      // the first time it's used, so a tick is just one buffer source + gain.
+      // A new sound on the same channel fades out the previous one (like
+      // use-sound's `interrupt`), so fast runs never pile up.
+      // Browsers only allow audio once the visitor has interacted with the
+      // page (or the site is allowed to autoplay), so until then it's silent.
+      const SOUND_CYCLE = ['pup', 'tik', 'modem'];
+      let voice = 'pup';
+      // Earlier builds remembered the pick; drop that so visits start on pup.
+      try { localStorage.removeItem('sound-voice'); } catch (_) {}
+      // Per-voice peak level for a lone tick (see playTick).
+      const LEVELS = { tik: 0.08, pup: 0.064, modem: 0.05 };
+      let audio = null;
+      let unlocking = null;
+      const lastTickAt = { tick: 0 };
+      const handshake = { step: 0 };
+      // Set the first time any sound actually plays; until then the sound
+      // switch shimmers and its first press just lets the current voice play.
+      let heard = false;
+      const onFirstSound = [];
+      // Normalise to a 1.0 peak so the play gain below *is* the peak level
+      // (gain 0.08 = -22 dBFS) whatever the voice's recipe.
+      const normalise = rendered => {
+        const samples = rendered.getChannelData(0);
+        let peak = 0;
+        for (let i = 0; i < samples.length; i++) peak = Math.max(peak, Math.abs(samples[i]));
+        if (peak > 0) for (let i = 0; i < samples.length; i++) samples[i] /= peak;
+        return rendered;
+      };
+      // One "pup": a sine sliding from `from` to `to` Hz in 30ms, 2ms attack,
+      // gone by 60ms, light (trimmed below 300Hz) and soft above 4kHz.
+      const renderPup = async (sampleRate, from, to) => {
+        const ctx = new OfflineAudioContext(1, Math.ceil(sampleRate * 0.08), sampleRate);
+        const thin = ctx.createBiquadFilter();
+        thin.type = 'highpass';
+        thin.frequency.value = 300;
+        const soften = ctx.createBiquadFilter();
+        soften.type = 'lowpass';
+        soften.frequency.value = 4000;
+        thin.connect(soften).connect(ctx.destination);
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.frequency.setValueAtTime(from, 0);
+        osc.frequency.exponentialRampToValueAtTime(to, 0.03);
+        gain.gain.setValueAtTime(0.0001, 0);
+        gain.gain.exponentialRampToValueAtTime(1, 0.002);
+        gain.gain.exponentialRampToValueAtTime(0.0001, 0.06);
+        osc.connect(gain).connect(thin);
+        osc.start(0);
+        osc.stop(0.07);
+        return normalise(await ctx.startRendering());
+      };
+      const renderVoice = async (sampleRate, { body, bodyDecay, tap, tapDecay }) => {
+        const length = Math.max(bodyDecay, tapDecay) + 0.03;
+        const ctx = new OfflineAudioContext(1, Math.ceil(sampleRate * length), sampleRate);
+        const soften = ctx.createBiquadFilter();
+        soften.type = 'lowpass';
+        soften.frequency.value = 5000;
+        soften.connect(ctx.destination);
+
+        // Tonal body: a sine with a 3ms attack and an exponential fall.
+        const osc = ctx.createOscillator();
+        const bodyGain = ctx.createGain();
+        osc.frequency.value = body;
+        bodyGain.gain.setValueAtTime(0.0001, 0);
+        bodyGain.gain.exponentialRampToValueAtTime(0.5, 0.003);
+        bodyGain.gain.exponentialRampToValueAtTime(0.0001, bodyDecay);
+        osc.connect(bodyGain).connect(soften);
+        osc.start(0);
+        osc.stop(bodyDecay + 0.01);
+
+        // Tap: white noise through a wide band-pass, 1ms attack.
+        const noise = ctx.createBuffer(1, Math.ceil(sampleRate * (tapDecay + 0.01)), sampleRate);
+        const data = noise.getChannelData(0);
+        for (let i = 0; i < data.length; i++) data[i] = Math.random() * 2 - 1;
+        const tapSource = ctx.createBufferSource();
+        tapSource.buffer = noise;
+        const band = ctx.createBiquadFilter();
+        band.type = 'bandpass';
+        band.frequency.value = tap;
+        band.Q.value = 0.8;
+        const tapGain = ctx.createGain();
+        tapGain.gain.setValueAtTime(0.0001, 0);
+        tapGain.gain.exponentialRampToValueAtTime(0.6, 0.001);
+        tapGain.gain.exponentialRampToValueAtTime(0.0001, tapDecay);
+        tapSource.connect(band).connect(tapGain).connect(soften);
+        tapSource.start(0);
+
+        return normalise(await ctx.startRendering());
+      };
+      // Modem fragments: `build` schedules tones/noise into a 4ms-faded
+      // envelope that feeds a phone-line band-pass.
+      const renderLine = async (sampleRate, duration, build) => {
+        const ctx = new OfflineAudioContext(1, Math.ceil(sampleRate * (duration + 0.01)), sampleRate);
+        const lineLow = ctx.createBiquadFilter();
+        lineLow.type = 'highpass';
+        lineLow.frequency.value = 300;
+        const lineHigh = ctx.createBiquadFilter();
+        lineHigh.type = 'lowpass';
+        lineHigh.frequency.value = 3400;
+        const envelope = ctx.createGain();
+        envelope.gain.setValueAtTime(0, 0);
+        envelope.gain.linearRampToValueAtTime(1, 0.004);
+        envelope.gain.setValueAtTime(1, duration - 0.008);
+        envelope.gain.linearRampToValueAtTime(0, duration);
+        envelope.connect(lineLow).connect(lineHigh).connect(ctx.destination);
+        build(ctx, envelope, duration);
+        return normalise(await ctx.startRendering());
+      };
+      const lineTone = (ctx, dest, freq, end, level = 1) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        gain.gain.value = level;
+        osc.frequency.value = freq;
+        osc.connect(gain).connect(dest);
+        osc.start(0);
+        osc.stop(end);
+        return osc;
+      };
+      // A white-noise buffer source of the given length.
+      const whiteNoise = (ctx, sampleRate, duration) => {
+        const noise = ctx.createBuffer(1, Math.ceil(sampleRate * duration), sampleRate);
+        const data = noise.getChannelData(0);
+        for (let i = 0; i < data.length; i++) data[i] = Math.random() * 2 - 1;
+        const source = ctx.createBufferSource();
+        source.buffer = noise;
+        return source;
+      };
+      // The V.34/V.90 handshake, stage by stage (ITU-T V.8/V.21/V.34 values).
+      const renderModem = sampleRate => {
+        // Dialling: DTMF digit pairs.
+        const dtmf = (low, high) => renderLine(sampleRate, 0.07, (ctx, dest, d) => {
+          lineTone(ctx, dest, low, d, 0.5);
+          lineTone(ctx, dest, high, d, 0.5);
+        });
+        // ANSam: 2100Hz answer tone with a 15Hz, +/-20% amplitude wobble.
+        const answer = renderLine(sampleRate, 0.12, (ctx, dest, d) => {
+          const am = ctx.createGain();
+          am.gain.value = 0.8;
+          am.connect(dest);
+          lineTone(ctx, am, 2100, d);
+          const lfo = ctx.createOscillator();
+          const depth = ctx.createGain();
+          lfo.frequency.value = 15;
+          depth.gain.value = 0.2;
+          lfo.connect(depth).connect(am.gain);
+          lfo.start(0);
+          lfo.stop(d);
+        });
+        // V.21 FSK at 300 baud: CM on the low channel (980/1180Hz), JM on the
+        // high channel (1650/1850Hz), random bits.
+        const fsk = (mark, space) => renderLine(sampleRate, 0.1, (ctx, dest, d) => {
+          const osc = lineTone(ctx, dest, mark, d);
+          for (let t = 0; t < d; t += 1 / 300) osc.frequency.setValueAtTime(Math.random() < 0.5 ? mark : space, t);
+        });
+        // Phase flips: a tone through a gain switched between +1 and -1.
+        const phased = (ctx, dest, freq, d, flips) => {
+          const sign = ctx.createGain();
+          sign.connect(dest);
+          lineTone(ctx, sign, freq, d);
+          flips.forEach(([t, value]) => sign.gain.setValueAtTime(value, t));
+        };
+        // INFO at 600bps DPSK on the 2400Hz carrier: the "ka-king".
+        const kaking = renderLine(sampleRate, 0.1, (ctx, dest, d) => {
+          const flips = [];
+          for (let t = 0, v = 1; t < d; t += 1 / 600) flips.push([t, v = Math.random() < 0.5 ? -v : v]);
+          phased(ctx, dest, 2400, d, flips);
+        });
+        // A: 2400Hz tone with a phase reversal, the "ding".
+        const ding = (freq, duration) => renderLine(sampleRate, duration, (ctx, dest, d) => {
+          phased(ctx, dest, freq, d, [[0, 1], [d / 2, -1]]);
+        });
+        // L1/L2 line probing: 21 tones 150Hz apart (150-3750Hz), the "pshhh".
+        const probe = renderLine(sampleRate, 0.1, (ctx, dest, d) => {
+          for (let k = 1; k <= 25; k++) {
+            if ([4, 6, 8, 10].includes(k)) continue; // V.34 omits a few to get 21
+            lineTone(ctx, dest, 150 * k, d, 0.25);
+          }
+        });
+        // TRN: scrambled data around the 1800Hz carrier, the "tshchchch".
+        const training = renderLine(sampleRate, 0.1, (ctx, dest, d) => {
+          const source = whiteNoise(ctx, sampleRate, d);
+          const band = ctx.createBiquadFilter();
+          band.type = 'bandpass';
+          band.frequency.value = 1800;
+          band.Q.value = 0.6;
+          source.connect(band).connect(dest);
+          source.start(0);
+        });
+        const hangUp = renderLine(sampleRate, 0.12, (ctx, dest, d) => {
+          const osc = lineTone(ctx, dest, 1400, d);
+          osc.frequency.exponentialRampToValueAtTime(500, d);
+        });
+        // "Connected": the A then B probe tones, ding-dong.
+        const connected = renderLine(sampleRate, 0.2, (ctx, dest, d) => {
+          const a = ctx.createGain();
+          const b = ctx.createGain();
+          a.connect(dest);
+          b.connect(dest);
+          lineTone(ctx, a, 2400, d);
+          lineTone(ctx, b, 1200, d);
+          a.gain.setValueAtTime(1, 0);
+          a.gain.setValueAtTime(0, d / 2);
+          b.gain.setValueAtTime(0, 0);
+          b.gain.setValueAtTime(1, d / 2);
+        });
+        return Promise.all([
+          dtmf(697, 1209), dtmf(770, 1477), dtmf(852, 1336), dtmf(941, 1209),
+          answer, fsk(980, 1180), fsk(1650, 1850), kaking, ding(2400, 0.09), probe, training,
+          connected, hangUp,
+        ]).then(parts => ({ tick: parts.slice(0, 11), open: parts[11], close: parts[12] }));
+      };
+      const asSet = parts => parts.then(([tick, open, close]) => ({ tick, open, close }));
+      const RECIPES = {
+        pup: rate => asSet(Promise.all([
+          renderPup(rate, 700, 1200),
+          renderPup(rate, 600, 1300),
+          renderPup(rate, 1100, 600),
+        ])),
+        tik: rate => asSet(Promise.all([
+          renderVoice(rate, { body: 880, bodyDecay: 0.03, tap: 2600, tapDecay: 0.012 }),
+          renderVoice(rate, { body: 660, bodyDecay: 0.07, tap: 2200, tapDecay: 0.018 }),
+          renderVoice(rate, { body: 520, bodyDecay: 0.05, tap: 2000, tapDecay: 0.014 }),
+        ])),
+        modem: rate => renderModem(rate),
+      };
+      // Renders a voice the first time it's needed (a few ms of work).
+      const ensureVoice = name => {
+        if (!audio || !RECIPES[name]) return Promise.resolve();
+        if (!audio.pending[name]) {
+          audio.pending[name] = RECIPES[name](audio.ctx.sampleRate)
+            .then(set => { audio.voices[name] = set; })
+            .catch(() => { audio.pending[name] = null; });
+        }
+        return audio.pending[name];
+      };
+      // Creates the context once (one shared promise, however many gestures
+      // fire meanwhile) and renders the current voice; later calls resume.
+      const unlockAudio = () => {
+        if (audio) {
+          if (audio.ctx.state !== 'running') audio.ctx.resume();
+          return ensureVoice(voice);
+        }
+        if (!unlocking) {
+          unlocking = (async () => {
+            try {
+              const ctx = new (window.AudioContext || window.webkitAudioContext)();
+              if (ctx.state !== 'running') ctx.resume();
+              audio = { ctx, voices: {}, pending: {}, playing: {} };
+              await ensureVoice(voice);
+            } catch (_) {
+              unlocking = null;
+            }
+          })();
+        }
+        return unlocking;
+      };
+      ['pointerdown', 'pointerup', 'touchend', 'click', 'keydown'].forEach(type => {
+        window.addEventListener(type, unlockAudio, { passive: true });
+      });
+      // Where the site is already allowed to play sound (e.g. the visitor
+      // granted autoplay), start without waiting for a click.
+      if (navigator.getAutoplayPolicy && navigator.getAutoplayPolicy('audiocontext') === 'allowed') unlockAudio();
+      document.addEventListener('visibilitychange', () => {
+        if (!audio) return;
+        if (document.hidden) audio.ctx.suspend();
+        else audio.ctx.resume();
+      });
+      const play = (channel, buffer, volume, rate = 1) => {
+        if (!audio || audio.ctx.state !== 'running') return;
+        const { ctx, playing } = audio;
+        const t = ctx.currentTime;
+        const previous = playing[channel];
+        if (previous) {
+          previous.gain.gain.setTargetAtTime(0, t, 0.012);
+          previous.source.stop(t + 0.08);
+        }
+        const source = ctx.createBufferSource();
+        const gain = ctx.createGain();
+        source.buffer = buffer;
+        source.playbackRate.value = rate;
+        gain.gain.value = volume;
+        source.connect(gain).connect(ctx.destination);
+        source.start(t);
+        playing[channel] = { source, gain };
+        if (!heard) {
+          heard = true;
+          onFirstSound.forEach(fn => fn());
+        }
+        source.onended = () => {
+          if (playing[channel] && playing[channel].source === source) playing[channel] = null;
+        };
+      };
+      const playTick = () => {
+        const now = performance.now();
+        const gap = now - lastTickAt.tick;
+        if (gap < 70) return;
+        lastTickAt.tick = now;
+        const set = audio && audio.voices[voice];
+        if (!set) return;
+        const rate = 0.99 + Math.random() * 0.02;
+        let buffer = set.tick;
+        if (Array.isArray(buffer)) {
+          // Modem: advance through the handshake, then keep cycling its
+          // ka-king / pshhh / tshch tail; a pause (hang up) dials again.
+          if (gap > 600) handshake.step = 0;
+          const last = buffer.length - 1;
+          const tail = [last - 3, last - 1, last]; // kaking, probe, training
+          const i = handshake.step <= last ? handshake.step : tail[(handshake.step - last - 1) % 3];
+          handshake.step++;
+          buffer = buffer[i];
+        }
+        // Peak levels follow common UI-sound guidance (repeated feedback around
+        // -18 to -24 dB, hover gain 0.03-0.08): a lone tick peaks at -22 dBFS,
+        // quick runs (fast scroll or sweep) ease down to about -30 dBFS.
+        // The 'pup' is a pure tone near where the ear is most sensitive, so it
+        // plays ~2 dB under the 'tik' for the same perceived level.
+        // The modem fragments are dense, full-band sounds, so they sit lower.
+        play('tick', buffer, LEVELS[voice] * Math.min(1, 0.4 + gap / 250), rate);
+      };
+      const playPop = open => {
+        const set = audio && audio.voices[voice];
+        if (!set) return;
+        const level = LEVELS[voice] / LEVELS.tik;
+        if (open) play('pop', set.open, 0.1 * level);
+        else play('pop', set.close, 0.08 * level);
+      };
+
+      // Sound switch in the filter row: cycles pup -> tik -> modem (its icon
+      // shows which) and plays a short sample of the new voice. The click is itself the gesture browsers need for audio. Until
+      // any sound has been heard it shimmers, and its first press doesn't
+      // switch, it just plays the current voice so sound is simply "on".
+      const soundToggle = document.getElementById('sound-toggle');
+      const showVoice = () => {
+        if (!soundToggle) return;
+        const label = heard ? `Sound: ${voice}, click to switch` : 'Play sound effects';
+        soundToggle.dataset.voice = voice;
+        soundToggle.setAttribute('aria-label', label);
+        soundToggle.setAttribute('title', label);
+      };
+      showVoice();
+      if (soundToggle) {
+        onFirstSound.push(() => {
+          soundToggle.classList.remove('is-idle');
+          showVoice();
+        });
+        soundToggle.addEventListener('click', async () => {
+          if (heard) {
+            voice = SOUND_CYCLE[(SOUND_CYCLE.indexOf(voice) + 1) % SOUND_CYCLE.length];
+          }
+          handshake.step = 0;
+          showVoice();
+          await unlockAudio();
+          if (!audio) return;
+          if (audio.ctx.state !== 'running') await audio.ctx.resume();
+          const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+          const picked = voice;
+          for (let k = 0; k < (picked === 'modem' ? 6 : 3) && voice === picked; k++) {
+            playTick();
+            await wait(140);
+          }
+        });
+      }
+      // A hovered row grows (desc wraps to two lines, hosted link appears).
+      // Cancel that growth with an equal negative margin so the rows below
+      // never shift; the active row simply overlaps the next one. Resize
+      // observer callbacks run after layout and before paint, so the
+      // compensation lands in the same frame as each step of the transition.
+      const baseHeights = new WeakMap();
+      const isEngaged = item => item.matches(':hover') || item.contains(document.activeElement);
+      const rowResizeObserver = canHover ? new ResizeObserver(entries => {
+        entries.forEach(entry => {
+          const item = entry.target;
+          const height = item.offsetHeight;
+          if (!item.classList.contains('cv-active')) {
+            baseHeights.set(item, {
+              height,
+              margin: parseFloat(getComputedStyle(item).marginBottom) || 0,
+            });
+            return;
+          }
+          const base = baseHeights.get(item);
+          if (!base) return;
+          item.style.marginBottom = height > base.height ? `${base.margin + base.height - height}px` : '';
+        });
+      }) : null;
       document.querySelectorAll('.project-item').forEach(item => {
         if (!canHover) return;
+        rowResizeObserver.observe(item);
         let revertTimer = null;
         const activate = () => {
           clearTimeout(revertTimer);
@@ -276,8 +715,9 @@ function getHostedLabel(url: string): string {
         const scheduleDeactivate = () => {
           clearTimeout(revertTimer);
           revertTimer = setTimeout(() => {
-            if (!item.matches(':hover') && !item.contains(document.activeElement)) {
+            if (!isEngaged(item)) {
               item.classList.remove('cv-active');
+              item.style.marginBottom = '';
             }
           }, 480);
         };
@@ -285,7 +725,146 @@ function getHostedLabel(url: string): string {
         item.addEventListener('mouseleave', scheduleDeactivate);
         item.addEventListener('focusin', activate);
         item.addEventListener('focusout', scheduleDeactivate);
+
+        // Only real project images pop out, and only on purpose: hovering the
+        // image (after a short intent delay) or clicking it. A click toggles,
+        // and a pinned image stays open until the pointer leaves the row.
+        const preview = item.querySelector('.project-preview.has-custom-image');
+        if (!preview) return;
+        let openTimer = null;
+        let pinned = false;
+        let suppressed = false;
+        const setOpen = open => {
+          const next = open && !compact.matches;
+          if (item.classList.contains('preview-open') === next) return;
+          item.classList.toggle('preview-open', next);
+          playPop(next);
+        };
+        preview.addEventListener('mouseenter', () => {
+          clearTimeout(openTimer);
+          if (!suppressed) openTimer = setTimeout(() => setOpen(true), 80);
+        });
+        preview.addEventListener('mouseleave', () => {
+          clearTimeout(openTimer);
+          suppressed = false;
+          if (!pinned) setOpen(false);
+        });
+        preview.addEventListener('click', () => {
+          clearTimeout(openTimer);
+          const open = !item.classList.contains('preview-open');
+          pinned = open;
+          suppressed = !open;
+          setOpen(open);
+        });
+        item.addEventListener('mouseleave', () => {
+          clearTimeout(openTimer);
+          pinned = false;
+          suppressed = false;
+          setOpen(false);
+        });
+        item.addEventListener('focusin', () => {
+          if (item.querySelector(':focus-visible')) setOpen(true);
+        });
+        item.addEventListener('focusout', () => {
+          if (!pinned && !item.matches(':hover')) setOpen(false);
+        });
       });
+
+      // Fisheye dial: every visible row gets its distance from the focal
+      // (hovered/focused) row, and CSS turns that into depth, so neighbours sit
+      // just below the focal row and rows recede the further away they are.
+      // Distance counts only rows the language/featured filters leave visible.
+      if (canHover && projectList) {
+        const rows = [...projectList.querySelectorAll('.project-item')];
+        const isShown = row => row.style.display !== 'none'
+          && (row.classList.contains('featured') || !projectList.classList.contains('show-featured-only'));
+        let focal = null;
+        const setFocal = item => {
+          if (!item || item === focal) return;
+          focal = item;
+          const shown = rows.filter(isShown);
+          const at = shown.indexOf(item);
+          playTick();
+          shown.forEach((row, i) => {
+            const d = i - at;
+            const dist = String(Math.min(Math.abs(d), 4));
+            const dir = String(Math.sign(d));
+            // Skip unchanged rows (most of the list sits at the 4 cap) so a
+            // focal change only restyles the handful of rows that move.
+            if (row.style.getPropertyValue('--fe-d') !== dist) row.style.setProperty('--fe-d', dist);
+            if (row.style.getPropertyValue('--fe-dir') !== dir) row.style.setProperty('--fe-dir', dir);
+          });
+        };
+        const onEnter = e => setFocal(e.target.closest('.project-item'));
+        projectList.addEventListener('mouseover', onEnter);
+        projectList.addEventListener('focusin', onEnter);
+        projectList.addEventListener('mouseleave', () => { focal = null; });
+      }
+
+      // Touch dial fallback for browsers without CSS scroll timelines (Firefox,
+      // so Zen too): same depth curve as the project-dial keyframes, driven by
+      // each nearby row's distance from the middle of the screen. Reads all
+      // rects first, then writes, once per frame; only rows near the viewport
+      // are touched.
+      const isTouch = window.matchMedia('(hover: none)').matches || window.matchMedia('(pointer: coarse)').matches;
+      const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // Touch dial tick: a thin observer band across the middle of the screen
+      // reports whichever row crosses it, so scrolling clicks through rows like
+      // the desktop hover dial without any per-scroll work.
+      if (projectList && isTouch) {
+        const rows = [...projectList.querySelectorAll('.project-item')];
+        let centerIndex = -1;
+        const centerIO = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            const i = rows.indexOf(entry.target);
+            if (i === centerIndex) return;
+            centerIndex = i;
+            playTick();
+          });
+        }, { rootMargin: '-49.5% 0px -49.5% 0px' });
+        rows.forEach(row => centerIO.observe(row));
+      }
+      if (projectList && isTouch && !calm && !CSS.supports('animation-timeline: view()')) {
+        const nearby = new Set();
+        const lerp = (a, b, t) => a + (b - a) * t;
+        const depth = d => {
+          const a = Math.min(Math.abs(d), 4);
+          const t = a <= 1 ? a : (a - 1) / 3;
+          const [o, sc, r] = a <= 1
+            ? [lerp(1, 0.64, t), lerp(1.015, 0.98, t), lerp(0, 2.5, t)]
+            : [lerp(0.64, 0.3, t), lerp(0.98, 0.92, t), lerp(2.5, 10, t)];
+          return [o, sc, -Math.sign(d) * r];
+        };
+        let queued = false;
+        const update = () => {
+          queued = false;
+          const mid = window.innerHeight / 2;
+          const rects = [...nearby].map(row => [row, row.getBoundingClientRect()]);
+          rects.forEach(([row, rect]) => {
+            const [o, sc, r] = depth((rect.top + rect.height / 2 - mid) / (rect.height + 10));
+            row.style.opacity = o.toFixed(3);
+            row.style.transform = `perspective(1200px) rotateX(${r.toFixed(2)}deg) scale(${sc.toFixed(4)})`;
+          });
+        };
+        const queue = () => {
+          if (queued) return;
+          queued = true;
+          requestAnimationFrame(update);
+        };
+        const io = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) nearby.add(entry.target);
+            else nearby.delete(entry.target);
+          });
+          queue();
+        }, { rootMargin: '50% 0px' });
+        projectList.classList.add('scroll-dial');
+        projectList.querySelectorAll('.project-item').forEach(row => io.observe(row));
+        window.addEventListener('scroll', queue, { passive: true });
+        window.addEventListener('resize', queue, { passive: true });
+      }
 
       document.querySelectorAll('.project-main-link, .project-hosted').forEach(link => {
         link.addEventListener('click', function() {
@@ -450,6 +1029,7 @@ function getHostedLabel(url: string): string {
 
 .lang-menu {
   position: relative;
+  display: flex; /* lines the trigger up with its sibling buttons */
 }
 
 .lang-chevron {
@@ -604,7 +1184,9 @@ function getHostedLabel(url: string): string {
   transition:
     background 0.3s ease,
     border-color 0.3s ease,
-    box-shadow 0.35s ease;
+    box-shadow 0.35s ease,
+    opacity 0.3s ease,
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
   /* Off-screen rows skip layout/paint entirely, so a hover-triggered height
      change (desc growing to 2 lines, hosted-link padding) only ever has to
      reflow/repaint the handful of rows actually on screen, not all 55+. */
@@ -646,9 +1228,60 @@ function getHostedLabel(url: string): string {
    .cv-active (set by JS for the hover/focus duration plus the retract
    transition) drops back to normal rendering so the preview can escape the
    row's box exactly like before; every other row keeps content-visibility:
-   auto for the off-screen perf win. */
-.project-item.cv-active {
+   auto for the off-screen perf win. Only rows with a real image can pop out,
+   so plain rows keep their containment (and cheap, row-scoped layout) even
+   while hovered. */
+.project-item.cv-active:has(.project-preview.has-custom-image) {
   content-visibility: visible;
+}
+
+.project-item.cv-active {
+  /* A dimmed row (opacity < 1) becomes its own stacking context, so keep the
+     row whose preview is still retracting above its neighbours. */
+  z-index: 20;
+}}
+
+/* Registered and non-inheriting, so updating them on a row restyles only that
+   row, not every element inside it. */
+@property --fe-d {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 4;
+}
+
+@property --fe-dir {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 0;
+}
+
+/* Fisheye dial: while the pointer is over the list (or a row has keyboard
+   focus) the focal row lifts to the front at full brightness and the others
+   recede with distance (--fe-d, 0-4, set by JS): dimmer, smaller, and tilted
+   away like rows on a drum (--fe-dir: -1 above, 1 below). Hovering the list
+   rather than each row keeps the gaps between rows from flashing back. */
+@media (hover: hover) and (pointer: fine) {.project-list:hover .project-item:not(:hover),
+.project-list:has(:focus-visible) .project-item:not(:has(:focus-visible)) {
+  opacity: max(0.3, 0.78 - var(--fe-d, 4) * 0.14);
+}}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {.project-list:hover .project-item:not(:hover),
+.project-list:has(:focus-visible) .project-item:not(:has(:focus-visible)) {
+  transform:
+    perspective(1200px)
+    rotateX(calc(var(--fe-dir, 0) * var(--fe-d, 4) * -2.5deg))
+    scale(calc(1 - var(--fe-d, 4) * 0.02));
+}
+
+.project-list:hover .project-item:hover,
+.project-list:has(:focus-visible) .project-item:has(:focus-visible) {
+  transform: scale(1.015);
+}}
+
+/* Hover intent: the hosted link waits a beat so sweeping the cursor across
+   the list doesn't fire every row; leaving still retracts immediately. */
+@media (hover: hover) and (pointer: fine) {.project-item:hover .project-hover-info {
+  transition-delay: 90ms;
 }}
 
 .project-item:has(.project-hosted):hover,
@@ -660,8 +1293,7 @@ function getHostedLabel(url: string): string {
   padding-left: 4.45rem;
 }
 
-.project-item:has(.project-preview):hover .project-main-link,
-.project-item:has(.project-preview):has(:focus-visible) .project-main-link {
+.project-item.preview-open:has(.project-preview) .project-main-link {
   padding-left: 10.8rem;
 }
 
@@ -691,7 +1323,7 @@ function getHostedLabel(url: string): string {
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.18),
     0 4px 14px rgba(0, 0, 0, 0.35);
-  transform: translateX(-1.625rem) scale(0.30804) rotate(0deg);
+  transform: translateX(-1.625rem) scale(0.30804);
   transition:
     transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
     border-radius 0.45s cubic-bezier(0.22, 1, 0.36, 1),
@@ -714,27 +1346,38 @@ function getHostedLabel(url: string): string {
   opacity: 0.32;
 }
 
-@media (hover: hover) and (pointer: fine) {.project-item:hover .project-preview.has-lang-card,
-.project-item:has(:focus-visible) .project-preview.has-lang-card {
+@media (hover: hover) and (pointer: fine) {.project-item.preview-open .project-preview.has-lang-card {
   border-radius: 20px;
   border-color: rgba(255, 255, 255, 0.2);
   background: #121212;
-  transform: translateX(0) scale(1) rotate(-4deg);
+  transform: translateX(0) scale(1);
   box-shadow:
     0 24px 48px -12px rgba(0, 0, 0, 0.75),
     0 12px 24px -6px rgba(0, 0, 0, 0.45),
     inset 0 1px 0 rgba(255, 255, 255, 0.24);
 }}
 
-@media (hover: hover) and (pointer: fine) {.project-item:hover .project-preview.has-lang-card::after,
-.project-item:has(:focus-visible) .project-preview.has-lang-card::after {
+@media (hover: hover) and (pointer: fine) {.project-item.preview-open .project-preview.has-lang-card::after {
   opacity: 0.48;
 }}
 
+/* Row hover only brightens and nudges the icon up; the full pop-out is
+   opt-in, opened by hovering or clicking a real project image (.preview-open,
+   set by JS). */
 @media (hover: hover) and (pointer: fine) {.project-item:hover .project-preview,
 .project-item:has(:focus-visible) .project-preview {
+  transform: translateX(-1.625rem) scale(0.34);
+}
+
+.project-preview.has-custom-image {
+  pointer-events: auto;
+  cursor: zoom-in;
+}
+
+.project-item.preview-open .project-preview {
   transform: translateX(0) scale(1);
   z-index: 10;
+  cursor: zoom-out;
 }}
 
 .project-preview img {
@@ -748,20 +1391,16 @@ function getHostedLabel(url: string): string {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
   position: relative;
   z-index: 1;
-  transform: rotate(0deg);
   transition: filter 0.35s ease,
               box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1),
               border-radius 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-              border-color 0.35s ease,
-              transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+              border-color 0.35s ease;
 }
 
-@media (hover: hover) and (pointer: fine) {.project-item:hover .project-preview img,
-.project-item:has(:focus-visible) .project-preview img {
+@media (hover: hover) and (pointer: fine) {.project-item.preview-open .project-preview img {
   border-radius: 20px;
   border-color: rgba(255, 255, 255, 0.16);
   filter: saturate(1.08) contrast(1.03);
-  transform: rotate(-4deg);
   box-shadow:
     0 28px 56px -12px rgba(0, 0, 0, 0.85),
     0 14px 28px -6px rgba(0, 0, 0, 0.6);
@@ -792,8 +1431,7 @@ function getHostedLabel(url: string): string {
     background 0.35s ease;
 }
 
-@media (hover: hover) and (pointer: fine) {.project-item:hover .lang-card,
-.project-item:has(:focus-visible) .lang-card {
+@media (hover: hover) and (pointer: fine) {.project-item.preview-open .lang-card {
   background: #121212;
   border: 0;
   transform: none;
@@ -909,23 +1547,16 @@ function getHostedLabel(url: string): string {
   font-family: var(--font-sans);
   font-size: var(--fs-sm);
   line-height: 1.45;
-  max-height: 1.45em;
   letter-spacing: 0.005em;
   color: rgba(255, 255, 255, 0.78);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  transition: max-height 0.35s ease, color 0.2s ease;
-}
-
-@media (hover: hover) and (pointer: fine) {.project-item:hover .project-desc,
-.project-item:has(:focus-visible) .project-desc {
+  /* Always up to two lines, so hovering never changes a row's height. */
   display: -webkit-box;
-  max-height: 2.9em;
-  white-space: normal;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
-}}
+  line-clamp: 2;
+  overflow: hidden;
+  transition: color 0.2s ease;
+}
 
 .project-lang {
   font-family: var(--font-mono);
@@ -1001,8 +1632,7 @@ function getHostedLabel(url: string): string {
     0 4px 14px rgba(0, 0, 0, 0.06);
 }
 
-@media (hover: hover) and (pointer: fine) {:global(body.light-mode) .project-item:hover .project-preview.has-lang-card,
-:global(body.light-mode) .project-item:has(:focus-visible) .project-preview.has-lang-card {
+@media (hover: hover) and (pointer: fine) {:global(body.light-mode) .project-item.preview-open .project-preview.has-lang-card {
   background: #eeeef0;
   border-color: rgba(0, 0, 0, 0.16);
   box-shadow:
@@ -1011,15 +1641,13 @@ function getHostedLabel(url: string): string {
 }}
 
 @media (hover: hover) and (pointer: fine) {:global(body.light-mode) .lang-card,
-:global(body.light-mode) .project-item:hover .lang-card,
-:global(body.light-mode) .project-item:has(:focus-visible) .lang-card {
+:global(body.light-mode) .project-item.preview-open .lang-card {
   background: #f1f1f3;
   border: 0;
   box-shadow: none;
 }}
 
-@media (hover: hover) and (pointer: fine) {:global(body.light-mode) .project-item:hover .lang-card,
-:global(body.light-mode) .project-item:has(:focus-visible) .lang-card {
+@media (hover: hover) and (pointer: fine) {:global(body.light-mode) .project-item.preview-open .lang-card {
   background: #eeeef0;
 }}
 
@@ -1300,18 +1928,21 @@ function getHostedLabel(url: string): string {
   }
 
   @media (hover: hover) and (pointer: fine) {.project-item:has(.project-preview) .project-main-link,
+  .project-item.preview-open .project-main-link,
   .project-item:hover .project-main-link,
   .project-item:has(:focus-visible) .project-main-link {
     padding-left: 3.55rem;
   }}
 
   @media (hover: hover) and (pointer: fine) {.project-item:hover .project-preview,
-  .project-item:has(:focus-visible) .project-preview {
+  .project-item:has(:focus-visible) .project-preview,
+  .project-item.preview-open .project-preview {
     left: 0.8rem;
     top: 50%;
     margin-top: -1.375rem;
     width: 2.75rem;
     height: 2.75rem;
+    transform: none;
   }}
 
   .project-lang {
@@ -1460,18 +2091,21 @@ function getHostedLabel(url: string): string {
   }
 
   @media (hover: hover) and (pointer: fine) {.project-item:has(.project-preview) .project-main-link,
+  .project-item.preview-open .project-main-link,
   .project-item:hover .project-main-link,
   .project-item:has(:focus-visible) .project-main-link {
     padding-left: 2.95rem;
   }}
 
   @media (hover: hover) and (pointer: fine) {.project-item:hover .project-preview,
-  .project-item:has(:focus-visible) .project-preview {
+  .project-item:has(:focus-visible) .project-preview,
+  .project-item.preview-open .project-preview {
     left: 0.6rem;
     top: 50%;
     margin-top: -1.175rem;
     width: 2.35rem;
     height: 2.35rem;
+    transform: none;
   }}
 
   @media (hover: hover) and (pointer: fine) {.project-item:hover,
@@ -1521,9 +2155,10 @@ function getHostedLabel(url: string): string {
   overflow-x: auto;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
-  content-visibility: auto;
-  contain-intrinsic-size: 0 160px;
   transition: opacity 0.2s ease, transform 0.2s ease;
+  /* The grid's width sets its height, so expose both to the placeholder. */
+  --contrib-gap: clamp(2px, 0.2vw, 3px);
+  container-type: inline-size;
 }
 
 .contrib-chart:hover {
@@ -1533,6 +2168,17 @@ function getHostedLabel(url: string): string {
 
 .contrib-header {
   margin-bottom: 0.75rem;
+}
+
+/* The count and grid arrive from the contributions API after first paint.
+   Hold their final size until then (one text line; 7 square cells + 6 gaps
+   at this width) so the stats and projects below never shift. */
+.contrib-count:empty::before {
+  content: '\a0';
+}
+
+.contrib-grid:empty {
+  height: calc((100cqw - 52 * var(--contrib-gap)) / 53 * 7 + 6 * var(--contrib-gap));
 }
 
 .contrib-count {
@@ -1545,7 +2191,7 @@ function getHostedLabel(url: string): string {
 :global(.contrib-grid) {
   display: grid;
   grid-template-columns: repeat(53, minmax(0, 1fr));
-  gap: clamp(2px, 0.2vw, 3px);
+  gap: var(--contrib-gap);
   width: 100%;
   min-width: 0;
 }
@@ -1553,7 +2199,7 @@ function getHostedLabel(url: string): string {
 :global(.contrib-week) {
   display: grid;
   grid-template-rows: repeat(7, 1fr);
-  gap: clamp(2px, 0.2vw, 3px);
+  gap: var(--contrib-gap);
 }
 
 :global(.contrib-cell) {
@@ -1652,12 +2298,8 @@ function getHostedLabel(url: string): string {
 }
 
 @media (max-width: 480px) {
-  :global(.contrib-grid) {
-    gap: 1px;
-  }
-
-  :global(.contrib-week) {
-    gap: 1px;
+  .contrib-chart {
+    --contrib-gap: 1px;
   }
 
   :global(.contrib-cell) {
@@ -1665,7 +2307,9 @@ function getHostedLabel(url: string): string {
   }
 }
 
-/* Phones: stats and the two filter buttons share one row; buttons stack on the right. */
+/* Phones: the stats and all three filter buttons share one line, so the
+   stat labels drop to one word (Years, Quests) and Featured shrinks to its
+   star. */
 @media (max-width: 768px) {
   .hero-stats-row {
     flex-wrap: nowrap;
@@ -1679,10 +2323,14 @@ function getHostedLabel(url: string): string {
     min-width: 0;
   }
 
+  .stat-label-extra {
+    display: none;
+  }
+
   .hero-stats-row .filter-controls {
     width: auto;
-    flex-direction: column;
-    align-items: stretch;
+    flex-direction: row;
+    align-items: stretch; /* icon-only and text buttons share one height */
     gap: 0.35rem;
   }
 
@@ -1692,7 +2340,15 @@ function getHostedLabel(url: string): string {
     padding: 0.28rem 0.6rem;
   }
 
+  .featured-word,
   .featured-only-word {
+    display: none;
+  }
+}
+
+/* The narrowest phones can't fit three stats beside the buttons. */
+@media (max-width: 359px) {
+  .hero-stat-quests {
     display: none;
   }
 }
@@ -1725,30 +2381,25 @@ function getHostedLabel(url: string): string {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .project-item:hover .project-preview.has-lang-card,
-  .project-item:has(:focus-visible) .project-preview.has-lang-card {
+  .project-item.preview-open .project-preview.has-lang-card {
     background: #121212;
     border-color: rgba(255, 255, 255, 0.2);
   }
 
-  :global(body.light-mode) .project-item:hover .project-preview.has-lang-card,
-  :global(body.light-mode) .project-item:has(:focus-visible) .project-preview.has-lang-card {
+  :global(body.light-mode) .project-item.preview-open .project-preview.has-lang-card {
     background: #f1f1f3;
     border-color: rgba(0, 0, 0, 0.1);
   }
 
-  .project-item:hover .lang-card,
-  .project-item:has(:focus-visible) .lang-card {
+  .project-item.preview-open .lang-card {
     background: #121212;
   }
 
-  :global(body.light-mode) .project-item:hover .lang-card,
-  :global(body.light-mode) .project-item:has(:focus-visible) .lang-card {
+  :global(body.light-mode) .project-item.preview-open .lang-card {
     background: #f1f1f3;
   }
 
-  .project-item:hover .lang-icon,
-  .project-item:has(:focus-visible) .lang-icon {
+  .project-item.preview-open .lang-icon {
     width: 58%;
     height: 58%;
   }
@@ -1786,5 +2437,149 @@ function getHostedLabel(url: string): string {
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;
   }
+}
+
+/* Phone type scale. Desktop's hierarchy (ASCII ~1.4x the tagline, tagline
+   ~2.4x the card text, stat numbers ~0.84x the tagline, names 1.25x their
+   descriptions) used to collapse on phones: the hero shrank to 0.4-0.5x
+   while cards and stats barely shrank. These keep a compressed version of
+   the same ratios, with descriptions held at a readable 0.8rem. */
+@media (max-width: 768px) {
+  .hero-ascii {
+    font-size: clamp(0.275rem, 1.32vw, 0.47rem);
+  }
+
+  .hero-tagline {
+    font-size: clamp(1.15rem, 4.6vw + 0.1rem, 1.75rem);
+    text-wrap: balance; /* no lone "shipped." when it wraps */
+  }
+
+  .contrib-count {
+    font-size: var(--fs-2xs);
+  }
+
+  .hero-stat-value {
+    font-size: 1rem;
+  }
+
+  .hero-stat-label {
+    font-size: 0.66rem;
+  }
+
+  .project-name {
+    font-size: var(--fs-sm);
+  }
+}
+
+/* Touch has no hover, so the dial follows the scroll instead: the row crossing
+   the middle of the screen is the focal one and the rest recede with distance,
+   matching the desktop hover dial (roughly one row per ~11% of the view
+   timeline). Scroll-driven and transform/opacity only, so it runs on the
+   compositor with no JS; browsers without scroll timelines keep a flat list. */
+@keyframes project-dial {
+  0% {
+    opacity: 0.3;
+    transform: perspective(1200px) rotateX(-10deg) scale(0.92);
+  }
+  39% {
+    opacity: 0.64;
+    transform: perspective(1200px) rotateX(-2.5deg) scale(0.98);
+  }
+  50% {
+    opacity: 1;
+    transform: perspective(1200px) rotateX(0deg) scale(1.015);
+  }
+  61% {
+    opacity: 0.64;
+    transform: perspective(1200px) rotateX(2.5deg) scale(0.98);
+  }
+  100% {
+    opacity: 0.3;
+    transform: perspective(1200px) rotateX(10deg) scale(0.92);
+  }
+}
+
+/* JS fallback dial (no scroll timelines): values are written every scroll
+   frame, so transform/opacity must apply directly. Easing them (the hover
+   transitions) would restart on every frame and drag the rows behind the
+   scroll. */
+.project-list.scroll-dial .project-item {
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.35s ease;
+}
+
+@supports (animation-timeline: view()) {
+  @media (hover: none) and (prefers-reduced-motion: no-preference),
+         (pointer: coarse) and (prefers-reduced-motion: no-preference) {
+    .project-item {
+      animation: project-dial linear both;
+      animation-timeline: view();
+    }
+  }
+}
+
+/* Sound switch: icon only, one speaker per voice in that voice's style:
+   pup a clean rounded SF-style glyph, tik a glossy Web 2.0 speaker, modem
+   a pixel-art speaker in the ASCII header's green. Sized to the text line
+   so the button matches its neighbours' height. */
+.sound-toggle {
+  padding-inline: 0.55rem;
+}
+
+/* Until a sound has played, a white glint slides through the speaker icon
+   every few seconds as a hint. The icon is drawn in full white and masked
+   to the button's usual 60% everywhere except a moving full-strength band,
+   so at rest it looks unchanged and the glint never leaves the glyph. In
+   light mode the same glint runs in near-black. */
+.sound-toggle.is-idle .sound-icon {
+  color: #fff;
+  -webkit-mask-image: linear-gradient(100deg, rgba(0, 0, 0, 0.6) 40%, #000 50%, rgba(0, 0, 0, 0.6) 60%);
+  mask-image: linear-gradient(100deg, rgba(0, 0, 0, 0.6) 40%, #000 50%, rgba(0, 0, 0, 0.6) 60%);
+  -webkit-mask-size: 300% 100%;
+  mask-size: 300% 100%;
+  -webkit-mask-position: 100% 0;
+  mask-position: 100% 0;
+  animation: sound-glint 3.2s ease-in-out 1.2s infinite;
+}
+
+:global(body.light-mode) .sound-toggle.is-idle .sound-icon {
+  color: #000;
+}
+
+@keyframes sound-glint {
+  0% {
+    -webkit-mask-position: 100% 0;
+    mask-position: 100% 0;
+  }
+  45%, 100% {
+    -webkit-mask-position: 0% 0;
+    mask-position: 0% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sound-toggle.is-idle .sound-icon {
+    animation: none;
+  }
+}
+
+.sound-icon {
+  display: none;
+  width: 1.3em;
+  height: 1.3em;
+  flex: 0 0 auto;
+}
+
+.sound-toggle[data-voice="pup"] .sound-icon-pup,
+.sound-toggle[data-voice="tik"] .sound-icon-tik,
+.sound-toggle[data-voice="modem"] .sound-icon-modem {
+  display: block;
+}
+
+.sound-icon-modem {
+  color: #1ed760;
+  shape-rendering: crispEdges;
 }
 </style>
