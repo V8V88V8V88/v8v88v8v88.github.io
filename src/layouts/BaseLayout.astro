@@ -435,32 +435,45 @@ const {
         }
       }
 
-      function step() {
-        if (isLight()) {
+      // Drawn at 30fps but moved by elapsed time (in 60fps ticks), so drift,
+      // shimmer and the cursor push keep the same speed. Every canvas frame
+      // makes the browser redo each backdrop-filter above it (navbar, edge
+      // blurs, floating buttons), so halving the frames halves that idle GPU
+      // work; the particles move a few px per second, so 30fps looks the same.
+      var FRAME_MS = 1000 / 30;
+      var TICK_MS = 1000 / 60;
+      var lastDraw = 0;
+
+      function step(now) {
+        if (isLight() || isScrolling) {
+          lastDraw = 0;
           requestAnimationFrame(step);
           return;
         }
 
-        if (isScrolling) {
+        if (lastDraw && now - lastDraw < FRAME_MS - 1) {
           requestAnimationFrame(step);
           return;
         }
+        // Capped so a long pause doesn't make particles jump.
+        var ticks = lastDraw ? Math.min((now - lastDraw) / TICK_MS, 4) : 1;
+        lastDraw = now;
 
         ctx.clearRect(0, 0, w, h);
         ctx.fillStyle = '#ffffff';
-        frame++;
+        frame += ticks;
 
         for (var i = 0; i < particles.length; i++) {
           var p = particles[i];
 
-          p.x += p.vx;
-          p.y += p.vy;
+          p.x += p.vx * ticks;
+          p.y += p.vy * ticks;
 
           var dx = p.x - mouseX;
           var dy = p.y - mouseY;
           var dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < PUSH_RADIUS && dist > 0) {
-            var force = (1 - dist / PUSH_RADIUS) * PUSH_STRENGTH;
+            var force = (1 - dist / PUSH_RADIUS) * PUSH_STRENGTH * ticks;
             p.x += (dx / dist) * force;
             p.y += (dy / dist) * force;
           }
@@ -495,7 +508,7 @@ const {
 
       window.addEventListener('resize', resize);
       resize();
-      step();
+      requestAnimationFrame(step);
     })();
   </script>
 </body>
