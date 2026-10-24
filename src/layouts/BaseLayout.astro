@@ -403,6 +403,22 @@ const {
       var frame = 0;
       var isScrolling = false;
       var scrollTimer;
+      // The loop only runs while it draws. A loop that merely skips frames
+      // still makes the browser run a main-thread frame every vsync, which
+      // is exactly what a fast scroll can't spare.
+      var running = false;
+
+      function start() {
+        if (running || isScrolling || isLight()) return;
+        running = true;
+        lastDraw = 0;
+        requestAnimationFrame(step);
+      }
+
+      function scrollStopped() {
+        isScrolling = false;
+        start();
+      }
 
       function onScroll() {
         isScrolling = true;
@@ -410,17 +426,21 @@ const {
           document.activeElement.blur();
         }
         clearTimeout(scrollTimer);
-        scrollTimer = setTimeout(function() {
-          isScrolling = false;
-        }, 120);
+        scrollTimer = setTimeout(scrollStopped, 120);
       }
 
       window.addEventListener('scroll', onScroll, { passive: true });
       if ('onscrollend' in window) {
         window.addEventListener('scrollend', function() {
-          isScrolling = false;
+          clearTimeout(scrollTimer);
+          scrollStopped();
         }, { passive: true });
       }
+
+      // Back from light mode: the theme toggle only flips classes.
+      var themeWatch = new MutationObserver(start);
+      themeWatch.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+      themeWatch.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
       function resize() {
         w = window.innerWidth;
@@ -446,8 +466,7 @@ const {
 
       function step(now) {
         if (isLight() || isScrolling) {
-          lastDraw = 0;
-          requestAnimationFrame(step);
+          running = false;
           return;
         }
 
@@ -508,7 +527,7 @@ const {
 
       window.addEventListener('resize', resize);
       resize();
-      requestAnimationFrame(step);
+      start();
     })();
   </script>
 </body>
