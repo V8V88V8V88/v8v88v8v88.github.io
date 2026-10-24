@@ -706,7 +706,9 @@ function getHostedLabel(url: string): string {
       }) : null;
       document.querySelectorAll('.project-item').forEach(item => {
         if (!canHover) return;
-        rowResizeObserver.observe(item);
+        // Hover growth is mostly padding (the hosted-link gap), which a default
+        // content-box observer never reports.
+        rowResizeObserver.observe(item, { box: 'border-box' });
         let revertTimer = null;
         const activate = () => {
           clearTimeout(revertTimer);
