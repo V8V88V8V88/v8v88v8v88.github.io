@@ -667,8 +667,16 @@ function getHostedLabel(url: string): string {
       };
       showVoice();
       if (soundToggle) {
+        // The glint animates a mask, which can't run on the compositor, so it
+        // costs a main-thread frame every vsync; scrolling the list would pay
+        // that the whole way down. Pause it while the button is off-screen.
+        const glintIO = new IntersectionObserver(([entry]) => {
+          soundToggle.classList.toggle('glint-paused', !entry.isIntersecting);
+        });
+        glintIO.observe(soundToggle);
         onFirstSound.push(() => {
           soundToggle.classList.remove('is-idle');
+          glintIO.disconnect();
           showVoice();
         });
         soundToggle.addEventListener('click', async () => {
@@ -2750,6 +2758,10 @@ function getHostedLabel(url: string): string {
 
 :global(body.light-mode) .sound-toggle.is-idle .sound-icon {
   color: #000;
+}
+
+.sound-toggle.glint-paused .sound-icon {
+  animation-play-state: paused;
 }
 
 @keyframes sound-glint {
