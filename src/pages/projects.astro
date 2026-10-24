@@ -2443,6 +2443,15 @@ function getHostedLabel(url: string): string {
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;
   }
+
+  /* content-visibility only pays off for desktop's hover reflows. While
+     scrolling a phone it lays out and paints each row as it enters, and the
+     5.6rem placeholder never matches the real row height, so the page
+     shifts a little every time one appears. The whole list is cheap enough
+     to render up front. */
+  .project-item {
+    content-visibility: visible;
+  }
 }
 
 /* Phone type scale. Desktop's hierarchy (ASCII ~1.4x the tagline, tagline
