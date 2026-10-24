@@ -2696,7 +2696,32 @@ function getHostedLabel(url: string): string {
       animation: project-dial linear both;
       animation-timeline: view();
     }
+
+    /* The dial fades every row, and a fading row with its own compositor
+       layer inside has to be drawn offscreen first: one extra GPU render
+       pass per visible row per frame (16 instead of 4 while scrolling),
+       which tile-based phone GPUs feel as stutter on a fast fling. The
+       preview's will-change and the card's backface-visibility only promote
+       for the desktop hover/pop-out motion; on touch the preview never
+       moves, so dropping them keeps each row a single layer and changes
+       nothing on screen. */
+    .project-preview {
+      will-change: auto;
+    }
+
+    .lang-card {
+      backface-visibility: visible;
+    }
   }
+}
+
+/* Same for the JS fallback dial, which fades rows the same way. */
+.project-list.scroll-dial .project-preview {
+  will-change: auto;
+}
+
+.project-list.scroll-dial .lang-card {
+  backface-visibility: visible;
 }
 
 /* Sound switch: icon only, one speaker per voice in that voice's style:
