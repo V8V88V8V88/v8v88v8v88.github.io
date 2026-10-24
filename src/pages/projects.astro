@@ -1207,6 +1207,10 @@ function getHostedLabel(url: string): string {
   align-items: center;
   color: #fff;
   text-decoration: none;
+  /* global.css pads every .project-item a by 1rem (home cards), which made
+     the rows too tall; a little breathing room is enough here. */
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
   transition: padding-left 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -1489,12 +1493,6 @@ function getHostedLabel(url: string): string {
   transition: color 0.2s ease;
 }
 
-@media (hover: hover) and (pointer: fine) {.project-item:hover .project-name,
-.project-item:has(:focus-visible) .project-name {
-  color: #1ed760;
-  text-shadow: 0 0 16px rgba(30, 215, 96, 0.25);
-}}
-
 .project-hover-info {
   display: flex;
   align-items: center;
@@ -1771,10 +1769,6 @@ function getHostedLabel(url: string): string {
 :global(body.light-mode) .project-name {
   color: #1d1d1f;
 }
-
-@media (hover: hover) and (pointer: fine) {:global(body.light-mode) .project-item:hover .project-name {
-  color: #0f4d1f;
-}}
 
 :global(body.light-mode) .project-desc {
   color: rgba(0, 0, 0, 0.6);
