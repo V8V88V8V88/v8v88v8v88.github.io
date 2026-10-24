@@ -31,6 +31,7 @@ function getHostedLabel(url: string): string {
 >
   <main class="projects-page">
     <section class="projects-hero">
+      <div class="hero-intro">
       <pre class="hero-ascii">
  ██████╗ ██████╗  ██████╗      ██╗███████╗ ██████╗████████╗███████╗
  ██╔══██╗██╔══██╗██╔═══██╗     ██║██╔════╝██╔════╝╚══██╔══╝██╔════╝
@@ -40,7 +41,7 @@ function getHostedLabel(url: string): string {
  ╚═╝     ╚═╝  ╚═╝ ╚═════╝  ╚════╝ ╚══════╝ ╚═════╝   ╚═╝   ╚══════╝
       </pre>
       <p class="hero-tagline">
-        That I've built, contributed, and <a class="shipped-link" href="https://github.com/v8v88v8v88?tab=repositories" target="_blank" rel="noopener noreferrer"><em>shipped</em></a>.
+        That I've built,<br class="tagline-break" /> contributed, and <a class="shipped-link" href="https://github.com/v8v88v8v88?tab=repositories" target="_blank" rel="noopener noreferrer"><em>shipped</em></a>.
       </p>
 
       <a class="contrib-chart" id="contrib-chart" href="https://github.com/v8v88v8v88" target="_blank" rel="noopener noreferrer" title="View GitHub profile (V8V88V8V88)">
@@ -58,6 +59,7 @@ function getHostedLabel(url: string): string {
           <span class="contrib-legend-label">More</span>
         </div>
       </a>
+      </div>
 
       <div class="hero-stats-row">
         <div class="hero-stats">
@@ -167,7 +169,12 @@ function getHostedLabel(url: string): string {
         .then(function(data) {
           var contributions = data.contributions || [];
           var total = data.total && data.total.lastYear || 0;
-          countEl.textContent = total + ' contributions in the last year';
+          countEl.textContent = total + ' contributions';
+          // Dropped on phones, where the count sits under the narrow chart column.
+          var countExtra = document.createElement('span');
+          countExtra.className = 'contrib-count-extra';
+          countExtra.textContent = ' in the last year';
+          countEl.appendChild(countExtra);
 
           if (contributions.length === 0) { chart.style.display = 'none'; return; }
 
@@ -2166,6 +2173,86 @@ function getHostedLabel(url: string): string {
   transform: translateY(-1px);
 }
 
+.hero-intro {
+  width: 100%;
+}
+
+/* Desktop: the chart fills the empty column beside the heading and tagline
+   instead of taking a row of its own. It runs from the heading's top to the
+   tagline's bottom, the cells are sized from that height, and as many recent
+   weeks as fit are shown, newest on the right, fading into the past on the
+   left. The count hangs just below, under the newest weeks. */
+@media (min-width: 1100px) {
+  .hero-intro {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    column-gap: clamp(2rem, 4vw, 4.5rem);
+  }
+
+  .hero-intro .hero-ascii {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .hero-intro .hero-tagline {
+    grid-column: 1;
+    grid-row: 2;
+    white-space: nowrap;
+  }
+
+  .hero-intro .contrib-chart {
+    --contrib-gap: 4px;
+    --contrib-cell: calc((100cqh - 6 * var(--contrib-gap)) / 7);
+    grid-column: 2;
+    grid-row: 1 / 3;
+    align-self: stretch;
+    /* Top on the heading's ink, bottom on the tagline's baseline. */
+    margin: 0.2rem 0 calc(1.5rem + 0.75rem);
+    /* Size containment keeps the chart out of the row sizing, so the left
+       column alone sets the height it stretches to. */
+    container-type: size;
+    overflow: visible;
+    position: relative;
+  }
+
+  .hero-intro .contrib-chart :global(.contrib-grid),
+  .hero-intro .contrib-chart :global(.contrib-grid:empty) {
+    display: flex;
+    justify-content: flex-end;
+    height: 100%;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 40%);
+    mask-image: linear-gradient(to right, transparent, #000 40%);
+  }
+
+  .hero-intro .contrib-chart :global(.contrib-week) {
+    flex: 0 0 var(--contrib-cell);
+  }
+
+  .hero-intro .contrib-chart :global(.contrib-cell) {
+    border-radius: 3px;
+  }
+
+  /* Out of flow, so the grid keeps the full heading-to-tagline height. */
+  .hero-intro .contrib-header {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin: 0.85rem 0 0;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .hero-intro .contrib-count {
+    font-size: var(--fs-2xs);
+  }
+
+  .hero-intro .contrib-legend {
+    display: none;
+  }
+}
+
 .contrib-header {
   margin-bottom: 0.75rem;
 }
@@ -2304,6 +2391,89 @@ function getHostedLabel(url: string): string {
 
   :global(.contrib-cell) {
     border-radius: 1px;
+  }
+}
+
+/* Phones mirror the desktop hero: the chart fills the column right of the
+   heading and tagline (the tagline breaks after "built," so its column
+   stays narrow), cells sized from that height, recent weeks fading into the
+   past on the left, and the count hangs below, under the newest weeks. */
+.tagline-break {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .hero-intro {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    column-gap: 1.1rem;
+    /* Room for the count, which hangs out of flow below the chart. */
+    padding-bottom: 1.35rem;
+  }
+
+  .hero-intro .hero-ascii {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .hero-intro .hero-tagline {
+    grid-column: 1;
+    grid-row: 2;
+    white-space: nowrap;
+  }
+
+  .tagline-break {
+    display: inline;
+  }
+
+  .hero-intro .contrib-chart {
+    --contrib-gap: 3px;
+    --contrib-cell: calc((100cqh - 6 * var(--contrib-gap)) / 7);
+    grid-column: 2;
+    grid-row: 1 / 3;
+    align-self: stretch;
+    width: auto;
+    margin: 0.1rem 0 0.75rem;
+    container-type: size;
+    overflow: visible;
+    position: relative;
+  }
+
+  .hero-intro .contrib-chart :global(.contrib-grid),
+  .hero-intro .contrib-chart :global(.contrib-grid:empty) {
+    display: flex;
+    justify-content: flex-end;
+    height: 100%;
+    overflow: hidden;
+    /* Shorter fade than desktop: the column is only a few weeks wide. */
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 25%);
+    mask-image: linear-gradient(to right, transparent, #000 25%);
+  }
+
+  .hero-intro .contrib-chart :global(.contrib-week) {
+    flex: 0 0 var(--contrib-cell);
+  }
+
+  .hero-intro .contrib-chart :global(.contrib-cell) {
+    border-radius: 2px;
+  }
+
+  .hero-intro .contrib-header {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin: 0.6rem 0 0;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .hero-intro .contrib-count :global(.contrib-count-extra) {
+    display: none;
+  }
+
+  .hero-intro .contrib-legend {
+    display: none;
   }
 }
 
