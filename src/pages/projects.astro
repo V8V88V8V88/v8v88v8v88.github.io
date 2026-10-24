@@ -854,6 +854,11 @@ function getHostedLabel(url: string): string {
             : [lerp(0.64, 0.3, t), lerp(0.98, 0.92, t), lerp(2.5, 10, t)];
           return [o, sc, -Math.sign(d) * r];
         };
+        // Every row written is re-rendered that frame, and the depth curve is
+        // flat past four rows out, so most nearby rows hold the same values
+        // frame after frame. Only rows whose values actually change are
+        // written: about the eight around the middle instead of ~22.
+        const written = new Map();
         let queued = false;
         const update = () => {
           queued = false;
@@ -861,8 +866,13 @@ function getHostedLabel(url: string): string {
           const rects = [...nearby].map(row => [row, row.getBoundingClientRect()]);
           rects.forEach(([row, rect]) => {
             const [o, sc, r] = depth((rect.top + rect.height / 2 - mid) / (rect.height + 10));
-            row.style.opacity = o.toFixed(3);
-            row.style.transform = `perspective(1200px) rotateX(${r.toFixed(2)}deg) scale(${sc.toFixed(4)})`;
+            const opacity = o.toFixed(3);
+            const transform = `perspective(1200px) rotateX(${r.toFixed(2)}deg) scale(${sc.toFixed(4)})`;
+            const last = written.get(row);
+            if (last && last[0] === opacity && last[1] === transform) return;
+            written.set(row, [opacity, transform]);
+            row.style.opacity = opacity;
+            row.style.transform = transform;
           });
         };
         const queue = () => {
