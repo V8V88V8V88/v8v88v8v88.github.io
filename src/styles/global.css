@@ -1,3 +1,12 @@
+/* Geist Serif ships a single 400 weight with no italic; self-hosted until Google Fonts carries it. */
+@font-face {
+    font-family: "Geist Serif";
+    src: url("/fonts/GeistSerif-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -474,8 +483,8 @@ html.light-mode .logo a[aria-current="page"] {
 
     /* Apple devices resolve to SF via the system keywords; everyone else gets Geist. */
     --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Geist", "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
-    --font-serif: "Fraunces", Georgia, serif;
-    --font-serif-text: "Newsreader", Georgia, serif;
+    --font-serif: "Geist Serif", Georgia, serif;
+    --font-serif-text: "Geist Serif", Georgia, serif;
     --font-mono: "SF Mono", ui-monospace, "Geist Mono", Menlo, Monaco, Consolas, monospace;
 
     /* Shared type scale; larger steps are fluid so headings track 720p → 1440p+. */
