@@ -14,6 +14,7 @@ interface Props {
   showRss?: boolean;
   showFontAwesome?: boolean;
   showFooter?: boolean;
+  preloadSerif?: boolean;
 }
 
 const {
@@ -27,6 +28,7 @@ const {
   showRss = false,
   showFontAwesome = true,
   showFooter = true,
+  preloadSerif = true,
 } = Astro.props;
 ---
 <!DOCTYPE html>
@@ -53,7 +55,7 @@ const {
   {showRss && <link rel="alternate" type="application/atom+xml" title="V8V88V8V88 Blog" href="https://v8v88v8v88.com/feed.xml" />}
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preload" as="font" type="font/woff2" href="/fonts/GeistSerif-Regular.woff2" crossorigin />
+  {preloadSerif && <link rel="preload" as="font" type="font/woff2" href="/fonts/GeistSerif-Regular.woff2" crossorigin />}
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap" />
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
   <noscript>
