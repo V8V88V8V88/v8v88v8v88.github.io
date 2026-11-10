@@ -104,8 +104,8 @@ function getCoverImage(image: string): string {
           <p class="now-status">dev × linux × foss × low&#8209;level × design</p>
         </div>
       </div>
-      <p>
-        I'm curious by nature and I like asking questions. That's what got me into computers, and from there into <a href="https://en.wikipedia.org/wiki/Linux" target="_blank" rel="noopener noreferrer">Linux</a>, <a href="https://en.wikipedia.org/wiki/Free_and_open-source_software" target="_blank" rel="noopener noreferrer">FOSS</a>, and <a href="https://en.wikipedia.org/wiki/Systems_programming" target="_blank" rel="noopener noreferrer">systems programming</a>. I work at <a href="https://automologylabs.com/" target="_blank" rel="noopener noreferrer">Automology Labs</a>, and in my free time I'm building <a href="https://github.com/v8v88v8v88/XE" target="_blank" rel="noopener noreferrer">XE</a> and a few <a href="/projects/">personal projects</a>. I like keeping things <a href="https://principles-wiki.net/principles:keep_it_simple_stupid" target="_blank" rel="noopener noreferrer">simple</a>, the <a href="https://en.wikipedia.org/wiki/Unix_philosophy" target="_blank" rel="noopener noreferrer">Unix</a> way, and most of what I know comes from breaking systems and fixing them. I'm also into cybersecurity (CEH certified), and outside of tech I read philosophy, history, or whatever catches my <a href="https://en.wikipedia.org/wiki/Attention_deficit_hyperactivity_disorder" target="_blank" rel="noopener noreferrer">attention</a>. If any of this sounds interesting, <a href="/contact/">feel free to reach out</a> :)
+      <p class="intro-bio">
+        I'm curious by nature and I like asking questions. That's what got me into computers, and from there into Linux, FOSS, and systems programming. I work at <a href="https://automologylabs.com/" target="_blank" rel="noopener noreferrer">Automology Labs</a>, and in my free time I'm building <a href="https://github.com/v8v88v8v88/XE" target="_blank" rel="noopener noreferrer">XE</a> and a few <a href="/projects/">personal projects</a>. I like keeping things simple, the Unix way, and most of what I know comes from breaking systems and fixing them. I'm also into cybersecurity (CEH certified), and outside of tech I read philosophy, history, or whatever catches my <a href="https://en.wikipedia.org/wiki/Attention_deficit_hyperactivity_disorder" target="_blank" rel="noopener noreferrer">attention</a>. If any of this sounds interesting, <a href="/contact/">feel free to reach out</a> :)
       </p>
       <a href="/about/#story" class="view-all about-cta">more about me →</a>
     </section>
@@ -115,26 +115,34 @@ function getCoverImage(image: string): string {
         <h2>Projects</h2>
         <a href="/projects/" class="view-all">view all →</a>
       </div>
-      <ul>
-        {featuredProjects.map(project => (
-          <li class="project-item">
-            <a href={project.url} target="_blank" rel="noopener noreferrer" class={project.image ? 'has-cover' : undefined} style={project.image ? `--proj-img: url('${getCoverImage(project.image)}')` : undefined}>
-              {project.image ? (
-                <img src={getCoverImage(project.image)} alt={`${project.name} project cover`} loading="lazy" class="project-thumb" />
-              ) : (
-                <div class="project-thumb project-thumb-placeholder" aria-hidden="true"></div>
-              )}
-              <div class="project-body">
-                <div class="project-meta">
-                  <h3>{project.name}</h3>
-                  {project.language !== 'Unknown' && <span class="project-stack-tag">{project.language}</span>}
+      <div class="carousel" data-carousel-nav>
+        <button type="button" class="carousel-btn carousel-prev" data-dir="-1" aria-label="Previous projects" disabled>
+          <svg viewBox="0 0 10 10" aria-hidden="true"><path d="M7.5 1.2v7.6L2 5z" /></svg>
+        </button>
+        <ul>
+          {featuredProjects.map(project => (
+            <li class="project-item">
+              <a href={project.url} target="_blank" rel="noopener noreferrer" class={project.image ? 'has-cover' : undefined} style={project.image ? `--proj-img: url('${getCoverImage(project.image)}')` : undefined}>
+                {project.image ? (
+                  <img src={getCoverImage(project.image)} alt={`${project.name} project cover`} loading="lazy" class="project-thumb" />
+                ) : (
+                  <div class="project-thumb project-thumb-placeholder" aria-hidden="true"></div>
+                )}
+                <div class="project-body">
+                  <div class="project-meta">
+                    <h3>{project.name}</h3>
+                    {project.language !== 'Unknown' && <span class="project-stack-tag">{project.language}</span>}
+                  </div>
+                  <p>{project.description}</p>
                 </div>
-                <p>{project.description}</p>
-              </div>
-            </a>
-          </li>
-        ))}
-      </ul>
+              </a>
+            </li>
+          ))}
+        </ul>
+        <button type="button" class="carousel-btn carousel-next" data-dir="1" aria-label="Next projects">
+          <svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2.5 1.2v7.6L8 5z" /></svg>
+        </button>
+      </div>
     </section>
 
     <section class="posts">
@@ -314,6 +322,31 @@ function getCoverImage(image: string): string {
         } catch (_) { copying = false; }
       });
     }
+
+    // Project row arrows: step one card at a time, and grey out at each end.
+    (function () {
+      var nav = document.querySelector('[data-carousel-nav]');
+      var row = document.querySelector('.projects ul');
+      if (!nav || !row) return;
+      var cards = row.children;
+      var prev = nav.querySelector('[data-dir="-1"]');
+      var next = nav.querySelector('[data-dir="1"]');
+      nav.addEventListener('click', function (e) {
+        var btn = e.target.closest('.carousel-btn');
+        if (!btn || cards.length < 2) return;
+        var step = cards[1].offsetLeft - cards[0].offsetLeft;
+        row.scrollBy({ left: step * Number(btn.dataset.dir) });
+      });
+      var sync = function () {
+        prev.disabled = row.scrollLeft <= 1;
+        next.disabled = row.scrollLeft + row.clientWidth >= row.scrollWidth - 1;
+        // The right-edge fade hints at more cards; at the end there are none.
+        row.classList.toggle('at-end', next.disabled);
+      };
+      row.addEventListener('scroll', sync, { passive: true });
+      window.addEventListener('resize', sync, { passive: true });
+      sync();
+    })();
   </script>
 </BaseLayout>
 
@@ -632,6 +665,46 @@ function getCoverImage(image: string): string {
     margin-bottom: 1.25rem;
   }
   .section-header h2 { margin-bottom: 0; }
+
+  /* Plain left / right triangles in the gutter on either side of the project
+     row. Each one only shows when there is somewhere to go that way, and
+     only where there is a pointer: touch screens swipe the row instead. */
+  .carousel {
+    position: relative;
+  }
+  .carousel-btn {
+    display: none;
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+    place-items: center;
+    width: 1.6rem;
+    height: 2.4rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: rgba(255, 255, 255, 0.55);
+    cursor: pointer;
+    transform: translateY(-50%);
+    transition: opacity 0.25s ease, visibility 0.25s ease, color 0.2s ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .carousel-btn { display: grid; }
+  }
+  .carousel-prev { left: -1.85rem; }
+  .carousel-next { right: -1.85rem; }
+  .carousel-btn svg {
+    width: 1.1rem;
+    height: 1.1rem;
+    fill: currentColor;
+  }
+  .carousel-btn:hover { color: #fff; }
+  .carousel-btn:disabled {
+    opacity: 0;
+    visibility: hidden;
+  }
+  :global(html.light-mode) .carousel-btn { color: rgba(0, 0, 0, 0.5); }
+  :global(html.light-mode) .carousel-btn:hover { color: #000; }
   .view-all {
     font-family: var(--font-mono);
     font-size: var(--fs-xs);
@@ -735,7 +808,7 @@ function getCoverImage(image: string): string {
   .about .intro {
     width: fit-content;
     max-width: 100%;
-    margin: 0 auto 1.75rem;
+    margin: 0 auto 1.4rem;
     gap: 1.75rem;
     justify-content: center;
   }
@@ -760,15 +833,27 @@ function getCoverImage(image: string): string {
     font-family: inherit;
     font-size: clamp(0.875rem, 0.8rem + 0.35vw, 1.0625rem);
     letter-spacing: 0.01em;
-    color: rgba(255, 255, 255, 0.45);
+    color: rgba(255, 255, 255, 0.62);
   }
   :global(html.light-mode) .intro-text .now-status {
-    color: rgba(0, 0, 0, 0.45);
+    color: rgba(0, 0, 0, 0.6);
   }
+
   .about-cta {
     display: block;
-    text-align: right;
-    margin: 1.25rem 0 0;
+    width: fit-content;
+    margin: 1.1rem auto 0;
+  }
+
+  /* The card reads as one centred column: photo and greeting, then the bio
+     at a comfortable line length, then the actions. */
+  .about .intro-bio {
+    max-width: 76ch;
+    margin-inline: auto;
+    font-size: clamp(0.95rem, 0.88rem + 0.2vw, 1.0625rem);
+    line-height: 1.7;
+    text-align: center;
+    text-wrap: balance;
   }
 
   .latest-tag {
@@ -854,6 +939,12 @@ function getCoverImage(image: string): string {
 
   @media (max-width: 768px) {
     .about .intro { gap: 1rem; }
+
+    /* Too many lines on a phone to centre comfortably. */
+    .about .intro-bio {
+      text-align: left;
+    }
+
 
     .now-status {
       font-size: var(--fs-2xs);

@@ -29,13 +29,30 @@ const coverDir = path.join(root, 'public/images/covers');
 mkdirSync(outDir, { recursive: true });
 mkdirSync(coverDir, { recursive: true });
 
+// Some screenshots are a window floating on a white or transparent margin,
+// which leaves them looking smaller and framed differently from the ones
+// that fill the image. Trim that margin (plus a sliver for the window's
+// rounded corners) and put any transparency on the card's own dark colour.
+async function coverSource(file) {
+  const { data, info } = await sharp(file).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+  const [r, g, b, a] = data;
+  const plainMargin = a < 16 || (r > 240 && g > 240 && b > 240);
+  if (!plainMargin) return file;
+  const trimmed = await sharp(file).trim({ threshold: 24 }).toBuffer({ resolveWithObject: true });
+  const inset = Math.round(trimmed.info.width * 0.012);
+  return sharp(trimmed.data)
+    .extract({ left: inset, top: inset, width: trimmed.info.width - inset * 2, height: trimmed.info.height - inset * 2 })
+    .flatten({ background: '#0d0d0d' })
+    .toBuffer();
+}
+
 for (const image of images) {
   const name = path.basename(image).replace(/\.\w+$/, '.webp');
   await sharp(path.join(root, 'public', image))
     .resize(SIZE, SIZE, { fit: 'cover', position: 'centre' })
     .webp({ quality: 82 })
     .toFile(path.join(outDir, name));
-  await sharp(path.join(root, 'public', image))
+  await sharp(await coverSource(path.join(root, 'public', image)))
     .resize({ width: COVER_WIDTH, withoutEnlargement: true })
     .webp({ quality: 82 })
     .toFile(path.join(coverDir, name));

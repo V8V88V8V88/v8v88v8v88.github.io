@@ -83,6 +83,25 @@ html {
     scroll-padding-top: 72px;
 }
 
+/* Page-to-page navigation cross-fades instead of cutting (cross-document
+   view transitions: CSS only, and browsers without them just navigate as
+   before). The navbar is its own group so it stays put while the page under
+   it changes. Skipped for people who ask for less motion. */
+@media (prefers-reduced-motion: no-preference) {
+    @view-transition {
+        navigation: auto;
+    }
+
+    header {
+        view-transition-name: site-header;
+    }
+
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+        animation-duration: 0.22s;
+    }
+}
+
 /* Page lock while a modal is open (set from the guestbook script). */
 html.scroll-locked {
     overflow: hidden;
@@ -172,6 +191,14 @@ html.light-mode body::before {
         --fade-midpoint: 0.7;
         --edge-blur: 26px;
     }
+}
+
+/* The bottom fade is thinner and softer than the top one: cards scroll up
+   through it, and a strong blur there read as a rendering glitch. */
+.bottom-edge-blur {
+    height: 3vh;
+    height: 3dvh;
+    --edge-blur: 10px;
 }
 
 @media print {
@@ -1350,6 +1377,11 @@ html.light-mode .projects {
 
 .projects ul::-webkit-scrollbar {
     display: none;
+}
+
+.projects ul.at-end {
+    mask-image: none;
+    -webkit-mask-image: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -2918,6 +2950,22 @@ html.light-mode main>section.intro {
     min-width: 0;
     max-width: 6rem;
     opacity: 1;
+}
+
+/* A bare pen reads as "edit", so on larger screens the label is always
+   there; phones keep the compact round button. */
+@media (min-width: 769px) {
+    .guestbook-btn {
+        width: auto;
+        padding: 0.6rem 1rem;
+        gap: 0.5rem;
+    }
+
+    .guestbook-btn .guestbook-btn-label {
+        width: auto;
+        max-width: 6rem;
+        opacity: 1;
+    }
 }
 
 html.light-mode .guestbook-btn {
