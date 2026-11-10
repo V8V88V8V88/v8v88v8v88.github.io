@@ -1,4 +1,5 @@
 ---
+import { iconSvg } from '../data/icons';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { contactPageContacts, getSameAsUrls, getTerminalContactJson } from '../data/contacts';
 const dockContacts = contactPageContacts.filter((contact) => contact.id !== 'youtube');
@@ -107,7 +108,7 @@ import { neofetchMarkup } from '../data/terminal';
               aria-label={c.label}
             >
               <div class="dock-icon-tile">
-                <i class={`${c.icon} dock-glyph`}></i>
+                <i class={`${c.icon} dock-glyph`} aria-hidden="true" set:html={iconSvg(c.icon)} />
               </div>
               <span class="dock-dot" aria-hidden="true"></span>
             </a>
@@ -598,7 +599,7 @@ I'm always open to collaborate on cool projects.`;
     opacity: 0.9;
   }
 
-  :global(body.light-mode) .terminal-resize-se::after {
+  :global(html.light-mode) .terminal-resize-se::after {
     background: linear-gradient(135deg,
       transparent 0%, transparent 35%,
       rgba(0, 0, 0, 0.28) 35%, rgba(0, 0, 0, 0.28) 48%,
@@ -871,11 +872,11 @@ I'm always open to collaborate on cool projects.`;
   .terminal-window :global(.neofetch-palette span:nth-child(6)) { background: #b5d8c6; }
   .terminal-welcome { font-size: 0.85em; }
 
-  :global(body.light-mode) .terminal-window :global(.neofetch-logo),
-  :global(body.light-mode) .terminal-window :global(.neofetch-user),
-  :global(body.light-mode) .terminal-window :global(.neofetch-label),
-  :global(body.light-mode) .terminal-window :global(.terminal-accent) { color: #0f6438; }
-  :global(body.light-mode) .terminal-window :global(.neofetch-user span) { color: #414950; }
+  :global(html.light-mode) .terminal-window :global(.neofetch-logo),
+  :global(html.light-mode) .terminal-window :global(.neofetch-user),
+  :global(html.light-mode) .terminal-window :global(.neofetch-label),
+  :global(html.light-mode) .terminal-window :global(.terminal-accent) { color: #0f6438; }
+  :global(html.light-mode) .terminal-window :global(.neofetch-user span) { color: #414950; }
 
   @container (max-width: 480px) {
     .terminal-window :global(.neofetch) { grid-template-columns: max-content minmax(0, 1fr); gap: 12px; }
@@ -927,7 +928,24 @@ I'm always open to collaborate on cool projects.`;
     flex: 1;
     min-height: 0;
     overflow: auto;
+    /* Scrolling past either end of the history stays in the terminal
+       instead of dragging the page along. */
+    overscroll-behavior: contain;
     overflow-wrap: anywhere;
+  }
+
+  /* Standard scrollbar styling for browsers without ::-webkit-scrollbar
+     (Firefox). Scoped this way because Chromium drops the rules below as
+     soon as the standard properties are set. */
+  @supports not selector(::-webkit-scrollbar) {
+    .terminal-history {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+    }
+
+    :global(html.light-mode) .terminal-history {
+      scrollbar-color: rgba(0, 0, 0, 0.15) transparent;
+    }
   }
 
   .terminal-history::-webkit-scrollbar {
@@ -947,20 +965,20 @@ I'm always open to collaborate on cool projects.`;
     background: rgba(255, 255, 255, 0.3);
   }
 
-  :global(body.light-mode) .terminal-input {
+  :global(html.light-mode) .terminal-input {
     color: #1d1d1f;
     caret-color: #0f4d1f;
   }
 
-  :global(body.light-mode) .terminal-input::placeholder {
+  :global(html.light-mode) .terminal-input::placeholder {
     color: rgba(0, 0, 0, 0.25);
   }
 
-  :global(body.light-mode) .terminal-history::-webkit-scrollbar-thumb {
+  :global(html.light-mode) .terminal-history::-webkit-scrollbar-thumb {
     background: rgba(0, 0, 0, 0.15);
   }
 
-  :global(body.light-mode) .terminal-history::-webkit-scrollbar-thumb:hover {
+  :global(html.light-mode) .terminal-history::-webkit-scrollbar-thumb:hover {
     background: rgba(0, 0, 0, 0.25);
   }
 
@@ -1176,7 +1194,7 @@ I'm always open to collaborate on cool projects.`;
     box-shadow: 0 0 4px rgba(255, 255, 255, 0.9), 0 0 8px rgba(90, 247, 142, 0.4);
   }
 
-  :global(body.light-mode) .terminal-window {
+  :global(html.light-mode) .terminal-window {
     background:
       radial-gradient(140% 90% at 50% 0%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.6) 50%, transparent 80%),
       linear-gradient(180deg, rgba(255, 255, 255, 0.90) 0%, rgba(249, 248, 247, 0.94) 100%);
@@ -1188,7 +1206,7 @@ I'm always open to collaborate on cool projects.`;
       inset 0 1px 1px 0 rgba(255, 255, 255, 1);
   }
 
-  :global(body.light-mode) .terminal-window::before {
+  :global(html.light-mode) .terminal-window::before {
     background: linear-gradient(90deg,
       transparent 0%,
       rgba(255, 255, 255, 0.9) 20%,
@@ -1198,21 +1216,21 @@ I'm always open to collaborate on cool projects.`;
     );
   }
 
-  :global(body.light-mode) .terminal-window.is-dragging {
+  :global(html.light-mode) .terminal-window.is-dragging {
     box-shadow:
       0 22px 48px -16px rgba(0, 0, 0, 0.18),
       0 8px 18px -8px rgba(0, 0, 0, 0.1),
       inset 0 1px 1px rgba(255, 255, 255, 0.85);
   }
 
-  :global(body.light-mode) .terminal-header {
+  :global(html.light-mode) .terminal-header {
     background: linear-gradient(180deg,
       rgba(255, 255, 255, 0.92) 0%,
       rgba(249, 248, 247, 0.85) 100%);
     border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   }
 
-  :global(body.light-mode) .terminal-dot {
+  :global(html.light-mode) .terminal-dot {
     background:
       linear-gradient(180deg, rgba(0, 0, 0, 0.04) 0%, rgba(0, 0, 0, 0.08) 100%),
       rgba(255, 255, 255, 0.7);
@@ -1223,42 +1241,42 @@ I'm always open to collaborate on cool projects.`;
       0 1px 2px rgba(0, 0, 0, 0.06);
   }
 
-  :global(body.light-mode) .terminal-title {
+  :global(html.light-mode) .terminal-title {
     color: rgba(0, 0, 0, 0.6);
     font-weight: 500;
   }
 
-  :global(body.light-mode) .terminal-body {
+  :global(html.light-mode) .terminal-body {
     background: transparent;
   }
 
-  :global(body.light-mode) .terminal-window :global(.terminal-prompt) {
+  :global(html.light-mode) .terminal-window :global(.terminal-prompt) {
     color: #0f4d1f;
   }
 
-  :global(body.light-mode) .terminal-window :global(.terminal-command) {
+  :global(html.light-mode) .terminal-window :global(.terminal-command) {
     color: #1d1d1f;
   }
 
-  :global(body.light-mode) .terminal-window :global(.terminal-output) {
+  :global(html.light-mode) .terminal-window :global(.terminal-output) {
     color: rgba(0, 0, 0, 0.6);
   }
 
-  :global(body.light-mode) .terminal-window :global(.terminal-link) {
+  :global(html.light-mode) .terminal-window :global(.terminal-link) {
     color: #0f4d1f;
   }
 
-  :global(body.light-mode) .terminal-window :global(.terminal-link:hover) {
+  :global(html.light-mode) .terminal-window :global(.terminal-link:hover) {
     color: #1DB954;
   }
 
-  :global(body.light-mode) .contact-page .contact {
+  :global(html.light-mode) .contact-page .contact {
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
   }
 
-  :global(body.light-mode) .macos-dock {
+  :global(html.light-mode) .macos-dock {
     --c-glass: #bbbbbc;
     --c-light: #ffffff;
     --c-dark: #000000;
@@ -1288,27 +1306,27 @@ I'm always open to collaborate on cool projects.`;
   .dock-item[data-contact="twitter"] { --app-ink: #24272d; }
   .dock-item[data-contact="linkedin"] { --app-ink: #3f6a86; }
 
-  :global(body.light-mode) .dock-glyph {
+  :global(html.light-mode) .dock-glyph {
     color: #3a4048;
     filter: none;
   }
 
-  :global(body.light-mode) .dock-item:hover .dock-glyph {
+  :global(html.light-mode) .dock-item:hover .dock-glyph {
     color: var(--app-ink, #303944);
     filter: none;
   }
 
-  :global(body.light-mode) .dock-dot {
+  :global(html.light-mode) .dock-dot {
     background: rgba(0, 0, 0, 0.75);
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
   }
 
-  :global(body.light-mode) .dock-dot.active {
+  :global(html.light-mode) .dock-dot.active {
     background: rgba(0, 0, 0, 0.85);
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
   }
 
-  :global(body.light-mode) .dock-tooltip {
+  :global(html.light-mode) .dock-tooltip {
     background:
       linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(246, 246, 249, 0.94) 100%);
     border: 0.5px solid rgba(0, 0, 0, 0.12);
@@ -1316,7 +1334,7 @@ I'm always open to collaborate on cool projects.`;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
   }
 
-  :global(body.light-mode) .dock-tooltip::after {
+  :global(html.light-mode) .dock-tooltip::after {
     background: rgba(246, 246, 249, 0.95);
     border-right: 0.5px solid rgba(0, 0, 0, 0.12);
     border-bottom: 0.5px solid rgba(0, 0, 0, 0.12);
@@ -1383,7 +1401,7 @@ I'm always open to collaborate on cool projects.`;
       padding: 0 4px 2px;
       width: 100%;
       overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-x: contain;
       scrollbar-width: none;
     }
 

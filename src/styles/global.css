@@ -7,6 +7,54 @@
     font-display: swap;
 }
 
+/* Geist and Geist Mono (variable weight), self-hosted so no page waits on a
+   third-party font server. Split by script like Google Fonts serves them:
+   the browser only downloads a file when the page uses its characters. */
+@font-face {
+    font-family: "Geist";
+    src: url("/fonts/Geist-latin-ext.woff2") format("woff2");
+    font-weight: 400 700;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+    font-family: "Geist";
+    src: url("/fonts/Geist-latin.woff2") format("woff2");
+    font-weight: 400 700;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+    font-family: "Geist Mono";
+    src: url("/fonts/GeistMono-symbols.woff2") format("woff2");
+    font-weight: 400 600;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+2000-2001, U+2004-2008, U+200A, U+23B8-23BD, U+2500-259F;
+}
+
+@font-face {
+    font-family: "Geist Mono";
+    src: url("/fonts/GeistMono-latin-ext.woff2") format("woff2");
+    font-weight: 400 600;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+    font-family: "Geist Mono";
+    src: url("/fonts/GeistMono-latin.woff2") format("woff2");
+    font-weight: 400 600;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -20,14 +68,24 @@
     color: #ffffff;
 }
 
-html.light-mode ::selection,
-body.light-mode ::selection {
+html.light-mode ::selection {
     background-color: rgba(29, 185, 84, 0.25);
     color: #0f4d1f;
 }
 
 html {
     overflow-x: clip;
+    /* Same fade as body, so the theme switch still cross-fades the page
+       colour now that light mode paints it here. */
+    transition: background-color 0.3s ease;
+    /* Keeps focused elements, find-in-page hits and anchor targets clear of
+       the floating navbar when the browser scrolls them into view. */
+    scroll-padding-top: 72px;
+}
+
+/* Page lock while a modal is open (set from the guestbook script). */
+html.scroll-locked {
+    overflow: hidden;
 }
 
 html.light-mode {
@@ -38,15 +96,6 @@ html.light-mode {
 html.dark-mode {
     color-scheme: dark;
     background-color: #000;
-}
-
-html.light-mode body {
-    background-color: #f9f8f7;
-    background-image: radial-gradient(circle, rgba(0, 0, 0, 0.11) 1px, transparent 1.2px);
-    background-size: 32px 32px;
-    background-position: center top;
-    background-attachment: fixed;
-    color: #000;
 }
 
 html.dark-mode body {
@@ -65,13 +114,32 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-body.light-mode {
-    background-color: #f9f8f7;
+html.light-mode body {
+    /* The page colour comes from <html>; the dot grid sits between the two. */
+    background-color: transparent;
+    color: #000;
+}
+
+/* Light mode's dot grid, pinned to the viewport. It is its own fixed layer
+   rather than background-attachment: fixed, which makes browsers repaint
+   the whole page background on every scroll frame (and which iOS ignores). */
+html.light-mode body::before {
+    content: "";
+    position: fixed;
+    inset: 0 0 auto;
+    height: 100vh;
+    height: 100lvh;
+    z-index: -1;
+    pointer-events: none;
     background-image: radial-gradient(circle, rgba(0, 0, 0, 0.11) 1px, transparent 1.2px);
     background-size: 32px 32px;
     background-position: center top;
-    background-attachment: fixed;
-    color: #000;
+}
+
+@media print {
+    html.light-mode body::before {
+        display: none;
+    }
 }
 
 /* Soft glass fades pinned to the viewport edges, below the navbar. */
@@ -113,14 +181,33 @@ body.light-mode {
     }
 }
 
+/* Inline SVG icons (src/data/icons.ts). The <i> wrapper keeps the box the
+   icon font used to give it: one em tall, as wide as the glyph, sitting on
+   the text baseline, sized by font-size and coloured by color. */
+i.fas,
+i.fab {
+    display: inline-block;
+    font-style: normal;
+    line-height: 1;
+    vertical-align: -0.125em;
+}
+
+i.fas > svg,
+i.fab > svg {
+    display: block;
+    height: 1em;
+    width: auto;
+    fill: currentColor;
+}
+
 a:focus-visible,
 button:focus-visible {
     outline: 2px solid #1DB954;
     outline-offset: 2px;
 }
 
-body.light-mode a:focus-visible,
-body.light-mode button:focus-visible {
+html.light-mode a:focus-visible,
+html.light-mode button:focus-visible {
     outline-color: #0f4d1f;
 }
 
@@ -216,28 +303,6 @@ body.scrolling header {
         inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
-body.light-mode header {
-    background:
-        linear-gradient(180deg,
-            rgba(255, 255, 255, 0.5) 0%,
-            rgba(255, 255, 255, 0.25) 30%,
-            rgba(255, 255, 255, 0.15) 60%,
-            rgba(255, 255, 255, 0.1) 100%),
-        rgba(249, 248, 247, 0.25);
-
-    border: 1.5px solid rgba(0, 0, 0, 0.20);
-
-    box-shadow:
-        0 0 0 0.5px rgba(255, 255, 255, 0.4),
-        0 4px 30px rgba(0, 0, 0, 0.06),
-        0 1px 3px rgba(0, 0, 0, 0.03),
-        inset 0 1px 0 rgba(255, 255, 255, 0.95),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.5);
-
-    backdrop-filter: blur(60px) saturate(200%);
-    -webkit-backdrop-filter: blur(60px) saturate(200%);
-}
-
 html.light-mode header {
     background:
         linear-gradient(180deg,
@@ -260,15 +325,6 @@ html.light-mode header {
     -webkit-backdrop-filter: blur(60px) saturate(200%);
 }
 
-body.light-mode header::before {
-    background:
-        radial-gradient(ellipse 100% 60% at 0% 0%,
-            rgba(255, 255, 255, 0.7) 0%,
-            rgba(255, 255, 255, 0.3) 30%,
-            transparent 60%);
-    opacity: 0.9;
-}
-
 html.light-mode header::before {
     background:
         radial-gradient(ellipse 100% 60% at 0% 0%,
@@ -278,19 +334,13 @@ html.light-mode header::before {
     opacity: 0.9;
 }
 
-body.light-mode header::after {
-    background: radial-gradient(300px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-            rgba(255, 255, 255, 0.4) 0%,
-            transparent 50%);
-}
-
 html.light-mode header::after {
     background: radial-gradient(300px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
             rgba(255, 255, 255, 0.4) 0%,
             transparent 50%);
 }
 
-body.light-mode.scrolling header {
+html.light-mode body.scrolling header {
     background:
         linear-gradient(180deg,
             rgba(255, 255, 255, 0.55) 0%,
@@ -307,22 +357,6 @@ body.light-mode.scrolling header {
         inset 0 -1px 0 rgba(0, 0, 0, 0.02);
 }
 
-html.light-mode.scrolling header {
-    background:
-        linear-gradient(180deg,
-            rgba(255, 255, 255, 0.55) 0%,
-            rgba(255, 255, 255, 0.3) 30%,
-            rgba(255, 255, 255, 0.2) 60%,
-            rgba(255, 255, 255, 0.15) 100%),
-        rgba(249, 248, 247, 0.25);
-    box-shadow:
-        0 0 0 0.5px rgba(255, 255, 255, 0.45),
-        0 8px 32px rgba(0, 0, 0, 0.08),
-        0 2px 6px rgba(0, 0, 0, 0.04),
-        inset 0 1px 0 rgba(255, 255, 255, 0.98),
-        inset -1px 0 0 rgba(255, 255, 255, 0.75),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.02);
-}
 
 nav {
     display: flex;
@@ -361,10 +395,6 @@ nav a {
         transform 0.2s ease;
 }
 
-body.light-mode nav a {
-    color: rgba(0, 0, 0, 0.6);
-}
-
 html.light-mode nav a {
     color: rgba(0, 0, 0, 0.6);
 }
@@ -373,11 +403,6 @@ nav a:hover {
     color: #fff;
     background-color: rgba(255, 255, 255, 0.08);
     transform: translateY(-1px);
-}
-
-body.light-mode nav a:hover {
-    color: #000;
-    background-color: rgba(0, 0, 0, 0.05);
 }
 
 html.light-mode nav a:hover {
@@ -389,11 +414,6 @@ html.light-mode nav a:hover {
 nav a[aria-current="page"] {
     background-color: rgba(255, 255, 255, 0.15);
     color: #fff;
-}
-
-body.light-mode nav a[aria-current="page"] {
-    background-color: rgba(0, 0, 0, 0.1);
-    color: #000;
 }
 
 html.light-mode nav a[aria-current="page"] {
@@ -409,7 +429,6 @@ nav a[aria-current="page"] {
     font-weight: 700;
 }
 
-body.light-mode nav a[aria-current="page"],
 html.light-mode nav a[aria-current="page"] {
     background-color: transparent;
     color: #000;
@@ -433,7 +452,6 @@ html.light-mode nav a[aria-current="page"] {
         opacity 0.25s ease;
 }
 
-body.light-mode .logo a,
 html.light-mode .logo a {
     color: #000;
 }
@@ -444,7 +462,6 @@ html.light-mode .logo a {
     transform: translateY(-1px);
 }
 
-body.light-mode .logo a:hover,
 html.light-mode .logo a:hover {
     color: #000;
     background-color: rgba(0, 0, 0, 0.08);
@@ -456,7 +473,6 @@ html.light-mode .logo a:hover {
     color: #fff;
 }
 
-body.light-mode .logo a[aria-current="page"],
 html.light-mode .logo a[aria-current="page"] {
     background-color: rgba(0, 0, 0, 0.1);
     color: #000;
@@ -470,7 +486,6 @@ html.light-mode .logo a[aria-current="page"] {
     font-weight: 750;
 }
 
-body.light-mode .logo a[aria-current="page"],
 html.light-mode .logo a[aria-current="page"] {
     background-color: transparent;
     color: #000;
@@ -514,7 +529,7 @@ section {
     transition: background-color 0.3s ease;
 }
 
-body.light-mode section {
+html.light-mode section {
     background-color: transparent;
 }
 
@@ -554,7 +569,7 @@ body.light-mode section {
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-body.light-mode .footer-glass {
+html.light-mode .footer-glass {
     background: #f1f0ef;
     border: 1px solid rgba(0, 0, 0, 0.08);
     box-shadow:
@@ -583,46 +598,46 @@ body.light-mode .footer-glass {
 }
 
 /* Light mode footer text colors */
-body.light-mode .footer-logo {
+html.light-mode .footer-logo {
     color: #1d1d1f;
 }
 
-body.light-mode .footer-tagline {
+html.light-mode .footer-tagline {
     color: rgba(0, 0, 0, 0.68);
 }
 
-body.light-mode .footer-nav-links a {
+html.light-mode .footer-nav-links a {
     color: rgba(0, 0, 0, 0.6);
 }
 
-body.light-mode .footer-nav-links a:hover {
+html.light-mode .footer-nav-links a:hover {
     color: #000;
 }
 
-body.light-mode .footer-social-icons a {
+html.light-mode .footer-social-icons a {
     background: rgba(0, 0, 0, 0.05);
     border-color: rgba(0, 0, 0, 0.08);
     color: rgba(0, 0, 0, 0.6);
 }
 
-body.light-mode .footer-social-icons a:hover {
+html.light-mode .footer-social-icons a:hover {
     background: rgba(0, 0, 0, 0.1);
     color: #000;
 }
 
-body.light-mode .footer-main {
+html.light-mode .footer-main {
     border-bottom-color: rgba(0, 0, 0, 0.06);
 }
 
-body.light-mode .footer-meta {
+html.light-mode .footer-meta {
     color: rgba(0, 0, 0, 0.68);
 }
 
-body.light-mode .footer-meta a {
+html.light-mode .footer-meta a {
     color: #111;
 }
 
-body.light-mode .footer-meta a:hover {
+html.light-mode .footer-meta a:hover {
     color: #000;
 }
 
@@ -632,23 +647,23 @@ body.light-mode .footer-meta a:hover {
     text-decoration-thickness: 1px;
 }
 
-body.light-mode .footer-webring {
+html.light-mode .footer-webring {
     background: rgba(0, 0, 0, 0.04);
     border-color: rgba(0, 0, 0, 0.06);
 }
 
-body.light-mode .footer-webring:hover {
+html.light-mode .footer-webring:hover {
     background: rgba(0, 0, 0, 0.08);
     border-color: rgba(0, 0, 0, 0.1);
 }
 
-body.light-mode .webring-link,
-body.light-mode .webring-hub {
+html.light-mode .webring-link,
+html.light-mode .webring-hub {
     color: rgba(0, 0, 0, 0.6);
 }
 
-body.light-mode .webring-link:hover,
-body.light-mode .webring-hub:hover {
+html.light-mode .webring-link:hover,
+html.light-mode .webring-hub:hover {
     color: #000;
 }
 
@@ -680,7 +695,7 @@ body.light-mode .webring-hub:hover {
     opacity: 0.8;
 }
 
-body.light-mode .footer-logo {
+html.light-mode .footer-logo {
     color: #000;
 }
 
@@ -691,7 +706,7 @@ body.light-mode .footer-logo {
     letter-spacing: 0.02em;
 }
 
-body.light-mode .footer-tagline {
+html.light-mode .footer-tagline {
     color: rgba(0, 0, 0, 0.5);
 }
 
@@ -1146,9 +1161,9 @@ h3 {
     letter-spacing: -0.02em;
 }
 
-body.light-mode h1,
-body.light-mode h2,
-body.light-mode h3 {
+html.light-mode h1,
+html.light-mode h2,
+html.light-mode h3 {
     color: #1d1d1f;
 }
 
@@ -1169,7 +1184,7 @@ p {
     color: rgba(255, 255, 255, 0.85);
 }
 
-body.light-mode p {
+html.light-mode p {
     color: rgba(0, 0, 0, 0.75);
 }
 
@@ -1183,11 +1198,11 @@ a:hover {
     color: #22d964;
 }
 
-body.light-mode a {
+html.light-mode a {
     color: #1DB954;
 }
 
-body.light-mode a:hover {
+html.light-mode a:hover {
     color: #0f4d1f;
 }
 
@@ -1232,20 +1247,20 @@ body.light-mode a:hover {
     color: #22d964;
 }
 
-body.light-mode .about {
+html.light-mode .about {
     background: rgba(0, 0, 0, 0.02);
     border-color: rgba(0, 0, 0, 0.06);
 }
 
-body.light-mode .about p {
+html.light-mode .about p {
     color: rgba(0, 0, 0, 0.7);
 }
 
-body.light-mode .about p a {
+html.light-mode .about p a {
     color: #1DB954;
 }
 
-body.light-mode .about p a:hover {
+html.light-mode .about p a:hover {
     color: #0f4d1f;
 }
 
@@ -1268,7 +1283,7 @@ body.light-mode .about p a:hover {
     margin-bottom: 0;
 }
 
-body.light-mode .hero h1 {
+html.light-mode .hero h1 {
     color: rgba(0, 0, 0, 0.85);
 }
 
@@ -1278,7 +1293,7 @@ body.light-mode .hero h1 {
     margin-top: 0.5rem;
 }
 
-body.light-mode .hero p {
+html.light-mode .hero p {
     color: rgba(0, 0, 0, 0.5);
 }
 
@@ -1298,7 +1313,7 @@ body.light-mode .hero p {
     margin: 2rem 0;
 }
 
-body.light-mode .projects {
+html.light-mode .projects {
     background: rgba(0, 0, 0, 0.02);
     border-color: rgba(0, 0, 0, 0.06);
 }
@@ -1314,9 +1329,10 @@ body.light-mode .projects {
     display: flex;
     overflow-x: auto;
     scroll-snap-type: x proximity;
-    scroll-behavior: smooth;
+    /* A sideways swipe that reaches the end stays in the row instead of
+       turning into the browser's back/forward gesture. */
+    overscroll-behavior-x: contain;
     scrollbar-width: none;
-    -ms-overflow-style: none;
     list-style-type: none;
     padding: 0;
     gap: 1.25rem;
@@ -1326,6 +1342,12 @@ body.light-mode .projects {
 
 .projects ul::-webkit-scrollbar {
     display: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .projects ul {
+        scroll-behavior: smooth;
+    }
 }
 
 .projects li {
@@ -1351,7 +1373,7 @@ body.light-mode .projects {
       transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-body.light-mode .project-item {
+html.light-mode .project-item {
     background: rgba(0, 0, 0, 0.02);
     border: 1px solid rgba(0, 0, 0, 0.08);
     box-shadow:
@@ -1370,7 +1392,7 @@ body.light-mode .project-item {
       0 12px 32px -4px rgba(0, 0, 0, 0.5);
 }
 
-body.light-mode .project-item:hover {
+html.light-mode .project-item:hover {
     background: rgba(0, 0, 0, 0.04);
     border-color: rgba(0, 0, 0, 0.14);
     box-shadow:
@@ -1387,7 +1409,7 @@ body.light-mode .project-item:hover {
     padding: 1rem;
 }
 
-body.light-mode .project-item a {
+html.light-mode .project-item a {
     color: #1d1d1f;
 }
 
@@ -1406,7 +1428,7 @@ body.light-mode .project-item a {
     background: #000;
 }
 
-body.light-mode .project-thumb {
+html.light-mode .project-thumb {
     border-color: rgba(0, 0, 0, 0.08);
 }
 
@@ -1440,7 +1462,7 @@ body.light-mode .project-thumb {
     padding: 0.15rem 0.45rem;
 }
 
-body.light-mode .project-stack-tag {
+html.light-mode .project-stack-tag {
     color: rgba(0, 0, 0, 0.55);
     border-color: rgba(0, 0, 0, 0.12);
     background: rgba(0, 0, 0, 0.03);
@@ -1453,7 +1475,7 @@ body.light-mode .project-stack-tag {
     margin-bottom: 0;
 }
 
-body.light-mode .project-item p {
+html.light-mode .project-item p {
     color: rgba(0, 0, 0, 0.55);
 }
 
@@ -1482,14 +1504,14 @@ body.light-mode .project-item p {
     -webkit-backdrop-filter: none;
 }
 .projects .project-item a.has-cover p { color: rgba(255, 255, 255, 0.72); }
-body.light-mode .projects .project-item a.has-cover::before { filter: blur(48px) saturate(160%) brightness(1.7); opacity: 0.35; }
+html.light-mode .projects .project-item a.has-cover::before { filter: blur(48px) saturate(160%) brightness(1.7); opacity: 0.35; }
 /* Cream veil behind the text so dark covers don't turn it muddy grey (same as Blogs). */
 .projects .project-item a.has-cover .project-body { flex: 1; margin: -1.25rem -1rem -1rem; padding: 1.25rem 1rem 1rem; }
-body.light-mode .projects .project-item a.has-cover .project-body {
+html.light-mode .projects .project-item a.has-cover .project-body {
     background: linear-gradient(to bottom, rgba(246, 246, 246, 0) 0, rgba(246, 246, 246, 0.82) 2.75rem, rgba(246, 246, 246, 0.92) 100%);
 }
-body.light-mode .projects .project-item:has(a.has-cover) { background: #f6f6f6; }
-body.light-mode .projects .project-item a.has-cover p { color: rgba(0, 0, 0, 0.62); }
+html.light-mode .projects .project-item:has(a.has-cover) { background: #f6f6f6; }
+html.light-mode .projects .project-item a.has-cover p { color: rgba(0, 0, 0, 0.62); }
 
 /* ========================================= */
 /* ==          Posts/Blogs Section        == */
@@ -1505,7 +1527,7 @@ body.light-mode .projects .project-item a.has-cover p { color: rgba(0, 0, 0, 0.6
     -webkit-backdrop-filter: blur(20px);
 }
 
-body.light-mode .posts {
+html.light-mode .posts {
     background: rgba(0, 0, 0, 0.02);
     border-color: rgba(0, 0, 0, 0.06);
 }
@@ -1559,17 +1581,17 @@ body.light-mode .posts {
     color: rgba(255, 255, 255, 0.5);
 }
 
-body.light-mode .posts a {
+html.light-mode .posts a {
     color: #1d1d1f;
     background: rgba(0, 0, 0, 0.025);
     border-color: rgba(0, 0, 0, 0.07);
 }
 
-body.light-mode .posts a::after {
+html.light-mode .posts a::after {
     color: rgba(0, 0, 0, 0.25);
 }
 
-body.light-mode .posts a:hover::after {
+html.light-mode .posts a:hover::after {
     color: rgba(0, 0, 0, 0.5);
 }
 
@@ -1578,7 +1600,7 @@ body.light-mode .posts a:hover::after {
     border-color: rgba(255, 255, 255, 0.12);
 }
 
-body.light-mode .posts a:hover {
+html.light-mode .posts a:hover {
     background: rgba(0, 0, 0, 0.04);
     border-color: rgba(0, 0, 0, 0.1);
 }
@@ -1597,7 +1619,7 @@ body.light-mode .posts a:hover {
     line-height: 1.55;
 }
 
-body.light-mode .posts p {
+html.light-mode .posts p {
     color: rgba(0, 0, 0, 0.55);
 }
 
@@ -1610,11 +1632,9 @@ body.light-mode .posts p {
     margin-top: 0.5rem;
 }
 
-body.light-mode .posts small {
+html.light-mode .posts small {
     color: rgba(0, 0, 0, 0.65);
 }
-
-
 
 
 /* ========================================= */
@@ -1639,7 +1659,7 @@ body.light-mode .posts small {
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
 
-body.light-mode .intro img {
+html.light-mode .intro img {
     border-color: rgba(0, 0, 0, 0.08);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
 }
@@ -1699,7 +1719,7 @@ body.light-mode .intro img {
     transform: translateY(0);
 }
 
-body.light-mode .intro-text p {
+html.light-mode .intro-text p {
     color: rgba(0, 0, 0, 0.5);
 }
 
@@ -1767,14 +1787,13 @@ html.theme-preload .mode-switch {
     outline-offset: 3px;
 }
 
-body.light-mode .liquid-toggle:focus-visible,
 html.light-mode .liquid-toggle:focus-visible {
     outline: 2px solid rgba(0, 0, 0, 0.4);
     outline-offset: 3px;
 }
 
 /* Light mode track: Crisp frosted glass with silver reflections, zero blue, zero dirty yellow */
-body.light-mode .liquid-toggle,
+html.light-mode .liquid-toggle,
 html.light-mode .liquid-toggle {
     --c-glass: #8a8a90;
     --c-light: #ffffff;
@@ -1825,7 +1844,7 @@ html.light-mode .liquid-toggle {
 }
 
 /* Light mode knob: Silky translucent white frosted elongated glass capsule */
-body.light-mode .liquid-toggle .glass-knob,
+html.light-mode .liquid-toggle .glass-knob,
 html.light-mode .liquid-toggle .glass-knob {
     background-color: color-mix(in srgb, #ffffff 88%, transparent);
     box-shadow: 
@@ -1891,9 +1910,7 @@ html.light-mode .liquid-toggle .glass-knob {
       0px 5px 14px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 28%), transparent);
 }
 
-body.light-mode .liquid-toggle[aria-checked="false"]:active .glass-knob,
 html.light-mode .liquid-toggle[aria-checked="false"]:active .glass-knob,
-body.light-mode .liquid-toggle[aria-checked="true"]:active .glass-knob,
 html.light-mode .liquid-toggle[aria-checked="true"]:active .glass-knob {
     background-color: color-mix(in srgb, #ffffff 94%, transparent);
     box-shadow: 
@@ -1956,7 +1973,6 @@ html.light-mode .liquid-toggle[aria-checked="true"]:active .glass-knob {
     transition: transform 0.3s ease, background 0.3s ease, opacity 0.3s ease;
 }
 
-body.light-mode .menu-toggle span,
 html.light-mode .menu-toggle span {
     background: rgba(0, 0, 0, 0.8);
 }
@@ -1976,7 +1992,7 @@ html.light-mode .menu-toggle span {
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
-body.light-mode .contact {
+html.light-mode .contact {
     background: rgba(0, 0, 0, 0.02);
     border-color: rgba(0, 0, 0, 0.06);
 }
@@ -1991,7 +2007,7 @@ body.light-mode .contact {
     letter-spacing: -0.01em;
 }
 
-body.light-mode .contact h2 {
+html.light-mode .contact h2 {
     color: #1d1d1f;
 }
 
@@ -2142,7 +2158,6 @@ body.light-mode .contact h2 {
         text-decoration: none;
     }
 
-    body.light-mode .logo a,
     html.light-mode .logo a {
         color: rgba(0, 0, 0, 0.6);
     }
@@ -2152,7 +2167,6 @@ body.light-mode .contact h2 {
         font-weight: 700;
     }
 
-    body.light-mode .logo a[aria-current="page"],
     html.light-mode .logo a[aria-current="page"] {
         color: #000;
         font-weight: 700;
@@ -2169,10 +2183,8 @@ body.light-mode .contact h2 {
        backdrop root and prevents the dropdown from blurring the page below. */
     header,
     body.scrolling header,
-    body.light-mode header,
     html.light-mode header,
-    body.light-mode.scrolling header,
-    html.light-mode.scrolling header {
+    html.light-mode body.scrolling header {
         background: transparent;
         backdrop-filter: none;
         -webkit-backdrop-filter: none;
@@ -2189,7 +2201,6 @@ body.light-mode .contact h2 {
             inset 0 1px 0 rgba(255, 255, 255, 0.08);
     }
 
-    body.light-mode header::before,
     html.light-mode header::before {
         background: rgba(249, 248, 247, 0.72);
         border-color: rgba(0, 0, 0, 0.1);
@@ -2234,7 +2245,6 @@ body.light-mode .contact h2 {
             visibility 0s linear 440ms;
     }
 
-    body.light-mode .nav-menu,
     html.light-mode .nav-menu {
         background: rgba(249, 248, 247, 0.72);
         border-color: rgba(0, 0, 0, 0.1);
@@ -2326,7 +2336,7 @@ body.light-mode .contact h2 {
         background: rgba(255, 255, 255, 0.1);
     }
 
-    body.light-mode .nav-menu a:hover {
+    html.light-mode .nav-menu a:hover {
         background: rgba(0, 0, 0, 0.06);
     }
 
@@ -2335,7 +2345,6 @@ body.light-mode .contact h2 {
     }
 
     .nav-menu a[aria-current="page"],
-    body.light-mode .nav-menu a[aria-current="page"],
     html.light-mode .nav-menu a[aria-current="page"] {
         background: transparent;
         font-weight: 600;
@@ -2416,7 +2425,6 @@ body.light-mode .contact h2 {
     }
 
     .nav-menu a:hover,
-    body.light-mode .nav-menu a:hover,
     html.light-mode .nav-menu a:hover {
         background-color: transparent;
     }
@@ -2636,6 +2644,7 @@ main.blog-post pre {
     padding: 1.25rem 1.5rem;
     margin: 1.5rem 0;
     overflow-x: auto;
+    overscroll-behavior-x: contain;
 }
 
 main.blog-post pre code {
@@ -2691,48 +2700,48 @@ main.blog-post .copy-btn.copied {
 }
 
 /* Light Mode adjustments for blog posts */
-body.light-mode main.blog-post {
+html.light-mode main.blog-post {
     color: #1d1d1f;
 }
 
-body.light-mode main.blog-post h1,
-body.light-mode main.blog-post h2,
-body.light-mode main.blog-post h3 {
+html.light-mode main.blog-post h1,
+html.light-mode main.blog-post h2,
+html.light-mode main.blog-post h3 {
     color: #000;
 }
 
-body.light-mode main.blog-post ul,
-body.light-mode main.blog-post ol {
+html.light-mode main.blog-post ul,
+html.light-mode main.blog-post ol {
     color: #1d1d1f;
 }
 
-body.light-mode main.blog-post p {
+html.light-mode main.blog-post p {
     color: #1d1d1f;
 }
 
-body.light-mode main.blog-post strong {
+html.light-mode main.blog-post strong {
     color: #000;
 }
 
-body.light-mode main.blog-post em {
+html.light-mode main.blog-post em {
     color: #6e6e73;
 }
 
 /* Site accent (green), a shade deeper so it stays readable on the light page. */
-body.light-mode main.blog-post a {
+html.light-mode main.blog-post a {
     color: #15964a;
 }
 
-body.light-mode main.blog-post a:hover {
+html.light-mode main.blog-post a:hover {
     color: #0f4d1f;
 }
 
-body.light-mode main.blog-post pre {
+html.light-mode main.blog-post pre {
     background: #f6f6f6;
     border-color: rgba(0, 0, 0, 0.08);
 }
 
-body.light-mode main.blog-post pre code {
+html.light-mode main.blog-post pre code {
     color: #1d1d1f;
     background: none;
     padding: 0;
@@ -2740,38 +2749,38 @@ body.light-mode main.blog-post pre code {
     border-radius: 0;
 }
 
-body.light-mode main.blog-post code {
+html.light-mode main.blog-post code {
     background: rgba(0, 0, 0, 0.05);
     color: #1d1d1f;
 }
 
-body.light-mode main.blog-post .copy-btn {
+html.light-mode main.blog-post .copy-btn {
     background: rgba(0, 0, 0, 0.04);
     border-color: rgba(0, 0, 0, 0.08);
     color: rgba(0, 0, 0, 0.4);
 }
 
-body.light-mode main.blog-post .copy-btn:hover {
+html.light-mode main.blog-post .copy-btn:hover {
     background: rgba(0, 0, 0, 0.08);
     color: rgba(0, 0, 0, 0.7);
     border-color: rgba(0, 0, 0, 0.12);
 }
 
-body.light-mode main.blog-post .copy-btn.copied {
+html.light-mode main.blog-post .copy-btn.copied {
     color: #0f4d1f;
     border-color: rgba(29, 185, 84, 0.3);
     background: rgba(29, 185, 84, 0.08);
 }
 
-body.light-mode main.blog-post .back-button {
+html.light-mode main.blog-post .back-button {
     color: #6e6e73;
 }
 
-body.light-mode main.blog-post .back-button:hover {
+html.light-mode main.blog-post .back-button:hover {
     color: #000;
 }
 
-body.light-mode main.blog-post section {
+html.light-mode main.blog-post section {
     background-color: rgba(0, 0, 0, 0.03);
     margin-bottom: 2rem;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
@@ -2811,10 +2820,10 @@ body.light-mode main.blog-post section {
 }
 
 /* Ensure consistent section styling in light mode */
-body.light-mode main>section.about,
-body.light-mode main>section.projects,
-body.light-mode main>section.posts,
-body.light-mode main>section.contact {
+html.light-mode main>section.about,
+html.light-mode main>section.projects,
+html.light-mode main>section.posts,
+html.light-mode main>section.contact {
     background-color: rgba(0, 0, 0, 0.03);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
     margin-bottom: 2rem;
@@ -2823,8 +2832,8 @@ body.light-mode main>section.contact {
     border: 1px solid rgba(0, 0, 0, 0.06);
 }
 
-body.light-mode main>section.hero,
-body.light-mode main>section.intro {
+html.light-mode main>section.hero,
+html.light-mode main>section.intro {
     background-color: transparent;
     box-shadow: none;
 }
@@ -2903,14 +2912,14 @@ body.light-mode main>section.intro {
     opacity: 1;
 }
 
-body.light-mode .guestbook-btn {
+html.light-mode .guestbook-btn {
     background: rgba(0, 0, 0, 0.04);
     border-color: rgba(0, 0, 0, 0.08);
     color: rgba(0, 0, 0, 0.75);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
 }
 
-body.light-mode .guestbook-btn:hover {
+html.light-mode .guestbook-btn:hover {
     background: rgba(0, 0, 0, 0.06);
     border-color: rgba(0, 0, 0, 0.12);
     box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
@@ -2926,6 +2935,7 @@ body.light-mode .guestbook-btn:hover {
     display: flex;
     align-items: center;
     justify-content: center;
+    overscroll-behavior: contain;
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
@@ -2956,7 +2966,7 @@ body.light-mode .guestbook-btn:hover {
     transform: translateY(0) scale(1);
 }
 
-body.light-mode .guestbook-modal {
+html.light-mode .guestbook-modal {
     background: #f5f5f7;
     border-color: rgba(0, 0, 0, 0.1);
     box-shadow: 0 32px 80px rgba(0, 0, 0, 0.15);
@@ -2971,7 +2981,7 @@ body.light-mode .guestbook-modal {
     flex-shrink: 0;
 }
 
-body.light-mode .guestbook-modal-header {
+html.light-mode .guestbook-modal-header {
     border-bottom-color: rgba(0, 0, 0, 0.08);
 }
 
@@ -2982,7 +2992,7 @@ body.light-mode .guestbook-modal-header {
     color: rgba(255, 255, 255, 0.6);
 }
 
-body.light-mode .guestbook-modal-header span {
+html.light-mode .guestbook-modal-header span {
     color: rgba(0, 0, 0, 0.5);
 }
 
@@ -3003,11 +3013,11 @@ body.light-mode .guestbook-modal-header span {
     background: rgba(255, 255, 255, 0.08);
 }
 
-body.light-mode .guestbook-modal-close {
+html.light-mode .guestbook-modal-close {
     color: rgba(0, 0, 0, 0.4);
 }
 
-body.light-mode .guestbook-modal-close:hover {
+html.light-mode .guestbook-modal-close:hover {
     color: #000;
     background: rgba(0, 0, 0, 0.06);
 }
@@ -3081,14 +3091,14 @@ body.light-mode .guestbook-modal-close:hover {
     box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
 }
 
-body.light-mode .scroll-to-top {
+html.light-mode .scroll-to-top {
     background: rgba(0, 0, 0, 0.04);
     border-color: rgba(0, 0, 0, 0.08);
     color: rgba(0, 0, 0, 0.75);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
 }
 
-body.light-mode .scroll-to-top:hover {
+html.light-mode .scroll-to-top:hover {
     background: rgba(0, 0, 0, 0.08);
     border-color: rgba(0, 0, 0, 0.12);
     box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
@@ -3119,7 +3129,6 @@ body.light-mode .scroll-to-top:hover {
     will-change: transform;
 }
 
-body.light-mode #bg-canvas,
 html.light-mode #bg-canvas {
     display: none;
 }
@@ -3192,7 +3201,6 @@ html.light-mode #bg-canvas {
         transition: none;
     }
 
-    body.light-mode .nav-menu,
     html.light-mode .nav-menu {
         background: transparent;
         border: 0;
@@ -3221,7 +3229,6 @@ html.light-mode #bg-canvas {
     }
 
     .nav-menu a:hover,
-    body.light-mode .nav-menu a:hover,
     html.light-mode .nav-menu a:hover {
         background: transparent;
     }

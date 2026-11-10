@@ -1,4 +1,5 @@
 ---
+import { iconSvg } from '../data/icons';
 interface Props {
   showRss?: boolean;
 }
@@ -21,10 +22,10 @@ const { showRss = false } = Astro.props;
         </div>
         <div class="footer-socials">
           <div class="footer-social-icons">
-            <a href="https://github.com/v8v88v8v88" target="_blank" rel="noopener noreferrer" title="GitHub"><i class="fab fa-github"></i></a>
-            <a href="https://t.me/V8V88V8V88" target="_blank" rel="noopener noreferrer" title="Telegram"><i class="fab fa-telegram"></i></a>
-            <a href="https://twitter.com/v8v88v8v88" target="_blank" rel="noopener noreferrer" title="X (Twitter)"><i class="fab fa-x-twitter"></i></a>
-            <a href="https://www.linkedin.com/in/v8v88v8v88/" target="_blank" rel="noopener noreferrer" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com/v8v88v8v88" target="_blank" rel="noopener noreferrer" title="GitHub"><i class="fab fa-github" aria-hidden="true" set:html={iconSvg('fab fa-github')} /></a>
+            <a href="https://t.me/V8V88V8V88" target="_blank" rel="noopener noreferrer" title="Telegram"><i class="fab fa-telegram" aria-hidden="true" set:html={iconSvg('fab fa-telegram')} /></a>
+            <a href="https://twitter.com/v8v88v8v88" target="_blank" rel="noopener noreferrer" title="X (Twitter)"><i class="fab fa-x-twitter" aria-hidden="true" set:html={iconSvg('fab fa-x-twitter')} /></a>
+            <a href="https://www.linkedin.com/in/v8v88v8v88/" target="_blank" rel="noopener noreferrer" title="LinkedIn"><i class="fab fa-linkedin" aria-hidden="true" set:html={iconSvg('fab fa-linkedin')} /></a>
           </div>
         </div>
       </nav>

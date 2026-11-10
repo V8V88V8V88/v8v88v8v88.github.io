@@ -2,6 +2,7 @@
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
+import { iconSvg } from '../data/icons';
 
 interface Props {
   title: string;
@@ -12,7 +13,6 @@ interface Props {
   twitterSite?: string;
   twitterCreator?: string;
   showRss?: boolean;
-  showFontAwesome?: boolean;
   showFooter?: boolean;
   preloadSerif?: boolean;
 }
@@ -26,7 +26,6 @@ const {
   twitterSite,
   twitterCreator,
   showRss = false,
-  showFontAwesome = true,
   showFooter = true,
   preloadSerif = true,
 } = Astro.props;
@@ -53,14 +52,7 @@ const {
   <meta name="description" content={description} />
   <link rel="canonical" href={canonical} />
   {showRss && <link rel="alternate" type="application/atom+xml" title="V8V88V8V88 Blog" href="https://v8v88v8v88.com/feed.xml" />}
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   {preloadSerif && <link rel="preload" as="font" type="font/woff2" href="/fonts/GeistSerif-Regular.woff2" crossorigin />}
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap" />
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
-  <noscript>
-    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet" />
-  </noscript>
   <link rel="icon" href="/images/favicon.ico" sizes="any" />
   <meta property="og:type" content={ogType} />
   <meta property="og:url" content={canonical} />
@@ -83,14 +75,33 @@ const {
   <div class="top-edge-blur" aria-hidden="true"></div>
   <div class="bottom-edge-blur" aria-hidden="true"></div>
   <!-- Psst... Did you know octopuses have three hearts? Just thought you should know. -->
-  {showFontAwesome && <script src="https://kit.fontawesome.com/133988a847.js" crossorigin="anonymous" defer is:inline></script>}
+  <button type="button" class="scroll-to-top" aria-label="Scroll to top"><i class="fas fa-arrow-up" aria-hidden="true" set:html={iconSvg('fas fa-arrow-up')} /></button>
+  <button type="button" class="guestbook-btn" aria-label="Open Guestbook" aria-haspopup="dialog"><i class="fas fa-pen guestbook-btn-icon" aria-hidden="true" set:html={iconSvg('fas fa-pen')} /><span class="guestbook-btn-label">Guestbook</span></button>
+  <div class="guestbook-modal-overlay" aria-hidden="true" inert>
+    <div class="guestbook-modal" role="dialog" aria-modal="true" aria-label="Guestbook">
+      <div class="guestbook-modal-header"><span>✦ GUESTBOOK</span><button type="button" class="guestbook-modal-close" aria-label="Close guestbook">×</button></div>
+      <iframe data-src="https://v8v88v8v88.atabook.org/" title="Guestbook" loading="lazy"></iframe>
+    </div>
+  </div>
   <script is:inline>
-    window.addEventListener("scroll", function () {
-      if (window.pageYOffset > 0) {
-        document.body.classList.add("scrolling");
-      } else {
-        document.body.classList.remove("scrolling");
-      }
+    // Scroll position without scroll listeners: an invisible 1px marker at
+    // the top of the page, watched by observers. They fire only when a
+    // threshold is crossed (and once on load, so a restored scroll position
+    // is right from the first frame), not on every scroll frame.
+    var topMark = document.createElement('div');
+    topMark.setAttribute('aria-hidden', 'true');
+    topMark.style.cssText = 'position:absolute;top:0;left:0;width:1px;height:1px;pointer-events:none;visibility:hidden';
+    document.body.appendChild(topMark);
+
+    function whenScrolledPast(px, apply) {
+      new IntersectionObserver(function (entries) {
+        // "Past" as soon as any part of the marker is above the line.
+        apply(entries[entries.length - 1].intersectionRatio < 1);
+      }, { rootMargin: px + 'px 0px 0px 0px', threshold: 1 }).observe(topMark);
+    }
+
+    whenScrolledPast(0, function (past) {
+      document.body.classList.toggle("scrolling", past);
     });
 
     const menuToggle = document.querySelector(".menu-toggle");
@@ -190,21 +201,16 @@ const {
       }
     }
 
-    var body = document.body;
     var navbarSwitch = document.getElementById('mode-switch');
     var liquidBtn = document.getElementById('liquid-mode-toggle');
 
     function setTheme(theme) {
       var root = document.documentElement;
       if (theme === 'light') {
-        body.classList.add('light-mode');
-        body.classList.remove('dark-mode');
         root.classList.add('light-mode');
         root.classList.remove('dark-mode');
         localStorage.setItem('theme', 'light');
       } else {
-        body.classList.remove('light-mode');
-        body.classList.add('dark-mode');
         root.classList.remove('light-mode');
         root.classList.add('dark-mode');
         localStorage.setItem('theme', 'dark');
@@ -305,41 +311,22 @@ const {
         });
       }
 
-      var scrollToTopBtn = document.createElement('button');
-      scrollToTopBtn.className = 'scroll-to-top';
-      scrollToTopBtn.setAttribute('aria-label', 'Scroll to top');
-      scrollToTopBtn.innerHTML = '<i class="fas fa-arrow-up"></i>';
+      var scrollToTopBtn = document.querySelector('.scroll-to-top');
       scrollToTopBtn.addEventListener('click', function() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        var calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        window.scrollTo({ top: 0, behavior: calm ? 'instant' : 'smooth' });
       });
-      document.body.appendChild(scrollToTopBtn);
 
-      var scrollTicking = false;
-      function updateScrollButtonVisibility() {
-        if (!scrollTicking) {
-          window.requestAnimationFrame(function () {
-            scrollToTopBtn.classList.toggle('visible', (window.pageYOffset || document.documentElement.scrollTop) > 300);
-            scrollTicking = false;
-          });
-          scrollTicking = true;
-        }
-      }
-      window.addEventListener('scroll', updateScrollButtonVisibility, { passive: true });
-      updateScrollButtonVisibility();
+      whenScrolledPast(300, function (past) {
+        scrollToTopBtn.classList.toggle('visible', past);
+      });
 
-      var guestbookBtn = document.createElement('button');
-      guestbookBtn.className = 'guestbook-btn';
-      guestbookBtn.setAttribute('aria-label', 'Open Guestbook');
-      guestbookBtn.innerHTML = '<i class="fas fa-pen guestbook-btn-icon"></i><span class="guestbook-btn-label">Guestbook</span>';
-
-      var guestbookOverlay = document.createElement('div');
-      guestbookOverlay.className = 'guestbook-modal-overlay';
-      guestbookOverlay.setAttribute('aria-hidden', 'true');
-      guestbookOverlay.setAttribute('inert', '');
-      guestbookOverlay.innerHTML = '<div class="guestbook-modal" role="dialog" aria-modal="true" aria-label="Guestbook"><div class="guestbook-modal-header"><span>✦ GUESTBOOK</span><button class="guestbook-modal-close" aria-label="Close guestbook">×</button></div><iframe data-src="https://v8v88v8v88.atabook.org/" title="Guestbook" loading="lazy"></iframe></div>';
-
-      document.body.appendChild(guestbookBtn);
-      document.body.appendChild(guestbookOverlay);
+      var guestbookBtn = document.querySelector('.guestbook-btn');
+      var guestbookOverlay = document.querySelector('.guestbook-modal-overlay');
+      var guestbookClose = guestbookOverlay.querySelector('.guestbook-modal-close');
+      // Everything outside the modal is made inert while it is open, which
+      // keeps Tab and screen readers inside it the way a native dialog does.
+      var guestbookInerted = [];
 
       function openGuestbook() {
         var iframe = guestbookOverlay.querySelector('iframe');
@@ -349,17 +336,38 @@ const {
         guestbookOverlay.classList.add('open');
         guestbookOverlay.setAttribute('aria-hidden', 'false');
         guestbookOverlay.removeAttribute('inert');
-        document.body.style.overflow = 'hidden';
+        guestbookInerted = Array.prototype.filter.call(document.body.children, function(el) {
+          return el !== guestbookOverlay && !el.hasAttribute('inert');
+        });
+        guestbookInerted.forEach(function(el) { el.setAttribute('inert', ''); });
+        // The overlay only becomes visible (and so focusable) once its fade
+        // has started, a frame after the class lands.
+        requestAnimationFrame(function() {
+          requestAnimationFrame(function() {
+            if (guestbookOverlay.classList.contains('open')) guestbookClose.focus({ preventScroll: true });
+          });
+        });
+        // Lock the page behind the modal on the root, which is the element
+        // that actually scrolls. Keeping the scrollbar's gutter (when there
+        // is one) stops the page shifting sideways as the bar disappears.
+        var root = document.documentElement;
+        root.style.scrollbarGutter = window.innerWidth > root.clientWidth ? 'stable' : '';
+        root.classList.add('scroll-locked');
       }
       function closeGuestbook() {
+        if (!guestbookOverlay.classList.contains('open')) return;
         guestbookOverlay.classList.remove('open');
         guestbookOverlay.setAttribute('aria-hidden', 'true');
         guestbookOverlay.setAttribute('inert', '');
-        document.body.style.overflow = '';
+        document.documentElement.classList.remove('scroll-locked');
+        document.documentElement.style.scrollbarGutter = '';
+        guestbookInerted.forEach(function(el) { el.removeAttribute('inert'); });
+        guestbookInerted = [];
+        guestbookBtn.focus({ preventScroll: true });
       }
 
       guestbookBtn.addEventListener('click', openGuestbook);
-      guestbookOverlay.querySelector('.guestbook-modal-close').addEventListener('click', closeGuestbook);
+      guestbookClose.addEventListener('click', closeGuestbook);
       guestbookOverlay.addEventListener('click', function(e) {
         if (e.target === guestbookOverlay) closeGuestbook();
       });
@@ -386,8 +394,7 @@ const {
       var PUSH_STRENGTH = 1.8;
 
       function isLight() {
-        return document.body.classList.contains('light-mode') ||
-               document.documentElement.classList.contains('light-mode');
+        return document.documentElement.classList.contains('light-mode');
       }
 
       function createParticle() {
@@ -423,26 +430,32 @@ const {
         start();
       }
 
+      // scrollend says exactly when a scroll finishes, so only the first
+      // scroll event of a gesture does any work. Browsers without it fall
+      // back to a timer that every scroll event has to reset.
+      var hasScrollEnd = 'onscrollend' in window;
+
       function onScroll() {
-        isScrolling = true;
-        if (document.activeElement && document.activeElement.closest && document.activeElement.closest('.project-item')) {
-          document.activeElement.blur();
+        if (!isScrolling) {
+          isScrolling = true;
+          // Drop the focus a mouse click leaves on a project row, but never
+          // keyboard focus: tabbing to an off-screen row scrolls the page,
+          // and blurring there would throw the user's place away.
+          if (document.activeElement && document.activeElement.closest && document.activeElement.closest('.project-item') && !document.activeElement.matches(':focus-visible')) {
+            document.activeElement.blur();
+          }
         }
-        clearTimeout(scrollTimer);
-        scrollTimer = setTimeout(scrollStopped, 120);
+        if (!hasScrollEnd) {
+          clearTimeout(scrollTimer);
+          scrollTimer = setTimeout(scrollStopped, 120);
+        }
       }
 
       window.addEventListener('scroll', onScroll, { passive: true });
-      if ('onscrollend' in window) {
-        window.addEventListener('scrollend', function() {
-          clearTimeout(scrollTimer);
-          scrollStopped();
-        }, { passive: true });
-      }
+      if (hasScrollEnd) window.addEventListener('scrollend', scrollStopped);
 
       // Back from light mode: the theme toggle only flips classes.
       var themeWatch = new MutationObserver(start);
-      themeWatch.observe(document.body, { attributes: true, attributeFilter: ['class'] });
       themeWatch.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
       function resize() {

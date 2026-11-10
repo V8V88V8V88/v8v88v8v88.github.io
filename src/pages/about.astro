@@ -1,4 +1,5 @@
 ---
+import { iconSvg } from '../data/icons';
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 <BaseLayout
@@ -87,7 +88,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </a>
 
       <div class="bento-item bento-player">
-        <img class="player-art" id="player-art" src="https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/ff/07/08/ff0708a7-def4-4789-7b19-391655c453f9/cover.jpg/400x400bb.jpg" alt="" width="72" height="72" />
+        <img class="player-art" id="player-art" src="/images/albums/afkap-aaina.webp" alt="" width="72" height="72" />
         <div class="player-meta">
           <span class="track-title" id="player-title">Aaina</span>
           <span class="track-artist" id="player-artist">AFKAP</span>
@@ -169,9 +170,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <img id="mood-lightbox-img" alt="" />
         <figcaption id="mood-lightbox-caption"></figcaption>
       </figure>
-      <button type="button" class="mood-lightbox-btn mood-lightbox-prev" id="mood-lightbox-prev" aria-label="Previous photo"><i class="fas fa-chevron-left"></i></button>
-      <button type="button" class="mood-lightbox-btn mood-lightbox-next" id="mood-lightbox-next" aria-label="Next photo"><i class="fas fa-chevron-right"></i></button>
-      <button type="button" class="mood-lightbox-btn mood-lightbox-close" id="mood-lightbox-close" aria-label="Close"><i class="fas fa-xmark"></i></button>
+      <button type="button" class="mood-lightbox-btn mood-lightbox-prev" id="mood-lightbox-prev" aria-label="Previous photo"><i class="fas fa-chevron-left" aria-hidden="true" set:html={iconSvg('fas fa-chevron-left')} /></button>
+      <button type="button" class="mood-lightbox-btn mood-lightbox-next" id="mood-lightbox-next" aria-label="Next photo"><i class="fas fa-chevron-right" aria-hidden="true" set:html={iconSvg('fas fa-chevron-right')} /></button>
+      <button type="button" class="mood-lightbox-btn mood-lightbox-close" id="mood-lightbox-close" aria-label="Close"><i class="fas fa-xmark" aria-hidden="true" set:html={iconSvg('fas fa-xmark')} /></button>
     </dialog>
   </main>
 
@@ -188,16 +189,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     autoScrollInterval = setInterval(rotatePhilosophy, 4000);
 
     var playerTracks = [
-      { title: 'Aaina', artist: 'AFKAP', art: 'https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/ff/07/08/ff0708a7-def4-4789-7b19-391655c453f9/cover.jpg/400x400bb.jpg', src: 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/12/d7/b0/12d7b0b5-1fc9-02f3-448d-79ba26726fbd/mzaf_4900324834013668967.plus.aac.p.m4a' },
-      { title: 'Jaago', artist: 'Lifafa', art: 'https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/a5/67/52/a5675288-d271-5947-0560-0ac19addb5f6/5060545638835.jpg/400x400bb.jpg', src: 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/68/53/83/685383da-e736-cd1a-1705-c6c3ee63a78c/mzaf_7201641971952177771.plus.aac.p.m4a' },
-      { title: 'Let It Happen', artist: 'Tame Impala', art: 'https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/a8/2e/b4/a82eb490-f30a-a321-461a-0383c88fec95/15UMGIM23316.rgb.jpg/400x400bb.jpg', src: 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/77/68/1f/77681ffc-56e6-813c-e1bc-d94a9b5893c1/mzaf_570579359857462588.plus.aac.p.m4a' },
-      { title: 'Stronger', artist: 'Kanye West', art: 'https://is1-ssl.mzstatic.com/image/thumb/Music128/v4/39/25/2d/39252d65-2d50-b991-0962-f7a98a761271/00602517483507.rgb.jpg/400x400bb.jpg', src: 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/9e/cc/69/9ecc6918-a8dc-354f-909f-ccc20a0a7a33/mzaf_7863921970418240507.plus.aac.p.m4a' },
-      { title: 'Kasam', artist: 'AFKAP', art: 'https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/50/ba/ab/50baab1b-9a7f-e8bd-1071-af55e025ceae/cover.jpg/400x400bb.jpg', src: 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/1c/0b/01/1c0b01b5-21d2-29a2-bd06-0d383fa34748/mzaf_14733283873478554780.plus.aac.p.m4a' },
-      { title: 'Pink + White', artist: 'Frank Ocean', art: 'https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/bb/45/68/bb4568f3-68cd-619d-fbcb-4e179916545d/BlondCover-Final.jpg/400x400bb.jpg', src: 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/ba/11/dc/ba11dccd-16d2-9cd8-13f0-85b73acc0a09/mzaf_1304250511099243436.plus.aac.p.m4a' },
-      { title: 'Wahin Ka Wahin', artist: 'Lifafa', art: 'https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/e6/fe/04/e6fe046c-b5c9-9f70-da3e-4b323189236c/859748867037_cover.jpg/400x400bb.jpg', src: 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/67/dd/cc/67ddcc59-f3e4-087e-4f72-1f69fab873b1/mzaf_14041520389762114093.plus.aac.p.m4a' },
-      { title: 'Everything In Its Right Place', artist: 'Radiohead', art: 'https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/bd/8e/13/bd8e1358-b367-a689-cb84-cebd0b067dc4/634904078263.png/400x400bb.jpg', src: 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/c5/eb/e3/c5ebe37f-2f48-0daf-dfe3-2a138386925d/mzaf_12219830978364632777.plus.aac.p.m4a' },
-      { title: 'cold/mess', artist: 'Prateek Kuhad', art: 'https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/59/4f/41/594f4117-78b6-0699-340f-84bda46cbe6b/075679801531.jpg/400x400bb.jpg', src: 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/b8/2d/80/b82d801a-1d64-d71f-ee8c-051757cdf53b/mzaf_16275896633706250850.plus.aac.p.m4a' },
-      { title: 'Waapsi', artist: 'AFKAP', art: 'https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/50/ba/ab/50baab1b-9a7f-e8bd-1071-af55e025ceae/cover.jpg/400x400bb.jpg', src: 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/0f/a9/1b/0fa91b2e-d1e6-a395-c486-1a5cac802fec/mzaf_15894688473228596898.plus.aac.p.m4a' }
+      { title: 'Aaina', artist: 'AFKAP', art: '/images/albums/afkap-aaina.webp', src: 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/12/d7/b0/12d7b0b5-1fc9-02f3-448d-79ba26726fbd/mzaf_4900324834013668967.plus.aac.p.m4a' },
+      { title: 'Jaago', artist: 'Lifafa', art: '/images/albums/lifafa-jaago.webp', src: 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/68/53/83/685383da-e736-cd1a-1705-c6c3ee63a78c/mzaf_7201641971952177771.plus.aac.p.m4a' },
+      { title: 'Let It Happen', artist: 'Tame Impala', art: '/images/albums/tame-impala-let-it-happen.webp', src: 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/77/68/1f/77681ffc-56e6-813c-e1bc-d94a9b5893c1/mzaf_570579359857462588.plus.aac.p.m4a' },
+      { title: 'Stronger', artist: 'Kanye West', art: '/images/albums/kanye-west-stronger.webp', src: 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/9e/cc/69/9ecc6918-a8dc-354f-909f-ccc20a0a7a33/mzaf_7863921970418240507.plus.aac.p.m4a' },
+      { title: 'Kasam', artist: 'AFKAP', art: '/images/albums/afkap-kasam.webp', src: 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/1c/0b/01/1c0b01b5-21d2-29a2-bd06-0d383fa34748/mzaf_14733283873478554780.plus.aac.p.m4a' },
+      { title: 'Pink + White', artist: 'Frank Ocean', art: '/images/albums/frank-ocean-pink-white.webp', src: 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/ba/11/dc/ba11dccd-16d2-9cd8-13f0-85b73acc0a09/mzaf_1304250511099243436.plus.aac.p.m4a' },
+      { title: 'Wahin Ka Wahin', artist: 'Lifafa', art: '/images/albums/lifafa-wahin-ka-wahin.webp', src: 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/67/dd/cc/67ddcc59-f3e4-087e-4f72-1f69fab873b1/mzaf_14041520389762114093.plus.aac.p.m4a' },
+      { title: 'Everything In Its Right Place', artist: 'Radiohead', art: '/images/albums/radiohead-everything-in-its-right-place.webp', src: 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/c5/eb/e3/c5ebe37f-2f48-0daf-dfe3-2a138386925d/mzaf_12219830978364632777.plus.aac.p.m4a' },
+      { title: 'cold/mess', artist: 'Prateek Kuhad', art: '/images/albums/prateek-kuhad-cold-mess.webp', src: 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/b8/2d/80/b82d801a-1d64-d71f-ee8c-051757cdf53b/mzaf_16275896633706250850.plus.aac.p.m4a' },
+      { title: 'Waapsi', artist: 'AFKAP', art: '/images/albums/afkap-kasam.webp', src: 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/0f/a9/1b/0fa91b2e-d1e6-a395-c486-1a5cac802fec/mzaf_15894688473228596898.plus.aac.p.m4a' }
     ];
     var playerAudio = document.getElementById('player-audio');
     var playerToggle = document.getElementById('player-toggle');
@@ -368,7 +369,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       var columns = canvas.width / fontSize;
       var drops = [];
       for (var i = 0; i < columns; i++) drops[i] = Math.random() * -100;
-      function isLightMode() { return document.body.classList.contains('light-mode'); }
+      function isLightMode() { return document.documentElement.classList.contains('light-mode'); }
       function drawMatrix() {
         var lightMode = isLightMode();
         ctx.fillStyle = lightMode ? 'rgba(240, 240, 240, 0.1)' : 'rgba(0, 0, 0, 0.05)';
@@ -382,7 +383,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           drops[i]++;
         }
       }
-      setInterval(drawMatrix, 50);
+      // The rain only runs while its card is on screen and the tab is
+      // visible; otherwise it would redraw 20 times a second for nobody.
+      var matrixTimer = null;
+      var matrixOnScreen = false;
+      function syncMatrix() {
+        var run = matrixOnScreen && !document.hidden;
+        if (run && !matrixTimer) matrixTimer = setInterval(drawMatrix, 50);
+        else if (!run && matrixTimer) { clearInterval(matrixTimer); matrixTimer = null; }
+      }
+      new IntersectionObserver(function(entries) {
+        matrixOnScreen = entries[entries.length - 1].isIntersecting;
+        syncMatrix();
+      }).observe(canvas);
+      document.addEventListener('visibilitychange', syncMatrix);
       window.addEventListener('resize', function() {
         columns = canvas.width / fontSize;
         drops = [];
@@ -689,44 +703,44 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 .cta-btn.secondary { background: rgba(255, 255, 255, 0.05); color: #fff; border: 1px solid rgba(255, 255, 255, 0.1); }
 .cta-btn.secondary:hover { background: rgba(255, 255, 255, 0.1); }
 
-:global(body.light-mode) .bento-item { background: #f1f0ef; border-color: rgba(0, 0, 0, 0.08); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04); }
-:global(body.light-mode) .bento-item::before { background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.06), transparent); }
-:global(body.light-mode) .bento-item:hover { background: #fff; border-color: rgba(0, 0, 0, 0.12); box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08); }
-:global(body.light-mode) .bento-hero { background: #f1f0ef; }
-:global(body.light-mode) .hero-title { color: #1d1d1f; }
-:global(body.light-mode) .hero-title .name { color: rgba(0, 0, 0, 0.4); transition: color 0.3s ease; }
-:global(body.light-mode) .bento-hero:hover .hero-title .name { color: #0f4d1f !important; }
-:global(body.light-mode) .hero-subtitle { color: rgba(0, 0, 0, 0.5); }
-:global(body.light-mode) .bento-ascii { color: #0f4d1f; }
-:global(body.light-mode) .philosophy-text { color: rgba(0, 0, 0, 0.7); }
-:global(body.light-mode) .philosophy-text .accent { color: #0f4d1f; }
-:global(body.light-mode) .hero-expanded { border-top-color: rgba(0, 0, 0, 0.1); }
-:global(body.light-mode) .hero-expanded p { color: rgba(0, 0, 0, 0.72); }
-:global(body.light-mode) .click-hint { color: rgba(0, 0, 0, 0.25); }
-:global(body.light-mode) .bento-item.clickable:hover,
-:global(body.light-mode) a.bento-item:hover { border-color: rgba(0, 0, 0, 0.12); }
-:global(body.light-mode) .bento-mood { background: radial-gradient(ellipse at 50% 55%, rgba(15, 77, 31, 0.06) 0%, transparent 70%), #f1f0ef; }
-:global(body.light-mode) .mood-tile { background: #fff; box-shadow: 0 6px 16px rgba(0, 0, 0, 0.14), 0 1px 3px rgba(0, 0, 0, 0.1); }
-:global(body.light-mode) .player-art { border-color: rgba(0, 0, 0, 0.08); background: rgba(0, 0, 0, 0.03); }
-:global(body.light-mode) .track-title { color: #1d1d1f; }
-:global(body.light-mode) .track-artist { color: rgba(0, 0, 0, 0.5); }
-:global(body.light-mode) .player-btn { color: rgba(0, 0, 0, 0.5); }
-:global(body.light-mode) .player-btn:hover { color: #1d1d1f; background: rgba(0, 0, 0, 0.06); }
-:global(body.light-mode) .player-btn-play { background: #0f4d1f; color: #fff; }
-:global(body.light-mode) .player-btn-play:hover { background: #136627; color: #fff; }
-:global(body.light-mode) .skill-tag { color: rgba(0, 0, 0, 0.6); background: rgba(0, 0, 0, 0.02); border-color: rgba(0, 0, 0, 0.08); }
-:global(body.light-mode) .skill-tag:hover { color: #0f4d1f; border-color: rgba(15, 77, 31, 0.3); background: rgba(15, 77, 31, 0.08); }
-:global(body.light-mode) .skill-tag.highlight { color: #0f4d1f; border-color: rgba(15, 77, 31, 0.3); background: rgba(15, 77, 31, 0.08); }
-:global(body.light-mode) .currently-key { color: rgba(0, 0, 0, 0.35); }
-:global(body.light-mode) .currently-value { color: rgba(0, 0, 0, 0.85); }
-:global(body.light-mode) .currently-link { color: #0f4d1f; border-bottom-color: rgba(15, 77, 31, 0.3); }
-:global(body.light-mode) .currently-link:hover { color: #1DB954; border-bottom-color: #1DB954; }
-:global(body.light-mode) .location-text { color: rgba(0, 0, 0, 0.7); }
-:global(body.light-mode) .location-sub { color: rgba(0, 0, 0, 0.35); }
-:global(body.light-mode) .bento-cta { background: #f1f0ef; }
-:global(body.light-mode) .bento-matrix { background: radial-gradient(ellipse at 50% 50%, rgba(15, 77, 31, 0.08) 0%, transparent 70%), #f1f0ef; }
-:global(body.light-mode) .cta-text { color: rgba(0, 0, 0, 0.75); }
-:global(body.light-mode) .cta-btn.secondary { background: rgba(0, 0, 0, 0.03); color: #1d1d1f; border-color: rgba(0, 0, 0, 0.1); }
+:global(html.light-mode) .bento-item { background: #f1f0ef; border-color: rgba(0, 0, 0, 0.08); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04); }
+:global(html.light-mode) .bento-item::before { background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.06), transparent); }
+:global(html.light-mode) .bento-item:hover { background: #fff; border-color: rgba(0, 0, 0, 0.12); box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08); }
+:global(html.light-mode) .bento-hero { background: #f1f0ef; }
+:global(html.light-mode) .hero-title { color: #1d1d1f; }
+:global(html.light-mode) .hero-title .name { color: rgba(0, 0, 0, 0.4); transition: color 0.3s ease; }
+:global(html.light-mode) .bento-hero:hover .hero-title .name { color: #0f4d1f !important; }
+:global(html.light-mode) .hero-subtitle { color: rgba(0, 0, 0, 0.5); }
+:global(html.light-mode) .bento-ascii { color: #0f4d1f; }
+:global(html.light-mode) .philosophy-text { color: rgba(0, 0, 0, 0.7); }
+:global(html.light-mode) .philosophy-text .accent { color: #0f4d1f; }
+:global(html.light-mode) .hero-expanded { border-top-color: rgba(0, 0, 0, 0.1); }
+:global(html.light-mode) .hero-expanded p { color: rgba(0, 0, 0, 0.72); }
+:global(html.light-mode) .click-hint { color: rgba(0, 0, 0, 0.25); }
+:global(html.light-mode) .bento-item.clickable:hover,
+:global(html.light-mode) a.bento-item:hover { border-color: rgba(0, 0, 0, 0.12); }
+:global(html.light-mode) .bento-mood { background: radial-gradient(ellipse at 50% 55%, rgba(15, 77, 31, 0.06) 0%, transparent 70%), #f1f0ef; }
+:global(html.light-mode) .mood-tile { background: #fff; box-shadow: 0 6px 16px rgba(0, 0, 0, 0.14), 0 1px 3px rgba(0, 0, 0, 0.1); }
+:global(html.light-mode) .player-art { border-color: rgba(0, 0, 0, 0.08); background: rgba(0, 0, 0, 0.03); }
+:global(html.light-mode) .track-title { color: #1d1d1f; }
+:global(html.light-mode) .track-artist { color: rgba(0, 0, 0, 0.5); }
+:global(html.light-mode) .player-btn { color: rgba(0, 0, 0, 0.5); }
+:global(html.light-mode) .player-btn:hover { color: #1d1d1f; background: rgba(0, 0, 0, 0.06); }
+:global(html.light-mode) .player-btn-play { background: #0f4d1f; color: #fff; }
+:global(html.light-mode) .player-btn-play:hover { background: #136627; color: #fff; }
+:global(html.light-mode) .skill-tag { color: rgba(0, 0, 0, 0.6); background: rgba(0, 0, 0, 0.02); border-color: rgba(0, 0, 0, 0.08); }
+:global(html.light-mode) .skill-tag:hover { color: #0f4d1f; border-color: rgba(15, 77, 31, 0.3); background: rgba(15, 77, 31, 0.08); }
+:global(html.light-mode) .skill-tag.highlight { color: #0f4d1f; border-color: rgba(15, 77, 31, 0.3); background: rgba(15, 77, 31, 0.08); }
+:global(html.light-mode) .currently-key { color: rgba(0, 0, 0, 0.35); }
+:global(html.light-mode) .currently-value { color: rgba(0, 0, 0, 0.85); }
+:global(html.light-mode) .currently-link { color: #0f4d1f; border-bottom-color: rgba(15, 77, 31, 0.3); }
+:global(html.light-mode) .currently-link:hover { color: #1DB954; border-bottom-color: #1DB954; }
+:global(html.light-mode) .location-text { color: rgba(0, 0, 0, 0.7); }
+:global(html.light-mode) .location-sub { color: rgba(0, 0, 0, 0.35); }
+:global(html.light-mode) .bento-cta { background: #f1f0ef; }
+:global(html.light-mode) .bento-matrix { background: radial-gradient(ellipse at 50% 50%, rgba(15, 77, 31, 0.08) 0%, transparent 70%), #f1f0ef; }
+:global(html.light-mode) .cta-text { color: rgba(0, 0, 0, 0.75); }
+:global(html.light-mode) .cta-btn.secondary { background: rgba(0, 0, 0, 0.03); color: #1d1d1f; border-color: rgba(0, 0, 0, 0.1); }
 
 @media (min-width: 1025px) {
   /* Width and card heights scale together so the grid keeps its proportions from 720p to 1440p+. */

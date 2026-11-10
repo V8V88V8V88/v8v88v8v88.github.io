@@ -1,7 +1,10 @@
 ---
+import { iconSvg } from '../data/icons';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getAllPosts, formatDate } from '../data/posts';
 import { contacts, getSameAsUrls } from '../data/contacts';
+import { existsSync } from 'node:fs';
+import path from 'node:path';
 import { getProjects } from '../data/projects';
 
 const featuredContactIds = ['email', 'github', 'linkedin', 'telegram', 'twitter'];
@@ -34,6 +37,13 @@ const featuredProjects = [...allProjects]
     return b.stars - a.stars;
   })
   .slice(0, 6);
+
+// Cards are 310px wide, so use the 800px WebP cover made by
+// scripts/project-previews.mjs when it exists, else the original.
+function getCoverImage(image: string): string {
+  const cover = image.replace(/^\/images\/(.+)\.\w+$/, '/images/covers/$1.webp');
+  return existsSync(path.join(process.cwd(), 'public', cover)) ? cover : image;
+}
 ---
 <BaseLayout
   title="Vaibhav | V8"
@@ -108,9 +118,9 @@ const featuredProjects = [...allProjects]
       <ul>
         {featuredProjects.map(project => (
           <li class="project-item">
-            <a href={project.url} target="_blank" rel="noopener noreferrer" class={project.image ? 'has-cover' : undefined} style={project.image ? `--proj-img: url('${project.image}')` : undefined}>
+            <a href={project.url} target="_blank" rel="noopener noreferrer" class={project.image ? 'has-cover' : undefined} style={project.image ? `--proj-img: url('${getCoverImage(project.image)}')` : undefined}>
               {project.image ? (
-                <img src={project.image} alt={`${project.name} project cover`} loading="lazy" class="project-thumb" />
+                <img src={getCoverImage(project.image)} alt={`${project.name} project cover`} loading="lazy" class="project-thumb" />
               ) : (
                 <div class="project-thumb project-thumb-placeholder" aria-hidden="true"></div>
               )}
@@ -153,7 +163,7 @@ const featuredProjects = [...allProjects]
       <div class="contact-preview">
         {featuredContacts.map((c) => (
           <a href={c.url} target={c.url.startsWith('mailto:') ? undefined : '_blank'} rel={c.rel ? `${c.rel} noopener noreferrer` : 'noopener noreferrer'} class="contact-pill">
-            <i class={c.icon}></i>
+            <i class={c.icon} aria-hidden="true" set:html={iconSvg(c.icon)} />
             <span>{c.label}</span>
           </a>
         ))}
@@ -381,12 +391,12 @@ const featuredProjects = [...allProjects]
     0% { filter: brightness(1.35); }
     100% { filter: brightness(1); }
   }
-  :global(body.light-mode) .hero {
+  :global(html.light-mode) .hero {
     --shimmer-base: rgba(0, 0, 0, 0.65);
     --shimmer-highlight: rgba(0, 0, 0, 0.77);
     --hero-ink: rgba(0, 0, 0, 0.76);
   }
-  :global(body.light-mode) .hero h1.shimmer-off {
+  :global(html.light-mode) .hero h1.shimmer-off {
     background: none;
     -webkit-background-clip: unset;
     background-clip: unset;
@@ -575,44 +585,44 @@ const featuredProjects = [...allProjects]
     60% { transform: scale(1.3); }
     100% { transform: scale(1); }
   }
-  :global(body.light-mode) .cli-cmd {
+  :global(html.light-mode) .cli-cmd {
     --cli-ink: rgba(0, 0, 0, 0.72);
     --cli-highlight: rgba(0, 0, 0, 0.82);
     background: rgba(0, 0, 0, 0.03);
     border-color: rgba(0, 0, 0, 0.12);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
   }
-  :global(body.light-mode) .cli-cmd:hover {
+  :global(html.light-mode) .cli-cmd:hover {
     --cli-ink: rgba(0, 0, 0, 0.82);
     background: rgba(0, 0, 0, 0.05);
     border-color: rgba(0, 0, 0, 0.18);
   }
-  :global(body.light-mode) .cli-cmd.copied {
+  :global(html.light-mode) .cli-cmd.copied {
     border-color: rgba(29, 185, 84, 0.25);
     background: rgba(29, 185, 84, 0.05);
   }
-  :global(body.light-mode) .cli-prompt {
+  :global(html.light-mode) .cli-prompt {
     color: #0f4d1f;
   }
-  :global(body.light-mode) .cli-cmd.copied .cli-text {
+  :global(html.light-mode) .cli-cmd.copied .cli-text {
     color: #0f4d1f;
   }
-  :global(body.light-mode) .cli-cmd.copied .cli-prompt {
+  :global(html.light-mode) .cli-cmd.copied .cli-prompt {
     color: #0f4d1f;
   }
-  :global(body.light-mode) .cli-cmd:not(.revealed):hover .cli-text {
+  :global(html.light-mode) .cli-cmd:not(.revealed):hover .cli-text {
     color: rgba(0, 0, 0, 0.5);
   }
-  :global(body.light-mode) .cli-icon {
+  :global(html.light-mode) .cli-icon {
     color: rgba(0, 0, 0, 0.2);
   }
-  :global(body.light-mode) .cli-cmd.revealed .cli-icon {
+  :global(html.light-mode) .cli-cmd.revealed .cli-icon {
     color: rgba(0, 0, 0, 0.5);
   }
-  :global(body.light-mode) .cli-cmd:hover .cli-icon {
+  :global(html.light-mode) .cli-cmd:hover .cli-icon {
     color: rgba(0, 0, 0, 0.6);
   }
-  :global(body.light-mode) .cli-cmd.copied .cli-icon {
+  :global(html.light-mode) .cli-cmd.copied .cli-icon {
     color: #0f4d1f;
   }
   .section-header {
@@ -633,8 +643,8 @@ const featuredProjects = [...allProjects]
     box-shadow: none !important;
   }
   .view-all:hover { color: #1DB954 !important; }
-  :global(body.light-mode) .view-all { color: rgba(0, 0, 0, 0.65) !important; }
-  :global(body.light-mode) .view-all:hover { color: #0f4d1f !important; }
+  :global(html.light-mode) .view-all { color: rgba(0, 0, 0, 0.65) !important; }
+  :global(html.light-mode) .view-all:hover { color: #0f4d1f !important; }
   .intro .avatar-flip {
     position: relative;
     width: 144px;
@@ -663,7 +673,7 @@ const featuredProjects = [...allProjects]
     border: 2px solid rgba(255, 255, 255, 0.92);
     box-shadow: none;
   }
-  :global(body.light-mode) .intro .avatar-flip img {
+  :global(html.light-mode) .intro .avatar-flip img {
     border-color: rgba(0, 0, 0, 0.88);
   }
   .intro .avatar-flip .avatar-back {
@@ -717,7 +727,7 @@ const featuredProjects = [...allProjects]
     color: rgba(255, 255, 255, 0.3);
     letter-spacing: 0.02em;
   }
-  :global(body.light-mode) .now-status {
+  :global(html.light-mode) .now-status {
     color: rgba(0, 0, 0, 0.3);
   }
 
@@ -752,7 +762,7 @@ const featuredProjects = [...allProjects]
     letter-spacing: 0.01em;
     color: rgba(255, 255, 255, 0.45);
   }
-  :global(body.light-mode) .intro-text .now-status {
+  :global(html.light-mode) .intro-text .now-status {
     color: rgba(0, 0, 0, 0.45);
   }
   .about-cta {
@@ -773,7 +783,7 @@ const featuredProjects = [...allProjects]
     position: relative;
     top: -1px;
   }
-  :global(body.light-mode) .latest-tag {
+  :global(html.light-mode) .latest-tag {
     background: #0f4d1f;
     box-shadow: 0 0 6px rgba(15, 77, 31, 0.4);
   }
@@ -822,23 +832,23 @@ const featuredProjects = [...allProjects]
     color: rgba(255, 255, 255, 0.9);
   }
 
-  :global(body.light-mode) .contact-pill {
+  :global(html.light-mode) .contact-pill {
     background: rgba(0, 0, 0, 0.03);
     border-color: rgba(0, 0, 0, 0.1);
     color: rgba(0, 0, 0, 0.75);
   }
 
-  :global(body.light-mode) .contact-pill i {
+  :global(html.light-mode) .contact-pill i {
     color: rgba(0, 0, 0, 0.5);
   }
 
-  :global(body.light-mode) .contact-pill:hover {
+  :global(html.light-mode) .contact-pill:hover {
     background: rgba(0, 0, 0, 0.07);
     border-color: rgba(0, 0, 0, 0.25);
     color: #000;
   }
 
-  :global(body.light-mode) .contact-pill:hover i {
+  :global(html.light-mode) .contact-pill:hover i {
     color: #000;
   }
 

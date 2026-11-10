@@ -241,12 +241,12 @@ const blogSchema = {
     font-weight: 400;
   }
 
-  :global(body.light-mode) .hero {
+  :global(html.light-mode) .hero {
     background: linear-gradient(145deg, rgba(0, 0, 0, 0.02) 0%, rgba(0, 0, 0, 0.06) 100%);
     border-color: rgba(0, 0, 0, 0.08);
   }
 
-  :global(body.light-mode) .hero:hover {
+  :global(html.light-mode) .hero:hover {
     border-color: rgba(0, 0, 0, 0.12);
     box-shadow:
       0 0 0 1px rgba(255, 255, 255, 0.5),
@@ -254,18 +254,18 @@ const blogSchema = {
       inset 0 1px 0 rgba(255, 255, 255, 0.9);
   }
 
-  :global(body.light-mode) .hero::before {
+  :global(html.light-mode) .hero::before {
     background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255, 255, 255, 0.5) 0%, transparent 50%);
   }
 
-  :global(body.light-mode) .hero-glow {
+  :global(html.light-mode) .hero-glow {
     background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
         rgba(255, 255, 255, 0.6) 0%,
         rgba(255, 255, 255, 0.2) 25%,
         transparent 50%);
   }
 
-  :global(body.light-mode) .hero-highlight {
+  :global(html.light-mode) .hero-highlight {
     background: linear-gradient(90deg,
         transparent 0%,
         rgba(255, 255, 255, 0.8) 20%,
@@ -274,7 +274,7 @@ const blogSchema = {
         transparent 100%);
   }
 
-  :global(body.light-mode) .hero::after {
+  :global(html.light-mode) .hero::after {
     background:
       linear-gradient(45deg,
         rgba(0, 0, 0, 0.02) 25%,
@@ -289,21 +289,21 @@ const blogSchema = {
     opacity: 0.6;
   }
 
-  :global(body.light-mode) .hero h1 {
+  :global(html.light-mode) .hero h1 {
     color: #1d1d1f;
   }
 
-  :global(body.light-mode) .hero h1 i {
+  :global(html.light-mode) .hero h1 i {
     color: rgba(0, 0, 0, 0.5);
     -webkit-text-fill-color: rgba(0, 0, 0, 0.5);
     background-image: linear-gradient(105deg, #7a5410 0%, #b98a2c 35%, #d9ad52 50%, #b98a2c 65%, #7a5410 100%);
   }
 
-  :global(body.light-mode) .hero:hover h1 i {
+  :global(html.light-mode) .hero:hover h1 i {
     -webkit-text-fill-color: transparent;
   }
 
-  :global(body.light-mode) .hero p {
+  :global(html.light-mode) .hero p {
     color: rgba(0, 0, 0, 0.5);
   }
 
@@ -484,13 +484,13 @@ const blogSchema = {
     transform: translateX(3px);
   }
 
-  :global(body.light-mode) .post-card {
+  :global(html.light-mode) .post-card {
     box-shadow:
       inset 0 0 0 1px rgba(0, 0, 0, 0.1),
       0 12px 32px -10px rgba(0, 0, 0, 0.25);
   }
 
-  :global(body.light-mode) .post-card:hover {
+  :global(html.light-mode) .post-card:hover {
     box-shadow:
       inset 0 0 0 1px rgba(0, 0, 0, 0.14),
       0 22px 44px -12px rgba(0, 0, 0, 0.35);
@@ -508,41 +508,41 @@ const blogSchema = {
     transition: border-color 0.35s ease;
   }
   .post-card:hover::after { border-color: rgba(255, 255, 255, 0.15); }
-  :global(body.light-mode) .post-card::after { border-color: rgba(0, 0, 0, 0.08); }
-  :global(body.light-mode) .post-card:hover::after { border-color: rgba(0, 0, 0, 0.12); }
+  :global(html.light-mode) .post-card::after { border-color: rgba(0, 0, 0, 0.08); }
+  :global(html.light-mode) .post-card:hover::after { border-color: rgba(0, 0, 0, 0.12); }
 
   /* Light: cover dissolves into a pale frosted copy of itself, text goes dark. */
-  :global(body.light-mode) .post-card {
+  :global(html.light-mode) .post-card {
     color: #1d1d1f;
     background: #f5f4f1;
   }
-  :global(body.light-mode) .post-card::before {
+  :global(html.light-mode) .post-card::before {
     filter: blur(48px) saturate(160%) brightness(1.7);
     opacity: 0.35;
   }
   /* Cream veil so dark covers don't turn the text area muddy grey; only a tint of the image survives. */
-  :global(body.light-mode) .post-content {
+  :global(html.light-mode) .post-content {
     background: linear-gradient(to bottom, rgba(245, 244, 241, 0) 0, rgba(245, 244, 241, 0.82) 2.75rem, rgba(245, 244, 241, 0.92) 100%);
   }
-  :global(body.light-mode) .post-meta { color: rgba(0, 0, 0, 0.5); }
-  :global(body.light-mode) .post-title {
+  :global(html.light-mode) .post-meta { color: rgba(0, 0, 0, 0.5); }
+  :global(html.light-mode) .post-title {
     color: #1d1d1f;
     -webkit-text-fill-color: #1d1d1f;
     background-image: linear-gradient(105deg, #7a5410 0%, #b98a2c 35%, #d9ad52 50%, #b98a2c 65%, #7a5410 100%);
   }
-  :global(body.light-mode) .post-card:hover .post-title,
-  :global(body.light-mode) .post-card:focus-visible .post-title {
+  :global(html.light-mode) .post-card:hover .post-title,
+  :global(html.light-mode) .post-card:focus-visible .post-title {
     -webkit-text-fill-color: transparent;
   }
-  :global(body.light-mode) .post-excerpt { color: rgba(0, 0, 0, 0.68); }
-  :global(body.light-mode) .post-tag {
+  :global(html.light-mode) .post-excerpt { color: rgba(0, 0, 0, 0.68); }
+  :global(html.light-mode) .post-tag {
     background: rgba(255, 255, 255, 0.55);
     color: rgba(0, 0, 0, 0.75);
     box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.12);
   }
-  :global(body.light-mode) .post-cta { color: rgba(0, 0, 0, 0.7); }
-  :global(body.light-mode) .post-card:hover .post-cta { color: #9a6d1c; }
-  :global(body.light-mode) .post-card:focus-visible { outline-color: #b98a2c; }
+  :global(html.light-mode) .post-cta { color: rgba(0, 0, 0, 0.7); }
+  :global(html.light-mode) .post-card:hover .post-cta { color: #9a6d1c; }
+  :global(html.light-mode) .post-card:focus-visible { outline-color: #b98a2c; }
 
   @media (max-width: 768px) {
     main {

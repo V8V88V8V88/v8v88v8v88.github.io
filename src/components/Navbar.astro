@@ -42,11 +42,6 @@ function isCurrent(path: string) {
             try {
               var root = document.documentElement;
               var light = root.classList.contains("light-mode");
-              var b = document.body;
-              if (b) {
-                b.classList.remove("light-mode", "dark-mode");
-                b.classList.add(light ? "light-mode" : "dark-mode");
-              }
               var sw = document.getElementById("mode-switch");
               if (sw) sw.checked = !light;
               var liquidBtn = document.getElementById("liquid-mode-toggle");

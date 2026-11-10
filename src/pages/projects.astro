@@ -936,6 +936,7 @@ function getHostedLabel(url: string): string {
   text-shadow: 0 0 20px rgba(29, 185, 84, 0.4);
   max-width: 100%;
   overflow-x: auto;
+  overscroll-behavior-x: contain;
   scrollbar-width: none;
 }
 
@@ -1114,23 +1115,23 @@ function getHostedLabel(url: string): string {
   color: #1ed760;
 }
 
-:global(body.light-mode) .lang-options {
+:global(html.light-mode) .lang-options {
   background: rgba(255, 255, 255, 0.95);
   border-color: rgba(0, 0, 0, 0.08);
   box-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.18);
 }
 
-:global(body.light-mode) .lang-options .tech-pill {
+:global(html.light-mode) .lang-options .tech-pill {
   color: rgba(0, 0, 0, 0.7);
 }
 
-:global(body.light-mode) .lang-options .tech-pill:hover,
-:global(body.light-mode) .lang-options .tech-pill:focus-visible {
+:global(html.light-mode) .lang-options .tech-pill:hover,
+:global(html.light-mode) .lang-options .tech-pill:focus-visible {
   background: rgba(0, 0, 0, 0.05);
   color: #000;
 }
 
-:global(body.light-mode) .lang-options .tech-pill.active {
+:global(html.light-mode) .lang-options .tech-pill.active {
   background: rgba(29, 185, 84, 0.12);
   color: #0f6438;
 }
@@ -1653,7 +1654,7 @@ function getHostedLabel(url: string): string {
   }
 }
 
-:global(body.light-mode) .project-preview.has-lang-card {
+:global(html.light-mode) .project-preview.has-lang-card {
   background: #f1f1f3;
   border-color: rgba(0, 0, 0, 0.1);
   box-shadow:
@@ -1661,7 +1662,7 @@ function getHostedLabel(url: string): string {
     0 4px 14px rgba(0, 0, 0, 0.06);
 }
 
-@media (hover: hover) and (pointer: fine) {:global(body.light-mode) .project-item.preview-open .project-preview.has-lang-card {
+@media (hover: hover) and (pointer: fine) {:global(html.light-mode) .project-item.preview-open .project-preview.has-lang-card {
   background: #eeeef0;
   border-color: rgba(0, 0, 0, 0.16);
   box-shadow:
@@ -1669,110 +1670,110 @@ function getHostedLabel(url: string): string {
     0 12px 24px -6px rgba(0, 0, 0, 0.1);
 }}
 
-@media (hover: hover) and (pointer: fine) {:global(body.light-mode) .lang-card,
-:global(body.light-mode) .project-item.preview-open .lang-card {
+@media (hover: hover) and (pointer: fine) {:global(html.light-mode) .lang-card,
+:global(html.light-mode) .project-item.preview-open .lang-card {
   background: #f1f1f3;
   border: 0;
   box-shadow: none;
 }}
 
-@media (hover: hover) and (pointer: fine) {:global(body.light-mode) .project-item.preview-open .lang-card {
+@media (hover: hover) and (pointer: fine) {:global(html.light-mode) .project-item.preview-open .lang-card {
   background: #eeeef0;
 }}
 
-:global(body.light-mode) .lang-icon {
+:global(html.light-mode) .lang-icon {
   filter: grayscale(1) contrast(1.1);
   opacity: 0.78;
   color: #111114;
 }
 
-@media (hover: hover) and (pointer: fine) {:global(body.light-mode) .project-item:hover .lang-icon,
-:global(body.light-mode) .project-item:has(:focus-visible) .lang-icon {
+@media (hover: hover) and (pointer: fine) {:global(html.light-mode) .project-item:hover .lang-icon,
+:global(html.light-mode) .project-item:has(:focus-visible) .lang-icon {
   filter: none;
   opacity: 1;
 }}
 
-:global(body.light-mode) .project-main-link {
+:global(html.light-mode) .project-main-link {
   color: #1d1d1f;
 }
 
-:global(body.light-mode) .project-hover-info {
+:global(html.light-mode) .project-hover-info {
   color: rgba(0, 0, 0, 0.48);
 }
 
-:global(body.light-mode) .project-hosted {
+:global(html.light-mode) .project-hosted {
   color: #0f4d1f;
 }
 
-:global(body.light-mode) .hero-ascii {
+:global(html.light-mode) .hero-ascii {
   color: #0f4d1f;
   text-shadow: none;
 }
 
-:global(body.light-mode) .hero-tagline {
+:global(html.light-mode) .hero-tagline {
   color: #1d1d1f;
 }
 
-:global(body.light-mode) .hero-tagline em {
+:global(html.light-mode) .hero-tagline em {
   color: #0f4d1f;
 }
 
-:global(body.light-mode) .hero-stat-value {
+:global(html.light-mode) .hero-stat-value {
   color: #1d1d1f;
 }
 
-:global(body.light-mode) .hero-stat-label {
+:global(html.light-mode) .hero-stat-label {
   color: rgba(0, 0, 0, 0.4);
 }
 
-:global(body.light-mode) .tech-pill {
+:global(html.light-mode) .tech-pill {
   background: rgba(0, 0, 0, 0.04);
   border-color: rgba(0, 0, 0, 0.08);
   color: rgba(0, 0, 0, 0.6);
 }
 
-:global(body.light-mode) .tech-pill:hover {
+:global(html.light-mode) .tech-pill:hover {
   background: rgba(29, 185, 84, 0.08);
   border-color: rgba(15, 77, 31, 0.3);
   color: #0f4d1f;
 }
 
-:global(body.light-mode) .tech-pill.active {
+:global(html.light-mode) .tech-pill.active {
   background: rgba(0, 0, 0, 0.08);
   border-color: rgba(0, 0, 0, 0.2);
   color: #1d1d1f;
 }
 
-:global(body.light-mode) .project-item.featured .project-name::after {
+:global(html.light-mode) .project-item.featured .project-name::after {
   background: #fff;
 }
 
-:global(body.light-mode) .rounded-star {
+:global(html.light-mode) .rounded-star {
   background: #fff;
 }
 
-:global(body.light-mode) .projects-divider {
+:global(html.light-mode) .projects-divider {
   background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.1) 20%, rgba(0, 0, 0, 0.1) 80%, transparent);
 }
 
-:global(body.light-mode) .filter-btn {
+:global(html.light-mode) .filter-btn {
   background: rgba(0, 0, 0, 0.04);
   border-color: rgba(0, 0, 0, 0.1);
   color: rgba(0, 0, 0, 0.6);
 }
 
-:global(body.light-mode) .filter-btn:hover {
+:global(html.light-mode) .filter-btn:hover {
   background: rgba(0, 0, 0, 0.06);
   color: rgba(0, 0, 0, 0.8);
 }
 
-:global(body.light-mode) .filter-btn.active {
+:global(html.light-mode) .filter-btn.active {
   background: rgba(0, 0, 0, 0.08);
   border-color: rgba(0, 0, 0, 0.2);
   color: #1d1d1f;
 }
 
-:global(body.light-mode) .project-item {
+:global(html.light-mode) .project-item {
   background: #f4f3f2;
   border: 1px solid rgba(0, 0, 0, 0.08);
   box-shadow:
@@ -1781,8 +1782,8 @@ function getHostedLabel(url: string): string {
     0 4px 16px -2px rgba(0, 0, 0, 0.04);
 }
 
-@media (hover: hover) and (pointer: fine) {:global(body.light-mode) .project-item:hover,
-:global(body.light-mode) .project-item:has(:focus-visible) {
+@media (hover: hover) and (pointer: fine) {:global(html.light-mode) .project-item:hover,
+:global(html.light-mode) .project-item:has(:focus-visible) {
   background: #efeeed;
   border-color: rgba(0, 0, 0, 0.14);
   box-shadow:
@@ -1791,15 +1792,15 @@ function getHostedLabel(url: string): string {
     0 12px 28px -4px rgba(0, 0, 0, 0.08);
 }}
 
-:global(body.light-mode) .project-name {
+:global(html.light-mode) .project-name {
   color: #1d1d1f;
 }
 
-:global(body.light-mode) .project-desc {
+:global(html.light-mode) .project-desc {
   color: rgba(0, 0, 0, 0.6);
 }
 
-:global(body.light-mode) .project-lang {
+:global(html.light-mode) .project-lang {
   color: rgba(0, 0, 0, 0.7);
   background: rgba(0, 0, 0, 0.05);
   border-color: rgba(0, 0, 0, 0.1);
@@ -1836,6 +1837,7 @@ function getHostedLabel(url: string): string {
     width: 100%;
     max-width: 100%;
     overflow-x: auto;
+    overscroll-behavior-x: contain;
     scrollbar-width: none;
   }
 
@@ -1863,9 +1865,8 @@ function getHostedLabel(url: string): string {
     align-items: center;
     flex-wrap: nowrap;
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
     scrollbar-width: none;
-    -ms-overflow-style: none;
     gap: 0.38rem;
     padding: 0.25rem 0;
     margin: 0;
@@ -2021,6 +2022,7 @@ function getHostedLabel(url: string): string {
     width: 100%;
     max-width: 100%;
     overflow-x: auto;
+    overscroll-behavior-x: contain;
     scrollbar-width: none;
   }
 
@@ -2178,8 +2180,8 @@ function getHostedLabel(url: string): string {
   width: 100%;
   max-width: 100%;
   overflow-x: auto;
+  overscroll-behavior-x: contain;
   scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
   transition: opacity 0.2s ease, transform 0.2s ease;
   /* The grid's width sets its height, so expose both to the placeholder. */
   --contrib-gap: clamp(2px, 0.2vw, 3px);
@@ -2369,36 +2371,36 @@ function getHostedLabel(url: string): string {
   color: rgba(255, 255, 255, 0.3);
 }
 
-:global(body.light-mode) .contrib-count {
+:global(html.light-mode) .contrib-count {
   color: rgba(0, 0, 0, 0.4);
 }
 
-:global(body.light-mode .contrib-cell.level-0) {
+:global(html.light-mode .contrib-cell.level-0) {
   background: rgba(0, 0, 0, 0.04);
   border-color: rgba(0, 0, 0, 0.08);
 }
 
-:global(body.light-mode .contrib-cell.level-1) {
+:global(html.light-mode .contrib-cell.level-1) {
   background: rgba(29, 185, 84, 0.2);
 }
 
-:global(body.light-mode .contrib-cell.level-2) {
+:global(html.light-mode .contrib-cell.level-2) {
   background: rgba(29, 185, 84, 0.4);
 }
 
-:global(body.light-mode .contrib-cell.level-3) {
+:global(html.light-mode .contrib-cell.level-3) {
   background: rgba(29, 185, 84, 0.6);
 }
 
-:global(body.light-mode .contrib-cell.level-4) {
+:global(html.light-mode .contrib-cell.level-4) {
   background: #0f4d1f;
 }
 
-:global(body.light-mode .contrib-cell:hover:not(.empty)) {
+:global(html.light-mode .contrib-cell:hover:not(.empty)) {
   outline-color: rgba(0, 0, 0, 0.3);
 }
 
-:global(body.light-mode) .contrib-legend-label {
+:global(html.light-mode) .contrib-legend-label {
   color: rgba(0, 0, 0, 0.3);
 }
 
@@ -2543,7 +2545,7 @@ function getHostedLabel(url: string): string {
 
 /* Resting icon is bare (no tile); the tile only forms on desktop hover/focus. */
 .project-preview.has-lang-card,
-:global(body.light-mode) .project-preview.has-lang-card {
+:global(html.light-mode) .project-preview.has-lang-card {
   background: transparent;
   border-color: transparent;
   box-shadow: none;
@@ -2554,7 +2556,7 @@ function getHostedLabel(url: string): string {
 }
 
 .lang-card,
-:global(body.light-mode) .lang-card {
+:global(html.light-mode) .lang-card {
   background: transparent;
 }
 
@@ -2574,7 +2576,7 @@ function getHostedLabel(url: string): string {
     border-color: rgba(255, 255, 255, 0.2);
   }
 
-  :global(body.light-mode) .project-item.preview-open .project-preview.has-lang-card {
+  :global(html.light-mode) .project-item.preview-open .project-preview.has-lang-card {
     background: #f1f1f3;
     border-color: rgba(0, 0, 0, 0.1);
   }
@@ -2583,7 +2585,7 @@ function getHostedLabel(url: string): string {
     background: #121212;
   }
 
-  :global(body.light-mode) .project-item.preview-open .lang-card {
+  :global(html.light-mode) .project-item.preview-open .lang-card {
     background: #f1f1f3;
   }
 
@@ -2766,7 +2768,7 @@ function getHostedLabel(url: string): string {
   animation: sound-glint 3.2s ease-in-out 1.2s infinite;
 }
 
-:global(body.light-mode) .sound-toggle.is-idle .sound-icon {
+:global(html.light-mode) .sound-toggle.is-idle .sound-icon {
   color: #000;
 }
 
