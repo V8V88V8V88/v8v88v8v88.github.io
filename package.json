@@ -7,15 +7,15 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "@astrojs/compiler-rs": "^0.5.2",
+    "@astrojs/compiler-rs": "^0.5.3",
     "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.4",
-    "astro": "^7.4.2",
-    "simple-icons": "^16.35.0"
+    "astro": "^7.4.8",
+    "simple-icons": "^16.37.0"
   },
   "devDependencies": {
-    "@fortawesome/free-brands-svg-icons": "6.7.2",
-    "@fortawesome/free-solid-svg-icons": "6.7.2",
+    "@fortawesome/free-brands-svg-icons": "7.3.1",
+    "@fortawesome/free-solid-svg-icons": "7.3.1",
     "esbuild": "^0.28.2"
   }
 }

@@ -6,6 +6,8 @@ export interface Post {
   image: string;
   tags?: string[];
   readTime?: string;
+  /** The cover image already has the title written on it, so cards show it whole and keep their own text clear of it. */
+  coverHasTitle?: boolean;
 }
 
 const posts: Post[] = [
@@ -15,6 +17,7 @@ const posts: Post[] = [
     date: '2026-03-13',
     slug: 'linux-location-geoclue',
     image: '/images/beacondb.webp',
+    coverHasTitle: true,
     tags: ['Linux', 'GeoClue', 'BeaconDB'],
     readTime: '7 min read',
   },

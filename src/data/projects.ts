@@ -51,6 +51,8 @@ export const projectNameOverrides: Record<string, string> = {
   'mini-vm': 'Mini VM',
   'cnn-image-classification': 'CNN Image Classification',
   'helium-copr': 'Helium COPR',
+  'tv-bluetooth': 'TV Bluetooth',
+  'asus-dts-linux': 'ASUS DTS Linux',
   'gtk-emoji-picker': 'GTK Emoji Picker',
   'Jina-IDS': 'Jina IDS',
   'ft9366-rek': 'FT9366-REK',
@@ -115,9 +117,12 @@ const categoryOverrides: Record<string, string> = {
 
 export const languageOverrides: Record<string, string> = {
   'interweb': 'JavaScript',
+  'route': 'Kotlin',
 };
 
 const descriptionOverrides: Record<string, string> = {
+  'route': 'Delhi NCR metro routes in seconds: an offline Android route planner with no login, no ads, and no permissions.',
+  'asus-dts-linux': 'Pulls the DTS speaker tuning out of the ASUS driver and runs it in PipeWire, so ASUS laptop speakers sound right on Linux.',
   'thefossclub.github.io': 'Official website for The FOSS Club, bringing together people who learn, build, and share open-source software.',
   'indx': 'An interactive map that indexes places, data, and anything worth discovering, all explorable through a fast and focused interface.',
   'Synthio': 'A minimalist music visualizer built with Svelte, turning live audio into an expressive and responsive visual experience.',

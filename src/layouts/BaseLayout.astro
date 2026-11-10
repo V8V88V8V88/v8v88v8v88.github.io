@@ -76,7 +76,7 @@ const {
   <div class="bottom-edge-blur" aria-hidden="true"></div>
   <!-- Psst... Did you know octopuses have three hearts? Just thought you should know. -->
   <button type="button" class="scroll-to-top" aria-label="Scroll to top"><i class="fas fa-arrow-up" aria-hidden="true" set:html={iconSvg('fas fa-arrow-up')} /></button>
-  <button type="button" class="guestbook-btn" aria-label="Open Guestbook" aria-haspopup="dialog"><i class="fas fa-pen guestbook-btn-icon" aria-hidden="true" set:html={iconSvg('fas fa-pen')} /><span class="guestbook-btn-label">Guestbook</span></button>
+  <button type="button" class:list={['guestbook-btn', showFooter && 'is-away']} aria-label="Open Guestbook" aria-haspopup="dialog"><i class="fas fa-pen guestbook-btn-icon" aria-hidden="true" set:html={iconSvg('fas fa-pen')} /><span class="guestbook-btn-label">Guestbook</span></button>
   <div class="guestbook-modal-overlay" aria-hidden="true" inert>
     <div class="guestbook-modal" role="dialog" aria-modal="true" aria-label="Guestbook">
       <div class="guestbook-modal-header"><span>✦ GUESTBOOK</span><button type="button" class="guestbook-modal-close" aria-label="Close guestbook">×</button></div>
@@ -364,6 +364,15 @@ const {
         guestbookInerted.forEach(function(el) { el.removeAttribute('inert'); });
         guestbookInerted = [];
         guestbookBtn.focus({ preventScroll: true });
+      }
+
+      // On phones the button stays out of the way until the footer shows
+      // (the CSS only acts on this class at phone widths).
+      var siteFooter = document.querySelector('.site-footer');
+      if (siteFooter) {
+        new IntersectionObserver(function(entries) {
+          guestbookBtn.classList.toggle('is-away', !entries[entries.length - 1].isIntersecting);
+        }).observe(siteFooter);
       }
 
       guestbookBtn.addEventListener('click', openGuestbook);

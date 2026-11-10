@@ -105,7 +105,7 @@ function getCoverImage(image: string): string {
         </div>
       </div>
       <p>
-        I'm curious by nature. I like asking questions and figuring things out, and that's what drew me to computers. Over time, I got into <a href="https://en.wikipedia.org/wiki/Linux" target="_blank" rel="noopener noreferrer">Linux</a>, <a href="https://en.wikipedia.org/wiki/Free_and_open-source_software" target="_blank" rel="noopener noreferrer">FOSS</a>, and <a href="https://en.wikipedia.org/wiki/Systems_programming" target="_blank" rel="noopener noreferrer">systems programming</a>. Lately, I've been exploring <a href="https://www.rust-lang.org/" target="_blank" rel="noopener noreferrer">Rust</a>. I work at <a href="https://automologylabs.com/" target="_blank" rel="noopener noreferrer">Automology Labs</a> and in my free time I am building <a href="https://github.com/v8v88v8v88/XE" target="_blank" rel="noopener noreferrer">XE</a>. I like keeping things <a href="https://principles-wiki.net/principles:keep_it_simple_stupid" target="_blank" rel="noopener noreferrer">simple</a>, the <a href="https://en.wikipedia.org/wiki/Unix_philosophy" target="_blank" rel="noopener noreferrer">Unix</a> way. Most of what I know comes from experimenting with systems and fixing things when they break. I'm also into cybersecurity and hold a <i>CEH</i> certification. Outside of tech, I read about philosophy, history, or whatever catches my <a href="https://en.wikipedia.org/wiki/Attention_deficit_hyperactivity_disorder" target="_blank" rel="noopener noreferrer">attention</a>. If you'd like to chat about any of this, <a href="/contact/">feel free to reach out</a>. I'll get back to you when I can :)
+        I'm curious by nature and I like asking questions. That's what got me into computers, and from there into <a href="https://en.wikipedia.org/wiki/Linux" target="_blank" rel="noopener noreferrer">Linux</a>, <a href="https://en.wikipedia.org/wiki/Free_and_open-source_software" target="_blank" rel="noopener noreferrer">FOSS</a>, and <a href="https://en.wikipedia.org/wiki/Systems_programming" target="_blank" rel="noopener noreferrer">systems programming</a>. I work at <a href="https://automologylabs.com/" target="_blank" rel="noopener noreferrer">Automology Labs</a>, and in my free time I'm building <a href="https://github.com/v8v88v8v88/XE" target="_blank" rel="noopener noreferrer">XE</a> and a few <a href="/projects/">personal projects</a>. I like keeping things <a href="https://principles-wiki.net/principles:keep_it_simple_stupid" target="_blank" rel="noopener noreferrer">simple</a>, the <a href="https://en.wikipedia.org/wiki/Unix_philosophy" target="_blank" rel="noopener noreferrer">Unix</a> way, and most of what I know comes from breaking systems and fixing them. I'm also into cybersecurity (CEH certified), and outside of tech I read philosophy, history, or whatever catches my <a href="https://en.wikipedia.org/wiki/Attention_deficit_hyperactivity_disorder" target="_blank" rel="noopener noreferrer">attention</a>. If any of this sounds interesting, <a href="/contact/">feel free to reach out</a> :)
       </p>
       <a href="/about/#story" class="view-all about-cta">more about me →</a>
     </section>
@@ -127,7 +127,7 @@ function getCoverImage(image: string): string {
               <div class="project-body">
                 <div class="project-meta">
                   <h3>{project.name}</h3>
-                  <span class="project-stack-tag">{project.language}</span>
+                  {project.language !== 'Unknown' && <span class="project-stack-tag">{project.language}</span>}
                 </div>
                 <p>{project.description}</p>
               </div>
@@ -876,8 +876,24 @@ function getCoverImage(image: string): string {
       font-size: var(--fs-2xs);
     }
 
+    /* Five pills as 3 + 2 with the second row centred, instead of
+       wrapping 2 / 2 / 1 and leaving one alone. */
+    .contact-preview {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 0.5rem;
+    }
+
     .contact-pill {
-      padding: 0.5rem 0.85rem;
+      grid-column: span 2;
+      justify-content: center;
+      gap: 0.35rem;
+      padding: 0.5rem 0.15rem;
+      min-width: 0;
+    }
+
+    .contact-pill:nth-child(4) {
+      grid-column: 2 / span 2;
     }
 
     .contact-pill span {

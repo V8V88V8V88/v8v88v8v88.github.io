@@ -41,7 +41,7 @@ const blogSchema = {
 
     <section class="posts-grid">
       {posts.map((post, i) => (
-        <a class="post-card" href={`/${post.slug}/`} style={`--post-img: url('${post.image}')`}>
+        <a class:list={['post-card', post.coverHasTitle && 'cover-has-title']} href={`/${post.slug}/`} style={`--post-img: url('${post.image}')`}>
           <div class="post-image" aria-hidden="true"></div>
           {i === 0 && <span class="post-badge">Latest</span>}
           <div class="post-content">
@@ -363,6 +363,19 @@ const blogSchema = {
 
   .post-card:hover .post-image {
     transform: scale(1.04);
+  }
+
+  /* A cover with its own lettering is shown whole, at its own shape, and the
+     card text starts below it instead of sliding up over the letters. */
+  .post-card.cover-has-title .post-image {
+    aspect-ratio: 1.6 / 1;
+    -webkit-mask-image: linear-gradient(to bottom, #000 88%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 88%, transparent 100%);
+  }
+
+  .post-card.cover-has-title .post-content {
+    margin-top: 0;
+    padding-top: 0.6rem;
   }
 
   .post-badge {
