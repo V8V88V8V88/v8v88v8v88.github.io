@@ -818,13 +818,7 @@ function getHostedLabel(url: string): string {
         projectList.addEventListener('mouseleave', () => { focal = null; });
       }
 
-      // Touch dial fallback for browsers without CSS scroll timelines (Firefox,
-      // so Zen too): same depth curve as the project-dial keyframes, driven by
-      // each nearby row's distance from the middle of the screen. Reads all
-      // rects first, then writes, once per frame; only rows near the viewport
-      // are touched.
       const isTouch = window.matchMedia('(hover: none)').matches || window.matchMedia('(pointer: coarse)').matches;
-      const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
       // Touch dial tick: a thin observer band across the middle of the screen
       // reports whichever row crosses it, so scrolling clicks through rows like
@@ -843,56 +837,6 @@ function getHostedLabel(url: string): string {
         }, { rootMargin: '-49.5% 0px -49.5% 0px' });
         rows.forEach(row => centerIO.observe(row));
       }
-      if (projectList && isTouch && !calm && !CSS.supports('animation-timeline: view()')) {
-        const nearby = new Set();
-        const lerp = (a, b, t) => a + (b - a) * t;
-        const depth = d => {
-          const a = Math.min(Math.abs(d), 4);
-          const t = a <= 1 ? a : (a - 1) / 3;
-          const [o, sc, r] = a <= 1
-            ? [lerp(1, 0.71, t), lerp(1.015, 0.98, t), lerp(0, 2.5, t)]
-            : [lerp(0.71, 0.5, t), lerp(0.98, 0.92, t), lerp(2.5, 10, t)];
-          return [o, sc, -Math.sign(d) * r];
-        };
-        // Every row written is re-rendered that frame, and the depth curve is
-        // flat past four rows out, so most nearby rows hold the same values
-        // frame after frame. Only rows whose values actually change are
-        // written: about the eight around the middle instead of ~22.
-        const written = new Map();
-        let queued = false;
-        const update = () => {
-          queued = false;
-          const mid = window.innerHeight / 2;
-          const rects = [...nearby].map(row => [row, row.getBoundingClientRect()]);
-          rects.forEach(([row, rect]) => {
-            const [o, sc, r] = depth((rect.top + rect.height / 2 - mid) / (rect.height + 10));
-            const opacity = o.toFixed(3);
-            const transform = `perspective(1200px) rotateX(${r.toFixed(2)}deg) scale(${sc.toFixed(4)})`;
-            const last = written.get(row);
-            if (last && last[0] === opacity && last[1] === transform) return;
-            written.set(row, [opacity, transform]);
-            row.style.opacity = opacity;
-            row.style.transform = transform;
-          });
-        };
-        const queue = () => {
-          if (queued) return;
-          queued = true;
-          requestAnimationFrame(update);
-        };
-        const io = new IntersectionObserver(entries => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) nearby.add(entry.target);
-            else nearby.delete(entry.target);
-          });
-          queue();
-        }, { rootMargin: '50% 0px' });
-        projectList.classList.add('scroll-dial');
-        projectList.querySelectorAll('.project-item').forEach(row => io.observe(row));
-        window.addEventListener('scroll', queue, { passive: true });
-        window.addEventListener('resize', queue, { passive: true });
-      }
-
       document.querySelectorAll('.project-main-link, .project-hosted').forEach(link => {
         link.addEventListener('click', function() {
           this.blur();
@@ -2674,7 +2618,8 @@ function getHostedLabel(url: string): string {
    the middle of the screen is the focal one and the rest recede with distance,
    matching the desktop hover dial (roughly one row per ~11% of the view
    timeline). Scroll-driven and transform/opacity only, so it runs on the
-   compositor with no JS; browsers without scroll timelines keep a flat list. */
+   compositor with no JS (Chrome, Safari 26+, Firefox 159+); older browsers
+   keep a flat list. */
 @keyframes project-dial {
   0% {
     opacity: 0.5;
@@ -2696,17 +2641,6 @@ function getHostedLabel(url: string): string {
     opacity: 0.5;
     transform: perspective(1200px) rotateX(10deg) scale(0.92);
   }
-}
-
-/* JS fallback dial (no scroll timelines): values are written every scroll
-   frame, so transform/opacity must apply directly. Easing them (the hover
-   transitions) would restart on every frame and drag the rows behind the
-   scroll. */
-.project-list.scroll-dial .project-item {
-  transition:
-    background 0.3s ease,
-    border-color 0.3s ease,
-    box-shadow 0.35s ease;
 }
 
 @supports (animation-timeline: view()) {
@@ -2733,15 +2667,6 @@ function getHostedLabel(url: string): string {
       backface-visibility: visible;
     }
   }
-}
-
-/* Same for the JS fallback dial, which fades rows the same way. */
-.project-list.scroll-dial .project-preview {
-  will-change: auto;
-}
-
-.project-list.scroll-dial .lang-card {
-  backface-visibility: visible;
 }
 
 /* Sound switch: icon only, one speaker per voice in that voice's style:
