@@ -8,9 +8,6 @@ import { getLanguageMeta } from '../data/languageIcons';
 const projects = await getProjects();
 const languages = new Set(projects.map(p => p.language));
 
-// Cards show a small square crop of each project image, so use the 560px
-// WebP made by scripts/project-previews.mjs when it exists (far less to
-// download and decode while scrolling), else the original.
 function getPreviewImage(image: string): string {
   const preview = image.replace(/^\/images\/(.+)\.\w+$/, '/images/previews/$1.webp');
   return existsSync(path.join(process.cwd(), 'public', preview)) ? preview : image;
@@ -170,7 +167,6 @@ function getHostedLabel(url: string): string {
           var contributions = data.contributions || [];
           var total = data.total && data.total.lastYear || 0;
           countEl.textContent = total + ' contributions';
-          // Dropped on phones, where the count sits under the narrow chart column.
           var countExtra = document.createElement('span');
           countExtra.className = 'contrib-count-extra';
           countExtra.textContent = ' in the last year';
@@ -208,40 +204,7 @@ function getHostedLabel(url: string): string {
   </script>
 
   <script is:inline>
-    const langMap = {
-      'TypeScript': 'TypeScript',
-      'Rust': 'Rust',
-      'Python': 'Python',
-      'Svelte': 'Svelte',
-      'Shell': 'Shell',
-      'C++': 'C/C++',
-      'C': 'C/C++',
-      'Go': 'Others',
-      'JavaScript': 'Others',
-      'HTML': 'Others',
-      'Theme': 'Others',
-      'Config': 'Others',
-      'Jupyter': 'Others',
-      'CSS': 'Others',
-      'GDScript': 'Others'
-    };
-
-    function initializeProjectLangs() {
-      const projectItems = document.querySelectorAll('.project-item');
-      projectItems.forEach(item => {
-        if (!item.dataset.lang) {
-          const langSpan = item.querySelector('.project-lang');
-          if (langSpan) {
-            const langText = langSpan.textContent.trim();
-            item.dataset.lang = langMap[langText] || 'Others';
-          }
-        }
-      });
-    }
-
     document.addEventListener('DOMContentLoaded', () => {
-      initializeProjectLangs();
-
       const projectList = document.querySelector('.project-list');
       const langMenu = document.getElementById('lang-menu');
       const langTrigger = document.getElementById('lang-trigger');
@@ -309,44 +272,16 @@ function getHostedLabel(url: string): string {
       const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
       const compact = window.matchMedia('(max-width: 768px)');
 
-      // Dial sounds, three voices, picked with the sound switch in the filter
-      // row (every visit starts on 'pup'):
-      // - 'pup': a light cartoon "pup" (think Doraemon's footsteps), a short
-      //   sine whose pitch flicks up in 30ms with the low end trimmed, at the
-      //   same pitch every time.
-      // - 'tik': a short, soft picker-wheel detent, a ~12ms band-passed noise
-      //   transient over a 30ms tonal body, at a steady pitch.
-      // - 'modem': an old dial-up modem connecting, one fragment per row.
-      //   Rows step through the V.34/V.90 handshake (DTMF dialling, the ANSam
-      //   answer tone, V.21 CM/JM, INFO "ka-king", the A "ding", L1 probing
-      //   "pshhh", TRN "tshchch") and keep cycling the noisy tail; a pause
-      //   hangs up and the next run dials again. Everything is band-limited
-      //   to a phone line (300-3400Hz).
-      // No reverb, so nothing rings or gurgles. Image pop-outs use the same
-      // voice (up on open, down on close). A hair of random rate variation
-      // keeps repeats from sounding mechanical.
-      // Each voice is rendered into AudioBuffers with an OfflineAudioContext
-      // the first time it's used, so a tick is just one buffer source + gain.
-      // A new sound on the same channel fades out the previous one (like
-      // use-sound's `interrupt`), so fast runs never pile up.
-      // Browsers only allow audio once the visitor has interacted with the
-      // page (or the site is allowed to autoplay), so until then it's silent.
       const SOUND_CYCLE = ['pup', 'tik', 'modem'];
       let voice = 'pup';
-      // Earlier builds remembered the pick; drop that so visits start on pup.
       try { localStorage.removeItem('sound-voice'); } catch (_) {}
-      // Per-voice peak level for a lone tick (see playTick).
       const LEVELS = { tik: 0.08, pup: 0.064, modem: 0.05 };
       let audio = null;
       let unlocking = null;
       const lastTickAt = { tick: 0 };
       const handshake = { step: 0 };
-      // Set the first time any sound actually plays; until then the sound
-      // switch shimmers and its first press just lets the current voice play.
       let heard = false;
       const onFirstSound = [];
-      // Normalise to a 1.0 peak so the play gain below *is* the peak level
-      // (gain 0.08 = -22 dBFS) whatever the voice's recipe.
       const normalise = rendered => {
         const samples = rendered.getChannelData(0);
         let peak = 0;
@@ -354,8 +289,6 @@ function getHostedLabel(url: string): string {
         if (peak > 0) for (let i = 0; i < samples.length; i++) samples[i] /= peak;
         return rendered;
       };
-      // One "pup": a sine sliding from `from` to `to` Hz in 30ms, 2ms attack,
-      // gone by 60ms, light (trimmed below 300Hz) and soft above 4kHz.
       const renderPup = async (sampleRate, from, to) => {
         const ctx = new OfflineAudioContext(1, Math.ceil(sampleRate * 0.08), sampleRate);
         const thin = ctx.createBiquadFilter();
@@ -385,7 +318,6 @@ function getHostedLabel(url: string): string {
         soften.frequency.value = 5000;
         soften.connect(ctx.destination);
 
-        // Tonal body: a sine with a 3ms attack and an exponential fall.
         const osc = ctx.createOscillator();
         const bodyGain = ctx.createGain();
         osc.frequency.value = body;
@@ -396,7 +328,6 @@ function getHostedLabel(url: string): string {
         osc.start(0);
         osc.stop(bodyDecay + 0.01);
 
-        // Tap: white noise through a wide band-pass, 1ms attack.
         const noise = ctx.createBuffer(1, Math.ceil(sampleRate * (tapDecay + 0.01)), sampleRate);
         const data = noise.getChannelData(0);
         for (let i = 0; i < data.length; i++) data[i] = Math.random() * 2 - 1;
@@ -415,8 +346,6 @@ function getHostedLabel(url: string): string {
 
         return normalise(await ctx.startRendering());
       };
-      // Modem fragments: `build` schedules tones/noise into a 4ms-faded
-      // envelope that feeds a phone-line band-pass.
       const renderLine = async (sampleRate, duration, build) => {
         const ctx = new OfflineAudioContext(1, Math.ceil(sampleRate * (duration + 0.01)), sampleRate);
         const lineLow = ctx.createBiquadFilter();
@@ -444,7 +373,6 @@ function getHostedLabel(url: string): string {
         osc.stop(end);
         return osc;
       };
-      // A white-noise buffer source of the given length.
       const whiteNoise = (ctx, sampleRate, duration) => {
         const noise = ctx.createBuffer(1, Math.ceil(sampleRate * duration), sampleRate);
         const data = noise.getChannelData(0);
@@ -453,14 +381,11 @@ function getHostedLabel(url: string): string {
         source.buffer = noise;
         return source;
       };
-      // The V.34/V.90 handshake, stage by stage (ITU-T V.8/V.21/V.34 values).
       const renderModem = sampleRate => {
-        // Dialling: DTMF digit pairs.
         const dtmf = (low, high) => renderLine(sampleRate, 0.07, (ctx, dest, d) => {
           lineTone(ctx, dest, low, d, 0.5);
           lineTone(ctx, dest, high, d, 0.5);
         });
-        // ANSam: 2100Hz answer tone with a 15Hz, +/-20% amplitude wobble.
         const answer = renderLine(sampleRate, 0.12, (ctx, dest, d) => {
           const am = ctx.createGain();
           am.gain.value = 0.8;
@@ -474,37 +399,30 @@ function getHostedLabel(url: string): string {
           lfo.start(0);
           lfo.stop(d);
         });
-        // V.21 FSK at 300 baud: CM on the low channel (980/1180Hz), JM on the
-        // high channel (1650/1850Hz), random bits.
         const fsk = (mark, space) => renderLine(sampleRate, 0.1, (ctx, dest, d) => {
           const osc = lineTone(ctx, dest, mark, d);
           for (let t = 0; t < d; t += 1 / 300) osc.frequency.setValueAtTime(Math.random() < 0.5 ? mark : space, t);
         });
-        // Phase flips: a tone through a gain switched between +1 and -1.
         const phased = (ctx, dest, freq, d, flips) => {
           const sign = ctx.createGain();
           sign.connect(dest);
           lineTone(ctx, sign, freq, d);
           flips.forEach(([t, value]) => sign.gain.setValueAtTime(value, t));
         };
-        // INFO at 600bps DPSK on the 2400Hz carrier: the "ka-king".
         const kaking = renderLine(sampleRate, 0.1, (ctx, dest, d) => {
           const flips = [];
           for (let t = 0, v = 1; t < d; t += 1 / 600) flips.push([t, v = Math.random() < 0.5 ? -v : v]);
           phased(ctx, dest, 2400, d, flips);
         });
-        // A: 2400Hz tone with a phase reversal, the "ding".
         const ding = (freq, duration) => renderLine(sampleRate, duration, (ctx, dest, d) => {
           phased(ctx, dest, freq, d, [[0, 1], [d / 2, -1]]);
         });
-        // L1/L2 line probing: 21 tones 150Hz apart (150-3750Hz), the "pshhh".
         const probe = renderLine(sampleRate, 0.1, (ctx, dest, d) => {
           for (let k = 1; k <= 25; k++) {
-            if ([4, 6, 8, 10].includes(k)) continue; // V.34 omits a few to get 21
+            if ([4, 6, 8, 10].includes(k)) continue;
             lineTone(ctx, dest, 150 * k, d, 0.25);
           }
         });
-        // TRN: scrambled data around the 1800Hz carrier, the "tshchchch".
         const training = renderLine(sampleRate, 0.1, (ctx, dest, d) => {
           const source = whiteNoise(ctx, sampleRate, d);
           const band = ctx.createBiquadFilter();
@@ -518,7 +436,6 @@ function getHostedLabel(url: string): string {
           const osc = lineTone(ctx, dest, 1400, d);
           osc.frequency.exponentialRampToValueAtTime(500, d);
         });
-        // "Connected": the A then B probe tones, ding-dong.
         const connected = renderLine(sampleRate, 0.2, (ctx, dest, d) => {
           const a = ctx.createGain();
           const b = ctx.createGain();
@@ -551,7 +468,6 @@ function getHostedLabel(url: string): string {
         ])),
         modem: rate => renderModem(rate),
       };
-      // Renders a voice the first time it's needed (a few ms of work).
       const ensureVoice = name => {
         if (!audio || !RECIPES[name]) return Promise.resolve();
         if (!audio.pending[name]) {
@@ -561,8 +477,6 @@ function getHostedLabel(url: string): string {
         }
         return audio.pending[name];
       };
-      // Creates the context once (one shared promise, however many gestures
-      // fire meanwhile) and renders the current voice; later calls resume.
       const unlockAudio = () => {
         if (audio) {
           if (audio.ctx.state !== 'running') audio.ctx.resume();
@@ -585,8 +499,6 @@ function getHostedLabel(url: string): string {
       ['pointerdown', 'pointerup', 'touchend', 'click', 'keydown'].forEach(type => {
         window.addEventListener(type, unlockAudio, { passive: true });
       });
-      // Where the site is already allowed to play sound (e.g. the visitor
-      // granted autoplay), start without waiting for a click.
       if (navigator.getAutoplayPolicy && navigator.getAutoplayPolicy('audiocontext') === 'allowed') unlockAudio();
       document.addEventListener('visibilitychange', () => {
         if (!audio) return;
@@ -628,21 +540,13 @@ function getHostedLabel(url: string): string {
         const rate = 0.99 + Math.random() * 0.02;
         let buffer = set.tick;
         if (Array.isArray(buffer)) {
-          // Modem: advance through the handshake, then keep cycling its
-          // ka-king / pshhh / tshch tail; a pause (hang up) dials again.
           if (gap > 600) handshake.step = 0;
           const last = buffer.length - 1;
-          const tail = [last - 3, last - 1, last]; // kaking, probe, training
+          const tail = [last - 3, last - 1, last];
           const i = handshake.step <= last ? handshake.step : tail[(handshake.step - last - 1) % 3];
           handshake.step++;
           buffer = buffer[i];
         }
-        // Peak levels follow common UI-sound guidance (repeated feedback around
-        // -18 to -24 dB, hover gain 0.03-0.08): a lone tick peaks at -22 dBFS,
-        // quick runs (fast scroll or sweep) ease down to about -30 dBFS.
-        // The 'pup' is a pure tone near where the ear is most sensitive, so it
-        // plays ~2 dB under the 'tik' for the same perceived level.
-        // The modem fragments are dense, full-band sounds, so they sit lower.
         play('tick', buffer, LEVELS[voice] * Math.min(1, 0.4 + gap / 250), rate);
       };
       const playPop = open => {
@@ -653,10 +557,6 @@ function getHostedLabel(url: string): string {
         else play('pop', set.close, 0.08 * level);
       };
 
-      // Sound switch in the filter row: cycles pup -> tik -> modem (its icon
-      // shows which) and plays a short sample of the new voice. The click is itself the gesture browsers need for audio. Until
-      // any sound has been heard it shimmers, and its first press doesn't
-      // switch, it just plays the current voice so sound is simply "on".
       const soundToggle = document.getElementById('sound-toggle');
       const showVoice = () => {
         if (!soundToggle) return;
@@ -667,9 +567,6 @@ function getHostedLabel(url: string): string {
       };
       showVoice();
       if (soundToggle) {
-        // The glint animates a mask, which can't run on the compositor, so it
-        // costs a main-thread frame every vsync; scrolling the list would pay
-        // that the whole way down. Pause it while the button is off-screen.
         const glintIO = new IntersectionObserver(([entry]) => {
           soundToggle.classList.toggle('glint-paused', !entry.isIntersecting);
         });
@@ -696,11 +593,6 @@ function getHostedLabel(url: string): string {
           }
         });
       }
-      // A hovered row grows (desc wraps to two lines, hosted link appears).
-      // Cancel that growth with an equal negative margin so the rows below
-      // never shift; the active row simply overlaps the next one. Resize
-      // observer callbacks run after layout and before paint, so the
-      // compensation lands in the same frame as each step of the transition.
       const baseHeights = new WeakMap();
       const isEngaged = item => item.matches(':hover') || item.contains(document.activeElement);
       const rowResizeObserver = canHover ? new ResizeObserver(entries => {
@@ -721,8 +613,6 @@ function getHostedLabel(url: string): string {
       }) : null;
       document.querySelectorAll('.project-item').forEach(item => {
         if (!canHover) return;
-        // Hover growth is mostly padding (the hosted-link gap), which a default
-        // content-box observer never reports.
         rowResizeObserver.observe(item, { box: 'border-box' });
         let revertTimer = null;
         const activate = () => {
@@ -743,9 +633,6 @@ function getHostedLabel(url: string): string {
         item.addEventListener('focusin', activate);
         item.addEventListener('focusout', scheduleDeactivate);
 
-        // Only real project images pop out, and only on purpose: hovering the
-        // image (after a short intent delay) or clicking it. A click toggles,
-        // and a pinned image stays open until the pointer leaves the row.
         const preview = item.querySelector('.project-preview.has-custom-image');
         if (!preview) return;
         let openTimer = null;
@@ -787,10 +674,6 @@ function getHostedLabel(url: string): string {
         });
       });
 
-      // Fisheye dial: every visible row gets its distance from the focal
-      // (hovered/focused) row, and CSS turns that into depth, so neighbours sit
-      // just below the focal row and rows recede the further away they are.
-      // Distance counts only rows the language/featured filters leave visible.
       if (canHover && projectList) {
         const rows = [...projectList.querySelectorAll('.project-item')];
         const isShown = row => row.style.display !== 'none'
@@ -806,8 +689,6 @@ function getHostedLabel(url: string): string {
             const d = i - at;
             const dist = String(Math.min(Math.abs(d), 4));
             const dir = String(Math.sign(d));
-            // Skip unchanged rows (most of the list sits at the 4 cap) so a
-            // focal change only restyles the handful of rows that move.
             if (row.style.getPropertyValue('--fe-d') !== dist) row.style.setProperty('--fe-d', dist);
             if (row.style.getPropertyValue('--fe-dir') !== dir) row.style.setProperty('--fe-dir', dir);
           });
@@ -820,9 +701,6 @@ function getHostedLabel(url: string): string {
 
       const isTouch = window.matchMedia('(hover: none)').matches || window.matchMedia('(pointer: coarse)').matches;
 
-      // Touch dial tick: a thin observer band across the middle of the screen
-      // reports whichever row crosses it, so scrolling clicks through rows like
-      // the desktop hover dial without any per-scroll work.
       if (projectList && isTouch) {
         const rows = [...projectList.querySelectorAll('.project-item')];
         let centerIndex = -1;
@@ -957,22 +835,6 @@ function getHostedLabel(url: string): string {
   width: 100%;
 }
 
-.projects-toolbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.75rem 1.25rem;
-  margin-bottom: 2rem;
-}
-
-.hero-tech-list {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.45rem;
-}
-
 .tech-pill {
   font-family: var(--font-mono);
   font-size: var(--fs-xs);
@@ -1001,7 +863,7 @@ function getHostedLabel(url: string): string {
 
 .lang-menu {
   position: relative;
-  display: flex; /* lines the trigger up with its sibling buttons */
+  display: flex;
 }
 
 .lang-chevron {
@@ -1149,8 +1011,6 @@ function getHostedLabel(url: string): string {
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.045) 0%, rgba(255, 255, 255, 0.015) 100%),
     rgb(7, 7, 7);
-  /* Opaque fills (the old translucent tints flattened onto the page colour)
-     replace the global .project-item backdrop blur, which this list doesn't need. */
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
   border: 1px solid rgba(255, 255, 255, 0.06);
@@ -1163,9 +1023,6 @@ function getHostedLabel(url: string): string {
     box-shadow 0.35s ease,
     opacity 0.3s ease,
     transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-  /* Off-screen rows skip layout/paint entirely, so a hover-triggered height
-     change (desc growing to 2 lines, hosted-link padding) only ever has to
-     reflow/repaint the handful of rows actually on screen, not all 55+. */
   content-visibility: auto;
   contain-intrinsic-size: auto 5.6rem;
 }
@@ -1177,8 +1034,6 @@ function getHostedLabel(url: string): string {
   align-items: center;
   color: #fff;
   text-decoration: none;
-  /* global.css pads every .project-item a by 1rem (home cards), which made
-     the rows too tall; a little breathing room is enough here. */
   padding-top: 0.3rem;
   padding-bottom: 0.3rem;
   transition: padding-left 0.45s cubic-bezier(0.22, 1, 0.36, 1);
@@ -1203,26 +1058,15 @@ function getHostedLabel(url: string): string {
     0 12px 32px -4px rgba(0, 0, 0, 0.5);
 }}
 
-@media (hover: hover) and (pointer: fine) {/* content-visibility: auto always forces paint containment (clips overflow)
-   even while rendered, which traps the pop-out preview inside the row.
-   .cv-active (set by JS for the hover/focus duration plus the retract
-   transition) drops back to normal rendering so the preview can escape the
-   row's box exactly like before; every other row keeps content-visibility:
-   auto for the off-screen perf win. Only rows with a real image can pop out,
-   so plain rows keep their containment (and cheap, row-scoped layout) even
-   while hovered. */
+@media (hover: hover) and (pointer: fine) {
 .project-item.cv-active:has(.project-preview.has-custom-image) {
   content-visibility: visible;
 }
 
 .project-item.cv-active {
-  /* A dimmed row (opacity < 1) becomes its own stacking context, so keep the
-     row whose preview is still retracting above its neighbours. */
   z-index: 20;
 }}
 
-/* Registered and non-inheriting, so updating them on a row restyles only that
-   row, not every element inside it. */
 @property --fe-d {
   syntax: '<number>';
   inherits: false;
@@ -1235,11 +1079,6 @@ function getHostedLabel(url: string): string {
   initial-value: 0;
 }
 
-/* Fisheye dial: while the pointer is over the list (or a row has keyboard
-   focus) the focal row lifts to the front at full brightness and the others
-   recede with distance (--fe-d, 0-4, set by JS): dimmer, smaller, and tilted
-   away like rows on a drum (--fe-dir: -1 above, 1 below). Hovering the list
-   rather than each row keeps the gaps between rows from flashing back. */
 @media (hover: hover) and (pointer: fine) {.project-list:hover .project-item:not(:hover),
 .project-list:has(:focus-visible) .project-item:not(:has(:focus-visible)) {
   opacity: max(0.5, 0.78 - var(--fe-d, 4) * 0.07);
@@ -1258,8 +1097,6 @@ function getHostedLabel(url: string): string {
   transform: scale(1.015);
 }}
 
-/* Hover intent: the hosted link waits a beat so sweeping the cursor across
-   the list doesn't fire every row; leaving still retracts immediately. */
 @media (hover: hover) and (pointer: fine) {.project-item:hover .project-hover-info {
   transition-delay: 90ms;
 }}
@@ -1293,16 +1130,13 @@ function getHostedLabel(url: string): string {
   will-change: transform;
 }
 
-/* Generated language icons use one opaque, glass-styled surface. */
 .project-preview.has-lang-card {
   overflow: hidden;
   isolation: isolate;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid transparent;
   border-radius: 16px;
-  background: #101010;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.18),
-    0 4px 14px rgba(0, 0, 0, 0.35);
+  background: transparent;
+  box-shadow: none;
   transform: translateX(-1.625rem) scale(0.30804);
   transition:
     transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
@@ -1315,15 +1149,11 @@ function getHostedLabel(url: string): string {
   content: '';
   position: absolute;
   inset: 0;
+  z-index: 1;
   border-radius: inherit;
   pointer-events: none;
-}
-
-.project-preview.has-lang-card::after {
-  z-index: 1;
-  inset: 0;
   background: radial-gradient(120% 100% at 15% 0%, rgba(255, 255, 255, 0.22), transparent 60%);
-  opacity: 0.32;
+  opacity: 0;
 }
 
 @media (hover: hover) and (pointer: fine) {.project-item.preview-open .project-preview.has-lang-card {
@@ -1341,9 +1171,6 @@ function getHostedLabel(url: string): string {
   opacity: 0.48;
 }}
 
-/* Row hover only brightens and nudges the icon up; the full pop-out is
-   opt-in, opened by hovering or clicking a real project image (.preview-open,
-   set by JS). */
 @media (hover: hover) and (pointer: fine) {.project-item:hover .project-preview,
 .project-item:has(:focus-visible) .project-preview {
   transform: translateX(-1.625rem) scale(0.34);
@@ -1365,10 +1192,10 @@ function getHostedLabel(url: string): string {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid transparent;
   outline: none;
   border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  box-shadow: none;
   position: relative;
   z-index: 1;
   transition: filter 0.35s ease,
@@ -1390,7 +1217,7 @@ function getHostedLabel(url: string): string {
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  background: #101010;
+  background: transparent;
   border: 0;
   border-radius: inherit;
   display: flex;
@@ -1422,8 +1249,8 @@ function getHostedLabel(url: string): string {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 58%;
-  height: 58%;
+  width: 80%;
+  height: 80%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1523,7 +1350,6 @@ function getHostedLabel(url: string): string {
   line-height: 1.45;
   letter-spacing: 0.005em;
   color: rgba(255, 255, 255, 0.78);
-  /* Always up to two lines, so hovering never changes a row's height. */
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -1598,31 +1424,18 @@ function getHostedLabel(url: string): string {
   }
 }
 
-:global(html.light-mode) .project-preview.has-lang-card {
+@media (hover: hover) and (pointer: fine) {:global(html.light-mode) .project-item.preview-open .project-preview.has-lang-card {
   background: #f1f1f3;
   border-color: rgba(0, 0, 0, 0.1);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    0 4px 14px rgba(0, 0, 0, 0.06);
-}
-
-@media (hover: hover) and (pointer: fine) {:global(html.light-mode) .project-item.preview-open .project-preview.has-lang-card {
-  background: #eeeef0;
-  border-color: rgba(0, 0, 0, 0.16);
   box-shadow:
     0 24px 48px -10px rgba(0, 0, 0, 0.15),
     0 12px 24px -6px rgba(0, 0, 0, 0.1);
 }}
 
-@media (hover: hover) and (pointer: fine) {:global(html.light-mode) .lang-card,
-:global(html.light-mode) .project-item.preview-open .lang-card {
+@media (hover: hover) and (pointer: fine) {:global(html.light-mode) .project-item.preview-open .lang-card {
   background: #f1f1f3;
   border: 0;
   box-shadow: none;
-}}
-
-@media (hover: hover) and (pointer: fine) {:global(html.light-mode) .project-item.preview-open .lang-card {
-  background: #eeeef0;
 }}
 
 :global(html.light-mode) .lang-icon {
@@ -1793,37 +1606,6 @@ function getHostedLabel(url: string): string {
     font-size: var(--fs-lg);
   }
 
-  .projects-toolbar {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0.75rem;
-    margin-bottom: 1.35rem;
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-  }
-
-  .hero-tech-list {
-    display: flex;
-    align-items: center;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
-    scrollbar-width: none;
-    gap: 0.38rem;
-    padding: 0.25rem 0;
-    margin: 0;
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-    box-sizing: border-box;
-  }
-
-  .hero-tech-list::-webkit-scrollbar {
-    display: none;
-  }
-
   .tech-pill {
     font-size: var(--fs-2xs);
     padding: 0.28rem 0.6rem;
@@ -1853,8 +1635,6 @@ function getHostedLabel(url: string): string {
   }
 
   .project-item {
-    grid-template-columns: 1fr auto;
-    gap: 0.8rem;
     padding: 0.55rem 0.8rem;
     margin: 0;
     min-height: 3.9rem;
@@ -1874,9 +1654,9 @@ function getHostedLabel(url: string): string {
   .project-preview {
     left: 0.8rem;
     top: 50%;
-    margin-top: -1.375rem;
-    width: 2.75rem;
-    height: 2.75rem;
+    margin-top: -1.5rem;
+    width: 3rem;
+    height: 3rem;
     transform: none;
   }
 
@@ -1892,26 +1672,13 @@ function getHostedLabel(url: string): string {
     border-radius: 12px;
   }
 
-  .lang-icon {
-    width: 1.45rem;
-    height: 1.45rem;
+  .project-item:has(.project-preview) .project-main-link {
+    padding-left: 3.6rem;
   }
-
-  @media (hover: hover) and (pointer: fine) {.project-item:has(.project-preview) .project-main-link,
-  .project-item.preview-open .project-main-link,
-  .project-item:hover .project-main-link,
-  .project-item:has(:focus-visible) .project-main-link {
-    padding-left: 3.55rem;
-  }}
 
   @media (hover: hover) and (pointer: fine) {.project-item:hover .project-preview,
   .project-item:has(:focus-visible) .project-preview,
   .project-item.preview-open .project-preview {
-    left: 0.8rem;
-    top: 50%;
-    margin-top: -1.375rem;
-    width: 2.75rem;
-    height: 2.75rem;
     transform: none;
   }}
 
@@ -1983,24 +1750,6 @@ function getHostedLabel(url: string): string {
     font-size: var(--fs-2xs);
   }
 
-  .projects-toolbar {
-    gap: 0.6rem;
-    margin-bottom: 1.1rem;
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-  }
-
-  .hero-tech-list {
-    margin: 0;
-    padding: 0.2rem 0;
-    gap: 0.32rem;
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-    box-sizing: border-box;
-  }
-
   .tech-pill {
     font-size: var(--fs-2xs);
     padding: 0.22rem 0.5rem;
@@ -2043,9 +1792,9 @@ function getHostedLabel(url: string): string {
   .project-preview {
     left: 0.6rem;
     top: 50%;
-    margin-top: -1.175rem;
-    width: 2.35rem;
-    height: 2.35rem;
+    margin-top: -1.35rem;
+    width: 2.7rem;
+    height: 2.7rem;
     transform: none;
   }
 
@@ -2061,23 +1810,9 @@ function getHostedLabel(url: string): string {
     border-radius: 11px;
   }
 
-  @media (hover: hover) and (pointer: fine) {.project-item:has(.project-preview) .project-main-link,
-  .project-item.preview-open .project-main-link,
-  .project-item:hover .project-main-link,
-  .project-item:has(:focus-visible) .project-main-link {
-    padding-left: 2.95rem;
-  }}
-
-  @media (hover: hover) and (pointer: fine) {.project-item:hover .project-preview,
-  .project-item:has(:focus-visible) .project-preview,
-  .project-item.preview-open .project-preview {
-    left: 0.6rem;
-    top: 50%;
-    margin-top: -1.175rem;
-    width: 2.35rem;
-    height: 2.35rem;
-    transform: none;
-  }}
+  .project-item:has(.project-preview) .project-main-link {
+    padding-left: 3.25rem;
+  }
 
   @media (hover: hover) and (pointer: fine) {.project-item:hover,
   .project-item:has(:focus-visible) {
@@ -2127,7 +1862,6 @@ function getHostedLabel(url: string): string {
   overscroll-behavior-x: contain;
   scrollbar-width: none;
   transition: opacity 0.2s ease, transform 0.2s ease;
-  /* The grid's width sets its height, so expose both to the placeholder. */
   --contrib-gap: clamp(2px, 0.2vw, 3px);
   container-type: inline-size;
 }
@@ -2141,11 +1875,6 @@ function getHostedLabel(url: string): string {
   width: 100%;
 }
 
-/* Desktop: the chart fills the empty column beside the heading and tagline
-   instead of taking a row of its own. It runs from the heading's top to the
-   tagline's bottom, the cells are sized from that height, and as many recent
-   weeks as fit are shown, newest on the right, fading into the past on the
-   left. The count hangs just below, under the newest weeks. */
 @media (min-width: 1100px) {
   .hero-intro {
     display: grid;
@@ -2171,10 +1900,7 @@ function getHostedLabel(url: string): string {
     grid-column: 2;
     grid-row: 1 / 3;
     align-self: stretch;
-    /* Top on the heading's ink, bottom on the tagline's baseline. */
     margin: 0.2rem 0 calc(1.5rem + 0.75rem);
-    /* Size containment keeps the chart out of the row sizing, so the left
-       column alone sets the height it stretches to. */
     container-type: size;
     overflow: visible;
     position: relative;
@@ -2198,7 +1924,6 @@ function getHostedLabel(url: string): string {
     border-radius: 3px;
   }
 
-  /* Out of flow, so the grid keeps the full heading-to-tagline height. */
   .hero-intro .contrib-header {
     position: absolute;
     top: 100%;
@@ -2221,9 +1946,6 @@ function getHostedLabel(url: string): string {
   margin-bottom: 0.75rem;
 }
 
-/* The count and grid arrive from the contributions API after first paint.
-   Hold their final size until then (one text line; 7 square cells + 6 gaps
-   at this width) so the stats and projects below never shift. */
 .contrib-count:empty::before {
   content: '\a0';
 }
@@ -2358,10 +2080,6 @@ function getHostedLabel(url: string): string {
   }
 }
 
-/* Phones mirror the desktop hero: the chart fills the column right of the
-   heading and tagline (the tagline breaks after "built," so its column
-   stays narrow), cells sized from that height, recent weeks fading into the
-   past on the left, and the count hangs below, under the newest weeks. */
 .tagline-break {
   display: none;
 }
@@ -2372,7 +2090,6 @@ function getHostedLabel(url: string): string {
     grid-template-columns: auto minmax(0, 1fr);
     grid-template-rows: auto auto;
     column-gap: 1.1rem;
-    /* Room for the count, which hangs out of flow below the chart. */
     padding-bottom: 1.35rem;
   }
 
@@ -2410,7 +2127,6 @@ function getHostedLabel(url: string): string {
     justify-content: flex-end;
     height: 100%;
     overflow: hidden;
-    /* Shorter fade than desktop: the column is only a few weeks wide. */
     -webkit-mask-image: linear-gradient(to right, transparent, #000 25%);
     mask-image: linear-gradient(to right, transparent, #000 25%);
   }
@@ -2441,9 +2157,6 @@ function getHostedLabel(url: string): string {
   }
 }
 
-/* Phones: the stats and all three filter buttons share one line, so the
-   stat labels drop to one word (Years, Quests) and Featured shrinks to its
-   star. */
 @media (max-width: 768px) {
   .hero-stats-row {
     flex-wrap: nowrap;
@@ -2464,7 +2177,7 @@ function getHostedLabel(url: string): string {
   .hero-stats-row .filter-controls {
     width: auto;
     flex-direction: row;
-    align-items: stretch; /* icon-only and text buttons share one height */
+    align-items: stretch;
     gap: 0.35rem;
   }
 
@@ -2480,91 +2193,19 @@ function getHostedLabel(url: string): string {
   }
 }
 
-/* The narrowest phones can't fit three stats beside the buttons. */
 @media (max-width: 359px) {
   .hero-stat-quests {
     display: none;
   }
 }
 
-/* Resting icon is bare (no tile); the tile only forms on desktop hover/focus. */
-.project-preview.has-lang-card,
-:global(html.light-mode) .project-preview.has-lang-card {
-  background: transparent;
-  border-color: transparent;
-  box-shadow: none;
-}
-
-.project-preview.has-lang-card::after {
-  opacity: 0;
-}
-
-.lang-card,
-:global(html.light-mode) .lang-card {
-  background: transparent;
-}
-
-.lang-icon {
-  width: 80%;
-  height: 80%;
-}
-
-.project-preview img {
-  border-color: transparent;
-  box-shadow: none;
-}
-
 @media (hover: hover) and (pointer: fine) {
-  .project-item.preview-open .project-preview.has-lang-card {
-    background: #121212;
-    border-color: rgba(255, 255, 255, 0.2);
-  }
-
-  :global(html.light-mode) .project-item.preview-open .project-preview.has-lang-card {
-    background: #f1f1f3;
-    border-color: rgba(0, 0, 0, 0.1);
-  }
-
-  .project-item.preview-open .lang-card {
-    background: #121212;
-  }
-
-  :global(html.light-mode) .project-item.preview-open .lang-card {
-    background: #f1f1f3;
-  }
-
   .project-item.preview-open .lang-icon {
     width: 58%;
     height: 58%;
   }
 }
 
-/* Phones: text sits just after the icon; base desktop offset assumes the hover pop-out. */
-@media (max-width: 768px) {
-  .project-preview {
-    width: 3rem;
-    height: 3rem;
-    margin-top: -1.5rem;
-  }
-
-  .project-item:has(.project-preview) .project-main-link {
-    padding-left: 3.6rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .project-preview {
-    width: 2.7rem;
-    height: 2.7rem;
-    margin-top: -1.35rem;
-  }
-
-  .project-item:has(.project-preview) .project-main-link {
-    padding-left: 3.25rem;
-  }
-}
-
-/* Touch: a tap just opens the project; no flash, callout or sticky hover state. */
 @media (hover: none), (pointer: coarse) {
   .project-main-link,
   .project-hosted {
@@ -2572,21 +2213,11 @@ function getHostedLabel(url: string): string {
     -webkit-touch-callout: none;
   }
 
-  /* content-visibility only pays off for desktop's hover reflows. While
-     scrolling a phone it lays out and paints each row as it enters, and the
-     5.6rem placeholder never matches the real row height, so the page
-     shifts a little every time one appears. The whole list is cheap enough
-     to render up front. */
   .project-item {
     content-visibility: visible;
   }
 }
 
-/* Phone type scale. Desktop's hierarchy (ASCII ~1.4x the tagline, tagline
-   ~2.4x the card text, stat numbers ~0.84x the tagline, names 1.25x their
-   descriptions) used to collapse on phones: the hero shrank to 0.4-0.5x
-   while cards and stats barely shrank. These keep a compressed version of
-   the same ratios, with descriptions held at a readable 0.8rem. */
 @media (max-width: 768px) {
   .hero-ascii {
     font-size: clamp(0.275rem, 1.32vw, 0.47rem);
@@ -2594,7 +2225,7 @@ function getHostedLabel(url: string): string {
 
   .hero-tagline {
     font-size: clamp(1.15rem, 4.6vw + 0.1rem, 1.75rem);
-    text-wrap: balance; /* no lone "shipped." when it wraps */
+    text-wrap: balance;
   }
 
   .contrib-count {
@@ -2614,12 +2245,6 @@ function getHostedLabel(url: string): string {
   }
 }
 
-/* Touch has no hover, so the dial follows the scroll instead: the row crossing
-   the middle of the screen is the focal one and the rest recede with distance,
-   matching the desktop hover dial (roughly one row per ~11% of the view
-   timeline). Scroll-driven and transform/opacity only, so it runs on the
-   compositor with no JS (Chrome, Safari 26+, Firefox 159+); older browsers
-   keep a flat list. */
 @keyframes project-dial {
   0% {
     opacity: 0.5;
@@ -2651,14 +2276,6 @@ function getHostedLabel(url: string): string {
       animation-timeline: view();
     }
 
-    /* The dial fades every row, and a fading row with its own compositor
-       layer inside has to be drawn offscreen first: one extra GPU render
-       pass per visible row per frame (16 instead of 4 while scrolling),
-       which tile-based phone GPUs feel as stutter on a fast fling. The
-       preview's will-change and the card's backface-visibility only promote
-       for the desktop hover/pop-out motion; on touch the preview never
-       moves, so dropping them keeps each row a single layer and changes
-       nothing on screen. */
     .project-preview {
       will-change: auto;
     }
@@ -2669,19 +2286,10 @@ function getHostedLabel(url: string): string {
   }
 }
 
-/* Sound switch: icon only, one speaker per voice in that voice's style:
-   pup a clean rounded SF-style glyph, tik a glossy Web 2.0 speaker, modem
-   a pixel-art speaker in the ASCII header's green. Sized to the text line
-   so the button matches its neighbours' height. */
 .sound-toggle {
   padding-inline: 0.55rem;
 }
 
-/* Until a sound has played, a white glint slides through the speaker icon
-   every few seconds as a hint. The icon is drawn in full white and masked
-   to the button's usual 60% everywhere except a moving full-strength band,
-   so at rest it looks unchanged and the glint never leaves the glyph. In
-   light mode the same glint runs in near-black. */
 .sound-toggle.is-idle .sound-icon {
   color: #fff;
   -webkit-mask-image: linear-gradient(100deg, rgba(0, 0, 0, 0.6) 40%, #000 50%, rgba(0, 0, 0, 0.6) 60%);
