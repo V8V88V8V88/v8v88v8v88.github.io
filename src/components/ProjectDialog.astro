@@ -1,0 +1,420 @@
+---
+import { iconSvg } from '../data/icons';
+---
+<dialog class="pdialog" id="project-dialog" aria-labelledby="pdialog-title">
+  <article class="pdialog-frame" tabindex="-1">
+    <div class="pdialog-media">
+      <img class="pdialog-img" alt="" decoding="async" />
+      <div class="pdialog-icon" aria-hidden="true"></div>
+    </div>
+    <div class="pdialog-body">
+      <div class="pdialog-head">
+        <div class="pdialog-heading">
+          <div class="pdialog-meta"></div>
+          <h2 class="pdialog-title" id="pdialog-title"></h2>
+        </div>
+        <div class="pdialog-links">
+        <a class="pdialog-link pdialog-site" target="_blank" rel="noopener noreferrer"><i class="fas fa-globe" aria-hidden="true" set:html={iconSvg('fas fa-globe')} /><span></span></a>
+        <a class="pdialog-link pdialog-source" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true" set:html={iconSvg('fab fa-github')} /><span>Source</span></a>
+        </div>
+      </div>
+      <p class="pdialog-desc"></p>
+    </div>
+  </article>
+  <button type="button" class="pdialog-btn pdialog-prev" data-step="-1" aria-label="Previous project"><i class="fas fa-chevron-left" aria-hidden="true" set:html={iconSvg('fas fa-chevron-left')} /></button>
+  <button type="button" class="pdialog-btn pdialog-next" data-step="1" aria-label="Next project"><i class="fas fa-chevron-right" aria-hidden="true" set:html={iconSvg('fas fa-chevron-right')} /></button>
+  <button type="button" class="pdialog-btn pdialog-close" aria-label="Close"><i class="fas fa-xmark" aria-hidden="true" set:html={iconSvg('fas fa-xmark')} /></button>
+</dialog>
+
+<script>
+  const dialog = document.getElementById('project-dialog') as HTMLDialogElement | null;
+  if (dialog) {
+    const frame = dialog.querySelector<HTMLElement>('.pdialog-frame')!;
+    const img = dialog.querySelector<HTMLImageElement>('.pdialog-img')!;
+    const icon = dialog.querySelector<HTMLElement>('.pdialog-icon')!;
+    const meta = dialog.querySelector<HTMLElement>('.pdialog-meta')!;
+    const title = dialog.querySelector<HTMLElement>('.pdialog-title')!;
+    const desc = dialog.querySelector<HTMLElement>('.pdialog-desc')!;
+    const site = dialog.querySelector<HTMLAnchorElement>('.pdialog-site')!;
+    const source = dialog.querySelector<HTMLAnchorElement>('.pdialog-source')!;
+    const prev = dialog.querySelector<HTMLButtonElement>('.pdialog-prev')!;
+    const next = dialog.querySelector<HTMLButtonElement>('.pdialog-next')!;
+    const calm = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const ease = 'cubic-bezier(0.2, 0.8, 0.2, 1)';
+    let cards: HTMLElement[] = [];
+    let index = 0;
+    let closing = false;
+
+    const visibleSiblings = (card: HTMLElement) => {
+      const scope = card.closest('.shelf-track') || document;
+      return [...scope.querySelectorAll<HTMLElement>('.pcard')].filter(c => c.offsetParent);
+    };
+
+    const fill = (card: HTMLElement) => {
+      const d = card.dataset;
+      title.textContent = d.name || '';
+      desc.textContent = d.description || '';
+      meta.textContent = [d.language, d.stars && `${d.stars} ${d.stars === '1' ? 'star' : 'stars'}`, d.category].filter(Boolean).join(' · ');
+      if (d.full) {
+        img.width = Number(d.fw) || 1600;
+        img.height = Number(d.fh) || 1000;
+        img.src = d.full;
+        img.alt = `${d.name} screenshot`;
+        img.hidden = false;
+        icon.hidden = true;
+        icon.innerHTML = '';
+      } else {
+        img.removeAttribute('src');
+        img.hidden = true;
+        icon.hidden = false;
+        icon.innerHTML = card.querySelector('.pcard-thumb-placeholder')?.innerHTML || '';
+      }
+      site.hidden = !d.homepage;
+      if (d.homepage) {
+        site.href = d.homepage;
+        site.querySelector('span')!.textContent = d.host || 'Website';
+      }
+      source.href = d.url || '#';
+      prev.disabled = index <= 0;
+      next.disabled = index >= cards.length - 1;
+      if (dialog.open && !dialog.contains(document.activeElement) || (document.activeElement as HTMLElement)?.closest?.('[hidden], :disabled')) {
+        frame.focus({ preventScroll: true });
+      }
+    };
+
+    const flip = (card: HTMLElement, reverse: boolean) => {
+      const from = card.getBoundingClientRect();
+      const to = frame.getBoundingClientRect();
+      const dx = from.left + from.width / 2 - (to.left + to.width / 2);
+      const dy = from.top + from.height / 2 - (to.top + to.height / 2);
+      const frames = [
+        { transform: `translate(${dx}px, ${dy}px) scale(${from.width / to.width}, ${from.height / to.height})`, opacity: 0.4 },
+        { transform: 'none', opacity: 1 },
+      ];
+      if (reverse) frames.reverse();
+      return frame.animate(frames, { duration: reverse ? 260 : 340, easing: ease });
+    };
+
+    const open = (card: HTMLElement) => {
+      cards = visibleSiblings(card);
+      index = Math.max(0, cards.indexOf(card));
+      fill(card);
+      dialog.showModal();
+      frame.scrollTop = 0;
+      if (!calm.matches) flip(card, false);
+    };
+
+    const close = () => {
+      if (!dialog.open || closing) return;
+      closing = true;
+      const done = () => { closing = false; dialog.close(); };
+      const card = cards[index];
+      const onScreen = card && card.getBoundingClientRect().bottom > 0 && card.getBoundingClientRect().top < window.innerHeight;
+      if (calm.matches || !onScreen) { done(); return; }
+      dialog.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 260, easing: 'ease', pseudoElement: '::backdrop' });
+      flip(card, true).onfinish = done;
+    };
+
+    const step = (dir: number) => {
+      const to = index + dir;
+      if (closing || to < 0 || to >= cards.length) return;
+      index = to;
+      fill(cards[index]);
+      cards[index].scrollIntoView({ block: 'nearest', inline: 'nearest' });
+      frame.scrollTop = 0;
+      if (!calm.matches) {
+        frame.animate([
+          { opacity: 0.35, transform: `translateX(${dir * 18}px)` },
+          { opacity: 1, transform: 'none' },
+        ], { duration: 160, easing: ease });
+      }
+    };
+
+    document.addEventListener('click', e => {
+      const main = (e.target as Element).closest?.('.pcard-main');
+      if (!main || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      e.preventDefault();
+      open(main.closest<HTMLElement>('.pcard')!);
+    });
+    prev.addEventListener('click', () => step(-1));
+    next.addEventListener('click', () => step(1));
+    dialog.querySelector('.pdialog-close')!.addEventListener('click', close);
+    document.addEventListener('keydown', e => {
+      if (!dialog.open) return;
+      if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
+    });
+    dialog.addEventListener('cancel', e => { e.preventDefault(); close(); });
+    dialog.addEventListener('click', e => { if (e.target === dialog) close(); });
+    dialog.addEventListener('close', () => {
+      img.removeAttribute('src');
+      cards[index]?.querySelector<HTMLElement>('.pcard-main')?.focus({ preventScroll: true });
+    });
+  }
+</script>
+
+<style>
+  .pdialog {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #fff;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .pdialog[open] {
+    display: flex;
+  }
+
+  .pdialog::backdrop {
+    background: rgba(0, 0, 0, 0.82);
+    animation: pdialog-fade 0.3s ease;
+  }
+
+  .pdialog[open] .pdialog-btn {
+    animation: pdialog-fade 0.3s ease;
+  }
+
+  @keyframes pdialog-fade {
+    from {
+      opacity: 0;
+    }
+  }
+
+  .pdialog-frame {
+    outline: none;
+    width: min(92vw, 760px);
+    max-height: min(88vh, 900px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    border-radius: 18px;
+    background: #0d0d0d;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+    transform-origin: center center;
+  }
+
+  .pdialog-media {
+    background: #050505;
+  }
+
+  .pdialog-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 58vh;
+    object-fit: contain;
+  }
+
+  .pdialog-icon {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 16 / 7;
+  }
+
+  .pdialog-icon :global(svg) {
+    width: 5rem;
+    height: 5rem;
+  }
+
+  .pdialog-img[hidden],
+  .pdialog-icon[hidden],
+  .pdialog-link[hidden] {
+    display: none;
+  }
+
+  .pdialog-body {
+    padding: 1.4rem 1.5rem 1.6rem;
+  }
+
+  .pdialog-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 0.75rem 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .pdialog-heading {
+    min-width: 0;
+  }
+
+  .pdialog-meta {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 0.5rem;
+  }
+
+  .pdialog-meta:empty {
+    display: none;
+  }
+
+  .pdialog-title {
+    font-size: var(--fs-xl);
+    font-weight: 600;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .pdialog-desc {
+    font-size: var(--fs-base);
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.75);
+    margin: 0;
+  }
+
+  .pdialog-links {
+    display: flex;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.5rem;
+  }
+
+  .pdialog-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 0.95rem;
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .pdialog-link:hover,
+  .pdialog-link:focus-visible {
+    color: #fff;
+    background: rgba(29, 185, 84, 0.18);
+    border-color: rgba(29, 185, 84, 0.55);
+  }
+
+  .pdialog-btn {
+    position: absolute;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(20, 20, 20, 0.7);
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+  }
+
+  .pdialog-btn:hover {
+    background: rgba(29, 185, 84, 0.25);
+    border-color: rgba(29, 185, 84, 0.6);
+  }
+
+  .pdialog-btn:disabled {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .pdialog-prev {
+    left: max(16px, 4vw);
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .pdialog-next {
+    right: max(16px, 4vw);
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .pdialog-close {
+    top: 20px;
+    right: max(16px, 4vw);
+  }
+
+  @media (max-width: 768px) {
+    .pdialog-frame {
+      max-height: 78vh;
+    }
+
+    .pdialog-body {
+      padding: 1.1rem 1.1rem 1.25rem;
+    }
+
+    .pdialog-head {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .pdialog-links {
+      justify-content: flex-start;
+    }
+
+    .pdialog-title {
+      font-size: var(--fs-lg);
+    }
+
+    .pdialog-desc {
+      font-size: var(--fs-sm);
+    }
+
+    .pdialog-prev,
+    .pdialog-next {
+      top: auto;
+      bottom: 22px;
+      transform: none;
+    }
+
+    .pdialog-prev {
+      left: calc(50% - 56px);
+    }
+
+    .pdialog-next {
+      right: calc(50% - 56px);
+    }
+  }
+
+  :global(html.light-mode) .pdialog-frame {
+    background: #f6f6f6;
+    color: #1d1d1f;
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+
+  :global(html.light-mode) .pdialog-media {
+    background: #ececee;
+  }
+
+  :global(html.light-mode) .pdialog-meta {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  :global(html.light-mode) .pdialog-desc {
+    color: rgba(0, 0, 0, 0.7);
+  }
+
+  :global(html.light-mode) .pdialog-link {
+    color: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.12);
+  }
+
+  :global(html.light-mode) .pdialog-link:hover,
+  :global(html.light-mode) .pdialog-link:focus-visible {
+    color: #000;
+    background: rgba(29, 185, 84, 0.12);
+    border-color: rgba(15, 77, 31, 0.45);
+  }
+</style>

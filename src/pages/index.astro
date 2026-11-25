@@ -3,9 +3,11 @@ import { iconSvg } from '../data/icons';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getAllPosts, formatDate } from '../data/posts';
 import { contacts, getSameAsUrls } from '../data/contacts';
-import { existsSync } from 'node:fs';
-import path from 'node:path';
 import { getProjects } from '../data/projects';
+import { getLanguageMeta } from '../data/languageIcons';
+import Shelf from '../components/Shelf.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import ProjectDialog from '../components/ProjectDialog.astro';
 
 const featuredContactIds = ['email', 'github', 'linkedin', 'telegram', 'twitter'];
 const featuredContacts = featuredContactIds
@@ -38,12 +40,6 @@ const featuredProjects = [...allProjects]
   })
   .slice(0, 6);
 
-// Cards are 310px wide, so use the 800px WebP cover made by
-// scripts/project-previews.mjs when it exists, else the original.
-function getCoverImage(image: string): string {
-  const cover = image.replace(/^\/images\/(.+)\.\w+$/, '/images/covers/$1.webp');
-  return existsSync(path.join(process.cwd(), 'public', cover)) ? cover : image;
-}
 ---
 <BaseLayout
   title="Vaibhav | V8"
@@ -115,34 +111,22 @@ function getCoverImage(image: string): string {
         <h2>Projects</h2>
         <a href="/projects/" class="view-all">view all →</a>
       </div>
-      <div class="carousel" data-carousel-nav>
-        <button type="button" class="carousel-btn carousel-prev" data-dir="-1" aria-label="Previous projects" disabled>
-          <svg viewBox="0 0 10 10" aria-hidden="true"><path d="M7.5 1.2v7.6L2 5z" /></svg>
-        </button>
-        <ul>
-          {featuredProjects.map(project => (
-            <li class="project-item">
-              <a href={project.url} target="_blank" rel="noopener noreferrer" class={project.image ? 'has-cover' : undefined} style={project.image ? `--proj-img: url('${getCoverImage(project.image)}')` : undefined}>
-                {project.image ? (
-                  <img src={getCoverImage(project.image)} alt={`${project.name} project cover`} loading="lazy" class="project-thumb" />
-                ) : (
-                  <div class="project-thumb project-thumb-placeholder" aria-hidden="true"></div>
-                )}
-                <div class="project-body">
-                  <div class="project-meta">
-                    <h3>{project.name}</h3>
-                    {project.language !== 'Unknown' && <span class="project-stack-tag">{project.language}</span>}
-                  </div>
-                  <p>{project.description}</p>
-                </div>
-              </a>
-            </li>
-          ))}
-        </ul>
-        <button type="button" class="carousel-btn carousel-next" data-dir="1" aria-label="Next projects">
-          <svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2.5 1.2v7.6L8 5z" /></svg>
-        </button>
-      </div>
+      <Shelf label="projects">
+        {featuredProjects.map(project => (
+          <ProjectCard
+            name={project.name}
+            description={project.description}
+            url={project.url}
+            image={project.image}
+            homepage={project.homepage}
+            language={project.language}
+            stars={project.stars}
+            category={project.category}
+            icon={getLanguageMeta(project.language).svg}
+          />
+        ))}
+      </Shelf>
+      <ProjectDialog />
     </section>
 
     <section class="posts">
@@ -322,31 +306,6 @@ function getCoverImage(image: string): string {
         } catch (_) { copying = false; }
       });
     }
-
-    // Project row arrows: step one card at a time, and grey out at each end.
-    (function () {
-      var nav = document.querySelector('[data-carousel-nav]');
-      var row = document.querySelector('.projects ul');
-      if (!nav || !row) return;
-      var cards = row.children;
-      var prev = nav.querySelector('[data-dir="-1"]');
-      var next = nav.querySelector('[data-dir="1"]');
-      nav.addEventListener('click', function (e) {
-        var btn = e.target.closest('.carousel-btn');
-        if (!btn || cards.length < 2) return;
-        var step = cards[1].offsetLeft - cards[0].offsetLeft;
-        row.scrollBy({ left: step * Number(btn.dataset.dir) });
-      });
-      var sync = function () {
-        prev.disabled = row.scrollLeft <= 1;
-        next.disabled = row.scrollLeft + row.clientWidth >= row.scrollWidth - 1;
-        // The right-edge fade hints at more cards; at the end there are none.
-        row.classList.toggle('at-end', next.disabled);
-      };
-      row.addEventListener('scroll', sync, { passive: true });
-      window.addEventListener('resize', sync, { passive: true });
-      sync();
-    })();
   </script>
 </BaseLayout>
 
@@ -666,45 +625,6 @@ function getCoverImage(image: string): string {
   }
   .section-header h2 { margin-bottom: 0; }
 
-  /* Plain left / right triangles in the gutter on either side of the project
-     row. Each one only shows when there is somewhere to go that way, and
-     only where there is a pointer: touch screens swipe the row instead. */
-  .carousel {
-    position: relative;
-  }
-  .carousel-btn {
-    display: none;
-    position: absolute;
-    top: 50%;
-    z-index: 2;
-    place-items: center;
-    width: 1.6rem;
-    height: 2.4rem;
-    padding: 0;
-    border: 0;
-    background: none;
-    color: rgba(255, 255, 255, 0.55);
-    cursor: pointer;
-    transform: translateY(-50%);
-    transition: opacity 0.25s ease, visibility 0.25s ease, color 0.2s ease;
-  }
-  @media (hover: hover) and (pointer: fine) {
-    .carousel-btn { display: grid; }
-  }
-  .carousel-prev { left: -1.85rem; }
-  .carousel-next { right: -1.85rem; }
-  .carousel-btn svg {
-    width: 1.1rem;
-    height: 1.1rem;
-    fill: currentColor;
-  }
-  .carousel-btn:hover { color: #fff; }
-  .carousel-btn:disabled {
-    opacity: 0;
-    visibility: hidden;
-  }
-  :global(html.light-mode) .carousel-btn { color: rgba(0, 0, 0, 0.5); }
-  :global(html.light-mode) .carousel-btn:hover { color: #000; }
   .view-all {
     font-family: var(--font-mono);
     font-size: var(--fs-xs);

@@ -1,0 +1,337 @@
+---
+import { existsSync } from 'node:fs';
+import path from 'node:path';
+import sharp from 'sharp';
+import { iconSvg } from '../data/icons';
+
+interface Props {
+  name: string;
+  description: string;
+  url: string;
+  image?: string | null;
+  homepage?: string | null;
+  language?: string;
+  stars?: number;
+  category?: string;
+  icon?: string;
+  globeIcon?: string;
+  githubIcon?: string;
+  [attr: string]: unknown;
+}
+
+const {
+  name,
+  description,
+  url,
+  image,
+  homepage,
+  language,
+  stars = 0,
+  category,
+  icon,
+  globeIcon = iconSvg('fas fa-globe'),
+  githubIcon = iconSvg('fab fa-github'),
+  ...rest
+} = Astro.props;
+
+function hostOf(link: string): string {
+  try {
+    return new URL(link).hostname.replace(/^www\./, '');
+  } catch {
+    return link;
+  }
+}
+
+function getCoverImage(src: string): string {
+  const cover = src.replace(/^\/images\/(.+)\.\w+$/, '/images/covers/$1.webp');
+  return existsSync(path.join(process.cwd(), 'public', cover)) ? cover : src;
+}
+
+const cover = image ? getCoverImage(image) : null;
+const full = image ? await sharp(path.join(process.cwd(), 'public', image)).metadata() : null;
+---
+<div
+  class="pcard"
+  data-name={name}
+  data-description={description}
+  data-url={url}
+  data-homepage={homepage || undefined}
+  data-host={homepage ? hostOf(homepage) : undefined}
+  data-language={language && language !== 'Unknown' ? language : undefined}
+  data-stars={stars > 0 ? stars : undefined}
+  data-category={category}
+  data-full={image || undefined}
+  data-fw={full?.width}
+  data-fh={full?.height}
+  {...rest}
+>
+  <div class:list={['pcard-link', cover && 'has-cover']} style={cover ? `--pcard-img: url('${cover}')` : undefined}>
+    {cover ? (
+      <img src={cover} alt={`${name} project cover`} loading="lazy" class="pcard-thumb" />
+    ) : (
+      <div class="pcard-thumb pcard-thumb-placeholder" aria-hidden="true" set:html={icon} />
+    )}
+    <div class="pcard-body">
+      <div class="pcard-meta">
+        <h3><a class="pcard-main" href={url} target="_blank" rel="noopener noreferrer">{name}</a></h3>
+        <div class="pcard-links">
+          {homepage && (
+            <a class="pcard-icon" href={homepage} target="_blank" rel="noopener noreferrer" title={hostOf(homepage)} aria-label={`Open ${hostOf(homepage)}`} set:html={globeIcon} />
+          )}
+          <a class="pcard-icon" href={url} target="_blank" rel="noopener noreferrer" title="GitHub" aria-label={`${name} on GitHub`} set:html={githubIcon} />
+        </div>
+      </div>
+      <p>{description}</p>
+    </div>
+  </div>
+</div>
+
+<style>
+  .pcard {
+    position: relative;
+    isolation: isolate;
+    background: rgba(255, 255, 255, 0.035);
+    border-radius: 16px;
+    overflow: hidden;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.12),
+      inset 0 -1px 0 0 rgba(255, 255, 255, 0.04),
+      0 4px 18px -2px rgba(0, 0, 0, 0.4);
+    transition:
+      background 0.3s ease,
+      border-color 0.3s ease,
+      box-shadow 0.35s ease,
+      transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .pcard[hidden] {
+    display: none;
+  }
+
+  .pcard:has(.has-cover) {
+    background: #0d0d0d;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .pcard:hover {
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.055);
+    border-color: rgba(255, 255, 255, 0.16);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.22),
+      inset 0 -1px 0 0 rgba(255, 255, 255, 0.08),
+      0 12px 32px -4px rgba(0, 0, 0, 0.5);
+  }
+
+  .pcard:has(.has-cover):hover {
+    background: #0d0d0d;
+  }
+
+  :global(html.light-mode) .pcard {
+    background: rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.8),
+      inset 0 -1px 0 0 rgba(0, 0, 0, 0.03),
+      0 4px 16px -2px rgba(0, 0, 0, 0.04);
+  }
+
+  :global(html.light-mode) .pcard:has(.has-cover) {
+    background: #f6f6f6;
+  }
+
+  :global(html.light-mode) .pcard:hover {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.14);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.95),
+      inset 0 -1px 0 0 rgba(0, 0, 0, 0.05),
+      0 12px 28px -4px rgba(0, 0, 0, 0.08);
+  }
+
+  :global(html.light-mode) .pcard:has(.has-cover):hover {
+    background: #f6f6f6;
+  }
+
+  .pcard-link {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  :global(html.light-mode) .pcard-link {
+    color: #1d1d1f;
+  }
+
+  .pcard-link.has-cover::before {
+    content: "";
+    position: absolute;
+    inset: -40px;
+    z-index: -1;
+    background: var(--pcard-img) center / cover no-repeat;
+    filter: blur(40px) saturate(130%) brightness(0.32);
+    pointer-events: none;
+  }
+
+  :global(html.light-mode) .pcard-link.has-cover::before {
+    filter: blur(48px) saturate(160%) brightness(1.7);
+    opacity: 0.35;
+  }
+
+  .pcard-thumb {
+    display: block;
+    width: 100%;
+    aspect-ratio: 8 / 5;
+    height: auto;
+    object-fit: cover;
+    background: #050505;
+  }
+
+  .has-cover .pcard-thumb {
+    -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 72%, transparent 100%);
+  }
+
+  .pcard-thumb-placeholder {
+    display: grid;
+    place-items: center;
+    box-sizing: border-box;
+    background: #000;
+  }
+
+  :global(html.light-mode) .pcard-thumb-placeholder {
+    background: #f1f1f3;
+  }
+
+  .pcard-thumb-placeholder :global(svg) {
+    width: 3.25rem;
+    height: 3.25rem;
+  }
+
+  .pcard-body {
+    flex: 1;
+    padding: 1rem;
+  }
+
+  .has-cover .pcard-body {
+    margin-top: -1.25rem;
+    padding-top: 1.25rem;
+  }
+
+  :global(html.light-mode) .has-cover .pcard-body {
+    background: linear-gradient(to bottom, rgba(246, 246, 246, 0) 0, rgba(246, 246, 246, 0.82) 2.75rem, rgba(246, 246, 246, 0.92) 100%);
+  }
+
+  .pcard-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .pcard h3 {
+    font-size: var(--fs-md);
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 0;
+  }
+
+  .pcard-main {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .pcard-main::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: 16px;
+  }
+
+  .pcard-main:focus-visible {
+    outline: none;
+  }
+
+  .pcard-main:focus-visible::after {
+    outline: 2px solid #1DB954;
+    outline-offset: -2px;
+  }
+
+  .pcard-links {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 0.1rem;
+    margin-right: -0.4rem;
+  }
+
+  .pcard-icon {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.55);
+    transition: color 0.2s ease, filter 0.25s ease;
+  }
+
+  .pcard-icon :global(svg) {
+    width: 1.15rem;
+    height: 1.15rem;
+    fill: currentColor;
+  }
+
+  .pcard-icon:hover,
+  .pcard-icon:focus-visible {
+    color: #fff;
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.55));
+  }
+
+  :global(html.light-mode) .pcard-icon {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  :global(html.light-mode) .pcard-icon:hover,
+  :global(html.light-mode) .pcard-icon:focus-visible {
+    color: #000;
+    filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.3));
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pcard,
+    .pcard-icon {
+      transition-duration: 0.01ms;
+    }
+  }
+
+  .pcard p {
+    font-size: var(--fs-sm);
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.5;
+    margin-bottom: 0;
+  }
+
+  .has-cover p {
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  :global(html.light-mode) .pcard p {
+    color: rgba(0, 0, 0, 0.55);
+  }
+
+  :global(html.light-mode) .has-cover p {
+    color: rgba(0, 0, 0, 0.62);
+  }
+</style>

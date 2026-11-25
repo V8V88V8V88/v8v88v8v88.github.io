@@ -1,0 +1,147 @@
+---
+interface Props {
+  label: string;
+  itemWidth?: string;
+}
+
+const { label, itemWidth } = Astro.props;
+---
+<div class="shelf" data-shelf style={itemWidth ? `--shelf-item: ${itemWidth}` : undefined}>
+  <button type="button" class="shelf-btn shelf-prev" data-dir="-1" aria-label={`Previous ${label}`} disabled>
+    <svg viewBox="0 0 10 10" aria-hidden="true"><path d="M7.5 1.2v7.6L2 5z" /></svg>
+  </button>
+  <div class="shelf-track">
+    <slot />
+  </div>
+  <button type="button" class="shelf-btn shelf-next" data-dir="1" aria-label={`Next ${label}`}>
+    <svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2.5 1.2v7.6L8 5z" /></svg>
+  </button>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-shelf]').forEach(shelf => {
+    const track = shelf.querySelector<HTMLElement>('.shelf-track')!;
+    const prev = shelf.querySelector<HTMLButtonElement>('[data-dir="-1"]')!;
+    const next = shelf.querySelector<HTMLButtonElement>('[data-dir="1"]')!;
+    const visible = () => [...track.children].filter(el => (el as HTMLElement).offsetParent) as HTMLElement[];
+    const sync = () => {
+      prev.disabled = track.scrollLeft <= 1;
+      next.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 1;
+      track.classList.toggle('at-end', next.disabled);
+    };
+    shelf.addEventListener('click', e => {
+      const btn = (e.target as Element).closest<HTMLButtonElement>('.shelf-btn');
+      const items = visible();
+      if (!btn || items.length < 2) return;
+      track.scrollBy({ left: (items[1].offsetLeft - items[0].offsetLeft) * Number(btn.dataset.dir) });
+    });
+    track.addEventListener('scroll', sync, { passive: true });
+    new ResizeObserver(sync).observe(track);
+    new MutationObserver(sync).observe(track, { subtree: true, attributes: true, attributeFilter: ['hidden'] });
+  });
+</script>
+
+<style>
+  .shelf {
+    position: relative;
+  }
+
+  .shelf-track {
+    display: flex;
+    gap: 1.25rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    padding: 0.5rem 0 1.5rem;
+    margin: -0.5rem 0 -1.5rem;
+    mask-image: linear-gradient(to right, #000 calc(100% - 48px), transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 48px), transparent 100%);
+  }
+
+  .shelf-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .shelf-track.at-end {
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+
+  .shelf-track > :global(*) {
+    flex: 0 0 var(--shelf-item, 288px);
+    scroll-snap-align: start;
+  }
+
+  @media (max-width: 768px) {
+    .shelf-track > :global(*) {
+      flex-basis: var(--shelf-item, 260px);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .shelf-track > :global(*) {
+      flex-basis: var(--shelf-item, 72vw);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .shelf-track {
+      scroll-behavior: smooth;
+    }
+  }
+
+  .shelf-btn {
+    display: none;
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+    place-items: center;
+    width: 1.6rem;
+    height: 2.4rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: rgba(255, 255, 255, 0.55);
+    cursor: pointer;
+    transform: translateY(-50%);
+    transition: opacity 0.25s ease, visibility 0.25s ease, color 0.2s ease;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .shelf-btn {
+      display: grid;
+    }
+  }
+
+  .shelf-prev {
+    left: -1.85rem;
+  }
+
+  .shelf-next {
+    right: -1.85rem;
+  }
+
+  .shelf-btn svg {
+    width: 1.1rem;
+    height: 1.1rem;
+    fill: currentColor;
+  }
+
+  .shelf-btn:hover {
+    color: #fff;
+  }
+
+  .shelf-btn:disabled {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  :global(html.light-mode) .shelf-btn {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  :global(html.light-mode) .shelf-btn:hover {
+    color: #000;
+  }
+</style>
