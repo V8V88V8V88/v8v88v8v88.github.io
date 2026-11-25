@@ -16,13 +16,55 @@ export interface Project {
   updatedAt: string | null;
 }
 
-const featuredPinnedRepos = new Set([
-  'indx',
-  'Vajra',
-]);
+export const pinnedRepos = [
+  'XE',
+  'INDX',
+  'GNOME-bluetooth-battery-monitor',
+  'Fedorable',
+  'interweb',
+  'MarkView',
+];
 
-const featuredBlockedRepos = new Set([
-  'website',
+export const projectOrder = [
+  'libfprint',
+  'ft9366-rek',
+  'asus-dts-linux',
+  'Rust-RISCV-Compiler',
+  'mini-vm',
+  'vfetch',
+  'yama',
+  'nanoHTTP',
+  'gtk-emoji-picker',
+  'Telegram-GTK4-Libadwaita-Theme',
+  'DeskImage',
+  'H3IST',
+  'dotfiles',
+  'helium-copr',
+  'evdev-reader',
+  'Vajra',
+  'Jina-IDS',
+  'Passvyn',
+  'H1RE',
+  'face-recognition',
+  'AI-Child-Protection',
+  'eva',
+  'Dosage',
+  'tv-bluetooth',
+  'canva-linux',
+  'LogiChain',
+  'rusty-snake',
+  'thefossclub.github.io',
+  'piracyindex',
+  'Synthio',
+  'v8v88v8v88.github.io',
+  'FOSS-Hack-Delhi',
+  'neolekh',
+  'musical-playground',
+];
+
+const featuredPinnedRepos = new Set([
+  'INDX',
+  'Vajra',
 ]);
 
 const MAX_FEATURED_PROJECTS = 12;
@@ -30,6 +72,22 @@ const MAX_FEATURED_PROJECTS = 12;
 const hiddenRepos = new Set([
   'v8v88v8v88',
   '.github',
+  'thefossclub',
+  'redesigned-dtc-website',
+  'teaching-git-in-community-call',
+  'community-call',
+  'remove.sh',
+  'rqg',
+  'iced-calculator',
+  'budgetwiser',
+  'sauce_run',
+  'simple-round-robin-scheduler',
+  'chemical-equipment-visualizer',
+  'cnn-image-classification',
+  'website',
+  't2s',
+  'route',
+  'dux-shell',
 ]);
 
 const additionalRepos = [
@@ -38,8 +96,6 @@ const additionalRepos = [
 
 export const projectNameOverrides: Record<string, string> = {
   'thefossclub.github.io': 'The FOSS Club',
-  'thefossclub': 'The FOSS Club',
-  'indx': 'INDX',
   'INDX': 'INDX',
   'piracyindex': 'Piracy Index',
   'interweb': 'Interweb',
@@ -49,7 +105,6 @@ export const projectNameOverrides: Record<string, string> = {
   'GNOME-bluetooth-battery-monitor': 'GNOME Bluetooth Battery Monitor',
   'Rust-RISCV-Compiler': 'Rust RISC-V Compiler',
   'mini-vm': 'Mini VM',
-  'cnn-image-classification': 'CNN Image Classification',
   'helium-copr': 'Helium COPR',
   'tv-bluetooth': 'TV Bluetooth',
   'asus-dts-linux': 'ASUS DTS Linux',
@@ -63,17 +118,9 @@ export const projectNameOverrides: Record<string, string> = {
   'canva-linux': 'Canva Linux',
   'face-recognition': 'Face Recognition',
   'rusty-snake': 'Rusty Snake',
-  'iced-calculator': 'Iced Calculator',
-  'simple-round-robin-scheduler': 'Simple Round Robin Scheduler',
-  'chemical-equipment-visualizer': 'Chemical Equipment Visualizer',
   'musical-playground': 'Musical Playground',
-  'Sauce_Run': 'Sauce Run',
   'dotfiles': 'Dotfiles',
   'yama': 'Yama',
-  'redesigned-dtc-website': 'Redesigned DTC Website',
-  'remove.sh': 'Remove.sh',
-  'teaching-git-in-community-call': 'Teaching Git in Community Call',
-  'community-call': 'Community Call',
 };
 
 export function formatProjectName(repoName: string): string {
@@ -93,35 +140,53 @@ export function formatProjectName(repoName: string): string {
 }
 
 const categoryOverrides: Record<string, string> = {
-  'thefossclub.github.io': 'Web Applications',
-  'Telegram-GTK4-Libadwaita-Theme': 'Themes & Desktop',
-  'dotfiles': 'Themes & Desktop',
-  'face-recognition': 'AI & Machine Learning',
-  'Vajra': 'AI & Machine Learning',
-  'AI-Child-Protection': 'AI & Machine Learning',
-  'H1RE': 'AI & Machine Learning',
-  'cnn-image-classification': 'AI & Machine Learning',
-  'T2S': 'AI & Machine Learning',
-  'GNOME-bluetooth-battery-monitor': 'GNOME & GTK',
-  'gtk-emoji-picker': 'GNOME & GTK',
-  'vfetch': 'CLI & System Tools',
   'Fedorable': 'CLI & System Tools',
-  'nanoHTTP': 'CLI & System Tools',
-  'simple-round-robin-scheduler': 'CLI & System Tools',
-  'canva-linux': 'CLI & System Tools',
+  'GNOME-bluetooth-battery-monitor': 'CLI & System Tools',
   'DeskImage': 'CLI & System Tools',
+  'H3IST': 'CLI & System Tools',
   'evdev-reader': 'CLI & System Tools',
+  'yama': 'CLI & System Tools',
+  'nanoHTTP': 'CLI & System Tools',
   'ft9366-rek': 'CLI & System Tools',
   'libfprint': 'CLI & System Tools',
+  'gtk-emoji-picker': 'CLI & System Tools',
+  'vfetch': 'CLI & System Tools',
+  'XE': 'CLI & System Tools',
+  'Rust-RISCV-Compiler': 'CLI & System Tools',
+  'mini-vm': 'CLI & System Tools',
+  'asus-dts-linux': 'CLI & System Tools',
+  'dotfiles': 'CLI & System Tools',
+  'helium-copr': 'CLI & System Tools',
+  'Telegram-GTK4-Libadwaita-Theme': 'CLI & System Tools',
+  'Vajra': 'Security',
+  'Jina-IDS': 'Security',
+  'Passvyn': 'Security',
+  'face-recognition': 'AI & Machine Learning',
+  'H1RE': 'AI & Machine Learning',
+  'AI-Child-Protection': 'AI & Machine Learning',
+  'MarkView': 'Apps & Games',
+  'eva': 'Apps & Games',
+  'canva-linux': 'Apps & Games',
+  'LogiChain': 'Apps & Games',
+  'Dosage': 'Apps & Games',
+  'tv-bluetooth': 'Apps & Games',
+  'rusty-snake': 'Apps & Games',
+  'thefossclub.github.io': 'Web',
+  'INDX': 'Web',
+  'Synthio': 'Web',
+  'neolekh': 'Web',
+  'piracyindex': 'Web',
+  'interweb': 'Web',
+  'musical-playground': 'Web',
+  'FOSS-Hack-Delhi': 'Web',
+  'v8v88v8v88.github.io': 'Web',
 };
 
 export const languageOverrides: Record<string, string> = {
   'interweb': 'JavaScript',
-  'route': 'Kotlin',
 };
 
 const descriptionOverrides: Record<string, string> = {
-  'route': 'Delhi NCR metro routes in seconds: an offline Android route planner with no login, no ads, and no permissions.',
   'asus-dts-linux': 'Pulls the DTS speaker tuning out of the ASUS driver and runs it in PipeWire, so ASUS laptop speakers sound right on Linux.',
   'thefossclub.github.io': 'Official website for The FOSS Club, bringing together people who learn, build, and share open-source software.',
   'indx': 'An interactive map that indexes places, data, and anything worth discovering, all explorable through a fast and focused interface.',
@@ -130,7 +195,6 @@ const descriptionOverrides: Record<string, string> = {
   'interweb': 'A carefully curated webring for discovering thoughtful personal websites, independent creators, and interesting corners of the web.',
   'neolekh': 'A simple, text-focused Hugo portfolio theme with dark mode and lightweight GoatCounter analytics for a distraction-free presence.',
   'musical-playground': 'An interactive music playground for trying instruments online, combining Svelte, Vue, and Tone.js in one playful space.',
-  'RQG': 'A small random code generator built as an FCC experiment, providing a quick way to create and test generated code snippets.',
   'FOSS-Hack-Delhi': 'A community-focused website promoting FOSS Hack in Delhi, with event information and an invitation to build together.',
   'Telegram-GTK4-Libadwaita-Theme': 'A GTK4 and Libadwaita-inspired theme for Telegram Desktop, bringing a cleaner and more native Linux visual language.',
   'dotfiles': 'A personal collection of Linux configuration files that documents the tools, preferences, and everyday setup behind the system.',
@@ -138,22 +202,17 @@ const descriptionOverrides: Record<string, string> = {
   'Vajra': 'An AI-powered cyber threat forecaster for critical infrastructure, focused on turning security signals into earlier and clearer warnings.',
   'H1RE': 'An AI-powered resume analyzer for starters that reviews CVs, estimates ATS readiness, and suggests practical improvements.',
   'AI-Child-Protection': 'An adaptive parental-control system using face detection and age estimation to make digital safety more responsive and difficult to bypass.',
-  'cnn-image-classification': 'A convolutional neural network experiment for classifying CIFAR-10 images, covering the core steps of training and evaluation.',
-  'T2S': 'A text-to-speech experiment that explores how written content can be converted into natural audio through an accessible interface.',
   'XE': 'A transpiled programming language project exploring its own syntax, compiler pipeline, and the ideas involved in building a language from scratch.',
   'yama': 'A lightweight package manager using C and Rust, designed to keep software installation and dependency handling simple and efficient.',
   'rusty-snake': 'A compact Snake game built with Rust and Piston, combining a familiar arcade loop with a hands-on game-development exercise.',
   'Rust-RISCV-Compiler': 'A Rust implementation of a RISC-V compiler, exploring instruction translation and the foundations of a small compilation pipeline.',
   'mini-vm': 'A minimal stack-based virtual machine with assembler, disassembler, and debugger pieces for exploring how runtimes execute programs.',
   'H3IST': 'A next-generation elevator control system built in Rust, modelling coordinated movement, requests, and the constraints of real-time control.',
-  'BudgetWiser': 'A Rust expense tracker for recording spending and understanding personal finances through a small, focused command-line workflow.',
-  'iced-calculator': 'A simple calculator built with the Iced toolkit and Rust, created to explore native interfaces and clean event-driven interactions.',
   'Fedorable': 'A small Fedora maintenance utility that gathers common system tasks into a practical script for a smoother Linux workflow.',
   'vfetch': 'A minimal system-information fetcher that presents useful hardware and software details in a fast, terminal-friendly format.',
   'canva-linux': 'A Linux-focused Canva concept exploring how familiar visual design workflows could feel at home in an open desktop environment.',
   'nanoHTTP': 'A tiny HTTP server written in C, keeping the request and response path understandable while exploring the building blocks of web servers.',
   'DeskImage': 'A Rust CLI tool that generates Desktop Entry files for AppImages, removing repetitive setup work from the Linux application workflow.',
-  'simple-round-robin-scheduler': 'A small round-robin scheduler written in C during operating-systems coursework, demonstrating fair time-sliced task execution.',
   'GNOME-bluetooth-battery-monitor': 'A GNOME Shell utility that surfaces Bluetooth device battery levels so important peripherals are easier to keep track of.',
   'gtk-emoji-picker': 'A GTK4 emoji picker opened with a global shortcut, designed to make expressive input quick and natural across the desktop.',
   'v8v88v8v88.github.io': 'A personal portfolio site combining Linux, FOSS, code, and design into a small space for experiments, projects, and writing.',
@@ -161,8 +220,6 @@ const descriptionOverrides: Record<string, string> = {
   'LogiChain': 'A supply-chain management system project in Java, modelling how products and information move through connected business processes.',
   'helium-copr': 'A GitHub Action for working with Helium COPR packages, automating part of the build and publishing workflow for Fedora software.',
   'Jina-IDS': 'An intrusion-detection system written in Python, exploring how suspicious activity can be observed, classified, and surfaced to users.',
-  'Sauce_Run': 'An endless runner made with the Godot engine, built around quick reactions, repeated runs, and a playful arcade-style challenge.',
-  'chemical-equipment-visualizer': 'A hybrid web and desktop tool for visualizing and analysing chemical equipment data through Django REST, React, and PyQt5.',
 };
 
 const projectImageMap: Record<string, string> = {
@@ -174,6 +231,17 @@ const projectImageMap: Record<string, string> = {
   'telegram-gtk4-libadwaita-theme': '/images/telegram.webp',
   'face-recognition': '/images/facerecognition.webp',
   'vfetch': '/images/vfetch.webp',
+  'fedorable': '/images/fedorable.webp',
+  'synthio': '/images/synthio.webp',
+  'tv-bluetooth': '/images/tv-bluetooth.webp',
+  'neolekh': '/images/neolekh.webp',
+  'dosage': '/images/dosage.webp',
+  'interweb': '/images/interweb.webp',
+  'v8v88v8v88.github.io': '/images/portfolio.webp',
+  'thefossclub.github.io': '/images/thefossclub.webp',
+  'h1re': '/images/h1re.webp',
+  'musical-playground': '/images/musical-playground.webp',
+  'foss-hack-delhi': '/images/foss-hack-delhi.webp',
 };
 
 function getProjectImage(name: string, _htmlUrl: string): string | null {
@@ -192,112 +260,90 @@ function getProjectDescription(repo: GitHubRepo): string {
 // the same newest-first order when the API is unavailable during a build.
 const fallbackUpdatedAt: Record<string, string> = {
   'ai-child-protection': '2026-04-01T00:42:13Z',
-  'budgetwiser': '2024-10-17T17:40:09Z',
-  'canva-linux': '2026-01-11T16:41:29Z',
-  'chemical-equipment-visualizer': '2026-02-05T12:33:53Z',
-  'cnn-image-classification': '2024-11-06T15:35:10Z',
-  'deskimage': '2025-05-05T04:32:11Z',
-  'dotfiles': '2026-03-08T13:36:22Z',
-  'face-recognition': '2026-08-08T14:20:18Z',
-  'fedorable': '2026-09-19T17:07:29Z',
-  'foss-hack-delhi': '2026-02-03T07:01:35Z',
-  'gnome-bluetooth-battery-monitor': '2026-08-02T23:42:43Z',
-  'gtk-emoji-picker': '2026-09-18T05:50:09Z',
-  'eva': '2026-10-15T19:02:17Z',
+  'asus-dts-linux': '2026-11-09T09:19:23Z',
+  'canva-linux': '2026-09-29T07:04:52Z',
+  'deskimage': '2026-10-20T15:25:40Z',
+  'dosage': '2026-11-16T07:00:46Z',
+  'dotfiles': '2026-11-09T07:31:39Z',
+  'eva': '2026-10-22T01:00:45Z',
   'evdev-reader': '2026-10-15T18:20:16Z',
+  'face-recognition': '2026-10-15T19:12:21Z',
+  'fedorable': '2026-11-09T06:06:10Z',
+  'foss-hack-delhi': '2026-02-03T07:01:35Z',
   'ft9366-rek': '2026-09-27T18:46:27Z',
+  'gnome-bluetooth-battery-monitor': '2026-11-06T17:13:36Z',
+  'gtk-emoji-picker': '2026-09-18T05:50:09Z',
   'h1re': '2026-05-02T05:13:19Z',
-  'h3ist': '2024-11-26T18:04:39Z',
-  'helium-copr': '2026-09-18T20:36:18Z',
-  'iced-calculator': '2026-02-20T05:24:54Z',
-  'indx': '2026-07-11T07:17:17Z',
-  'interweb': '2026-09-13T05:41:15Z',
-  'jina-ids': '2026-02-20T16:34:08Z',
+  'h3ist': '2026-10-16T03:32:17Z',
+  'helium-copr': '2026-11-02T15:07:50Z',
+  'indx': '2026-10-30T08:55:16Z',
+  'interweb': '2026-10-06T09:55:46Z',
+  'jina-ids': '2026-10-15T19:06:58Z',
   'libfprint': '2026-09-27T18:46:26Z',
-  'logichain': '2026-08-16T06:17:21Z',
-  'markview': '2026-05-24T17:11:13Z',
+  'logichain': '2026-10-15T17:26:57Z',
+  'markview': '2026-11-05T14:54:15Z',
   'mini-vm': '2026-02-01T01:18:17Z',
   'musical-playground': '2026-03-18T04:24:55Z',
-  'nanohttp': '2025-04-06T09:59:57Z',
-  'neolekh': '2026-02-20T05:00:06Z',
-  'passvyn': '2026-08-28T06:00:23Z',
-  'piracyindex': '2026-04-24T17:20:12Z',
-  'rqg': '2026-02-20T04:51:18Z',
-  'redesigned-dtc-website': '2026-02-20T04:58:27Z',
-  'remove.sh': '2026-02-20T04:59:13Z',
-  'rust-riscv-compiler': '2026-02-20T04:42:45Z',
-  'rusty-snake': '2026-02-20T04:57:54Z',
-  'sauce_run': '2026-02-20T07:06:50Z',
-  'simple-round-robin-scheduler': '2026-02-20T04:56:09Z',
-  'synthio': '2026-05-20T02:43:27Z',
-  't2s': '2026-02-20T06:03:20Z',
+  'nanohttp': '2026-10-15T18:19:50Z',
+  'neolekh': '2026-10-15T17:26:54Z',
+  'passvyn': '2026-10-15T18:58:07Z',
+  'piracyindex': '2026-10-13T01:21:51Z',
+  'rust-riscv-compiler': '2026-10-15T18:20:01Z',
+  'rusty-snake': '2026-10-12T16:02:31Z',
+  'synthio': '2026-10-15T19:07:01Z',
   'telegram-gtk4-libadwaita-theme': '2025-09-04T09:32:46Z',
   // Organization repo: use Vaibhav's latest authored commit, not the repo's
   // overall activity, so other contributors do not change its position.
-  'thefossclub.github.io': '2026-08-22T17:05:42Z',
-  'thefossclub': '2026-02-20T05:14:49Z',
-  'teaching-git-in-community-call': '2026-02-20T04:50:26Z',
-  'v8v88v8v88.github.io': '2026-09-22T07:52:00Z',
+  'thefossclub.github.io': '2026-11-24T13:18:00Z',
+  'tv-bluetooth': '2026-11-15T15:17:08Z',
+  'v8v88v8v88.github.io': '2026-11-25T11:25:09Z',
   'vajra': '2026-02-03T07:00:58Z',
   'vfetch': '2026-02-14T07:33:16Z',
-  'xe': '2026-08-16T04:32:13Z',
-  'yama': '2026-06-03T05:02:19Z',
-  'website': '2026-05-02T04:50:01Z',
-  'community-call': '2026-02-20T04:49:46Z',
+  'xe': '2026-11-06T12:16:25Z',
+  'yama': '2026-10-15T18:19:59Z',
 };
 
 const fallbackRepos: GitHubRepo[] = [
-  { name: 'v8v88v8v88.github.io', description: 'My personal portfolio website hosted on GitHub Pages.', html_url: 'https://github.com/V8V88V8V88/v8v88v8v88.github.io', homepage: 'https://v8v88v8v88.com/', language: 'Astro', stargazers_count: 6, fork: false, archived: false },
-  { name: 'indx', description: 'Indexing everything that can be on maps', html_url: 'https://github.com/v8v88v8v88/indx', language: 'TypeScript', stargazers_count: 0, fork: false, archived: false },
-  { name: 'thefossclub.github.io', description: 'Official website for The FOSS Club', html_url: 'https://github.com/thefossclub/thefossclub.github.io', homepage: 'https://thefossclub.org', language: 'TypeScript', stargazers_count: 13, fork: false, archived: false },
-  { name: 'helium-copr', description: 'GitHub Action for Helium COPR packages', html_url: 'https://github.com/V8V88V8V88/helium-copr', homepage: 'https://copr.fedorainfracloud.org/coprs/v8v88v8v88/helium/', language: null, stargazers_count: 0, fork: false, archived: false },
-  { name: 'interweb', description: 'Curated webring for the best of the web', html_url: 'https://github.com/V8V88V8V88/interweb', homepage: 'https://v8v88v8v88.com/interweb/', language: 'JavaScript', stargazers_count: 6, fork: false, archived: false },
-  { name: 'Passvyn', description: 'A secure Python password manager using SHA-256', html_url: 'https://github.com/V8V88V8V88/Passvyn', language: 'Python', stargazers_count: 4, fork: false, archived: false },
-  { name: 'LogiChain', description: 'A supply-chain management system made in Java', html_url: 'https://github.com/V8V88V8V88/LogiChain', language: 'Java', stargazers_count: 4, fork: false, archived: false },
-  { name: 'XE', description: 'A transpiled programming language', html_url: 'https://github.com/V8V88V8V88/XE', homepage: 'https://xe-lang.vercel.app', language: 'Rust', stargazers_count: 11, fork: false, archived: false },
-  { name: 'eva', description: 'Eva is a gemini, gopher protocol browser in Rust using gtk4', html_url: 'https://github.com/V8V88V8V88/eva', language: 'Rust', stargazers_count: 4, fork: false, archived: false },
-  { name: 'website', description: 'Code for an earlier version of my personal website', html_url: 'https://github.com/V8V88V8V88/website', language: 'HTML', stargazers_count: 2, fork: false, archived: true },
-  { name: 'piracyindex', description: 'The greatest piracy index of all time', html_url: 'https://github.com/V8V88V8V88/piracyindex', language: 'TypeScript', stargazers_count: 0, fork: false, archived: false },
-  { name: 'Synthio', description: 'A minimalist music visualizer built with Svelte', html_url: 'https://github.com/V8V88V8V88/Synthio', language: 'Svelte', stargazers_count: 0, fork: false, archived: false },
-  { name: 'Telegram-GTK4-Libadwaita-Theme', description: 'A GTK4 - Libadwaita Inspired Theme for Telegram Desktop', html_url: 'https://github.com/V8V88V8V88/Telegram-GTK4-Libadwaita-Theme', language: null, stargazers_count: 0, fork: false, archived: false },
-  { name: 'face-recognition', description: 'Face detection on live cameras using OpenCV and Dlib', html_url: 'https://github.com/V8V88V8V88/face-recognition', language: 'C++', stargazers_count: 0, fork: false, archived: false },
-  { name: 'Vajra', description: 'AI-Powered Cyber Threat Forecaster', html_url: 'https://github.com/V8V88V8V88/Vajra', language: 'TypeScript', stargazers_count: 0, fork: false, archived: false },
-  { name: 'H1RE', description: 'AI-powered resume analyzer for starters', html_url: 'https://github.com/V8V88V8V88/H1RE', language: 'TypeScript', stargazers_count: 0, fork: false, archived: false },
-  { name: 'H3IST', description: 'A next-generation elevator control system', html_url: 'https://github.com/V8V88V8V88/H3IST', language: 'Rust', stargazers_count: 0, fork: false, archived: false },
-  { name: 'yama', description: 'Lightweight package manager using C and Rust', html_url: 'https://github.com/V8V88V8V88/yama', language: 'Rust', stargazers_count: 0, fork: false, archived: false },
-  { name: 'BudgetWiser', description: 'A Rust program to track your expenses', html_url: 'https://github.com/V8V88V8V88/BudgetWiser', language: 'Rust', stargazers_count: 0, fork: false, archived: false },
-  { name: 'Rust-RISCV-Compiler', description: 'RISC-V compiler in Rust', html_url: 'https://github.com/V8V88V8V88/Rust-RISCV-Compiler', language: 'Rust', stargazers_count: 0, fork: false, archived: false },
-  { name: 'mini-vm', description: 'Minimal virtual machine', html_url: 'https://github.com/V8V88V8V88/mini-vm', language: 'Rust', stargazers_count: 0, fork: false, archived: false },
-  { name: 'vfetch', description: 'A minimal system information fetcher', html_url: 'https://github.com/V8V88V8V88/vfetch', language: 'Shell', stargazers_count: 0, fork: false, archived: false },
-  { name: 'Fedorable', description: 'Simple script for maintaining Fedora Linux', html_url: 'https://github.com/V8V88V8V88/Fedorable', language: 'Python', stargazers_count: 0, fork: false, archived: false },
-  { name: 'nanoHTTP', description: 'Nano lightweight HTTP server in C', html_url: 'https://github.com/V8V88V8V88/nanoHTTP', language: 'C', stargazers_count: 0, fork: false, archived: false },
-  { name: 'MarkView', description: 'GTK-based Markdown viewer with real-time preview', html_url: 'https://github.com/V8V88V8V88/MarkView', language: 'Rust', stargazers_count: 7, fork: false, archived: false },
-  { name: 'DeskImage', description: 'CLI tool that generates .Desktop entries for AppImages', html_url: 'https://github.com/V8V88V8V88/DeskImage', language: 'Rust', stargazers_count: 0, fork: false, archived: false },
-  { name: 'dotfiles', description: 'All the dotfiles of my linux system', html_url: 'https://github.com/V8V88V8V88/dotfiles', language: null, stargazers_count: 0, fork: false, archived: false },
-  { name: 'musical-playground', description: 'Try music instruments online using svelte, vue, and tone.js', html_url: 'https://github.com/V8V88V8V88/musical-playground', language: 'Svelte', stargazers_count: 0, fork: false, archived: false },
-  { name: 'FOSS-Hack-Delhi', description: 'Website to promote FOSS Hack in Delhi area', html_url: 'https://github.com/V8V88V8V88/FOSS-Hack-Delhi', language: 'TypeScript', stargazers_count: 0, fork: false, archived: false },
-  { name: 'Jina-IDS', description: 'An intrusion-detection system made in Python', html_url: 'https://github.com/V8V88V8V88/Jina-IDS', language: 'Python', stargazers_count: 0, fork: false, archived: false },
-  { name: 'neolekh', description: 'A minimal Hugo portfolio theme with dark mode and GoatCounter analytics', html_url: 'https://github.com/V8V88V8V88/neolekh', homepage: 'https://v8v88v8v88.com', language: 'HTML', stargazers_count: 1, fork: false, archived: false },
-  { name: 'RQG', description: 'Random quote generator demo for FCC', html_url: 'https://github.com/V8V88V8V88/RQG', homepage: 'https://randomqoutev8.netlify.app/', language: 'TypeScript', stargazers_count: 0, fork: false, archived: false },
-  { name: 'chemical-equipment-visualizer', description: 'Hybrid web and desktop tool for visualizing chemical equipment data', html_url: 'https://github.com/V8V88V8V88/chemical-equipment-visualizer', homepage: 'https://chemical-equipment-visualizer-steel.vercel.app/', language: 'Python', stargazers_count: 0, fork: false, archived: false },
-  { name: 'AI-Child-Protection', description: 'AI-driven parental control with face detection', html_url: 'https://github.com/V8V88V8V88/AI-Child-Protection', language: 'Python', stargazers_count: 0, fork: false, archived: false },
-  { name: 'cnn-image-classification', description: 'CNN to classify images in CIFAR-10 dataset', html_url: 'https://github.com/V8V88V8V88/cnn-image-classification', language: 'Jupyter Notebook', stargazers_count: 0, fork: false, archived: false },
-  { name: 'T2S', description: 'Text to speech using AI', html_url: 'https://github.com/V8V88V8V88/T2S', language: 'CSS', stargazers_count: 0, fork: false, archived: false },
-  { name: 'thefossclub', description: 'An earlier Svelte website for The FOSS Club', html_url: 'https://github.com/V8V88V8V88/thefossclub', homepage: 'https://thefossclub.vercel.app', language: 'Svelte', stargazers_count: 0, fork: false, archived: true },
-  { name: 'remove.sh', description: 'Shell script for removing installed or unwanted packages', html_url: 'https://github.com/V8V88V8V88/remove.sh', language: 'Shell', stargazers_count: 0, fork: false, archived: true },
-  { name: 'redesigned-dtc-website', description: 'College website reimagined for a web technology project', html_url: 'https://github.com/V8V88V8V88/redesigned-dtc-website', homepage: 'https://dtc-neon.vercel.app/', language: 'CSS', stargazers_count: 0, fork: false, archived: true },
-  { name: 'teaching-git-in-community-call', description: 'A website used for teaching Git in a community call', html_url: 'https://github.com/V8V88V8V88/teaching-git-in-community-call', language: 'HTML', stargazers_count: 0, fork: false, archived: true },
-  { name: 'community-call', description: 'Community call website', html_url: 'https://github.com/V8V88V8V88/community-call', language: 'HTML', stargazers_count: 0, fork: false, archived: true },
-  { name: 'rusty-snake', description: 'A simple snake game built with Rust and Piston', html_url: 'https://github.com/V8V88V8V88/rusty-snake', language: 'Rust', stargazers_count: 0, fork: false, archived: false },
-  { name: 'iced-calculator', description: 'Simple calculator made using iced kit', html_url: 'https://github.com/V8V88V8V88/iced-calculator', language: 'Rust', stargazers_count: 0, fork: false, archived: false },
-  { name: 'simple-round-robin-scheduler', description: 'Round robin scheduler made during OS lectures', html_url: 'https://github.com/V8V88V8V88/simple-round-robin-scheduler', language: 'C', stargazers_count: 0, fork: false, archived: false },
-  { name: 'canva-linux', description: 'Canva for Linux', html_url: 'https://github.com/V8V88V8V88/canva-linux', language: 'Python', stargazers_count: 0, fork: false, archived: false },
+  { name: 'AI-Child-Protection', description: 'Traditional parental controls rely on manual settings, making them easy to bypass. This AI-driven system ensures real-time monitoring and adaptive content control using face detection and AI-based age estimation for smarter child protection.', html_url: 'https://github.com/V8V88V8V88/AI-Child-Protection', language: 'Python', stargazers_count: 1, fork: false, archived: false },
+  { name: 'asus-dts-linux', description: 'pulls the DTS speaker tuning out of the asus driver and runs it in pipewire. makes asus laptop speakers sound right on linux.', html_url: 'https://github.com/V8V88V8V88/asus-dts-linux', language: 'Python', stargazers_count: 4, fork: false, archived: false },
+  { name: 'canva-linux', description: null, html_url: 'https://github.com/V8V88V8V88/canva-linux', language: 'Python', stargazers_count: 3, fork: false, archived: false },
+  { name: 'DeskImage', description: 'A lightweight Rust CLI tool that generates .Desktop entries for AppImages.', html_url: 'https://github.com/V8V88V8V88/DeskImage', language: 'Rust', stargazers_count: 2, fork: false, archived: true },
+  { name: 'Dosage', description: 'Unofficial Vala rewrite of Dosage that also runs on Android (GTK4 + libadwaita, Pixiewood)', html_url: 'https://github.com/V8V88V8V88/Dosage', language: 'Vala', stargazers_count: 0, fork: true, archived: false },
+  { name: 'dotfiles', description: 'this repository contains all the dotfiles of my linux system', html_url: 'https://github.com/V8V88V8V88/dotfiles', language: 'Lua', stargazers_count: 3, fork: false, archived: false },
+  { name: 'eva', description: 'Eva is a gemini, gopher protocol browser in Rust using gtk4', html_url: 'https://github.com/V8V88V8V88/eva', language: 'Rust', stargazers_count: 5, fork: false, archived: false },
   { name: 'evdev-reader', description: 'Reads key events from /dev/input with evdev, in Python and C++', html_url: 'https://github.com/V8V88V8V88/evdev-reader', language: 'C++', stargazers_count: 0, fork: false, archived: true },
-  { name: 'ft9366-rek', description: 'Reverse engineering the FocalTech FT9366 / RTS5811 fingerprint sensor: protocol notes, tools, Fedora fixes', html_url: 'https://github.com/V8V88V8V88/ft9366-rek', language: 'C', stargazers_count: 1, fork: false, archived: false },
-  { name: 'libfprint', description: 'libfprint with an open driver for the FocalTech FT9366 / RTS5811 sensor', html_url: 'https://github.com/V8V88V8V88/libfprint', language: 'C', stargazers_count: 1, fork: false, archived: false },
-  { name: 'GNOME-bluetooth-battery-monitor', description: 'Displays battery level in the GNOME shell', html_url: 'https://github.com/V8V88V8V88/GNOME-bluetooth-battery-monitor', language: 'JavaScript', stargazers_count: 0, fork: false, archived: false },
-  { name: 'gtk-emoji-picker', description: 'GTK4-based emoji picker with global shortcut', html_url: 'https://github.com/V8V88V8V88/gtk-emoji-picker', language: 'Python', stargazers_count: 0, fork: false, archived: false },
-  { name: 'Sauce_Run', description: 'Endless runner game made in Redot engine', html_url: 'https://github.com/V8V88V8V88/Sauce_Run', language: 'GDScript', stargazers_count: 0, fork: false, archived: false },
+  { name: 'face-recognition', description: 'Face Recognition code to detect faces on live cameras implemented using OpenCV and Dlib.', html_url: 'https://github.com/V8V88V8V88/face-recognition', language: 'C++', stargazers_count: 8, fork: false, archived: false },
+  { name: 'Fedorable', description: 'A simple bash script for maintaining Fedora Linux systems.', html_url: 'https://github.com/V8V88V8V88/Fedorable', language: 'Shell', stargazers_count: 15, fork: false, archived: false },
+  { name: 'FOSS-Hack-Delhi', description: 'a website to promote the FOSS Hack in our Delhi area', html_url: 'https://github.com/V8V88V8V88/FOSS-Hack-Delhi', homepage: 'https://foss-hack-delhi.vercel.app', language: 'TypeScript', stargazers_count: 0, fork: false, archived: false },
+  { name: 'ft9366-rek', description: 'Reverse engineering the FocalTech FT9366 / RTS5811 fingerprint sensor (2808:a658, ASUS VivoBook): protocol notes, tools, Fedora fixes', html_url: 'https://github.com/V8V88V8V88/ft9366-rek', language: 'C', stargazers_count: 1, fork: false, archived: false },
+  { name: 'GNOME-bluetooth-battery-monitor', description: 'Displays Bluetooth Battery level on GNOME shell', html_url: 'https://github.com/V8V88V8V88/GNOME-bluetooth-battery-monitor', homepage: 'https://extensions.gnome.org/extension/9308/bluetooth-battery-monitor/', language: 'JavaScript', stargazers_count: 14, fork: false, archived: false },
+  { name: 'gtk-emoji-picker', description: 'A GTK4-based emoji picker that can be triggered globally using Meta + . shortcut.', html_url: 'https://github.com/V8V88V8V88/gtk-emoji-picker', language: 'Python', stargazers_count: 0, fork: false, archived: false },
+  { name: 'H1RE', description: 'AI-powered resume analyzer with ats score and suggestions', html_url: 'https://github.com/V8V88V8V88/H1RE', homepage: 'https://h1re.vercel.app', language: 'TypeScript', stargazers_count: 1, fork: false, archived: false },
+  { name: 'H3IST', description: 'Elevator simulator in Rust with tokio. Unfinished.', html_url: 'https://github.com/V8V88V8V88/H3IST', language: 'Rust', stargazers_count: 2, fork: false, archived: true },
+  { name: 'helium-copr', description: 'Github action for Helium COPR package', html_url: 'https://github.com/V8V88V8V88/helium-copr', homepage: 'https://copr.fedorainfracloud.org/coprs/v8v88v8v88/helium/', language: null, stargazers_count: 0, fork: false, archived: true },
+  { name: 'INDX', description: 'Indexing everything on map', html_url: 'https://github.com/V8V88V8V88/INDX', homepage: 'https://ind-x.vercel.app/', language: 'TypeScript', stargazers_count: 9, fork: false, archived: false },
+  { name: 'interweb', description: 'curated webring for best of the bests', html_url: 'https://github.com/V8V88V8V88/interweb', homepage: 'http://v8v88v8v88.com/interweb/', language: 'JavaScript', stargazers_count: 6, fork: false, archived: false },
+  { name: 'Jina-IDS', description: 'An IDS system made in Python', html_url: 'https://github.com/V8V88V8V88/Jina-IDS', language: 'Python', stargazers_count: 0, fork: false, archived: false },
+  { name: 'libfprint', description: 'libfprint with an open driver for the FocalTech FT9366 / RTS5811 sensor (2808:a658) - see branch ft9366. Upstream: gitlab.freedesktop.org/libfprint/libfprint', html_url: 'https://github.com/V8V88V8V88/libfprint', language: 'C', stargazers_count: 1, fork: false, archived: false },
+  { name: 'LogiChain', description: 'A Project on Supply Chain Management System made in Java', html_url: 'https://github.com/V8V88V8V88/LogiChain', language: 'Java', stargazers_count: 4, fork: false, archived: false },
+  { name: 'MarkView', description: 'MarkView is a sleek, GTK-based Markdown viewer that allows you to write Markdown and see the rendered output in real-time.', html_url: 'https://github.com/V8V88V8V88/MarkView', language: 'Rust', stargazers_count: 6, fork: false, archived: false },
+  { name: 'mini-vm', description: 'a stack based vm witth assembler, disassembler and a debugger', html_url: 'https://github.com/V8V88V8V88/mini-vm', language: 'Rust', stargazers_count: 2, fork: false, archived: false },
+  { name: 'musical-playground', description: 'Music Playground is a one stop solution to try music intruments online using svelte, vue, and tone.js', html_url: 'https://github.com/V8V88V8V88/musical-playground', homepage: 'https://musical-playground.vercel.app', language: 'Svelte', stargazers_count: 0, fork: false, archived: false },
+  { name: 'nanoHTTP', description: 'A nano lightweight, HTTP server implementation in C.', html_url: 'https://github.com/V8V88V8V88/nanoHTTP', language: 'C', stargazers_count: 2, fork: false, archived: true },
+  { name: 'neolekh', description: 'Simple, text-focussed and a minimal personal portfolio hugo theme with dark mode and GoatCounter analytics(a great alternative to Google analytics)', html_url: 'https://github.com/V8V88V8V88/neolekh', homepage: 'https://v8v88v8v88.com', language: 'HTML', stargazers_count: 1, fork: false, archived: false },
+  { name: 'Passvyn', description: 'A python based secured password manager which is highly secured using SHA256', html_url: 'https://github.com/V8V88V8V88/Passvyn', language: 'Python', stargazers_count: 4, fork: false, archived: false },
+  { name: 'piracyindex', description: 'the greatest piracy index of all time. :D', html_url: 'https://github.com/V8V88V8V88/piracyindex', homepage: 'https://piracyindex.vercel.app', language: 'TypeScript', stargazers_count: 9, fork: false, archived: false },
+  { name: 'Rust-RISCV-Compiler', description: 'rust riscv compiler', html_url: 'https://github.com/V8V88V8V88/Rust-RISCV-Compiler', language: 'Rust', stargazers_count: 2, fork: false, archived: true },
+  { name: 'rusty-snake', description: 'A simple snake game built with Rust and Piston', html_url: 'https://github.com/V8V88V8V88/rusty-snake', language: 'Rust', stargazers_count: 2, fork: false, archived: false },
+  { name: 'Synthio', description: 'Synthio is a minimalist music visualizer I developed while exploring Svelte. It combines real-time audio visualization with a sleek, responsive design.', html_url: 'https://github.com/V8V88V8V88/Synthio', homepage: 'https://synthio.vercel.app/', language: 'Svelte', stargazers_count: 8, fork: false, archived: false },
+  { name: 'Telegram-GTK4-Libadwaita-Theme', description: 'A GTK4 - Libadwaita Inspired Theme for Telegram Desktop', html_url: 'https://github.com/V8V88V8V88/Telegram-GTK4-Libadwaita-Theme', homepage: 'https://t.me/addtheme/libadwaita', language: null, stargazers_count: 13, fork: false, archived: false },
+  { name: 'thefossclub.github.io', description: 'This repository contains the code of the current official website of The FOSS Club', html_url: 'https://github.com/thefossclub/thefossclub.github.io', homepage: 'https://thefossclub.org', language: 'TypeScript', stargazers_count: 13, fork: false, archived: false },
+  { name: 'tv-bluetooth', description: 'A clean, minimal Bluetooth manager for Android TV and Google TV. Pair the speakers and devices the built-in screen never lists.', html_url: 'https://github.com/V8V88V8V88/tv-bluetooth', language: 'Java', stargazers_count: 4, fork: false, archived: false },
+  { name: 'v8v88v8v88.github.io', description: 'My Personal Portfolio Site', html_url: 'https://github.com/V8V88V8V88/v8v88v8v88.github.io', homepage: 'https://v8v88v8v88.com/', language: 'Astro', stargazers_count: 5, fork: false, archived: false },
+  { name: 'Vajra', description: 'AI-Powered Cyber Threat Forecaster for Critical Infrastructure Protection', html_url: 'https://github.com/V8V88V8V88/Vajra', language: 'TypeScript', stargazers_count: 3, fork: false, archived: false },
+  { name: 'vfetch', description: 'a minimal system information fetcher', html_url: 'https://github.com/V8V88V8V88/vfetch', language: 'Shell', stargazers_count: 6, fork: false, archived: false },
+  { name: 'XE', description: 'XE: A fast, indentation-based programming language that compiles to standalone native binaries via Rust.', html_url: 'https://github.com/V8V88V8V88/XE', homepage: 'https://xe-lang.vercel.app', language: 'Rust', stargazers_count: 12, fork: false, archived: false },
+  { name: 'yama', description: 'Yama is a lightweight package manager that efficiently manages software installations and dependencies using C and Rust.', html_url: 'https://github.com/V8V88V8V88/yama', language: 'Rust', stargazers_count: 2, fork: false, archived: true },
 ].map(repo => ({
   ...repo,
   updated_at: fallbackUpdatedAt[repo.name.toLowerCase()] || null,
@@ -314,31 +360,26 @@ const langFilterMap: Record<string, string> = {
   'C': 'C/C++',
 };
 
-const categoryOrder = [
-  'Web Applications',
-  'Themes & Desktop',
-  'AI & Machine Learning',
-  'Rust Projects',
-  'CLI & System Tools',
-  'GNOME & GTK',
-  'Other',
-];
-
 function getDefaultCategory(language: string | null): string {
-  if (!language) return 'Other';
   switch (language) {
-    case 'Rust': return 'Rust Projects';
+    case 'Rust':
+    case 'C':
+    case 'C++':
+    case 'Go':
+    case 'Shell':
+    case 'Lua':
+      return 'CLI & System Tools';
     case 'TypeScript':
     case 'JavaScript':
     case 'Svelte':
+    case 'Astro':
     case 'HTML':
     case 'CSS':
-      return 'Web Applications';
-    case 'Shell': return 'CLI & System Tools';
-    case 'Python': return 'Other';
-    case 'C':
-    case 'C++': return 'CLI & System Tools';
-    default: return 'Other';
+      return 'Web';
+    case 'Jupyter Notebook':
+      return 'AI & Machine Learning';
+    default:
+      return 'Apps & Games';
   }
 }
 
@@ -543,8 +584,7 @@ export async function getProjects(): Promise<Project[]> {
   }
   const eligibleRepos = [...uniqueRepos.values()];
 
-  const rankedFeatureCandidates = eligibleRepos
-    .filter(repo => !featuredBlockedRepos.has(repo.name))
+  const rankedFeatureCandidates = [...eligibleRepos]
     .sort((a, b) => {
       const scoreDiff = getFeatureScore(b) - getFeatureScore(a);
       if (scoreDiff !== 0) return scoreDiff;
@@ -589,19 +629,4 @@ export async function getProjects(): Promise<Project[]> {
       if (!aUpdated && !bUpdated) return 0;
       return a.repoName.localeCompare(b.repoName);
     });
-}
-
-export function groupByCategory(projects: Project[]): { category: string; projects: Project[] }[] {
-  const groups: Record<string, Project[]> = {};
-
-  for (const project of projects) {
-    if (!groups[project.category]) {
-      groups[project.category] = [];
-    }
-    groups[project.category].push(project);
-  }
-
-  return categoryOrder
-    .filter(cat => groups[cat]?.length > 0)
-    .map(cat => ({ category: cat, projects: groups[cat] }));
 }
