@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Card from '../../components/Card.astro';
 import { getAllPosts, formatDate } from '../../data/posts';
 
 const posts = getAllPosts();
@@ -39,30 +40,23 @@ const blogSchema = {
       </div>
     </section>
 
-    <section class="posts-grid">
+    <section class="posts-grid card-grid">
       {posts.map((post, i) => (
-        <a class:list={['post-card', post.coverHasTitle && 'cover-has-title']} href={`/${post.slug}/`} style={`--post-img: url('${post.image}')`}>
-          <div class="post-image" aria-hidden="true"></div>
-          {i === 0 && <span class="post-badge">Latest</span>}
-          <div class="post-content">
-            <div class="post-meta">
-              <time datetime={post.date}>{formatDate(post.date)}</time>
-              {post.readTime && <><span class="post-meta-dot" aria-hidden="true">·</span><span>{post.readTime}</span></>}
-            </div>
-            <h2 class="post-title">{post.title}</h2>
-            <p class="post-excerpt">{post.description}</p>
-            <div class="post-footer">
-              {post.tags && (
-                <div class="post-tags">
-                  {post.tags.map((tag) => (
-                    <span class="post-tag">{tag}</span>
-                  ))}
-                </div>
-              )}
-              <span class="post-cta" aria-hidden="true">Read <span class="post-cta-arrow">→</span></span>
-            </div>
-          </div>
-        </a>
+        <Card
+          href={`/${post.slug}/`}
+          image={post.image}
+          imageHasTitle={post.coverHasTitle}
+          badge={i === 0 ? 'Latest' : undefined}
+          title={post.title}
+          description={post.description}
+          tags={post.tags}
+          cta="Read"
+        >
+          <Fragment slot="meta">
+            <time datetime={post.date}>{formatDate(post.date)}</time>
+            {post.readTime && <><span aria-hidden="true">·</span><span>{post.readTime}</span></>}
+          </Fragment>
+        </Card>
       ))}
     </section>
   </main>
@@ -308,254 +302,11 @@ const blogSchema = {
   }
 
   .posts-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
-    gap: clamp(1rem, 1.6vw, 1.5rem);
+    justify-content: center;
     margin-top: 0.35rem;
     padding: 0 clamp(0px, 2vw, 2rem);
     background-color: transparent;
   }
-
-  /* Sharp cover on top that dissolves into a blurred copy of itself behind the text. */
-  .post-card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    border-radius: 20px;
-    overflow: hidden;
-    isolation: isolate;
-    text-decoration: none;
-    color: #fff;
-    background: #0d0d0d;
-    box-shadow:
-      0 12px 32px -10px rgba(0, 0, 0, 0.6);
-    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .post-card::before {
-    content: "";
-    position: absolute;
-    inset: -40px;
-    z-index: -2;
-    background: var(--post-img) center / cover no-repeat;
-    filter: blur(40px) saturate(130%) brightness(0.32);
-  }
-
-  .post-card:hover {
-    transform: translateY(-5px);
-    box-shadow:
-      0 22px 44px -12px rgba(0, 0, 0, 0.75);
-  }
-
-  .post-card:focus-visible {
-    outline: 2px solid #e9c97a;
-    outline-offset: 3px;
-  }
-
-  .post-image {
-    aspect-ratio: 1.618 / 1;
-    background: var(--post-img) center / cover no-repeat;
-    -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent 100%);
-    mask-image: linear-gradient(to bottom, #000 62%, transparent 100%);
-    transform-origin: center top;
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .post-card:hover .post-image {
-    transform: scale(1.04);
-  }
-
-  /* A cover with its own lettering is shown whole, at its own shape, and the
-     card text starts below it instead of sliding up over the letters. */
-  .post-card.cover-has-title .post-image {
-    aspect-ratio: 1.6 / 1;
-    -webkit-mask-image: linear-gradient(to bottom, #000 88%, transparent 100%);
-    mask-image: linear-gradient(to bottom, #000 88%, transparent 100%);
-  }
-
-  .post-card.cover-has-title .post-content {
-    margin-top: 0;
-    padding-top: 0.6rem;
-  }
-
-  .post-badge {
-    position: absolute;
-    top: 0.85rem;
-    left: 0.85rem;
-    padding: 0.22rem 0.6rem;
-    border-radius: 999px;
-    font-size: var(--fs-2xs);
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: #fff;
-    background: rgba(0, 0, 0, 0.45);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: inset 0 0 0 0.5px rgba(255, 255, 255, 0.25);
-  }
-
-  .post-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    padding: 0.35rem clamp(1.1rem, 1.5vw, 1.4rem) clamp(1.1rem, 1.5vw, 1.35rem);
-    margin-top: -1.25rem;
-  }
-
-  .post-meta {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-size: var(--fs-xs);
-    color: rgba(255, 255, 255, 0.55);
-    margin-bottom: 0.45rem;
-  }
-
-  .post-title {
-    font-size: clamp(1.15rem, 1.25vw, 1.35rem);
-    font-weight: 600;
-    margin: 0 0 0.4rem;
-    color: #fff;
-    line-height: 1.25;
-    letter-spacing: -0.015em;
-    transition: color 0.2s ease;
-  }
-
-  /* Same gold-leaf reveal as the hero's "maybe?". */
-  .post-title {
-    background: linear-gradient(105deg, #b8862e 0%, #e9c97a 35%, #fff1c9 50%, #e9c97a 65%, #b8862e 100%);
-    background-size: 250% 100%;
-    background-position: 100% 0;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: #fff;
-    transition: -webkit-text-fill-color 0.5s ease, background-position 1.4s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  .post-card:hover .post-title,
-  .post-card:focus-visible .post-title {
-    -webkit-text-fill-color: transparent;
-    background-position: 0% 0;
-  }
-
-  .post-excerpt {
-    font-size: var(--fs-sm);
-    margin: 0 0 1rem;
-    color: rgba(255, 255, 255, 0.7);
-    line-height: 1.5;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    overflow: hidden;
-  }
-
-  .post-footer {
-    margin-top: auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.75rem;
-  }
-
-  .post-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem;
-    min-width: 0;
-  }
-
-  .post-tag {
-    background: rgba(255, 255, 255, 0.09);
-    color: rgba(255, 255, 255, 0.85);
-    padding: 0.2rem 0.6rem;
-    border-radius: 999px;
-    font-size: var(--fs-xs);
-    font-weight: 500;
-    box-shadow: inset 0 0 0 0.5px rgba(255, 255, 255, 0.14);
-  }
-
-  .post-cta {
-    flex-shrink: 0;
-    font-size: var(--fs-xs);
-    font-weight: 600;
-    color: rgba(255, 255, 255, 0.75);
-    white-space: nowrap;
-    transition: color 0.2s ease;
-  }
-
-  .post-cta-arrow {
-    display: inline-block;
-    transition: transform 0.25s ease;
-  }
-
-  .post-card:hover .post-cta {
-    color: #e9c97a;
-  }
-
-  .post-card:hover .post-cta-arrow {
-    transform: translateX(3px);
-  }
-
-  :global(html.light-mode) .post-card {
-    box-shadow:
-      inset 0 0 0 1px rgba(0, 0, 0, 0.1),
-      0 12px 32px -10px rgba(0, 0, 0, 0.25);
-  }
-
-  :global(html.light-mode) .post-card:hover {
-    box-shadow:
-      inset 0 0 0 1px rgba(0, 0, 0, 0.14),
-      0 22px 44px -12px rgba(0, 0, 0, 0.35);
-  }
-
-  /* Hero-style hairline drawn above the cover so it reads all the way round. */
-  .post-card::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    pointer-events: none;
-    z-index: 3;
-    transition: border-color 0.35s ease;
-  }
-  .post-card:hover::after { border-color: rgba(255, 255, 255, 0.15); }
-  :global(html.light-mode) .post-card::after { border-color: rgba(0, 0, 0, 0.08); }
-  :global(html.light-mode) .post-card:hover::after { border-color: rgba(0, 0, 0, 0.12); }
-
-  /* Light: cover dissolves into a pale frosted copy of itself, text goes dark. */
-  :global(html.light-mode) .post-card {
-    color: #1d1d1f;
-    background: #f5f4f1;
-  }
-  :global(html.light-mode) .post-card::before {
-    filter: blur(48px) saturate(160%) brightness(1.7);
-    opacity: 0.35;
-  }
-  /* Cream veil so dark covers don't turn the text area muddy grey; only a tint of the image survives. */
-  :global(html.light-mode) .post-content {
-    background: linear-gradient(to bottom, rgba(245, 244, 241, 0) 0, rgba(245, 244, 241, 0.82) 2.75rem, rgba(245, 244, 241, 0.92) 100%);
-  }
-  :global(html.light-mode) .post-meta { color: rgba(0, 0, 0, 0.5); }
-  :global(html.light-mode) .post-title {
-    color: #1d1d1f;
-    -webkit-text-fill-color: #1d1d1f;
-    background-image: linear-gradient(105deg, #7a5410 0%, #b98a2c 35%, #d9ad52 50%, #b98a2c 65%, #7a5410 100%);
-  }
-  :global(html.light-mode) .post-card:hover .post-title,
-  :global(html.light-mode) .post-card:focus-visible .post-title {
-    -webkit-text-fill-color: transparent;
-  }
-  :global(html.light-mode) .post-excerpt { color: rgba(0, 0, 0, 0.68); }
-  :global(html.light-mode) .post-tag {
-    background: rgba(255, 255, 255, 0.55);
-    color: rgba(0, 0, 0, 0.75);
-    box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.12);
-  }
-  :global(html.light-mode) .post-cta { color: rgba(0, 0, 0, 0.7); }
-  :global(html.light-mode) .post-card:hover .post-cta { color: #9a6d1c; }
-  :global(html.light-mode) .post-card:focus-visible { outline-color: #b98a2c; }
 
   @media (max-width: 768px) {
     main {
@@ -585,21 +336,7 @@ const blogSchema = {
     }
 
     .posts-grid {
-      grid-template-columns: 1fr;
-      gap: 0.85rem;
       margin-top: 0.5rem;
-    }
-
-    .post-card {
-      border-radius: 18px;
-    }
-
-    .post-image {
-      aspect-ratio: 2.4 / 1;
-    }
-
-    .post-content {
-      margin-top: -1.75rem;
     }
   }
 
@@ -626,38 +363,6 @@ const blogSchema = {
     .hero p {
       font-size: var(--fs-sm);
       text-wrap: balance;
-    }
-
-    .post-card {
-      border-radius: 16px;
-    }
-
-    .post-image {
-      aspect-ratio: 2.8 / 1;
-    }
-
-    .post-content {
-      padding: 0.25rem 0.9rem 0.85rem;
-    }
-
-    .post-meta {
-      font-size: var(--fs-2xs);
-      margin-bottom: 0.3rem;
-    }
-
-    .post-title {
-      font-size: var(--fs-base);
-    }
-
-    .post-excerpt {
-      font-size: var(--fs-xs);
-      margin-bottom: 0.6rem;
-      -webkit-line-clamp: 1;
-    }
-
-    .post-tag {
-      font-size: var(--fs-2xs);
-      padding: 0.16rem 0.5rem;
     }
   }
 </style>
