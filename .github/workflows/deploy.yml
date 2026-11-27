@@ -54,3 +54,18 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
+
+      - name: Notify IndexNow (Bing, Yandex, etc.)
+        if: github.event_name == 'push'
+        continue-on-error: true
+        env:
+          HOST: v8v88v8v88.com
+          INDEXNOW_KEY: b78b7ba869deeda0382d4549d3d9080e
+        run: |
+          sleep 30
+          urls=$(curl -fsSL "https://$HOST/sitemap-0.xml" | grep -o '<loc>[^<]*' | sed 's/<loc>//' | jq -R . | jq -s .)
+          echo "Submitting $(echo "$urls" | jq length) URLs"
+          jq -n --arg host "$HOST" --arg key "$INDEXNOW_KEY" --argjson urls "$urls" \
+            '{host: $host, key: $key, keyLocation: "https://\($host)/\($key).txt", urlList: $urls}' \
+          | curl -sS -w '\nHTTP %{http_code}\n' -X POST https://api.indexnow.org/indexnow \
+              -H 'Content-Type: application/json; charset=utf-8' --data-binary @-

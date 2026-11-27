@@ -2,4 +2,4 @@ User-agent: *
 Disallow: /.git/
 Disallow: /cgi-bin/ 
 
-Sitemap: https://v8v88v8v88.com/sitemap.xml 
+Sitemap: https://v8v88v8v88.com/sitemap-index.xml 
